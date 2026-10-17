@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Château élargi</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1300px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .bar { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; position:sticky; top:0; background:var(--bg); padding:6px 0; z-index:5; }
+  .bar button { background:var(--card); color:var(--text); border:3px solid transparent; border-radius:12px; padding:8px 14px; font-weight:700; cursor:pointer; font-size:15px; }
+  .bar button.on { border-color:var(--accent); background:#3b3560; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
+  figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; }
+  figure img { width:100%; display:block; }
+  figcaption { padding:8px 13px 11px; font-size:15px; color:var(--muted); }
+  figcaption b.new { color:var(--ok); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏰 Le château qui remplit toute la largeur du rocher</h1>
+  <p>C'est une proposition à valider : rien n'est encore changé dans le jeu. À gauche, le château actuel. À droite, la proposition. Les rendus utilisent le vrai code du jeu, avec la même falaise, les mêmes galeries et la même cascade.</p>
+  <div class="note">
+    <b>Ce qui change dans la proposition :</b>
+    <ul>
+      <li>Le château du haut passe de <b>50 à 82 studs de large</b> : il occupe tout le dessus de la falaise.</li>
+      <li>Un <b>pavillon central</b> plus haut s'avance au milieu. Il porte la porte, la rosace, l'enseigne et un toit en pointe : la façade n'est plus un mur plat.</li>
+      <li>Les deux <b>ailes</b> ont 3 étages de 5 vitrines de chaque côté (toujours 60 vitrines en tout).</li>
+      <li>Les <b>tours de coin</b> (palier 2+) sont aux deux bouts du château. Les tours du palier 4 passent <b>au fond</b>, plus hautes que le toit, pour que leurs géants restent bien visibles.</li>
+      <li>Les paliers, les couleurs et le nombre de géants ne changent pas : 0 / 2 / 3 / 4 / 5 / 6.</li>
+    </ul>
+  </div>
+  <div class="bar" id="bar"></div>
+  <div class="bar" id="views"></div>
+  <div class="grid">
+    <figure><img id="before" alt=""><figcaption>Aujourd'hui (château de 50 de large)</figcaption></figure>
+    <figure><img id="after" alt=""><figcaption><b class="new">Proposition</b> : toute la largeur du rocher</figcaption></figure>
+  </div>
+</div>
+<script>
+const NAMES = ["Fortin de bois", "Château fort", "Château de pierre", "Château royal", "Palais d'or", "Citadelle céleste"];
+let tier = 4, view = "34";
+const bar = document.getElementById("bar"), views = document.getElementById("views");
+NAMES.forEach((n, i) => { const b = document.createElement("button"); b.textContent = `Palier ${i + 1} : ${n}`; b.onclick = () => { tier = i + 1; refresh(); }; bar.appendChild(b); });
+[["34", "Vue de trois quarts"], ["front", "Vue de face"]].forEach(([v, label]) => { const b = document.createElement("button"); b.textContent = label; b.dataset.v = v; b.onclick = () => { view = v; refresh(); }; views.appendChild(b); });
+function refresh() {
+  [...bar.children].forEach((b, k) => b.classList.toggle("on", k + 1 === tier));
+  [...views.children].forEach(b => b.classList.toggle("on", b.dataset.v === view));
+  document.getElementById("before").src = `chateau-large/avant_palier${tier}_${view}.jpg`;
+  document.getElementById("after").src = `chateau-large/apres_palier${tier}_${view}.jpg`;
+}
+refresh();
+</script>
+</body>
+</html>
