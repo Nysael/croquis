@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Îles : toutes les options</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:26px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+  .sticky { position:sticky; top:0; z-index:5; background:var(--bg); padding:8px 0 6px; }
+  .bar { display:flex; gap:8px; flex-wrap:wrap; margin:6px 0; }
+  .bar button { background:var(--card); color:var(--text); border:3px solid transparent; border-radius:12px; padding:7px 13px; font-weight:700; cursor:pointer; font-size:14px; }
+  .bar button.on { border-color:var(--accent); background:#3b3560; }
+  .bar .lab { color:var(--muted); font-size:14px; align-self:center; margin-right:4px; }
+  .grid { display:grid; grid-template-columns:1.25fr 1fr; gap:10px; }
+  @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
+  .box { background:var(--card); border-radius:14px; overflow:hidden; }
+  .box h3 { margin:0; padding:9px 13px; font-size:15px; color:var(--accent); }
+  svg { width:100%; height:auto; display:block; }
+  .facts { padding:10px 14px 12px; }
+  .facts .big { font-size:20px; font-weight:800; color:var(--ok); }
+  table { width:100%; border-collapse:collapse; background:var(--card); border-radius:14px; overflow:hidden; font-size:14px; margin-top:8px; }
+  th, td { padding:8px 11px; text-align:left; border-bottom:1px solid #3a3558; vertical-align:top; }
+  th { color:var(--accent); font-size:13px; } td { color:var(--text); }
+  tr.sel td { background:#3b3560; }
+  .legend span { display:inline-block; margin-right:14px; font-size:13px; color:var(--muted); }
+  .sw { display:inline-block; width:14px; height:14px; border-radius:3px; vertical-align:-2px; margin-right:4px; border:1px solid #0006; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏝️ Rapprocher les îles : toutes les options</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu. Toutes les tailles viennent du jeu (jardin de 22 × 16 cases au niveau 1 à 36 × 36 au niveau 5, une case = 4 studs). Dans toutes les options, la <b>place est ronde</b> (260 de diamètre).</p>
+
+  <div class="sticky">
+    <div class="bar" id="optBar"><span class="lab">Option :</span></div>
+    <div class="bar" id="lvlBar"><span class="lab">Niveau de l'île :</span></div>
+  </div>
+
+  <div class="grid">
+    <div class="box"><h3 id="mapTitle">La carte</h3><svg id="map" viewBox="-820 -820 1640 1640"></svg></div>
+    <div class="box"><h3 id="zoomTitle">Une île de près</h3><svg id="zoom" viewBox="-170 -260 340 340"></svg>
+      <div class="facts" id="facts"></div></div>
+  </div>
+  <p style="font-size:13px">Toutes les cartes sont à la <b>même échelle</b> : tu peux comparer les distances d'une option à l'autre.</p>
+  <p class="legend"><span><i class="sw" style="background:#6fcf5a"></i>jardin débloqué</span><span><i class="sw" style="background:#8a9a6a"></i>terrain à débloquer</span><span><i class="sw" style="border:2px dashed #fff;background:none"></i>jardin au niveau max (aujourd'hui)</span><span><i class="sw" style="background:#cfc6e8"></i>château</span><span><i class="sw" style="background:#5ef0ff"></i>plaques de vitesse</span></p>
+
+  <h2>Récapitulatif</h2>
+  <table id="table">
+    <thead><tr><th>Option</th><th>Cercle des îles</th><th>Pont</th><th>Jardin au niveau max</th><th>Joueurs</th><th>Bon à savoir</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <div class="note">
+    <b>Correction :</b> j'avais présenté l'option B comme « −17 % de largeur », mais je comptais la rive autour de l'île. En <b>cases constructibles</b>, B fait <b>27 colonnes au lieu de 36</b> (−25 %).
+  </div>
+  <div class="note">
+    <b>⭐ Château devant, jardin derrière :</b>
+    <ul>
+      <li><b>En arrivant par le pont</b>, on traverse une petite cour (coffre, machine à œufs), puis on tombe sur le <b>château</b>. La façade, la cascade de gemmes et les géants sur les balcons accueillent le visiteur.</li>
+      <li><b>Pourquoi les îles se rapprochent autant :</b> le château (100 de large) devient la pointe de l'île, du côté où le cercle est le plus serré. Le jardin, plus large, est derrière, là où il y a de la place. Résultat : cercle à <b>341</b> au lieu de 559, pont de <b>121 studs</b>, et <b>aucune case de jardin perdue</b>.</li>
+      <li><b>Le jardin grandit vers la mer</b> à chaque agrandissement : pas besoin de terrain à débloquer, et le pont ne change jamais de longueur.</li>
+      <li><b>Ce qui change :</b> le château tourne le dos au jardin. Pour aller au jardin, on passe sur le côté du château (ou par une porte à l'arrière). Les tableaux d'amélioration, la fusion et l'autel peuvent être dans la cour ou au bord du jardin.</li>
+    </ul>
+  </div>
+  <div class="note">
+    <b>Jardin autour du château (île ronde) :</b>
+    <ul>
+      <li><b>Pourquoi c'est le plus proche :</b> des îles rondes se rangent mieux en cercle que des rectangles, comme des pièces de monnaie autour d'une assiette. Avec la même surface de jardin (1 296 cases au max), le cercle des îles passe à <b>363</b> et le pont à <b>~104 studs</b>, sans perdre aucune case.</li>
+      <li><b>Ce qui change dans le jeu :</b> la grille où l'on pose les décorations devient un <b>anneau rond</b> autour du château. Chaque agrandissement élargit l'anneau. Une partie du jardin se retrouve <b>sur les côtés et derrière le château</b> : on en fait le tour.</li>
+      <li><b>À prévoir :</b> c'est le plus gros chantier (mode construction, agrandissements, placement des tableaux, de la fusion et de l'autel, promenade des créatures). La façade du château et l'escalier restent tournés vers le pont.</li>
+    </ul>
+  </div>
+  <div class="note">
+    <b>Comment lire l'éventail :</b> chaque agrandissement ajoute une bande à l'arrière (vers le château), plus large que la précédente. L'avant, côté pont, reste étroit (22 colonnes), le fond va jusqu'à 36 colonnes. La pointe étroite permet de rapprocher les îles sans qu'elles se touchent.
+  </div>
+</div>
+<script>
+const CELL = 4, NEAR = 54, MARGIN = 4, FAR = 16, SHORE = 26, PLAZA_R = 130, OLD_PLAZA = 82;
+const LV = [ { c: 22, r: 16 }, { c: 26, r: 21 }, { c: 30, r: 26 }, { c: 34, r: 31 }, { c: 36, r: 36 } ];
+const MAXD = 36 * CELL; // 144
+const FRONT = NEAR + MAXD + FAR; // 214 : avant de la terre au niveau max (repère de l'île)
+const OPTS = [
+  { id: "now", name: "Aujourd'hui", n: 8, ring: 559, mode: "inward", maxCols: 36, note: "Le jardin grandit vers la place, donc le pont raccourcit avec les niveaux." },
+  { id: "C", name: "Château devant, jardin derrière ⭐", n: 8, ring: 341, mode: "castleFront", maxCols: 36, note: "Recommandé. En arrivant par le pont, on tombe sur la cour et le château. Le jardin est derrière, vers l'extérieur : il garde ses 36 × 36 cases et grandit naturellement vers la mer." },
+  { id: "A", name: "A vers l'extérieur", n: 8, ring: 527, mode: "rect", maxCols: 36, note: "Rien n'est perdu. Îles un peu plus serrées (16 studs entre voisines au max)." },
+  { id: "B", name: "B vers l'extérieur", n: 8, ring: 488, mode: "rect", maxCols: 27, note: "Ton choix actuel. Le jardin max fait 27 colonnes au lieu de 36." },
+  { id: "F", name: "B en éventail", n: 8, ring: 460, mode: "fan", maxCols: 36, note: "Recommandé. Étroit devant (22 colonnes), 36 colonnes au fond. À peu près autant de cases que B." },
+  { id: "6", name: "6 îles en éventail", n: 6, ring: 408, mode: "fan", maxCols: 36, note: "Le plus proche, mais seulement 6 joueurs par serveur." },
+  { id: "S341", name: "Château devant + jardin de chaque côté (à 341)", n: 8, ring: 341, mode: "sides341", maxCols: 36, note: "Ton essai : même distance que « château devant », mais avec le jardin de chaque côté du château. Regarde les niveaux : dès le niveau 1, la rive (en rouge) touche la voisine, et au niveau max les îles se chevauchent." },
+  { id: "S", name: "Jardin à gauche et à droite 🆕", n: 8, ring: 597, mode: "sides", maxCols: 36, note: "Le jardin est coupé en deux, de chaque côté du château. L'île devient très LARGE, et c'est justement la largeur qui empêche les îles de se rapprocher : elles s'éloignent." },
+  { id: "R", name: "Jardin autour du château (île ronde) 🆕", n: 8, ring: 363, mode: "round", maxCols: 36, note: "Le plus proche avec 8 joueurs et SANS perdre de cases. Mais c'est le plus gros changement : la grille du jardin devient ronde, et une partie du jardin est derrière le château." },
+];
+// Jardin à gauche et à droite du château : 2 moitiés de la profondeur du
+// château (25 rangées), les colonnes de chaque côté = moitié des cases
+function sideCols(l) { return Math.ceil(LV[l].c * LV[l].r / 2 / 25); }
+// Île ronde : château (100 × 100) au centre, jardin en anneau autour.
+// Surface du jardin = nombre de cases × 16 ; + marge 4 et rive 26.
+const CASTLE_AREA = 100 * 100;
+function roundRadius(l) { const cells = LV[l].c * LV[l].r; return Math.sqrt((cells * 16 + CASTLE_AREA) / Math.PI) + MARGIN + SHORE; }
+let opt = OPTS[1], level = 0;
+const COUR = 40; // cour devant le château (coffre, machine à œufs) : de z = -90 à z = -50
+
+// Bandes du jardin (repère de l'île : z négatif = vers la place)
+function bands(o, l) {
+  const out = [];
+  if (o.mode === "inward") {
+    const L = LV[l]; out.push({ x: L.c * CELL / 2, z0: -(NEAR + L.r * CELL), z1: -NEAR, open: true }); return out;
+  }
+  if (o.mode === "rect") {
+    const w = Math.min(LV[4].c, o.maxCols) * CELL / 2;
+    const depth = LV[l].r * CELL, gFront = -(NEAR + MAXD);
+    out.push({ x: Math.min(LV[l].c, o.maxCols) * CELL / 2, z0: gFront, z1: gFront + depth, open: true });
+    if (depth < MAXD) out.push({ x: w, z0: gFront + depth, z1: -NEAR, open: false });
+    return out;
+  }
+  // éventail : chaque niveau ajoute une bande de ses rangées, de sa largeur
+  let prev = 0; const gFront = -(NEAR + MAXD);
+  LV.forEach((L, k) => { const d = L.r * CELL; out.push({ x: L.c * CELL / 2, z0: gFront + prev, z1: gFront + d, open: k <= l }); prev = d; });
+  return out;
+}
+function cellsMax(o) {
+  if (o.mode === "sides341") return sideCols(4) * 25 * 2;
+  if (o.mode === "castleFront") return 36 * 36;
+  if (o.mode === "round") return 36 * 36;
+  if (o.mode === "sides") return sideCols(4) * 25 * 2;
+  if (o.mode === "fan") { let prev = 0, n = 0; LV.forEach(L => { n += L.c * (L.r - prev); prev = L.r; }); return n; }
+  return Math.min(36, o.maxCols) * 36;
+}
+function bridge(o, l) {
+  if (o.mode === "sides341") return Math.round(o.ring - 90 - PLAZA_R);
+  if (o.mode === "castleFront") return Math.round(o.ring - (50 + COUR) - PLAZA_R);
+  if (o.mode === "round") return Math.round(o.ring - roundRadius(4) - PLAZA_R);
+  if (o.mode === "sides") return Math.round(o.ring - NEAR - PLAZA_R);
+  if (o.mode === "inward") return Math.round(o.ring - (NEAR + LV[l].r * CELL + FAR) - OLD_PLAZA);
+  return Math.round(o.ring - FRONT - PLAZA_R);
+}
+function islandSVG(o, l, s) {
+  if (o.mode === "castleFront") {
+    // Repère de l'île : -z = vers la place. Cour + château devant, jardin derrière (+z)
+    const L = LV[l], depth = L.r * CELL, half = L.c * CELL / 2 + MARGIN;
+    s.push(`<rect x="${-(MAXD / 2 + MARGIN)}" y="54" width="${MAXD + MARGIN * 2}" height="${MAXD + FAR}" fill="none" stroke="#ffffffaa" stroke-width="2.5" stroke-dasharray="8 6"/>`);
+    s.push(`<rect x="-54" y="${-(50 + COUR)}" width="108" height="${COUR}" fill="#d9d2c0" stroke="#fff" stroke-width="2"/>`);
+    s.push(`<rect x="-50" y="-50" width="100" height="100" fill="#cfc6e8" stroke="#fff" stroke-width="2"/>`);
+    s.push(`<rect x="${-half}" y="50" width="${half * 2}" height="${depth + 4}" fill="#6fcf5a" stroke="#ffd34d" stroke-width="3"/>`);
+    s.push(`<rect x="${-half}" y="${54 + depth}" width="${half * 2}" height="${FAR}" fill="#b9d38f"/>`);
+    return -(50 + COUR);
+  }
+  if (o.mode === "sides341") {
+    const w = sideCols(l) * CELL;
+    s.push(`<rect x="-54" y="-90" width="108" height="40" fill="#d9d2c0" stroke="#fff" stroke-width="2"/>`);
+    s.push(`<rect x="-50" y="-50" width="100" height="100" fill="#cfc6e8" stroke="#fff" stroke-width="2"/>`);
+    for (const side of [-1, 1]) {
+      const xo = side > 0 ? 54 : -54 - w;
+      s.push(`<rect x="${xo}" y="-50" width="${w}" height="100" fill="#6fcf5a" fill-opacity=".8" stroke="#ffd34d" stroke-width="3"/>`);
+      // rive (26 studs) au bout du jardin : c'est elle qui touche la voisine
+      s.push(`<rect x="${side > 0 ? 54 + w : -54 - w - 26}" y="-50" width="26" height="100" fill="#ff5a4a" fill-opacity=".45"/>`);
+    }
+    return -90;
+  }
+  if (o.mode === "sides") {
+    const wMax = sideCols(4) * CELL, w = sideCols(l) * CELL;
+    s.push(`<rect x="-50" y="-50" width="100" height="100" fill="#cfc6e8" stroke="#fff" stroke-width="2"/>`);
+    for (const side of [-1, 1]) {
+      const x0 = side > 0 ? 54 : -54 - wMax;
+      s.push(`<rect x="${x0}" y="-50" width="${wMax}" height="100" fill="#8a9a6a" stroke="#6d7c52" stroke-width="2"/>`);
+      const xo = side > 0 ? 54 : -54 - w;
+      s.push(`<rect x="${xo}" y="-50" width="${w}" height="100" fill="#6fcf5a" stroke="#ffd34d" stroke-width="3"/>`);
+    }
+    s.push(`<rect x="-50" y="-54" width="100" height="4" fill="#b9d38f"/>`);
+    return -NEAR;
+  }
+  if (o.mode === "round") {
+    const rMax = roundRadius(4) - SHORE, rL = roundRadius(l) - SHORE;
+    s.push(`<circle r="${rMax + SHORE}" fill="#e8dcae" opacity=".55"/>`); // rive
+    s.push(`<circle r="${rMax}" fill="#8a9a6a" stroke="#6d7c52" stroke-width="2"/>`); // à débloquer
+    s.push(`<circle r="${rL}" fill="#6fcf5a" stroke="#ffd34d" stroke-width="3"/>`); // jardin débloqué
+    s.push(`<rect x="-50" y="-50" width="100" height="100" fill="#cfc6e8" stroke="#fff" stroke-width="2"/>`);
+    return -(rMax + SHORE);
+  }
+  // terre (rive + marges) puis bandes, château
+  const bs = bands(o, l);
+  const frontLand = o.mode === "inward" ? -(NEAR + LV[l].r * CELL + FAR) : -FRONT;
+  // contour du jardin max d'aujourd'hui (comparaison)
+  s.push(`<rect x="${-(MAXD / 2 + MARGIN)}" y="${-FRONT}" width="${MAXD + MARGIN * 2}" height="${FRONT - NEAR}" fill="none" stroke="#ffffffaa" stroke-width="2.5" stroke-dasharray="8 6"/>`);
+  // marge avant (tapis) de la largeur de la première bande
+  const first = bs[0];
+  s.push(`<rect x="${-(first.x + MARGIN)}" y="${frontLand}" width="${(first.x + MARGIN) * 2}" height="${FAR}" fill="#b9d38f"/>`);
+  for (const b of bs) s.push(`<rect x="${-(b.x + MARGIN)}" y="${b.z0}" width="${(b.x + MARGIN) * 2}" height="${b.z1 - b.z0}" fill="${b.open ? "#6fcf5a" : "#8a9a6a"}" stroke="${b.open ? "#ffd34d" : "#6d7c52"}" stroke-width="2"/>`);
+  s.push(`<rect x="-50" y="-50" width="100" height="100" fill="#cfc6e8" stroke="#fff" stroke-width="2"/>`);
+  return frontLand;
+}
+function drawMap() {
+  const o = opt, s = [];
+  s.push('<rect x="-820" y="-820" width="1640" height="1640" fill="#1f5a7a"/>');
+  for (let v = -600; v <= 600; v += 100) s.push(`<line x1="${v}" y1="-640" x2="${v}" y2="640" stroke="#ffffff0d" stroke-width="3"/><line x1="-640" y1="${v}" x2="640" y2="${v}" stroke="#ffffff0d" stroke-width="3"/>`);
+  const start = o.n === 8 ? 15 : 0;
+  for (let i = 0; i < o.n; i++) {
+    const angDeg = start + i * 360 / o.n, a = angDeg * Math.PI / 180, dx = Math.sin(a), dz = Math.cos(a);
+    // pont
+    const plazaEdge = o.mode === "inward" ? OLD_PLAZA : PLAZA_R;
+    const front = o.ring + (o.mode === "castleFront" || o.mode === "sides341" ? -(50 + COUR) : o.mode === "inward" ? -(NEAR + LV[level].r * CELL + FAR) : o.mode === "round" ? -roundRadius(4) : o.mode === "sides" ? -NEAR : -FRONT);
+    s.push(`<line x1="${dx * plazaEdge}" y1="${dz * plazaEdge}" x2="${dx * front}" y2="${dz * front}" stroke="#2b2840" stroke-width="14"/>`);
+    for (let d = plazaEdge + 14; d < front - 8; d += 45) s.push(`<rect x="${dx * d - 5}" y="${dz * d - 5}" width="10" height="10" fill="#5ef0ff"/>`);
+    // île : repère local (-z vers le centre) -> rotation pour viser le centre
+    s.push(`<g transform="translate(${dx * o.ring} ${dz * o.ring}) rotate(${-angDeg})">`);
+    const tmp = []; islandSVG(o, level, tmp); s.push(tmp.join(""));
+    s.push(`</g>`);
+  }
+  if (o.mode === "inward") s.push('<rect x="-90" y="-75" width="180" height="150" fill="#cfc6e8" stroke="#fff" stroke-width="5"/>');
+  else s.push(`<circle r="${PLAZA_R}" fill="#cfc6e8" stroke="#fff" stroke-width="5"/>`);
+  s.push('<text y="11" font-size="34" text-anchor="middle" font-weight="800" fill="#1d1a2b">Place</text>');
+  s.push(`<circle r="${o.ring}" fill="none" stroke="#ffd34d" stroke-width="3" stroke-dasharray="6 10" opacity=".7"/>`);
+  s.push(`<text y="${-o.ring - 12}" font-size="30" text-anchor="middle" fill="#ffd34d" font-weight="800">cercle à ${o.ring}</text>`);
+  document.getElementById("map").setAttribute("viewBox", "-820 -820 1640 1640"); // même échelle pour toutes les options
+  document.getElementById("map").innerHTML = s.join("");
+  document.getElementById("mapTitle").textContent = `${o.name} · niveau ${level + 1} · toute la carte`;
+}
+function drawZoom() {
+  const o = opt, s = [];
+  document.getElementById("zoom").setAttribute("viewBox", o.mode === "round" ? "-170 -230 340 340" : "-170 -260 340 340");
+  s.push('<rect x="-300" y="-320" width="600" height="640" fill="#1f5a7a"/>');
+  const frontLand = islandSVG(o, level, s);
+  const b = bridge(o, level);
+  s.push(`<rect x="-5" y="-260" width="10" height="${frontLand + 260}" fill="#2b2840"/>`);
+  s.push(`<text x="10" y="-244" font-size="13" fill="#ffd34d" font-weight="800">⬆ place (pont : ${b} studs)</text>`);
+  s.push('<text y="6" font-size="13" text-anchor="middle" font-weight="800" fill="#1d1a2b">🏰 château</text>');
+  if (o.mode === "castleFront") {
+    document.getElementById("zoom").setAttribute("viewBox", "-190 -230 380 480");
+    s.push(`<text y="-66" font-size="12" text-anchor="middle" fill="#1d1a2b" font-weight="800">cour : coffre, machine</text>`);
+    s.push(`<text y="${54 + LV[level].r * CELL / 2 + 4}" font-size="13" text-anchor="middle" fill="#1d1a2b" font-weight="800">jardin (derrière)</text>`);
+    s.push(`<text y="240" font-size="12" text-anchor="middle" fill="#fff">⬇ il grandit vers la mer</text>`);
+    document.getElementById("zoom").innerHTML = s.join("");
+    document.getElementById("zoomTitle").textContent = `${o.name} · une île au niveau ${level + 1}`;
+    document.getElementById("facts").innerHTML = `<div class="big">Pont : ${b} studs · cercle à ${o.ring}</div><p style="margin:6px 0 0">${o.note}</p>`;
+    return;
+  }
+  if (o.mode === "sides" || o.mode === "sides341") {
+    document.getElementById("zoom").setAttribute("viewBox", "-280 -300 560 420");
+    s.push(`<text x="-160" y="6" font-size="13" text-anchor="middle" fill="#1d1a2b" font-weight="800">jardin</text>`);
+    s.push(`<text x="160" y="6" font-size="13" text-anchor="middle" fill="#1d1a2b" font-weight="800">jardin</text>`);
+    document.getElementById("zoom").innerHTML = s.join("");
+    document.getElementById("zoomTitle").textContent = `${o.name} · une île au niveau ${level + 1}`;
+    document.getElementById("facts").innerHTML = `<div class="big" style="color:var(--bad)">Pont : ${b} studs · cercle à ${o.ring}</div><p style="margin:6px 0 0">${o.note}</p>`;
+    return;
+  }
+  if (o.mode === "round") {
+    const rL = roundRadius(level) - SHORE;
+    s.push(`<text y="${-rL + 22}" font-size="12" text-anchor="middle" fill="#1d1a2b" font-weight="800">jardin (tout autour)</text>`);
+    if (level < 4) s.push(`<text y="${-(roundRadius(4) - SHORE) + 12}" font-size="10" text-anchor="middle" fill="#fff" font-weight="700">🔒 à débloquer</text>`);
+    document.getElementById("zoom").innerHTML = s.join("");
+    document.getElementById("zoomTitle").textContent = `${o.name} · une île au niveau ${level + 1}`;
+    document.getElementById("facts").innerHTML = `<div class="big">Pont : ${b} studs · cercle à ${o.ring}</div><p style="margin:6px 0 0">${o.note}</p>`;
+    return;
+  }
+  const bs = bands(o, level);
+  const locked = bs.filter(x => !x.open);
+  if (locked.length) { const z = (locked[0].z0 + locked[locked.length - 1].z1) / 2; s.push(`<text y="${z + 4}" font-size="11" text-anchor="middle" fill="#fff" font-weight="700">🔒 à débloquer</text>`); }
+  const open = bs.filter(x => x.open); const zo = (open[0].z0 + open[open.length - 1].z1) / 2;
+  s.push(`<text y="${zo + 4}" font-size="12" text-anchor="middle" fill="#1d1a2b" font-weight="800">jardin</text>`);
+  document.getElementById("zoom").innerHTML = s.join("");
+  document.getElementById("zoomTitle").textContent = `${o.name} · une île au niveau ${level + 1}`;
+  const L = LV[level];
+  const cols = o.mode === "rect" ? Math.min(L.c, o.maxCols) : L.c;
+  document.getElementById("facts").innerHTML = `<div class="big">Pont : ${b} studs · cercle à ${o.ring}</div><p style="margin:6px 0 0">${o.note}</p>`;
+}
+function drawTable() {
+  document.getElementById("rows").innerHTML = OPTS.map(o => {
+    const br = o.mode === "sides341" ? `${bridge(o, 0)} (fixe)` : o.mode === "castleFront" ? `${bridge(o, 0)} (fixe)` : o.mode === "inward" ? `${bridge(o, 0)} → ${bridge(o, 4)}` : `${bridge(o, 0)} (fixe)`;
+    const g = o.mode === "sides341" ? `2 × ${sideCols(4)} colonnes · ne rentre pas` : o.mode === "castleFront" ? `36 × 36 · ${cellsMax(o)} cases (rien perdu)` : o.mode === "fan" ? `22 → 36 colonnes · ${cellsMax(o)} cases` : o.mode === "round" ? `anneau rond · ${cellsMax(o)} cases` : o.mode === "sides" ? `2 × ${sideCols(4)} colonnes · ${cellsMax(o)} cases` : `${Math.min(36, o.maxCols)} × 36 · ${cellsMax(o)} cases`;
+    return `<tr class="${o === opt ? "sel" : ""}"><td><b>${o.name}</b></td><td>${o.ring}</td><td>${br} studs</td><td>${g}</td><td>${o.n}</td><td>${o.note}</td></tr>`;
+  }).join("");
+}
+function refresh() {
+  [...document.querySelectorAll("#optBar button")].forEach((b, k) => b.classList.toggle("on", OPTS[k] === opt));
+  [...document.querySelectorAll("#lvlBar button")].forEach((b, k) => b.classList.toggle("on", k === level));
+  drawMap(); drawZoom(); drawTable();
+}
+OPTS.forEach(o => { const b = document.createElement("button"); b.textContent = o.name; b.onclick = () => { opt = o; refresh(); }; document.getElementById("optBar").appendChild(b); });
+LV.forEach((L, k) => { const b = document.createElement("button"); b.textContent = `${k + 1}${k === 4 ? " (max)" : ""}`; b.onclick = () => { level = k; refresh(); }; document.getElementById("lvlBar").appendChild(b); });
+refresh();
+</script>
+</body>
+</html>
