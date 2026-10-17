@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jardin vers l'extérieur</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  @media (max-width: 800px) { .row { grid-template-columns:1fr; } }
+  .box { background:var(--card); border-radius:14px; overflow:hidden; }
+  .box h3 { margin:0; padding:9px 13px; font-size:15px; }
+  .box.now h3 { color:var(--bad); } .box.new h3 { color:var(--ok); }
+  svg { width:100%; height:auto; display:block; }
+  .levels { display:flex; gap:8px; margin:14px 0 4px; flex-wrap:wrap; }
+  .levels button { background:var(--card); color:var(--text); border:3px solid transparent; border-radius:12px; padding:8px 14px; font-weight:700; cursor:pointer; font-size:15px; }
+  .levels button.on { border-color:var(--accent); background:#3b3560; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border-radius:14px; overflow:hidden; font-size:14px; margin-top:10px; }
+  th, td { padding:8px 11px; text-align:left; border-bottom:1px solid #3a3558; }
+  th { color:var(--accent); font-size:13px; } td { color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌱 Faire grandir l'île vers l'extérieur</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu. Les tailles sont les vraies tailles du jardin à chaque niveau (5 niveaux, de 22 × 16 cases à 36 × 36).</p>
+  <div class="note">
+    <b>Ce qu'il faut savoir :</b>
+    <ul>
+      <li>La <b>distance des îles</b> ne dépend que de la taille du jardin au <b>niveau maximum</b>. Elle est donc la même quel que soit le sens où il grandit (option B : cercle à 488).</li>
+      <li>En revanche, si le jardin grandit <b>vers l'extérieur</b>, l'avant de l'île, là où arrive le pont, est <b>tout de suite à sa place définitive</b>. Le pont est court <b>dès le niveau 1</b> et ne change plus jamais.</li>
+    </ul>
+  </div>
+
+  <div class="levels" id="levels"></div>
+  <div class="row">
+    <div class="box now"><h3>AUJOURD'HUI : le jardin grandit vers la place</h3><svg id="now" viewBox="0 0 600 720"></svg></div>
+    <div class="box new"><h3>PROPOSÉ : le jardin grandit vers l'extérieur</h3><svg id="new" viewBox="0 0 600 720"></svg></div>
+  </div>
+
+  <h2>Longueur du pont (option B, place ronde)</h2>
+  <table>
+    <thead><tr><th>Niveau de l'île</th><th>Aujourd'hui (vers la place)</th><th>Proposé (vers l'extérieur)</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <h2>Comment ça marcherait</h2>
+  <div class="note">
+    <ul>
+      <li>Dès le départ, l'île a sa <b>taille finale</b>. Le jardin constructible commence <b>à l'avant, côté pont</b>, et chaque agrandissement le fait <b>reculer vers ton château</b>.</li>
+      <li>La partie pas encore débloquée est un <b>terrain sauvage</b> (herbe haute, rochers, panneau « 🔒 Agrandis ton île pour débloquer ») que l'on peut traverser à pied. C'est très courant dans les jeux simulateur, et ça <b>montre au joueur ce qu'il peut gagner</b>.</li>
+      <li>Le château, la tour et le coffre ne bougent pas. Les îles libres prennent aussi leur taille finale.</li>
+      <li>Ce que je ne peux pas éviter : au niveau 1, il faut traverser ce terrain sauvage pour aller du château au jardin, soit environ 80 studs de plus qu'aujourd'hui (5 s à pied). Ça diminue à chaque agrandissement.</li>
+    </ul>
+  </div>
+</div>
+<script>
+// Vraies tailles (BaseConfig.Expansion) : case = 4 studs, bord côté château fixe à z = -54
+const LV = [ { c: 22, r: 16 }, { c: 26, r: 21 }, { c: 30, r: 26 }, { c: 34, r: 31 }, { c: 36, r: 36 } ];
+const CELL = 4, NEAR = 54, FAR_MARGIN = 16, MAX_DEPTH = 36 * CELL, RING = 488, PLAZA_R = 130;
+const FRONT_MAX = NEAR + MAX_DEPTH + FAR_MARGIN; // 214 : avant de l'île au niveau max
+const S = 2.1; // studs -> pixels
+function bridgeNow(l) { return Math.round(RING - (NEAR + LV[l].r * CELL + FAR_MARGIN) - PLAZA_R); }
+function bridgeNew() { return Math.round(RING - FRONT_MAX - PLAZA_R); }
+function draw(id, l, outward) {
+  const svg = document.getElementById(id); const s = [];
+  const cx = 300, castleY = 600; // château en bas, la place en haut
+  const toY = z => castleY - z * S;
+  s.push('<rect width="600" height="720" fill="#1f5a7a"/>');
+  // place (en haut) et pont
+  const front = outward ? FRONT_MAX : NEAR + LV[l].r * CELL + FAR_MARGIN;
+  const bridge = outward ? bridgeNew() : bridgeNow(l);
+  const plazaY = toY(front + bridge);
+  s.push(`<rect x="${cx - 8}" y="${plazaY}" width="16" height="${(bridge) * S}" fill="#2b2840"/>`);
+  for (let d = 14; d < bridge - 8; d += 45) s.push(`<rect x="${cx - 6}" y="${toY(front + d) - 6}" width="12" height="12" fill="#5ef0ff"/>`);
+  s.push(`<rect x="0" y="0" width="600" height="${Math.max(0, plazaY)}" fill="#cfc6e8"/>`);
+  if (plazaY > 18) s.push(`<text x="300" y="${plazaY / 2 + 8}" font-size="22" text-anchor="middle" font-weight="800" fill="#1d1a2b">Place</text>`);
+  s.push(`<text x="${cx + 18}" y="${Math.max(36, (Math.max(0, plazaY) + toY(front)) / 2)}" font-size="20" fill="#ffd34d" font-weight="800">pont : ${bridge} studs</text>`);
+  // terrain de l'île (taille finale si vers l'extérieur)
+  const halfMax = 36 * CELL / 2 + 4, half = LV[l].c * CELL / 2 + 4;
+  if (outward) {
+    s.push(`<rect x="${cx - halfMax * S}" y="${toY(FRONT_MAX)}" width="${halfMax * 2 * S}" height="${(FRONT_MAX - NEAR + 4) * S}" fill="#7a9a5a" stroke="#fff" stroke-width="3"/>`);
+    // terrain sauvage (verrouillé) : rochers / herbes
+    const depth = LV[l].r * CELL;
+    const gFront = FRONT_MAX - FAR_MARGIN, gBack = gFront - depth;
+    if (gBack > NEAR + 1) {
+      for (let k = 0; k < 18; k++) { const x = cx + ((k * 53) % (halfMax * 2 * S - 30)) - halfMax * S + 15; const y = toY(NEAR + 4 + ((k * 37) % Math.max(4, (gBack - NEAR - 8)))); s.push(`<circle cx="${x}" cy="${y}" r="6" fill="#5d7a44"/>`); }
+      s.push(`<text x="${cx}" y="${toY((gBack + NEAR) / 2) + 6}" font-size="17" text-anchor="middle" fill="#fff" font-weight="700">🔒 terrain à débloquer</text>`);
+    }
+    s.push(`<rect x="${cx - half * S}" y="${toY(gFront)}" width="${half * 2 * S}" height="${depth * S}" fill="#6fcf5a" stroke="#ffd34d" stroke-width="4"/>`);
+    s.push(`<text x="${cx}" y="${toY(gFront - depth / 2) + 6}" font-size="18" text-anchor="middle" fill="#1d1a2b" font-weight="800">jardin ${LV[l].c} × ${LV[l].r}</text>`);
+  } else {
+    const depth = LV[l].r * CELL;
+    s.push(`<rect x="${cx - halfMax * S}" y="${toY(FRONT_MAX)}" width="${halfMax * 2 * S}" height="${(FRONT_MAX - NEAR) * S}" fill="none" stroke="#ffffff66" stroke-width="3" stroke-dasharray="10 8"/>`);
+    s.push(`<text x="${cx}" y="${toY(FRONT_MAX) + 22}" font-size="14" text-anchor="middle" fill="#ffffffaa">(taille au niveau max)</text>`);
+    s.push(`<rect x="${cx - half * S}" y="${toY(NEAR + depth + FAR_MARGIN)}" width="${half * 2 * S}" height="${(depth + FAR_MARGIN) * S}" fill="#6fcf5a" stroke="#ffd34d" stroke-width="4"/>`);
+    s.push(`<text x="${cx}" y="${toY(NEAR + depth / 2) + 6}" font-size="18" text-anchor="middle" fill="#1d1a2b" font-weight="800">jardin ${LV[l].c} × ${LV[l].r}</text>`);
+  }
+  // château
+  s.push(`<rect x="${cx - 105}" y="${toY(NEAR)}" width="210" height="${(NEAR + 50) * S}" fill="#cfc6e8" stroke="#fff" stroke-width="3"/>`);
+  s.push(`<text x="${cx}" y="${toY(0) + 8}" font-size="22" text-anchor="middle" font-weight="800" fill="#1d1a2b">🏰 château</text>`);
+  s.push(`<text x="20" y="705" font-size="15" fill="#fff">⬆ vers la place · ⬇ vers l'extérieur (la mer)</text>`);
+  svg.innerHTML = s.join("");
+}
+const lv = document.getElementById("levels");
+function pick(l) { [...lv.children].forEach((b, k) => b.classList.toggle("on", k === l)); draw("now", l, false); draw("new", l, true); }
+LV.forEach((_, l) => { const b = document.createElement("button"); b.textContent = `Niveau ${l + 1}${l === 4 ? " (max)" : ""}`; b.onclick = () => pick(l); lv.appendChild(b); });
+document.getElementById("rows").innerHTML = LV.map((L, l) => `<tr><td>Niveau ${l + 1} (${L.c} × ${L.r})</td><td>${bridgeNow(l)} studs</td><td><b>${bridgeNew()} studs</b></td></tr>`).join("");
+pick(0);
+</script>
+</body>
+</html>
