@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Croquis interface du parc</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700;800&display=swap">
+<style>
+/* Mise en page : une maquette d'écran de jeu annotée, puis les choix à valider. */
+:root {
+  --bg: #eef2f8; --fg: #1d2333; --muted: #5b6478; --card: #ffffff; --line: #d3dae6;
+  --accent: #2f7de1; --good: #2fa84f; --warn: #d9822b;
+  --sky1: #6fb7ff; --sky2: #bfe3ff; --grass: #5cc93f; --grass2: #49b331;
+  --outline: #10131c; --gold: #ffcf3a; --gem: #6be2ff;
+  --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121620; --fg: #e8ecf5; --muted: #9aa4ba; --card: #1b2130; --line: #2c3446; --accent: #6aa8ff; color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #121620; --fg: #e8ecf5; --muted: #9aa4ba; --card: #1b2130; --line: #2c3446; --accent: #6aa8ff; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+.wrap { max-width: 1060px; margin: 0 auto; display: grid; gap: 28px; }
+h1 { font-family: var(--display); font-size: clamp(26px, 4vw, 36px); margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 22px; margin: 0 0 8px; }
+p { margin: 0; max-width: 68ch; }
+.lead { color: var(--muted); }
+
+/* ---- Écran de jeu (toujours « monde du jeu », mêmes couleurs dans les deux thèmes) ---- */
+.screen-box { overflow-x: auto; border-radius: 14px; border: 1px solid var(--line); background: var(--card); padding: 12px; }
+.screen { position: relative; width: 960px; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden;
+  background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 42%, var(--grass) 42%, var(--grass2) 100%);
+  font-family: var(--display); color: #fff; }
+.screen .stud { position: absolute; inset: 42% 0 0 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,.18) 2px, transparent 3px); background-size: 22px 22px; }
+.tower { position: absolute; left: 50%; top: 9%; width: 170px; height: 46%; transform: translateX(-50%);
+  background: #232838; border: 3px solid var(--outline); border-radius: 4px;
+  background-image: linear-gradient(90deg, transparent 47%, #7b5cff 47% 53%, transparent 53%),
+                    repeating-linear-gradient(0deg, transparent 0 26px, #d9354a 26px 28px); }
+.chest { position: absolute; left: 50%; top: 52%; width: 70px; height: 44px; transform: translateX(-50%);
+  background: #8a5229; border: 3px solid var(--outline); border-radius: 6px;
+  box-shadow: inset 0 10px 0 #ffd84a; }
+.chest-tag { position: absolute; left: 50%; top: 41%; transform: translateX(-50%); background: rgba(20,22,32,.9);
+  border-radius: 10px; padding: 4px 12px 7px; text-align: center; font-size: 22px; color: #7dff6f; -webkit-text-stroke: 1px #0a0c12; }
+.chest-tag i { display: block; height: 6px; width: 120px; border-radius: 4px; background: #2d3040; margin-top: 3px; overflow: hidden; }
+.chest-tag i::after { content: ""; display: block; height: 100%; width: 38%; background: #46d65b; }
+.path { position: absolute; left: 50%; top: 62%; width: 46px; height: 38%; transform: translateX(-50%);
+  background: repeating-linear-gradient(180deg, #dfe6f3 0 14px, transparent 14px 22px); opacity: .9; }
+
+/* Texte « contour noir » des simulateurs */
+.ol { -webkit-text-stroke: 1.6px var(--outline); paint-order: stroke fill; text-shadow: 0 3px 0 var(--outline); font-weight: 700; }
+
+.leftcol { position: absolute; left: 18px; top: 16%; display: grid; gap: 14px; }
+.ico { display: grid; justify-items: center; gap: 0; width: 92px; }
+.ico .pic { font-size: 40px; line-height: 1; filter: drop-shadow(0 3px 0 var(--outline)); }
+.ico .lbl { font-size: 21px; margin-top: -4px; }
+.ico .new { position: absolute; transform: translate(26px, -6px) rotate(-8deg); background: #ff3b5c; color: #fff;
+  font-size: 11px; padding: 1px 6px; border-radius: 6px; border: 2px solid var(--outline); }
+.rightcol { position: absolute; right: 16px; top: 15%; display: grid; grid-template-columns: repeat(2, 64px); gap: 8px 10px; }
+.mini { display: grid; justify-items: center; }
+.mini .pic { font-size: 26px; line-height: 1; filter: drop-shadow(0 2px 0 var(--outline)); }
+.mini .lbl { font-size: 13px; margin-top: -2px; }
+.top { position: absolute; left: 50%; top: 2%; transform: translateX(-50%); display: flex; gap: 34px; }
+.top .ico .lbl { font-size: 24px; }
+.luck { position: absolute; left: 18px; bottom: 74px; font-size: 30px; display: flex; align-items: center; gap: 6px; }
+.money { position: absolute; left: 18px; bottom: 18px; font-size: 42px; display: flex; align-items: center; gap: 8px; color: #fff; }
+.money .gem { font-size: 38px; filter: drop-shadow(0 3px 0 var(--outline)); }
+.br { position: absolute; right: 22px; bottom: 16px; display: flex; gap: 22px; }
+.br .ico .lbl { font-size: 20px; }
+.ready { color: #ffe14d; }
+
+/* Repères numérotés sur la maquette */
+.pin { position: absolute; width: 26px; height: 26px; border-radius: 50%; background: #ffffff; color: #10131c;
+  border: 3px solid #10131c; display: grid; place-items: center; font: 800 14px/1 var(--body); z-index: 3; }
+
+/* ---- Légende et choix ---- */
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 8px; min-width: 0; }
+.card h3 { margin: 0; font-family: var(--display); font-size: 18px; display: flex; gap: 10px; align-items: center; }
+.num { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--fg); display: grid; place-items: center; font: 800 13px/1 var(--body); }
+.tag { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; }
+.tag.new { background: color-mix(in srgb, var(--warn) 20%, transparent); color: var(--warn); }
+.tag.same { background: color-mix(in srgb, var(--good) 18%, transparent); color: var(--good); }
+.card p, .card li { color: var(--muted); }
+.card ul { margin: 0; padding-left: 18px; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+th { font-size: 13px; color: var(--muted); font-weight: 800; }
+.tbl { overflow-x: auto; }
+.reco { color: var(--good); font-weight: 800; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <h1>Nouvelle interface du parc</h1>
+    <p class="lead">Croquis inspiré de tes captures : grosses icônes sans cadre avec un contour noir, l'argent en bas à gauche, les récompenses en bas à droite. Les numéros renvoient aux explications en dessous. Dis-moi ce que tu gardes, ce que tu changes, et je le code.</p>
+  </header>
+
+  <div class="screen-box">
+    <div class="screen" role="img" aria-label="Maquette de l'écran de jeu avec la nouvelle interface">
+      <div class="stud"></div>
+      <div class="tower"></div>
+      <div class="chest-tag ol">💎 47,1K<i></i></div>
+      <div class="chest"></div>
+      <div class="path"></div>
+
+      <div class="top">
+        <div class="ico"><div class="pic">🏝️</div><div class="lbl ol">Mon île</div></div>
+        <div class="ico"><div class="pic">🏛️</div><div class="lbl ol">Place</div></div>
+      </div>
+      <span class="pin" style="left:330px;top:14px">1</span>
+
+      <div class="leftcol">
+        <div class="ico"><div class="pic">📖</div><div class="lbl ol">Index</div></div>
+        <div class="ico"><div class="pic">🛒</div><span class="new">NOUVEAU</span><div class="lbl ol">Boutique</div></div>
+        <div class="ico"><div class="pic">🔮</div><div class="lbl ol">Rebirth</div></div>
+        <div class="ico"><div class="pic">🏰</div><div class="lbl ol">Ma tour</div></div>
+      </div>
+      <span class="pin" style="left:112px;top:82px">2</span>
+
+      <div class="rightcol">
+        <div class="mini"><div class="pic">⚔️</div><div class="lbl ol">Équipe</div></div>
+        <div class="mini"><div class="pic">🥚</div><div class="lbl ol">Œufs</div></div>
+        <div class="mini"><div class="pic">🐣</div><div class="lbl ol">Incubateurs</div></div>
+        <div class="mini"><div class="pic">🗺️</div><div class="lbl ol">Zones</div></div>
+        <div class="mini"><div class="pic">📜</div><div class="lbl ol">Quêtes</div></div>
+        <div class="mini"><div class="pic">📦</div><div class="lbl ol">Capsules</div></div>
+        <div class="mini"><div class="pic">🎩</div><div class="lbl ol">Cosmétiques</div></div>
+        <div class="mini"><div class="pic">🔨</div><div class="lbl ol">Construire</div></div>
+      </div>
+      <span class="pin" style="right:160px;top:82px">3</span>
+
+      <div class="luck ol">x1,15 <span style="font-size:30px">🍀</span></div>
+      <div class="money ol"><span class="gem">💎</span>100K</div>
+      <span class="pin" style="left:150px;bottom:90px">4</span>
+
+      <div class="br">
+        <div class="ico"><div class="pic">📅</div><div class="lbl ol">Quotidien</div></div>
+        <div class="ico"><div class="pic">🎁</div><div class="lbl ol ready">Prêt !</div></div>
+      </div>
+      <span class="pin" style="right:240px;bottom:60px">5</span>
+      <span class="pin" style="left:560px;top:150px">6</span>
+    </div>
+  </div>
+
+  <section class="grid2">
+    <div class="card">
+      <h3><span class="num">1</span>Boutons de voyage en haut</h3>
+      <span class="tag new">nouveau</span>
+      <p>« Mon île » et « Place » te téléportent directement, comme « Mon île » et « Marché » dans tes captures. Les portails restent sur la carte.</p>
+    </div>
+    <div class="card">
+      <h3><span class="num">2</span>Les 4 menus principaux à gauche</h3>
+      <span class="tag same">existant, nouveau look</span>
+      <p>Index, Boutique, Rebirth et Ma tour : grosse icône, nom en gros avec contour noir, sans cadre. L'étiquette « NOUVEAU » rouge apparaît sur un menu qui vient d'arriver.</p>
+    </div>
+    <div class="card">
+      <h3><span class="num">3</span>Les autres menus à droite, plus petits</h3>
+      <span class="tag same">existant, nouveau look</span>
+      <p>Même style sans cadre, en deux colonnes, pour garder le centre de l'écran libre. Sur téléphone, ils restent au-dessus du bouton saut.</p>
+    </div>
+    <div class="card">
+      <h3><span class="num">4</span>Chance et argent en bas à gauche</h3>
+      <span class="tag same">existant, nouveau look</span>
+      <p>« x1,15 🍀 » est ta chance de tirage (le panneau Chance de la machine). En dessous, tes gemmes en très gros. Le gain par seconde reste juste au-dessus en petit.</p>
+    </div>
+    <div class="card">
+      <h3><span class="num">5</span>Quotidien et cadeau en bas à droite</h3>
+      <span class="tag new">nouveau</span>
+      <ul>
+        <li><strong>Quotidien</strong> : une récompense par jour de connexion, 7 jours de suite, de plus en plus grosse (gemmes, œufs, boost de chance). Si tu rates un jour, ça recommence au jour 1.</li>
+        <li><strong>Cadeau</strong> : un cadeau gratuit toutes les 15 minutes de jeu. L'icône affiche le temps restant, puis « Prêt ! » en jaune.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3><span class="num">6</span>Le coffre au pied de la tour</h3>
+      <span class="tag same">déjà fait</span>
+      <p>Montant en gros et barre de remplissage, E « Récupérer ». Il reste à choisir sa taille de départ, voir en dessous.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Taille du coffre au départ</h2>
+    <p>J'avais dit que 2 500 💎 se remplissait en quelques secondes, mais c'était à cause des 53 familiers du mode debug. Un vrai débutant a 4 créatures communes dans sa tour, soit environ 4 💎 par seconde. Voici le temps avant que le coffre soit plein :</p>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Taille de départ</th><th>Débutant (4 💎/s)</th><th>Après quelques œufs rares (40 💎/s)</th><th>Avis</th></tr></thead>
+        <tbody>
+          <tr><td>2 500 💎 (actuel)</td><td>10 min</td><td>1 min</td><td>Oblige à acheter vite le panneau « Taille du coffre »</td></tr>
+          <tr><td>5 000 💎</td><td>21 min</td><td>2 min</td><td class="reco">Recommandé : on revient vider le coffre régulièrement, sans frustration</td></tr>
+          <tr><td>10 000 💎</td><td>42 min</td><td>4 min</td><td>Confortable, mais le panneau sert moins au début</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Chaque niveau du panneau « Taille du coffre » multiplie la taille par 1,6 ; ça ne change pas.</p>
+  </section>
+</div>
+</body>
+</html>
