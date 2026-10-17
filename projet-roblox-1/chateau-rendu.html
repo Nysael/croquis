@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rendu du château</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1150px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:24px 0 8px; font-size:20px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+  .tabs button { flex:1 1 140px; border:3px solid transparent; border-radius:12px; padding:9px 6px; background:var(--card); color:var(--text); font-weight:700; cursor:pointer; }
+  .tabs button small { display:block; font-weight:400; color:var(--muted); }
+  .tabs button.on { border-color:var(--accent); background:#3b3560; }
+  .views { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media (max-width: 800px) { .views { grid-template-columns:1fr; } }
+  .views figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; }
+  .views img { width:100%; display:block; cursor:zoom-in; }
+  .views figcaption { padding:6px 10px; font-size:13px; color:var(--muted); }
+  .verdict { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width: 800px) { .verdict { grid-template-columns:1fr; } }
+  .box { background:var(--card); border-radius:14px; padding:12px 16px; }
+  .box h3 { margin:0 0 6px; font-size:16px; }
+  .good h3 { color:var(--ok); } .bad h3 { color:var(--bad); }
+  .box ul { margin:0; padding-left:20px; }
+  .props { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+  .props ol { padding-left:22px; margin:6px 0; }
+  .zoom { position:fixed; inset:0; background:#000d; display:none; align-items:center; justify-content:center; padding:16px; cursor:zoom-out; }
+  .zoom img { max-width:100%; max-height:100%; border-radius:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏰 Le château, rendu en 3D</h1>
+  <p>Ce n'est pas un dessin : c'est le <b>vrai château construit par le code du jeu</b> (CastleBuilder), rendu dans Blender avec le soleil, les ombres et les picots.
+  Par-dessus, j'ai dessiné ce que le jeu affiche lui-même : les géants sur les balcons avec leur nom, leur poids et leur gain, les créatures dans les fenêtres débloquées, les 🔒 et l'enseigne.
+  Le coffre, la machine à fusion, les panneaux et le petit avatar bleu devant la porte servent d'échelle. Clique sur une image pour l'agrandir.</p>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="views">
+    <figure><img id="v34" alt="vue de trois-quarts"><figcaption>Trois-quarts, depuis le jardin</figcaption></figure>
+    <figure><img id="vfront" alt="vue de face"><figcaption>De face</figcaption></figure>
+  </div>
+
+  <h2>Mon avis honnête</h2>
+  <div class="verdict">
+    <div class="box good"><h3>Ce qui rend bien</h3><ul>
+      <li>À partir du <b>Château fort</b>, les tours rondes et les toits pointus en picots donnent vraiment un air de château.</li>
+      <li>On voit bien la <b>progression</b> : plus de tours, couleurs plus riches, de l'or puis la citadelle bleu ciel.</li>
+      <li>Les <b>géants sur les balcons</b> se repèrent de loin, et l'<b>île flottante</b> est la plus spectaculaire.</li>
+    </ul></div>
+    <div class="box bad"><h3>Ce qui rend moins bien</h3><ul>
+      <li>Le <b>donjon ressemble à un immeuble</b> : un mur plat couvert de 60 fenêtres carrées, avec des bandes lumineuses horizontales, ça fait bureau plutôt que château.</li>
+      <li>Le <b>Fortin de bois</b> ne fait pas fortin : c'est une tour sombre entourée d'échafaudages.</li>
+      <li>Les <b>balcons</b> ressemblent à des étagères plates collées sur les tours.</li>
+      <li>La <b>porte</b> est minuscule, à peine plus grande que l'avatar.</li>
+      <li><b>Bug</b> au Palais d'or : l'échafaudage qui annonce l'île flottante <b>flotte tout seul dans le ciel</b>.</li>
+    </ul></div>
+  </div>
+
+  <div class="props">
+    <b>Ce que je te propose d'améliorer</b> (rien n'est changé dans le jeu, j'attends ton avis) :
+    <ol>
+      <li><b>Donjon plus « château »</b> : des pierres dessinées sur la façade, des fenêtres arrondies en haut, et les bandes lumineuses gardées seulement pour le Palais d'or et la Citadelle.</li>
+      <li><b>Une vraie grande porte</b> : un socle de pierre de 5 studs sous le donjon avec un porche en arc deux fois plus haut que l'avatar. Les 60 fenêtres sont simplement remontées au-dessus.</li>
+      <li><b>Fortin de bois</b> : façade en planches, palissade de rondins pointus de chaque côté et toit en bois, au lieu des échafaudages.</li>
+      <li><b>Balcons arrondis</b> en demi-cercle, avec des consoles de pierre en dessous et une rambarde à colonnettes.</li>
+      <li><b>Bug de l'échafaudage volant</b> : remplacé par un petit rocher flottant avec le panneau « Renaissance 20 ».</li>
+    </ol>
+    Dis-moi lesquelles tu veux : je les montre d'abord dans un nouveau rendu comme celui-ci, et je ne change le jeu qu'après ton accord.
+  </div>
+</div>
+<div class="zoom" id="zoom"><img id="zoomImg" alt=""></div>
+<script>
+const TIERS = [
+  ["Fortin de bois", "départ"], ["Château fort", "renaissance 1"], ["Château de pierre", "renaissance 3"],
+  ["Château royal", "renaissance 5"], ["Palais d'or", "renaissance 10"], ["Citadelle céleste", "renaissance 20"],
+];
+const tabs = document.getElementById("tabs");
+function show(i) {
+  document.getElementById("v34").src = `chateau-rendu/palier${i + 1}_34.jpg`;
+  document.getElementById("vfront").src = `chateau-rendu/palier${i + 1}_front.jpg`;
+  [...tabs.children].forEach((b, k) => b.classList.toggle("on", k === i));
+}
+TIERS.forEach(([name, when], i) => {
+  const b = document.createElement("button");
+  b.innerHTML = `${i + 1}. ${name}<small>${when}</small>`;
+  b.onclick = () => show(i);
+  tabs.appendChild(b);
+});
+const zoom = document.getElementById("zoom");
+document.querySelectorAll(".views img").forEach(img => img.onclick = () => { document.getElementById("zoomImg").src = img.src; zoom.style.display = "flex"; });
+zoom.onclick = () => zoom.style.display = "none";
+show(5);
+</script>
+</body>
+</html>
