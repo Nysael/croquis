@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Château réalisé</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --green:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1150px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:26px 0 8px; font-size:20px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+  .tabs button { flex:1 1 140px; border:3px solid transparent; border-radius:12px; padding:9px 6px; background:var(--card); color:var(--text); font-weight:700; cursor:pointer; }
+  .tabs button small { display:block; font-weight:400; color:var(--muted); }
+  .tabs button.on { border-color:var(--accent); background:#3b3560; }
+  .scene { background:linear-gradient(#7ec8ff 0%, #c4e8ff 78%, #79c25a 78%); border-radius:16px; overflow:hidden; }
+  .scene svg { display:block; width:100%; height:auto; }
+  .legend { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin-top:12px; }
+  .legend div { background:var(--card); border-radius:12px; padding:10px 12px; font-size:14px; color:var(--muted); }
+  .legend b { color:var(--accent); }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width: 800px) { .two { grid-template-columns:1fr; } }
+  .panel { background:#5a3d27; border:4px solid #2b1c10; border-radius:18px; padding:12px; }
+  .panel .title { background:#d23246; color:#fff; font-weight:800; text-align:center; border-radius:10px; padding:6px; margin:-4px -4px 10px; }
+  .top { display:flex; justify-content:space-between; gap:10px; align-items:center; }
+  .gold { background:#ffc333; color:#3a2600; font-weight:800; border-radius:10px; padding:10px 14px; white-space:nowrap; }
+  .strip-title { color:#ffcd3c; font-weight:700; margin:10px 0 6px; font-size:14px; }
+  .strip { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; }
+  .cell { flex:0 0 150px; height:94px; border-radius:12px; background:#8a6a48; border:3px solid #2b1c10; display:flex; align-items:center; justify-content:center; text-align:center; font-size:13px; font-weight:700; }
+  .cell.giant { background:#785618; justify-content:space-between; padding:4px; }
+  .cell.giant .pic { font-size:40px; width:45%; }
+  .cell.giant .txt { width:55%; font-size:12px; text-align:center; }
+  .cell.giant .btn { background:#e04848; border-radius:8px; padding:4px; margin-top:4px; }
+  .cell.free { color:#9dff9d; } .cell.lock { color:#ddd; background:#4b3a2c; }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  .col h4 { margin:4px 0 6px; text-align:center; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:6px; }
+  .card { background:#a07a52; border:3px solid #2b1c10; border-radius:10px; padding:4px; text-align:center; font-size:11px; }
+  .card .pic { font-size:28px; }
+  .card .inc { color:var(--green); } .card .w { color:#eee; } .card .w.g { color:#ffcd3c; font-weight:700; }
+  .card .btn { border-radius:7px; padding:4px; margin-top:3px; font-weight:800; color:#fff; }
+  .note { background:#332d52; border-radius:14px; padding:12px 16px; margin-top:18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏰 Ce que j'ai construit : la façade de château</h1>
+  <p>Dessin <b>à l'échelle du jeu</b> (1 carreau = 1 stud), vu depuis le jardin, avec les vraies valeurs de <b>CastleConfig</b> et <b>CastleBuilder</b>. Le petit bonhomme à côté de la porte est un avatar (5 studs) pour comparer. Clique sur un palier.</p>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="scene"><svg id="front" viewBox="-50 -128 100 132"></svg></div>
+  <div class="legend" id="legend"></div>
+
+  <div class="two">
+    <div>
+      <h2>Vue de dessus (palier affiché)</h2>
+      <p>Pour vérifier que rien ne se chevauche : coffre, machine à fusion, panneaux d'amélioration et balcons.</p>
+      <div class="scene" style="background:#79c25a"><svg id="topview" viewBox="-50 10 100 40"></svg></div>
+    </div>
+    <div>
+      <h2>Menu « Ma tour » (nouveau bandeau)</h2>
+      <div class="panel">
+        <div class="title">🏰 Ma tour</div>
+        <div class="top"><div style="font-size:13px">Places : 10 / 10 · 💎 +1,2K/s<br>+2 places à chaque renaissance</div><div class="gold">⭐ Placer les meilleurs</div></div>
+        <div class="strip-title" id="stripTitle"></div>
+        <div class="strip" id="strip"></div>
+        <div class="cols">
+          <div class="col"><h4>🏰 Au travail</h4><div class="cards">
+            <div class="card"><div class="pic">🐉</div>Dragon<div class="inc">Niv. 3 · 💎 +32/s</div><div class="w">⚖️ 640 kg</div><div class="btn" style="background:#e04848">Retirer</div></div>
+            <div class="card"><div class="pic">🦄</div>Licorne<div class="inc">Niv. 1 · 💎 +13/s</div><div class="w">⚖️ 310 kg</div><div class="btn" style="background:#e04848">Retirer</div></div>
+          </div></div>
+          <div class="col"><h4>🐾 Tes créatures</h4><div class="cards">
+            <div class="card"><div class="pic">🐻</div>Ours<div class="inc">Niv. 2 · 💎 +18/s</div><div class="w g">⚖️ 1 120 kg · 🦣 GÉANT</div><div class="btn" style="background:#d9a21b">🦣 Tour à géant</div></div>
+            <div class="card"><div class="pic">🐶</div>Chiot<div class="inc">Niv. 1 · 💎 +1/s</div><div class="w">⚖️ 6,4 kg</div><div class="btn" style="background:#888">Tour pleine</div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Ce qui change par rapport au premier croquis :</b> la porte est plus étroite (elle tient dans la colonne centrale pour ne cacher aucune vitrine) ;
+    au palier 4 le balcon du milieu laisse la place aux 4 tours, il revient au palier 5 ; l'île flottante n'a pas de tour ; pas de fontaine (pas la place devant le coffre),
+    le Palais d'or a des cristaux à la place. Les géants sont réduits à 13 studs maximum sur leur balcon.
+  </div>
+</div>
+<script>
+// ---- Valeurs du jeu (CastleConfig / CastleBuilder) ----
+const FLOOR = 1.2, KEEP = { W:34, D:12, Z:39, FH:8, Floors:6, PerSide:5, Shaft:2.2 };
+const KEEP_TOP = FLOOR + KEEP.Floors * KEEP.FH; // 49,2
+const TIERS = [
+  { r:0,  name:"Fortin de bois",    wall:"#786856", dark:"#4e4234", trim:"#785230", roof:"#7a4a2a", glow:"#ffaa46", gate:"Wood", wood:true, torches:true },
+  { r:1,  name:"Château fort",      wall:"#969288", dark:"#625e56", trim:"#767268", roof:"#aa3a2e", glow:"#ffb450", gate:"Portcullis", crenels:true, torches:true, flags:"#d22828" },
+  { r:3,  name:"Château de pierre", wall:"#b0aa9e", dark:"#767066", trim:"#8c867a", roof:"#3060b4", glow:"#ffbe5a", gate:"Portcullis", crenels:true, torches:true, flags:"#285ac8", moat:true, ivy:true },
+  { r:5,  name:"Château royal",     wall:"#e8e2d6", dark:"#a6a094", trim:"#dab44a", roof:"#2c50d8", glow:"#ffe18c", gate:"Royal", crenels:true, torches:true, flags:"#ffcd3c", moat:true, gold:true, rose:true },
+  { r:10, name:"Palais d'or",       wall:"#f2e0a0", dark:"#c6a856", trim:"#ffcd3a", roof:"#7e2cd8", glow:"#fff27a", gate:"Royal", crenels:true, flags:"#ffcd3c", moat:true, gold:true, rose:true, crystals:true },
+  { r:20, name:"Citadelle céleste", wall:"#e8f2ff", dark:"#a0b8da", trim:"#a0f6ff", roof:"#26d2ff", glow:"#80f6ff", gate:"Portal", crenels:true, flags:"#82f0ff", gold:true, rose:true, crystals:true, clouds:true, halo:true },
+];
+const SPOTS = [
+  { min:2, kind:"Side",   x:-24, z:39, r:5,   h:58, giant:"🐉" },
+  { min:2, kind:"Side",   x:24,  z:39, r:5,   h:58, giant:"🐻" },
+  { min:3, max:3, kind:"Roof", x:0, z:39, r:6, h:4, giant:"🦁" },
+  { min:4, kind:"Side",   x:-37, z:40, r:4.5, h:46, giant:"🦄" },
+  { min:4, kind:"Side",   x:37,  z:40, r:4.5, h:46, giant:"🐋" },
+  { min:5, kind:"Roof",   x:0,   z:39, r:6,   h:4,  giant:"🦁" },
+  { min:6, kind:"Sky",    x:0,   z:40, r:5,   float:34, giant:"🐲" },
+];
+const active = (s, tierNo) => s.min <= tierNo && (s.max === undefined || tierNo <= s.max);
+const activeSpots = tierNo => SPOTS.filter(s => active(s, tierNo));
+const GIANT_MAX = 13, BONUS = "1,5";
+
+// Vu du jardin : le +X de la parcelle est à GAUCHE de l'écran
+const sx = x => -x;
+const Y = y => -y; // SVG : y vers le bas
+let svg = "";
+const rect = (x1, y1, x2, y2, fill, extra="") => { // coordonnées jeu (x écran déjà converti)
+  const x = Math.min(x1, x2), w = Math.abs(x2 - x1), top = Math.max(y1, y2), h = Math.abs(y2 - y1);
+  svg += `<rect x="${x}" y="${Y(top)}" width="${w}" height="${h}" fill="${fill}" ${extra}/>`;
+};
+const txt = (x, y, s, size, fill="#fff", extra="") => svg += `<text x="${x}" y="${Y(y)}" font-size="${size}" fill="${fill}" text-anchor="middle" font-family="Segoe UI" font-weight="700" ${extra}>${s}</text>`;
+
+function cone(cx, baseY, width, height, color) { for (let k = 0; k < 6; k++) { const w = width * (1 - k / 6); rect(cx - w/2, baseY + k*height/6, cx + w/2, baseY + (k+1)*height/6, color); } return baseY + height; }
+function flag(cx, y, color) { rect(cx - 0.12, y, cx + 0.12, y + 4, "#46484f"); rect(cx + 0.1, y + 2.5, cx + 2.5, y + 3.9, color); }
+function crystal(cx, y, color) { svg += `<polygon points="${cx},${Y(y+2.6)} ${cx+0.9},${Y(y+1.6)} ${cx},${Y(y+0.6)} ${cx-0.9},${Y(y+1.6)}" fill="${color}" stroke="#fff" stroke-width=".2"/>`; }
+function giantOn(cx, y, emoji, label) {
+  svg += `<text x="${cx}" y="${Y(y + 0.4)}" font-size="9" text-anchor="middle">${emoji}</text>`;
+  txt(cx, y + 11.6, label, 1.9, "#ffcd3c", `stroke="#000" stroke-width=".25" paint-order="stroke"`);
+  txt(cx, y + 9.6, `+x${BONUS}`, 1.6, "#8cff7a", `stroke="#000" stroke-width=".25" paint-order="stroke"`);
+}
+function balcony(cx, y, width, t, emoji) {
+  rect(cx - width/2, y - 0.5, cx + width/2, y + 0.5, t.trim, `stroke="#0004" stroke-width=".15"`);
+  rect(cx - width*0.3, y - 2.1, cx + width*0.3, y - 0.5, t.dark);
+  rect(cx - width/2, y + 1.45, cx + width/2, y + 1.8, t.dark);
+  giantOn(cx, y + 0.5, emoji, "🦣 GÉANT");
+}
+function scaffold(cx, baseY, h, r, nextR) {
+  for (const s of [-1, 1]) rect(cx + s*r - 0.25, baseY, cx + s*r + 0.25, baseY + h, "#7a522e");
+  for (let y = 3; y < h; y += 4) rect(cx - r - 0.5, baseY + y - 0.2, cx + r + 0.5, baseY + y + 0.2, "#54361e");
+  txt(cx, baseY + h + 3.5, "🏗️ Tour à géant 🦣", 2, "#ffdc5a", `stroke="#000" stroke-width=".3" paint-order="stroke"`);
+  txt(cx, baseY + h + 1.4, "Renaissance " + nextR, 1.8, "#ffdc5a", `stroke="#000" stroke-width=".3" paint-order="stroke"`);
+}
+function cloud(cx, y, s) { for (const [dx, dy] of [[0,0],[s*.6,-s*.1],[-s*.6,-s*.15],[0,s*.25]]) svg += `<ellipse cx="${cx+dx}" cy="${Y(y+dy)}" rx="${s/2}" ry="${s*.35}" fill="#fff" opacity=".93"/>`; }
+
+function drawFront(ti) {
+  const t = TIERS[ti], tierNo = ti + 1;
+  svg = "";
+  const unlocked = Math.min(60, 4 + 2 * t.r);
+  // Tours de côté (derrière / à côté du donjon)
+  SPOTS.forEach((s, i) => {
+    const cx = sx(s.x);
+    if (s.kind !== "Side") return;
+    if (s.min <= tierNo) {
+      const d = s.r * 2;
+      rect(cx - s.r, FLOOR, cx + s.r, FLOOR + s.h, t.wall, `stroke="${t.dark}" stroke-width=".3"`);
+      rect(cx - s.r - 0.5, FLOOR, cx + s.r + 0.5, FLOOR + 1.4, t.dark);
+      rect(cx - s.r - 0.4, FLOOR + s.h - 0.8, cx + s.r + 0.4, FLOOR + s.h, t.trim);
+      for (let y = 8; y <= s.h - 6; y += 7) rect(cx - 0.45, FLOOR + y - 1.2, cx + 0.45, FLOOR + y + 1.2, "#1a1622");
+      if (t.crenels) for (let k = -2; k <= 2; k++) rect(cx + k*d/5 - 0.7, FLOOR + s.h, cx + k*d/5 + 0.7, FLOOR + s.h + 1.8, t.wall, `stroke="${t.dark}" stroke-width=".15"`);
+      const tip = cone(cx, FLOOR + s.h + 0.6, d + 1.6, d * 1.3, t.roof);
+      if (t.crystals) crystal(cx, tip, t.glow); else if (t.flags) flag(cx, tip, t.flags);
+      balcony(cx, FLOOR + s.h * 0.5, d + 1, t, s.giant);
+    } else if (s.min === tierNo + 1) {
+      scaffold(cx, FLOOR, s.h * 0.55, s.r, TIERS[tierNo].r);
+    }
+  });
+  // Donjon
+  const L = -KEEP.W/2, R = KEEP.W/2;
+  rect(L, FLOOR, R, KEEP_TOP, t.wall, `stroke="${t.dark}" stroke-width=".3"`);
+  for (const x of [L, R, -KEEP.Shaft, KEEP.Shaft]) rect(x - 0.5, FLOOR, x + 0.5, KEEP_TOP, t.dark);
+  rect(-0.6, FLOOR + KEEP.FH, 0.6, KEEP_TOP - 0.2, t.glow);
+  const pitch = (KEEP.W/2 - KEEP.Shaft - 1) / KEEP.PerSide;
+  for (let f = 1; f <= KEEP.Floors; f++) {
+    const y = FLOOR + (f - 1) * KEEP.FH;
+    rect(L - 0.3, y + KEEP.FH - 0.8, R + 0.3, y + KEEP.FH, t.trim);
+    rect(L - 0.3, y + KEEP.FH - 1.0, R + 0.3, y + KEEP.FH - 0.8, t.glow);
+    for (const side of [-1, 1]) for (let k = 1; k <= KEEP.PerSide; k++) {
+      const column = side < 0 ? KEEP.PerSide - k + 1 : k;
+      const gx = side * (KEEP.Shaft + 0.5 + (column - 0.5) * pitch);
+      const order = side < 0 ? k : KEEP.PerSide + k;
+      const index = (f - 1) * KEEP.PerSide * 2 + order;
+      const cx = sx(gx);
+      rect(cx - (pitch - 0.2)/2, y + 1.5, cx + (pitch - 0.2)/2, y + 6.3, t.trim);
+      rect(cx - (pitch - 0.6)/2, y + 1.7, cx + (pitch - 0.6)/2, y + 6.1, index <= unlocked ? "#1e1e30" : "#0a0a10");
+      txt(cx, y + 3.2, index <= unlocked ? "🐾" : "🔒", 1.4);
+    }
+  }
+  if (t.ivy) for (let i = 0; i < 19; i++) rect(sx(L) - 0.2 - (i*7 % 3), FLOOR + i*1.6, sx(L) + 1.4 - (i*7 % 3), FLOOR + i*1.6 + 1.5, "#3c8c37");
+  // Porte (colonne centrale, rez-de-chaussée)
+  const gw = KEEP.Shaft * 2 - 1.2, gh = KEEP.FH - 1 - 0.8;
+  rect(-KEEP.Shaft, FLOOR, KEEP.Shaft, FLOOR + KEEP.FH - 1, t.gold ? t.trim : t.dark);
+  const doorFill = t.gate === "Wood" ? "#7a5230" : t.gate === "Portal" ? t.glow : "#1a1620";
+  rect(-gw/2, FLOOR, gw/2, FLOOR + gh, doorFill);
+  if (t.gate === "Portcullis" || t.gate === "Royal") for (let i = 1; i <= 3; i++) rect(-gw/2 + i*gw/4 - 0.11, FLOOR, -gw/2 + i*gw/4 + 0.11, FLOOR + gh, t.gate === "Royal" ? t.trim : "#46484f");
+  if (t.torches) for (const s of [-1, 1]) { rect(s*(KEEP.Shaft + 0.5) - 0.2, FLOOR + 3.4, s*(KEEP.Shaft + 0.5) + 0.2, FLOOR + 5, "#54361e"); svg += `<circle cx="${s*(KEEP.Shaft+0.5)}" cy="${Y(FLOOR+5.3)}" r=".45" fill="#ff962a"/>`; }
+  if (t.rose) { svg += `<circle cx="0" cy="${Y(FLOOR + KEEP.FH + 4)}" r="1.9" fill="${t.trim}"/><circle cx="0" cy="${Y(FLOOR + KEEP.FH + 4)}" r="1.3" fill="#d250ff"/>`; }
+  if (t.moat) { rect(-17, FLOOR - 0.6, -2.7, FLOOR + 0.1, "#3c96dc"); rect(2.7, FLOOR - 0.6, 17, FLOOR + 0.1, "#3c96dc"); rect(-2.7, FLOOR - 0.4, 2.7, FLOOR + 0.3, "#7a5230"); }
+  // Avatar (5 studs) pour l'échelle
+  const ax = -6.5;
+  svg += `<circle cx="${ax}" cy="${Y(FLOOR + 4.4)}" r=".6" fill="#ffd9a8"/>`; rect(ax - 0.6, FLOOR + 1.9, ax + 0.6, FLOOR + 3.8, "#2a7de1"); rect(ax - 0.6, FLOOR, ax + 0.6, FLOOR + 1.9, "#333");
+  // Sommet
+  rect(L - 1, KEEP_TOP, R + 1, KEEP_TOP + 1.2, t.trim);
+  const topY = KEEP_TOP + 1.2;
+  if (t.crenels) for (let i = 0; i < 11; i++) { const p = 35.2 / 11; rect(-17.6 + (i + 0.5)*p - p*0.275, topY, -17.6 + (i + 0.5)*p + p*0.275, topY + 2, t.wall, `stroke="${t.dark}" stroke-width=".15"`); }
+  if (t.wood) { rect(L - 0.6, topY + 1.15, R + 0.6, topY + 1.65, "#7a5230"); for (let x = L; x <= R; x += 4) rect(x - 0.25, topY, x + 0.25, topY + 2, "#54361e"); }
+  if (t.flags) for (const x of [L, R]) flag(x, topY, t.flags);
+  // Balcon du milieu, sur un socle au centre du toit (palier 3+), sans tour
+  const roofs = SPOTS.filter(s => s.kind === "Roof");
+  const roofNow = roofs.find(s => active(s, tierNo));
+  const roofNext = !roofNow && TIERS[tierNo] ? roofs.find(s => s.min === tierNo + 1) : null;
+  const dj = roofNow || roofNext || roofs[0];
+  if (roofNow) {
+    const w = dj.r * 2, base = topY;
+    rect(-dj.r - 0.3, base, dj.r + 0.3, base + 0.6, t.dark);
+    rect(-dj.r, base, dj.r, base + dj.h, t.wall, `stroke="${t.dark}" stroke-width=".3"`);
+    for (const s of [-1, 1]) { rect(s*(dj.r - 0.3) - 0.45, base, s*(dj.r - 0.3) + 0.45, base + dj.h + 1.4, t.dark); if (t.gold) svg += `<circle cx="${s*(dj.r - 0.3)}" cy="${Y(base + dj.h + 1.8)}" r=".45" fill="${t.glow}"/>`; }
+    balcony(0, base + dj.h + 0.5, w, t, dj.giant);
+  } else if (roofNext) {
+    scaffold(0, topY, dj.h * 0.8, dj.r, TIERS[tierNo].r);
+  }
+  // Enseigne
+  rect(-9, topY + 0.7, 9, topY + 3.7, t.gold ? "#a88a32" : "#be202e", `stroke="${t.dark}" stroke-width=".3"`);
+  txt(0, topY + 1.6, "CHÂTEAU DE PSEUDO", 1.7);
+  // Île céleste (palier 6)
+  const sk = SPOTS[6];
+  if (sk.min <= tierNo) {
+    const iy = KEEP_TOP + sk.float;
+    rect(-9, iy - 2, 9, iy, "#968ca0"); rect(-6.5, iy - 4, 6.5, iy - 2, "#786e87"); rect(-4, iy - 6, 4, iy - 4, "#786e87"); rect(-1.5, iy - 8, 1.5, iy - 6, "#786e87");
+    rect(-9.2, iy, 9.2, iy + 0.4, "#6ec878");
+    cloud(-9, iy - 3, 6); cloud(9, iy - 4, 5);
+    // Pas de tour : le géant au milieu de l'île, sur un grand balcon, entre quatre cristaux
+    balcony(0, iy + 0.7, 11, t, sk.giant);
+    for (const x of [-7, 7]) crystal(x, iy, t.glow);
+    if (t.halo) svg += `<ellipse cx="0" cy="${Y(iy - 5)}" rx="11" ry="1.4" fill="none" stroke="${t.glow}" stroke-width=".5"/>`;
+  } else if (sk.min === tierNo + 1) {
+    txt(0, KEEP_TOP + sk.float + 2, "🏗️ Place pour un géant 🦣 (île flottante) — Renaissance " + TIERS[tierNo].r, 2, "#ffdc5a", `stroke="#000" stroke-width=".3" paint-order="stroke"`);
+  }
+  if (t.clouds) for (let i = 0; i < 9; i++) cloud(-25 + i * 50/8, FLOOR + 1.5 + (i % 3), 5);
+  document.getElementById("front").innerHTML = svg;
+}
+
+function drawTop(ti) {
+  const tierNo = ti + 1, t = TIERS[ti];
+  svg = "";
+  // Vue de dessus : écran x = -X (comme vu du jardin), écran y = Z (le jardin en bas)
+  const R = (x1, z1, x2, z2, fill, label) => {
+    const x = Math.min(-x1, -x2), w = Math.abs(x2 - x1);
+    svg += `<rect x="${x}" y="${Math.min(z1,z2)}" width="${w}" height="${Math.abs(z2-z1)}" fill="${fill}" stroke="#0005" stroke-width=".2"/>`;
+    if (label) svg += `<text x="${-(x1+x2)/2}" y="${(z1+z2)/2+0.6}" font-size="1.7" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI">${label}</text>`;
+  };
+  // Le haut de l'écran = le fond (Z grand) : on retourne Z
+  svg += `<g transform="translate(0,${10+50}) scale(1,-1)">`;
+  const keepZ1 = KEEP.Z - KEEP.D/2, keepZ2 = KEEP.Z + KEEP.D/2;
+  svg += `</g>`;
+  // Repère simple : y écran = 60 - Z
+  const Z = z => 60 - z;
+  const box = (x1, z1, x2, z2, fill, label) => {
+    const x = Math.min(-x1, -x2), w = Math.abs(x2 - x1), y = Math.min(Z(z1), Z(z2)), h = Math.abs(z2 - z1);
+    svg += `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" stroke="#0006" stroke-width=".2"/>`;
+    if (label) svg += `<text x="${-(x1+x2)/2}" y="${y + h/2 + 0.6}" font-size="1.6" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI">${label}</text>`;
+  };
+  box(-17, keepZ1, 17, keepZ2, t.wall, "DONJON (60 vitrines)");
+  box(-2.2, keepZ1 - 0.9, 2.2, keepZ1, "#1a1620");
+  SPOTS.forEach((s) => {
+    if (!active(s, tierNo)) return;
+    if (s.kind === "Side") {
+      svg += `<circle cx="${-s.x}" cy="${Z(s.z)}" r="${s.r}" fill="${t.wall}" stroke="#0006" stroke-width=".2"/>`;
+      box(s.x - s.r - 0.5, s.z - s.r - 7 + 0.8, s.x + s.r + 0.5, s.z - s.r + 0.8, t.trim, "🦣");
+    } else if (s.kind === "Roof") {
+      box(-s.r, s.z - 4, s.r, s.z + 4, t.trim, "🦣 balcon sur le toit");
+    }
+  });
+  if (t.moat) { box(-17, keepZ1 - 4.3, -2.7, keepZ1 - 0.9, "#3c96dc"); box(2.7, keepZ1 - 4.3, 17, keepZ1 - 0.9, "#3c96dc"); }
+  box(-28 - 2.4, 30 - 2.4, -28 + 2.4, 30 + 2.4, "#9a3cdc", "fusion");
+  for (const bx of [14, 27, 40]) box(bx - 4, 25.6, bx + 4, 26.4, "#c8a050");
+  svg += `<text x="-27" y="${Z(25)}" font-size="1.6" fill="#fff" text-anchor="middle" font-family="Segoe UI" font-weight="700">panneaux d'amélioration</text>`;
+  box(-3, 22, 3, 26, "#c88a2a", "coffre");
+  svg += `<text x="0" y="${Z(14)}" font-size="1.8" fill="#fff" text-anchor="middle" font-family="Segoe UI">⬇ vers la machine à œufs et l'entrée</text>`;
+  document.getElementById("topview").innerHTML = svg;
+}
+
+function drawUI(ti) {
+  const tierNo = ti + 1;
+  const slots = activeSpots(tierNo).length;
+  const strip = document.getElementById("strip");
+  const filled = Math.max(0, slots - 1);
+  document.getElementById("stripTitle").textContent = `🏰 ${TIERS[ti].name} · tours à géants : ${filled} / ${slots}  (un géant 🦣 y rapporte x${BONUS})`;
+  let html = "";
+  const NAMES = { "🐉":"Dragon", "🐻":"Ours", "🦁":"Lion", "🦄":"Licorne", "🐋":"Baleine", "🐲":"Dragon céleste" };
+  for (let i = 0; i < slots; i++) {
+    if (i < filled) html += `<div class="cell giant"><div class="pic">${activeSpots(tierNo)[i].giant}</div><div class="txt">${NAMES[activeSpots(tierNo)[i].giant]}<br><span style="color:#8cff7a">💎 +${(i+1)*48}/s</span><div class="btn">Retirer</div></div></div>`;
+    else html += `<div class="cell free">🦣 Tour ${i+1}<br>Place libre</div>`;
+  }
+  if (TIERS[ti + 1]) html += `<div class="cell lock">🔒 Tour ${slots+1}<br>Renaissance ${TIERS[ti+1].r}</div>`;
+  if (slots === 0 && !TIERS[ti + 1]) html = "";
+  strip.innerHTML = html;
+}
+
+function legend(ti) {
+  const t = TIERS[ti], tierNo = ti + 1;
+  const slots = activeSpots(tierNo).length;
+  const unlocked = Math.min(60, 4 + 2 * t.r);
+  const items = [
+    `<b>${t.name}</b> — dès ${t.r === 0 ? "le départ" : t.r + " renaissance" + (t.r > 1 ? "s" : "")}`,
+    `<b>${slots}</b> tour(s) à géant · un géant y rapporte <b>x${BONUS}</b>`,
+    `<b>${unlocked}</b> vitrines débloquées (🐾) sur 60, les autres 🔒`,
+    `Porte : <b>${{Wood:"en planches", Portcullis:"herse en fer", Royal:"herse dorée", Portal:"portail lumineux"}[t.gate]}</b>` + (t.moat ? " · douves + pont" : "") + (t.rose ? " · rosace" : ""),
+  ];
+  document.getElementById("legend").innerHTML = items.map(i => `<div>${i}</div>`).join("");
+}
+
+function show(i) { drawFront(i); drawTop(i); drawUI(i); legend(i); [...document.getElementById("tabs").children].forEach((b, k) => b.classList.toggle("on", k === i)); }
+TIERS.forEach((t, i) => {
+  const b = document.createElement("button");
+  b.innerHTML = `${i+1}. ${t.name}<small>${t.r === 0 ? "départ" : "renaissance " + t.r}</small>`;
+  b.onclick = () => show(i);
+  document.getElementById("tabs").appendChild(b);
+});
+show(5);
+</script>
+</body>
+</html>
