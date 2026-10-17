@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Île en U</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:28px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+  .bar { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; position:sticky; top:0; background:var(--bg); padding:6px 0; z-index:5; }
+  .bar button { background:var(--card); color:var(--text); border:3px solid transparent; border-radius:12px; padding:8px 14px; font-weight:700; cursor:pointer; font-size:15px; }
+  .bar button.on { border-color:var(--accent); background:#3b3560; }
+  .grid { display:grid; grid-template-columns:1.15fr 1fr; gap:10px; }
+  @media (max-width: 860px) { .grid { grid-template-columns:1fr; } }
+  .box { background:var(--card); border-radius:14px; overflow:hidden; }
+  .box h3 { margin:0; padding:9px 13px; font-size:15px; color:var(--accent); }
+  svg { width:100%; height:auto; display:block; }
+  .facts { padding:10px 14px; font-size:15px; }
+  .facts .big { font-size:19px; font-weight:800; color:var(--ok); }
+  .ideas { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+  .idea { background:var(--card); border-radius:14px; padding:11px 14px; border-left:6px solid var(--accent); }
+  .idea h3 { margin:0 0 4px; font-size:16px; }
+  .idea p { margin:0; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏰 L'île en U : château devant, jardin autour</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu. C'est ton idée : le château devant, côté pont, un jardin de chaque côté, et l'agrandissement vers l'arrière. Les îles restent à <b>341 du centre</b> (pont de 121 studs) et le jardin a <b>autant de cases qu'aujourd'hui</b> à chaque niveau.</p>
+  <div class="note"><b>Mon avis :</b> c'est la plus belle disposition. Le château est au centre, encadré par ses deux jardins comme un vrai château à la française, avec le grand parc derrière. Les côtés doivent rester <b>étroits</b> (5 colonnes chacun, soit une belle allée fleurie) parce que, près de la place, les îles sont serrées. C'est donc <b>derrière</b> que le jardin grandit, là où il y a de la place, jusqu'à 40 colonnes de large.</div>
+
+  <div class="bar" id="bar"></div>
+  <div class="grid">
+    <div class="box"><h3 id="zoomTitle">Une île</h3><svg id="zoom" viewBox="-130 -150 260 400"></svg><div class="facts" id="facts"></div></div>
+    <div class="box"><h3>La carte : les 8 îles en U autour de la place ronde</h3><svg id="map" viewBox="-560 -560 1120 1120"></svg>
+      <div class="facts">Même au niveau max, les îles ne se touchent pas (les traits blancs montrent les parts de chaque île).</div></div>
+  </div>
+
+  <h2>Pour que ce soit vraiment beau</h2>
+  <div class="ideas">
+    <div class="idea"><h3>🌉 L'arrivée</h3><p>Le pont débouche sur une <b>cour d'honneur</b> pavée, face à la façade du château : la cascade de gemmes tombe dans le coffre au centre, et les géants sont sur leurs balcons. C'est la première chose que voit un visiteur.</p></div>
+    <div class="idea"><h3>🌷 Les deux jardins des côtés</h3><p>Ce sont deux <b>allées-jardins symétriques</b> qui longent le château, avec une haie basse côté mer et des lanternes. On y pose des décorations, et on les traverse pour aller au grand parc derrière.</p></div>
+    <div class="idea"><h3>🌳 Le grand parc derrière</h3><p>C'est la plus grande partie du jardin. Tes créatures exposées s'y promènent, et un <b>belvédère sur la mer</b> (un point de vue avec des bancs et des lanternes) termine la promenade tout au fond, face au château. À chaque agrandissement, le parc s'étend vers la mer.</p></div>
+    <div class="idea"><h3>🔀 Où va le reste</h3><p>La <b>machine à œufs</b> va à gauche de la cour et les <b>tableaux d'amélioration</b> à droite. La <b>fusion</b> et l'<b>autel</b> se trouvent aux deux coins du parc, juste derrière le château, de chaque côté de la porte arrière.</p></div>
+    <div class="idea"><h3>🚪 Le passage</h3><p>Une <b>grande porte à l'arrière</b> du château donne directement sur le parc. Les deux allées des côtés font aussi le tour : on n'est jamais bloqué.</p></div>
+    <div class="idea"><h3>🏝️ La forme de l'île</h3><p>Elle reste <b>carrée</b> comme tu aimes : un carré qui s'allonge vers la mer à chaque niveau, bordé de rives en terrasses.</p></div>
+  </div>
+</div>
+<script>
+const CELL = 4, RING = 341, PLAZA_R = 130, SHORE = 26;
+// Jardin en U : côtés fixes (5 colonnes × 22 rangées), parc derrière qui grandit
+const SIDE = { cols: 5, rows: 22, z0: -40 };
+const BACK = [ { c: 32, r: 4 }, { c: 34, r: 10 }, { c: 36, r: 16 }, { c: 38, r: 22 }, { c: 40, r: 27 } ];
+const TODAY = [352, 546, 780, 1054, 1296];
+let level = 0;
+function cells(l) { return 2 * SIDE.cols * SIDE.rows + BACK[l].c * BACK[l].r; }
+function island(s, l, labels) {
+  const b = BACK[l], bw = b.c * CELL, bd = b.r * CELL;
+  const sideW = SIDE.cols * CELL, sideD = SIDE.rows * CELL;
+  const backZ0 = 54, backZ1 = 54 + bd;
+  const outerHalf = Math.max(54 + sideW + 4, bw / 2 + 4);
+  // rive en terrasses autour de l'île
+  s.push(`<path d="M ${-(54 + sideW + 4 + SHORE)} ${-90 - 6} L ${54 + sideW + 4 + SHORE} ${-90 - 6} L ${54 + sideW + 4 + SHORE} 50 L ${bw / 2 + 4 + SHORE} 54 L ${bw / 2 + 4 + SHORE} ${backZ1 + 16 + SHORE} L ${-(bw / 2 + 4 + SHORE)} ${backZ1 + 16 + SHORE} L ${-(bw / 2 + 4 + SHORE)} 54 L ${-(54 + sideW + 4 + SHORE)} 50 Z" fill="#e8dcae" opacity=".55"/>`);
+  // terre de l'île
+  s.push(`<path d="M ${-(54 + sideW + 4)} -90 L ${54 + sideW + 4} -90 L ${54 + sideW + 4} 50 L ${bw / 2 + 4} 54 L ${bw / 2 + 4} ${backZ1 + 16} L ${-(bw / 2 + 4)} ${backZ1 + 16} L ${-(bw / 2 + 4)} 54 L ${-(54 + sideW + 4)} 50 Z" fill="#9fd47e" stroke="#fff" stroke-width="2"/>`);
+  // cour d'honneur
+  s.push(`<rect x="-54" y="-90" width="108" height="40" fill="#d9d2c0" stroke="#bfb6a0" stroke-width="1.5"/>`);
+  // château
+  s.push(`<rect x="-50" y="-50" width="100" height="100" fill="#cfc6e8" stroke="#fff" stroke-width="2"/>`);
+  // jardins des côtés
+  for (const side of [-1, 1]) {
+    const x = side > 0 ? 54 : -54 - sideW;
+    s.push(`<rect x="${x}" y="${SIDE.z0}" width="${sideW}" height="${sideD}" fill="#6fcf5a" stroke="#ffd34d" stroke-width="2"/>`);
+  }
+  // grand parc derrière + belvédère sur la mer au fond
+  s.push(`<rect x="${-bw / 2}" y="${backZ0}" width="${bw}" height="${bd}" fill="#6fcf5a" stroke="#ffd34d" stroke-width="2"/>`);
+  s.push(`<rect x="${-bw / 2}" y="${backZ1}" width="${bw}" height="12" fill="#e8c27a" opacity=".9"/>`);
+  if (!labels) return;
+  const T = (x, y, t, size = 8, color = "#1d1a2b") => s.push(`<text x="${x}" y="${y}" font-size="${size}" text-anchor="middle" fill="${color}" font-weight="700">${t}</text>`);
+  T(0, -78, "cour d'honneur", 7);
+  T(0, -62, "💰 coffre", 7); T(0, -54, "(cascade de gemmes)", 5);
+  T(-41, -74, "🥚", 9); T(-41, -66, "machine", 5);
+  T(41, -74, "📋", 9); T(41, -66, "tableaux", 5);
+  T(0, 0, "🏰 château", 10);
+  T(0, 12, "géants sur les balcons", 5.5);
+  T(0, 47, "🚪 porte arrière", 6);
+  for (const side of [-1, 1]) { const x = side * (54 + sideW / 2); T(x, 0, "🌷", 9); T(x, 10, "allée", 5.5); }
+  if (bd >= 24) { T(-bw / 2 + 14, backZ0 + 12, "🔀", 9); T(-bw / 2 + 14, backZ0 + 20, "fusion", 5); T(bw / 2 - 14, backZ0 + 12, "🗿", 9); T(bw / 2 - 14, backZ0 + 20, "autel", 5); }
+  T(0, backZ0 + bd / 2 + 3, "🌳 grand parc 🐾", 9);
+  T(0, backZ1 + 9, "🌅 belvédère sur la mer", 6, "#fff");
+}
+function drawZoom() {
+  const s = [];
+  s.push('<rect x="-130" y="-150" width="260" height="400" fill="#1f5a7a"/>');
+  s.push(`<rect x="-4" y="-150" width="8" height="60" fill="#2b2840"/>`);
+  for (let y = -146; y < -96; y += 22) s.push(`<rect x="-3" y="${y}" width="6" height="6" fill="#5ef0ff"/>`);
+  s.push('<text x="8" y="-138" font-size="8" fill="#ffd34d" font-weight="800">⬆ pont (121 studs) vers la place</text>');
+  island(s, level, true);
+  s.push('<text x="0" y="244" font-size="8" text-anchor="middle" fill="#fff">⬇ le parc grandit vers la mer</text>');
+  document.getElementById("zoom").innerHTML = s.join("");
+  document.getElementById("zoomTitle").textContent = `Une île au niveau ${level + 1}`;
+  const b = BACK[level];
+  document.getElementById("facts").innerHTML = `<div class="big">${cells(level)} cases (aujourd'hui : ${TODAY[level]})</div>Côtés : 2 × ${SIDE.cols} × ${SIDE.rows} · parc derrière : ${b.c} × ${b.r}`;
+}
+function drawMap() {
+  const s = [];
+  s.push('<rect x="-560" y="-560" width="1120" height="1120" fill="#1f5a7a"/>');
+  for (let i = 0; i < 8; i++) {
+    const ang = 15 + i * 45, a = ang * Math.PI / 180, dx = Math.sin(a), dz = Math.cos(a);
+    const front = RING - 90;
+    s.push(`<line x1="${dx * PLAZA_R}" y1="${dz * PLAZA_R}" x2="${dx * front}" y2="${dz * front}" stroke="#2b2840" stroke-width="12"/>`);
+    for (let d = PLAZA_R + 14; d < front - 8; d += 45) s.push(`<rect x="${dx * d - 4}" y="${dz * d - 4}" width="8" height="8" fill="#5ef0ff"/>`);
+    s.push(`<g transform="translate(${dx * RING} ${dz * RING}) rotate(${-ang})">`); island(s, level, false); s.push('</g>');
+    // limites des parts (à mi-chemin entre deux îles)
+    const m = (ang + 22.5) * Math.PI / 180;
+    s.push(`<line x1="${Math.sin(m) * 150}" y1="${Math.cos(m) * 150}" x2="${Math.sin(m) * 560}" y2="${Math.cos(m) * 560}" stroke="#ffffff55" stroke-width="2" stroke-dasharray="6 8"/>`);
+  }
+  s.push(`<circle r="${PLAZA_R}" fill="#cfc6e8" stroke="#fff" stroke-width="5"/>`);
+  s.push('<text y="10" font-size="30" text-anchor="middle" font-weight="800" fill="#1d1a2b">Place</text>');
+  document.getElementById("map").innerHTML = s.join("");
+}
+const bar = document.getElementById("bar");
+BACK.forEach((_, l) => { const b = document.createElement("button"); b.textContent = `Niveau ${l + 1}${l === 4 ? " (max)" : ""}`; b.onclick = () => { level = l; refresh(); }; bar.appendChild(b); });
+function refresh() { [...bar.children].forEach((b, k) => b.classList.toggle("on", k === level)); drawZoom(); drawMap(); }
+refresh();
+</script>
+</body>
+</html>
