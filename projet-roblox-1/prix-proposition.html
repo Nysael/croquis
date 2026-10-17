@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prix du parc</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;700;800&display=swap">
+<style>
+/* Mise en page : constats en haut, puis un tableau « actuel → proposé » par sujet. */
+:root {
+  --bg: #eef2f8; --fg: #1d2333; --muted: #5b6478; --card: #ffffff; --line: #d3dae6;
+  --up: #c2410c; --down: #15803d; --gem: #0e7ab8; --warn: #b45309; --bad: #b91c1c;
+  --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Nunito", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121620; --fg: #e8ecf5; --muted: #9aa4ba; --card: #1b2130; --line: #2c3446;
+  --up: #fb923c; --down: #4ade80; --gem: #67d4ff; --warn: #fbbf24; --bad: #f87171; color-scheme: dark } }
+:root[data-theme="dark"] { --bg: #121620; --fg: #e8ecf5; --muted: #9aa4ba; --card: #1b2130; --line: #2c3446;
+  --up: #fb923c; --down: #4ade80; --gem: #67d4ff; --warn: #fbbf24; --bad: #f87171; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); line-height: 1.5; margin: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 22px; }
+h1 { font-family: var(--display); font-size: clamp(26px, 4vw, 34px); margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-size: 21px; margin: 0; display: flex; gap: 10px; align-items: center; }
+p { margin: 0; max-width: 72ch; }
+.lead { color: var(--muted); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; min-width: 0; }
+.num { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--fg); display: grid; place-items: center; font: 800 14px/1 var(--body); }
+.problems { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.problems li { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; }
+.sev { font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+.sev.bad { color: var(--bad); background: color-mix(in srgb, var(--bad) 15%, transparent); }
+.sev.warn { color: var(--warn); background: color-mix(in srgb, var(--warn) 16%, transparent); }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td.wrap-cell { white-space: normal; min-width: 220px; }
+th { font-size: 13px; color: var(--muted); font-weight: 800; }
+.old { color: var(--muted); text-decoration: line-through; }
+.up { color: var(--up); font-weight: 800; }
+.down { color: var(--down); font-weight: 800; }
+.same { color: var(--muted); }
+.note { color: var(--muted); font-size: 14px; }
+.choice { border-left: 4px solid var(--gem); padding-left: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <h1>Prix du parc : proposition</h1>
+    <p class="lead">J'ai calculé combien de temps chaque achat met à se rembourser, puis simulé un joueur qui tire le levier, achète des œufs et fait ses renaissances. Voici ce qui ne va pas et ce que je propose. Rien n'est encore changé dans le jeu : valide ou corrige, et je l'applique.</p>
+  </header>
+
+  <section class="card">
+    <h2>Ce que la simulation a trouvé</h2>
+    <ul class="problems">
+      <li><span class="sev bad">bloquant</span><p><strong>Le tutoriel est impossible à finir.</strong> On démarre avec 50 💎 (+50 de récompense), mais l'étape 2 demande d'acheter un œuf à 300 💎 avec une seule créature qui rapporte 1 💎/s : il faut attendre 3 minutes sans rien comprendre.</p></li>
+      <li><span class="sev bad">important</span><p><strong>Les œufs de la place sont 4 fois plus rentables que la machine.</strong> Un Œuf Basique à 200 💎 rapporte en moyenne 2,9 💎/s, remboursé en 70 s. Un œuf Commun de la machine à 300 💎 rapporte 1 💎/s, remboursé en 300 s. La machine, qui est le cœur du jeu, ne sert à rien.</p></li>
+      <li><span class="sev bad">important</span><p><strong>Le jeu est « fini » en moins de 4 heures.</strong> Les œufs du haut sont trop bon marché et les renaissances ne montent que ×3 : la tour est pleine de Célestes après environ 3 h 30, et les renaissances 4 à 6 passent en quelques minutes chacune.</p></li>
+      <li><span class="sev warn">gênant</span><p><strong>Après une renaissance, le coffre redescend à 5 000 💎.</strong> Avec une tour qui produit 2 000 💎/s, il est plein en 2 secondes et il faut le vider sans arrêt.</p></li>
+      <li><span class="sev warn">gênant</span><p><strong>Les packs Robux et le Quotidien donnent des gemmes fixes.</strong> 1 000 💎 pour 25 R$, c'est 1 seconde de production pour un joueur avancé : plus personne n'en voudrait.</p></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">1</span>Argent de départ</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Quoi</th><th>Actuel</th><th>Proposé</th><th>Pourquoi</th></tr></thead>
+      <tbody>
+        <tr><td>Gemmes au départ</td><td><span class="old">50</span></td><td class="up">500</td><td class="wrap-cell">On achète son premier œuf tout de suite au tutoriel.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">2</span>Œufs de la machine</h2>
+    <p class="note">Les petits œufs ne changent pas, les gros deviennent plus chers pour que la fin du jeu prenne du temps. « Remboursé en » = temps pour que la créature regagne son prix dans la tour.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Rareté</th><th>Gain dans la tour</th><th>Prix actuel</th><th>Prix proposé</th><th>Remboursé en</th></tr></thead>
+      <tbody>
+        <tr><td>Commun</td><td>1 💎/s</td><td>300</td><td class="same">300</td><td>5 min</td></tr>
+        <tr><td>Peu commun</td><td>2 💎/s</td><td>900</td><td class="same">900</td><td>7 min</td></tr>
+        <tr><td>Rare</td><td>5 💎/s</td><td><span class="old">2 800</span></td><td class="up">3 000</td><td>10 min</td></tr>
+        <tr><td>Épique</td><td>12 💎/s</td><td><span class="old">9 500</span></td><td class="up">12 000</td><td>17 min</td></tr>
+        <tr><td>Légendaire</td><td>30 💎/s</td><td><span class="old">32 000</span></td><td class="up">50 000</td><td>28 min</td></tr>
+        <tr><td>Mythique</td><td>75 💎/s</td><td><span class="old">120 000</span></td><td class="up">220 000</td><td>49 min</td></tr>
+        <tr><td>Divin</td><td>180 💎/s</td><td><span class="old">400 000</span></td><td class="up">1 000 000</td><td>1 h 30</td></tr>
+        <tr><td>Céleste</td><td>450 💎/s</td><td><span class="old">1 200 000</span></td><td class="up">4 500 000</td><td>2 h 45</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">3</span>Œufs de la place</h2>
+    <p class="note">Ils restent un peu plus rentables que la machine, parce qu'ils sont au hasard et peuvent donner un Cosmique ou un Secret.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Œuf</th><th>Gain moyen</th><th>Prix actuel</th><th>Prix proposé</th><th>Remboursé en</th></tr></thead>
+      <tbody>
+        <tr><td>Œuf Basique</td><td>2,9 💎/s</td><td><span class="old">200</span></td><td class="up">600</td><td>3 min 30</td></tr>
+        <tr><td>Œuf Rare</td><td>6,1 💎/s</td><td><span class="old">1 200</span></td><td class="up">3 000</td><td>8 min</td></tr>
+        <tr><td>Œuf Épique</td><td>14 💎/s</td><td><span class="old">7 500</span></td><td class="up">18 000</td><td>21 min</td></tr>
+        <tr><td>Œuf Légendaire</td><td>50 💎/s</td><td><span class="old">25 000</span></td><td class="up">60 000</td><td>20 min</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">4</span>Renaissances</h2>
+    <p class="note">Le prix est multiplié par 4 à chaque fois au lieu de 3. Chaque renaissance donne toujours +2 places dans la tour et +50 % de gains.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Renaissance</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>8</th><th>10</th></tr></thead>
+      <tbody>
+        <tr><td>Prix actuel (×3)</td><td>50K</td><td>150K</td><td>450K</td><td>1,35M</td><td>4M</td><td>12M</td><td>109M</td><td>984M</td></tr>
+        <tr><td><strong>Prix proposé (×4)</strong></td><td>50K</td><td class="up">200K</td><td class="up">800K</td><td class="up">3,2M</td><td class="up">12,8M</td><td class="up">51M</td><td class="up">820M</td><td class="up">13B</td></tr>
+        <tr><td>Places dans la tour</td><td>6</td><td>8</td><td>10</td><td>12</td><td>14</td><td>16</td><td>20</td><td>24</td></tr>
+      </tbody>
+    </table></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Simulation (sans les panneaux d'amélioration)</th><th>1re renaissance</th><th>4e renaissance</th><th>Tour pleine de Célestes</th></tr></thead>
+      <tbody>
+        <tr><td>Actuel</td><td>1 h 35</td><td>3 h 30</td><td class="down">environ 3 h 50 : le jeu est fini</td></tr>
+        <tr><td><strong>Proposé</strong></td><td>1 h 55</td><td>4 h 30</td><td>pas encore après 6 h</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">En vrai, ça va plus vite : la simulation ne compte ni les panneaux Puissance et Vitesse, ni les monstres, les quêtes, le jardin et les récompenses. Une première renaissance vers 1 heure de jeu me paraît bien.</p>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">5</span>Ce que la renaissance remet à zéro</h2>
+    <div class="choice">
+      <p><strong>Proposé :</strong> la renaissance remet à zéro les gemmes et les panneaux <em>Puissance</em>, <em>Vitesse</em> et <em>Chance</em>, mais <strong>garde la Taille du coffre et les Emplacements</strong> de la machine. Sinon le coffre est plein en 2 secondes et il faut racheter les socles un par un.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">6</span>Gemmes qui grandissent avec ton parc</h2>
+    <p class="note">Au lieu d'un nombre fixe, on donne « au moins X, ou N minutes de ta production si c'est plus ». Un débutant reçoit le minimum, un joueur avancé reçoit beaucoup plus.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Quoi</th><th>Actuel</th><th>Proposé</th></tr></thead>
+      <tbody>
+        <tr><td>Pack Robux « Poignée » (25 R$)</td><td>1 000 💎</td><td>1 000 💎 ou <strong>15 min</strong> de production</td></tr>
+        <tr><td>Pack Robux « Sac » (99 R$)</td><td>7 500 💎</td><td>7 500 💎 ou <strong>1 h</strong> de production</td></tr>
+        <tr><td>Pack Robux « Coffre » (399 R$)</td><td>50 000 💎</td><td>50 000 💎 ou <strong>5 h</strong> de production</td></tr>
+        <tr><td>Quotidien jour 1 / 2 / 5 / 7</td><td>500 / 1 500 / 5 000 / 10 000 💎</td><td>même minimum, ou 5 / 10 / 30 / 60 min de production</td></tr>
+        <tr><td>Cadeau toutes les 15 min</td><td>5 min de production (min. 300)</td><td class="same">inchangé</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="card">
+    <h2>Ce qui ne change pas</h2>
+    <p class="note">Les panneaux d'amélioration (Puissance, Vitesse, Chance, Emplacements, Coffre), le robot à 15 000 💎, les incubateurs à 1 500 / 7 500 / 50 000 💎, les gains des créatures dans la tour, les récompenses des monstres et des quêtes, et la taille de départ du coffre (5 000 💎). La simulation n'y a rien trouvé d'anormal.</p>
+  </section>
+</div>
+</body>
+</html>
