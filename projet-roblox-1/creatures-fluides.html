@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Créatures plus fluides</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 60px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:34px 0 6px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .howto { background:#332d52; border-radius:14px; padding:12px 18px; margin:12px 0; }
+  .controls { position:sticky; top:0; z-index:5; background:var(--bg); padding:8px 0; display:flex; gap:8px; flex-wrap:wrap; }
+  .controls button { background:var(--card); color:var(--text); border:3px solid transparent; border-radius:12px; padding:8px 14px; font-weight:700; cursor:pointer; font-size:15px; }
+  .controls button.on { border-color:var(--accent); background:#3b3560; }
+  .look { background:#3b3560; border-left:5px solid var(--accent); border-radius:10px; padding:8px 14px; color:var(--text); font-size:15px; margin:6px 0 8px; }
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media (max-width: 760px) { .pair { grid-template-columns:1fr; } }
+  .box { background:var(--card); border-radius:14px; overflow:hidden; }
+  .box h3 { margin:0; padding:8px 12px; font-size:15px; }
+  .box.now h3 { color:var(--bad); }
+  .box.new h3 { color:var(--ok); }
+  canvas { width:100%; height:auto; display:block; }
+  .plan { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; margin-top:10px; }
+  .step { background:var(--card); border-radius:14px; padding:11px 14px; border-left:6px solid var(--accent); }
+  .step h3 { margin:0 0 4px; font-size:16px; }
+  .step ul { margin:4px 0 0; padding-left:18px; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐾 Des créatures plus fluides et plus vivantes</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu.</p>
+  <div class="howto">
+    <b>Comment lire ce croquis :</b>
+    <ul>
+      <li>Chaque exemple a deux animations côte à côte. <b style="color:var(--bad)">À gauche, ce que fait le jeu aujourd'hui</b>. <b style="color:var(--ok)">À droite, ce que je propose</b>.</li>
+      <li>Les <b>étiquettes jaunes</b> sur l'animation montrent ce qui se passe à ce moment-là. Les <b>traces</b> montrent le chemin parcouru.</li>
+      <li>Utilise le bouton <b>🐢 Ralenti</b> pour bien voir les détails, et <b>⏸ Pause</b> pour figer l'image.</li>
+      <li>Le bonhomme jaune, c'est toi. La créature bleue ou rose est un familier ou un mob.</li>
+    </ul>
+  </div>
+  <div class="controls">
+    <button id="bNormal" class="on">▶ Vitesse normale</button>
+    <button id="bSlow">🐢 Ralenti (×0,35)</button>
+    <button id="bPause">⏸ Pause</button>
+  </div>
+
+  <h2>1. Un mob qui se promène dans une zone (vu de dessus)</h2>
+  <div class="look">👀 Regarde les <b>points de la trace</b> : à gauche ils sont <b>irréguliers, avec des trous</b>. C'est la saccade : le mob « saute » d'un point à l'autre. À droite, la trace est <b>continue</b>, les virages sont <b>arrondis</b> et le mob s'arrête de temps en temps pour regarder autour de lui.</div>
+  <div class="pair">
+    <div class="box now"><h3>AUJOURD'HUI : saccades et demi-tours secs</h3><canvas id="mobNow" width="560" height="300"></canvas></div>
+    <div class="box new"><h3>PROPOSÉ : glisse, virages en arc, pauses</h3><canvas id="mobNew" width="560" height="300"></canvas></div>
+  </div>
+
+  <h2>2. La démarche (vue de côté)</h2>
+  <div class="look">👀 Regarde les <b>pattes et le sol</b> : à gauche, la patte posée <b>glisse sur le sol</b> (trait rouge) et l'arrêt est net. À droite, chaque patte se <b>pose et reste en place</b> (empreinte), le corps <b>monte et descend</b> à chaque pas, la <b>tête bouge</b>, la <b>queue traîne</b> et, à l'arrêt, la créature <b>respire</b>.<br><small>Comme dans le jeu, chaque patte est <b>une seule pièce sans genou</b> : la souplesse vient donc du <b>corps</b> (rebond, écrasement, balancement), de la <b>tête</b> qui hoche, de l'<b>oreille</b> qui ballotte et de la <b>queue</b> qui fouette. Le pas aussi est plus naturel : la patte pousse lentement puis revient vite.</small></div>
+  <div class="pair">
+    <div class="box now"><h3>AUJOURD'HUI : pieds qui glissent, corps raide</h3><canvas id="walkNow" width="560" height="300"></canvas></div>
+    <div class="box new"><h3>PROPOSÉ : vrais pas, corps et tête vivants</h3><canvas id="walkNew" width="560" height="300"></canvas></div>
+  </div>
+
+  <h2>3. Ton familier quand tu tournes (vu de dessus)</h2>
+  <div class="look">👀 Toi (en jaune), tu tournes brusquement. Regarde la <b>trace rose</b> du familier : à gauche, il fait un <b>grand arc d'un coup</b> pour rester collé derrière ton dos. À droite, il te suit <b>tranquillement</b>, coupe le virage et se tourne petit à petit.</div>
+  <div class="pair">
+    <div class="box now"><h3>AUJOURD'HUI : grand arc brutal</h3><canvas id="petNow" width="560" height="300"></canvas></div>
+    <div class="box new"><h3>PROPOSÉ : suit en douceur</h3><canvas id="petNew" width="560" height="300"></canvas></div>
+  </div>
+
+  <h2>4. Une créature qui vole (vue de face)</h2>
+  <div class="look">👀 Regarde les <b>ailes et l'inclinaison</b> : à gauche, les ailes battent toujours pareil, comme un métronome, et l'oiseau reste droit dans les virages. À droite : <b>coup d'aile fort vers le bas</b>, <b>remontée plus lente</b>, <b>petits vols planés</b>, et il <b>penche</b> du côté où il tourne.</div>
+  <div class="pair">
+    <div class="box now"><h3>AUJOURD'HUI : métronome, toujours droit</h3><canvas id="flyNow" width="560" height="300"></canvas></div>
+    <div class="box new"><h3>PROPOSÉ : battements naturels, il penche</h3><canvas id="flyNew" width="560" height="300"></canvas></div>
+  </div>
+
+  <h2>5. Une gelée qui sautille (vue de côté)</h2>
+  <div class="look">👀 Regarde sa <b>forme</b> : à gauche, elle reste une boule rigide qui rebondit comme une balle. À droite, elle <b>s'écrase pour prendre son élan</b>, <b>s'étire en l'air</b>, <b>s'aplatit en atterrissant</b> puis tremblote.</div>
+  <div class="pair">
+    <div class="box now"><h3>AUJOURD'HUI : boule rigide</h3><canvas id="hopNow" width="560" height="260"></canvas></div>
+    <div class="box new"><h3>PROPOSÉ : gelée élastique</h3><canvas id="hopNew" width="560" height="260"></canvas></div>
+  </div>
+
+  <h2>6. Vitrine de la tour et éclosion d'un œuf</h2>
+  <div class="look">👀 À gauche, la créature dans la vitrine est <b>une statue</b> et l'œuf <b>tremble par petits sauts</b>. À droite, la créature <b>respire, bouge la queue et tourne la tête</b>, l'œuf <b>vacille de plus en plus fort</b>, puis la créature <b>saute de joie</b>.</div>
+  <div class="pair">
+    <div class="box now"><h3>AUJOURD'HUI : figée</h3><canvas id="showNow" width="560" height="280"></canvas></div>
+    <div class="box new"><h3>PROPOSÉ : vivante</h3><canvas id="showNew" width="560" height="280"></canvas></div>
+  </div>
+
+  <h2>Le plan, en 5 étapes (je teste et j'enregistre après chacune)</h2>
+  <div class="plan">
+    <div class="step"><h3>1. Un « moteur de mouvement » commun</h3><ul>
+      <li>C'est le système des boss que tu as validé (ressorts, vrais pas, respiration, tête, queue, ailes, sauts élastiques), réutilisé par toutes les créatures.</li></ul></div>
+    <div class="step"><h3>2. Les mobs (exemple 1)</h3><ul>
+      <li>Ton écran lisse leur mouvement, comme pour les boss : plus de saccades.</li>
+      <li>Ils accélèrent, freinent et font des pauses, et ils apparaissent et disparaissent en douceur.</li>
+      <li>Le serveur ne déplace plus ceux que personne ne voit (moins de calcul).</li></ul></div>
+    <div class="step"><h3>3. Tes familiers (exemples 2, 3, 4, 5)</h3><ul>
+      <li>Ils te suivent en douceur, ont de vrais pas, et leurs attaques ont de l'élan.</li>
+      <li>Au K.O., ils basculent et se relèvent au lieu de se retourner d'un coup.</li></ul></div>
+    <div class="step"><h3>4. Les créatures de ton île</h3><ul>
+      <li>Mêmes mouvements. Les volantes changent d'altitude en douceur, et elles se couchent pour dormir en respirant.</li></ul></div>
+    <div class="step"><h3>5. Vitrines, géants, œufs et Index (exemple 6)</h3><ul>
+      <li>Les créatures respirent et bougent dans les vitrines et sur les balcons, et l'éclosion devient fluide et joyeuse.</li></ul></div>
+  </div>
+  <div class="howto"><b>Performances (important sur téléphone) :</b> les créatures proches ont toute l'animation, les lointaines une version simplifiée, et celles qu'on ne voit pas ne sont pas animées.</div>
+</div>
+<script>
+const TAU = Math.PI * 2;
+let speed = 1, paused = false;
+const btn = id => document.getElementById(id);
+function setMode(m) { speed = m === "slow" ? 0.35 : 1; paused = m === "pause"; ["bNormal", "bSlow", "bPause"].forEach(b => btn(b).classList.remove("on")); btn(m === "slow" ? "bSlow" : m === "pause" ? "bPause" : "bNormal").classList.add("on"); }
+btn("bNormal").onclick = () => setMode("normal"); btn("bSlow").onclick = () => setMode("slow"); btn("bPause").onclick = () => setMode("pause");
+
+const ctxOf = id => btn(id).getContext("2d");
+function spring(st, goal, dt, k, c) { for (let i = 0; i < 3; i++) { const h = dt / 3; st.v += (k * (goal - st.x) - c * st.v) * h; st.x += st.v * h; } return st.x; }
+function angDiff(a, b) { return ((b - a + Math.PI) % TAU + TAU) % TAU - Math.PI; }
+
+// Étiquette jaune avec flèche vers un point
+function tag(g, text, x, y, tx, ty, color = "#ffd34d") {
+  g.save(); g.font = "bold 15px Segoe UI"; const w = g.measureText(text).width + 14;
+  // l'étiquette reste entière dans l'image (la flèche montre toujours le bon endroit)
+  x = Math.max(w / 2 + 4, Math.min(g.canvas.width - w / 2 - 4, x));
+  y = Math.max(16, Math.min(g.canvas.height - 16, y));
+  if (tx !== undefined) { g.strokeStyle = color; g.lineWidth = 2.5; g.beginPath(); g.moveTo(x, y); g.lineTo(tx, ty); g.stroke(); g.beginPath(); g.arc(tx, ty, 3.5, 0, TAU); g.fillStyle = color; g.fill(); }
+  g.fillStyle = "#1d1a2be6"; g.strokeStyle = color; g.lineWidth = 2; g.beginPath(); g.roundRect(x - w / 2, y - 13, w, 24, 8); g.fill(); g.stroke();
+  g.fillStyle = color; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(text, x, y); g.restore();
+}
+// Étiquettes qui restent affichées un moment
+function flash(store, text, life = 1.2) { store.push({ text, t: life }); }
+function drawFlashes(g, store, dt, x, y) { for (let i = store.length - 1; i >= 0; i--) { const f = store[i]; f.t -= dt; if (f.t <= 0) store.splice(i, 1); } store.slice(-1).forEach(f => tag(g, f.text, x, y)); }
+
+function grass(g, w, h) { g.fillStyle = "#8fd36f"; g.fillRect(0, 0, w, h); g.fillStyle = "#7cc25e"; for (let i = 0; i < 50; i++) g.fillRect((i * 97) % w, (i * 53) % h, 7, 7); }
+// Créature vue de dessus (chien bleu / rose) : corps, tête avec oreilles, queue
+function topCreature(g, x, y, ang, color, tail = 0, head = 0) {
+  g.save(); g.translate(x, y); g.rotate(ang); g.fillStyle = color; g.strokeStyle = "#1d1a2b"; g.lineWidth = 2;
+  g.save(); g.translate(-17, 0); g.rotate(tail); g.beginPath(); g.moveTo(0, -4); g.quadraticCurveTo(-14, 0, -20, 0); g.quadraticCurveTo(-14, 2, 0, 4); g.fill(); g.stroke(); g.restore();
+  g.beginPath(); g.ellipse(0, 0, 19, 12, 0, 0, TAU); g.fill(); g.stroke();
+  g.save(); g.translate(17, 0); g.rotate(head); g.beginPath(); g.arc(6, 0, 10, 0, TAU); g.fill(); g.stroke();
+  g.beginPath(); g.ellipse(2, -10, 4, 6, -0.4, 0, TAU); g.ellipse(2, 10, 4, 6, 0.4, 0, TAU); g.fill(); g.stroke();
+  g.fillStyle = "#1d1a2b"; g.beginPath(); g.arc(11, -4, 2.2, 0, TAU); g.arc(11, 4, 2.2, 0, TAU); g.fill(); g.restore();
+  g.restore();
+}
+function trail(g, pts, color, dotted) { g.save(); g.fillStyle = color; for (const p of pts) { g.globalAlpha = Math.max(0.15, p.a); g.beginPath(); g.arc(p.x, p.y, dotted ? 3.2 : 2.6, 0, TAU); g.fill(); } g.restore(); }
+function age(pts, dt, life) { for (let i = pts.length - 1; i >= 0; i--) { pts[i].a -= dt / life; if (pts[i].a <= 0) pts.splice(i, 1); } }
+
+// ---------- 1. Mobs ----------
+const WP = [[90, 80], [460, 70], [480, 230], [120, 225]];
+const mobNow = { i: 0, x: 90, y: 80, sx: 90, sy: 80, sa: 0, next: 0, trail: [], fl: [] };
+const mobNew = { i: 0, x: 90, y: 80, ang: 0, speed: 0, pause: 0, look: 0, lookT: 0, tail: { x: 0, v: 0 }, angSt: { x: 0, v: 0 }, head: { x: 0, v: 0 }, trail: [], fl: [], tt: 0 };
+function mobs(t, dt) {
+  for (const id of ["mobNow", "mobNew"]) { const g = ctxOf(id); grass(g, 560, 300); g.strokeStyle = "#ffffffaa"; g.setLineDash([6, 6]); g.beginPath(); WP.forEach((p, k) => k ? g.lineTo(...p) : g.moveTo(...p)); g.closePath(); g.stroke(); g.setLineDash([]); g.fillStyle = "#ffffffcc"; g.font = "12px Segoe UI"; g.fillText("chemin prévu", 230, 62); }
+  // Aujourd'hui
+  let m = mobNow, tgt = WP[(m.i + 1) % 4], dx = tgt[0] - m.x, dy = tgt[1] - m.y, d = Math.hypot(dx, dy);
+  const step = Math.min(d, 75 * dt); m.x += dx / d * step; m.y += dy / d * step;
+  if (d < 2) { m.i = (m.i + 1) % 4; flash(m.fl, "↪ demi-tour sec !"); }
+  if (t > m.next) { const jump = Math.hypot(m.x - m.sx, m.y - m.sy); m.sx = m.x; m.sy = m.y; m.sa = Math.atan2(dy, dx); m.trail.push({ x: m.sx, y: m.sy, a: 1 }); m.next = t + 0.1 + Math.random() * 0.22; if (jump > 18) flash(m.fl, "⚡ à-coup !", 0.7); }
+  age(m.trail, dt, 4);
+  let g = ctxOf("mobNow"); trail(g, m.trail, "#ff5a4a", true); topCreature(g, m.sx, m.sy, m.sa, "#7ab8ff", 0, 0); drawFlashes(g, m.fl, dt, m.sx, m.sy - 34);
+  // Proposé
+  m = mobNew; tgt = WP[(m.i + 1) % 4]; dx = tgt[0] - m.x; dy = tgt[1] - m.y; d = Math.hypot(dx, dy);
+  if (m.pause > 0) {
+    m.pause -= dt; m.speed = Math.max(0, m.speed - 160 * dt);
+    if (t > m.lookT) { m.look = (Math.random() - 0.5) * 1.6; m.lookT = t + 0.5 + Math.random() * 0.5; }
+  } else {
+    const want = Math.atan2(dy, dx);
+    m.speed += ((75 * Math.min(1, d / 45)) - m.speed) * Math.min(1, dt * 3);
+    m.ang += Math.max(-3.2 * dt, Math.min(3.2 * dt, angDiff(m.ang, want)));
+    m.look *= Math.pow(0.05, dt);
+    if (d < 7) { m.i = (m.i + 1) % 4; m.pause = 1.4 + Math.random() * 0.6; flash(m.fl, "⏸ pause, il regarde autour 👀", 1.6); }
+  }
+  m.x += Math.cos(m.ang) * m.speed * dt; m.y += Math.sin(m.ang) * m.speed * dt;
+  m.tt += dt; if (m.tt > 0.05) { m.tt = 0; m.trail.push({ x: m.x, y: m.y, a: 1 }); }
+  age(m.trail, dt, 4);
+  const sm = spring(m.angSt, m.ang, dt, 60, 10);
+  const tail = spring(m.tail, -(m.ang - sm) * 2.4 + Math.sin(t * 2.2) * 0.15, dt, 40, 6);
+  const head = spring(m.head, m.look, dt, 50, 9);
+  g = ctxOf("mobNew"); trail(g, m.trail, "#2fa84f", false); topCreature(g, m.x, m.y, m.ang, "#7ab8ff", tail, head);
+  if (m.pause <= 0 && Math.abs(angDiff(m.ang, Math.atan2(dy, dx))) > 0.4) tag(g, "↻ tourne en arc", m.x, m.y - 34);
+  drawFlashes(g, m.fl, dt, m.x, m.y - 34);
+}
+
+// ---------- 2. Démarche ----------
+// Créature vue de côté. Comme dans le jeu, chaque patte est UNE pièce qui
+// pivote à la hanche (pas de genou) : la souplesse vient du corps, de la
+// tête, des oreilles et de la queue.
+//   o.legs[4] (angles), bob, lean (penché), sq (écrasement), breath,
+//   head (hochement), headY, ear, tail, tail2 (bout de la queue)
+function capsule(g, w, h) { g.beginPath(); g.roundRect(-w / 2, 0, w, h, w / 2); g.fill(); g.stroke(); }
+function sideCreature(g, x, ground, o) {
+  const legLen = 27;
+  g.save(); g.translate(x, ground - 11 - legLen - (o.bob || 0)); g.rotate(o.lean || 0); g.strokeStyle = "#1d1a2b"; g.lineWidth = 2;
+  const legX = [-18, -8, 12, 22];
+  // pattes du côté lointain d'abord (plus foncées), puis queue, corps, pattes proches, tête
+  const drawLeg = k => { g.save(); g.translate(legX[k], 8); g.rotate(o.legs[k]); g.fillStyle = k % 2 ? "#5d8fd0" : "#7ab8ff"; capsule(g, 9, legLen + 3); g.restore(); };
+  drawLeg(1); drawLeg(3);
+  // queue en deux morceaux : la base suit le corps, le bout traîne derrière
+  g.save(); g.translate(-28, -4); g.rotate(-0.55 + (o.tail || 0)); g.fillStyle = "#7ab8ff"; g.beginPath(); g.ellipse(-8, 0, 10, 5, 0, 0, TAU); g.fill(); g.stroke();
+  g.translate(-15, 0); g.rotate(o.tail2 || 0); g.beginPath(); g.ellipse(-7, 0, 9, 4.5, 0, 0, TAU); g.fill(); g.stroke(); g.restore();
+  const br = 1 + (o.breath || 0), sq = o.sq || 0;
+  g.save(); g.scale(1 + sq, 1 - sq); g.fillStyle = "#7ab8ff"; g.beginPath(); g.ellipse(0, 0, 31 * br, 18 * br, 0, 0, TAU); g.fill(); g.stroke(); g.restore();
+  drawLeg(0); drawLeg(2);
+  g.save(); g.translate(29, -15 + (o.headY || 0)); g.rotate(o.head || 0); g.fillStyle = "#7ab8ff";
+  g.beginPath(); g.ellipse(9, -4, 14, 12, 0, 0, TAU); g.fill(); g.stroke();
+  g.beginPath(); g.ellipse(21, 0, 6, 4.5, 0, 0, TAU); g.fill(); g.stroke(); // museau
+  g.fillStyle = "#1d1a2b"; g.beginPath(); g.arc(15, -7, 2.5, 0, TAU); g.arc(26, -1, 1.8, 0, TAU); g.fill();
+  g.save(); g.translate(3, -14); g.rotate(-0.25 + (o.ear || 0)); g.fillStyle = "#5d8fd0"; g.beginPath(); g.moveTo(-4, 0); g.quadraticCurveTo(-6, -14, 2, -16); g.quadraticCurveTo(6, -8, 5, 0); g.fill(); g.stroke(); g.restore();
+  g.restore();
+  g.restore();
+  // position des pieds au sol (pour les empreintes)
+  return legX.map((lx, k) => { const a = o.legs[k] + (o.lean || 0); return x + lx + Math.sin(-a) * legLen; });
+}
+// Pas en trot (comme dans le jeu pour les quadrupèdes) : 60 % du temps la
+// patte est posée et recule lentement, 40 % elle revient vite vers l'avant
+function gaitAngle(ph) {
+  ph = ((ph % 1) + 1) % 1;
+  if (ph < 0.6) return 0.62 - (ph / 0.6) * 1.24;
+  const s = (ph - 0.6) / 0.4, e = s * s * (3 - 2 * s);
+  return -0.62 + e * 1.24;
+}
+function ground(g) { g.fillStyle = "#cfe8ff"; g.fillRect(0, 0, 560, 300); g.fillStyle = "#8fd36f"; g.fillRect(0, 238, 560, 62); g.fillStyle = "#6fb24f"; g.fillRect(0, 238, 560, 4); }
+const wNow = { x: 40, prints: [], fl: [] }, wNew = { x: 40, speed: 0, phase: 0, lean: { x: 0, v: 0 }, head: { x: 0, v: 0 }, tail: { x: 0, v: 0 }, bob: { x: 0, v: 0 }, prints: [], lastStep: 0, fl: [] };
+function walking(t, dt) {
+  const c = t % 8, moving = c < 5;
+  ground(ctxOf("walkNow")); ground(ctxOf("walkNew"));
+  // Aujourd'hui : pattes au rythme du temps, vitesse constante -> le pied posé glisse
+  const n = wNow; const prevX = n.x; if (moving) n.x += 55 * dt; if (n.x > 600) { n.x = -40; n.prints = []; }
+  const amp = moving ? 0.55 : 0;
+  let g = ctxOf("walkNow");
+  const legs = [0, 1, 2, 3].map(k => Math.sin(t * 9 + (k % 2 ? Math.PI : 0)) * amp);
+  const feet = sideCreature(g, n.x, 238, { legs, tail: Math.sin(t * 3.2) * 0.25 });
+  // trait rouge : la patte arrière posée glisse (avance alors que le pied devrait rester fixe)
+  if (moving) { g.strokeStyle = "#ff3b2f"; g.lineWidth = 4; g.beginPath(); g.moveTo(feet[0] - 10, 244); g.lineTo(feet[0] + 6, 244); g.stroke(); tag(g, "le pied glisse ↔", feet[0], 275, feet[0], 245); }
+  else tag(g, "arrêt net, plus rien ne bouge", n.x, 150);
+  // Proposé
+  const m = wNew; m.speed += ((moving ? 55 : 0) - m.speed) * Math.min(1, dt * 2.5); m.x += m.speed * dt; if (m.x > 600) { m.x = -40; m.prints = []; }
+  // phase avancée par la DISTANCE : un cycle = 2 pas = 52 px (pieds qui ne glissent pas)
+  const before = Math.floor(m.phase * 2);
+  m.phase += m.speed * dt / 52;
+  const mv = Math.min(1, m.speed / 55);
+  const ph = m.phase % 1;
+  // rebond : le corps descend quand une paire de pattes se pose, remonte entre deux pas (ressort un peu mou = léger dépassement)
+  const bob = spring(m.bob, (0.5 - 0.5 * Math.cos(ph * 2 * TAU)) * 7 * mv, dt, 260, 13);
+  const sq = Math.max(0, (3.5 * mv - bob) / 7) * 0.09; // petit écrasement à chaque appui
+  // balancement avant / arrière à chaque pas + penché en accélérant / freinant
+  const accel = (moving && m.speed < 50 ? 1 : 0) - (!moving && m.speed > 5 ? 1 : 0);
+  const lean = spring(m.lean, Math.sin(ph * TAU) * 0.07 * mv + accel * 0.1, dt, 140, 11);
+  // tête : hoche avec du retard, contrebalance le rebond ; à l'arrêt elle regarde autour
+  const head = spring(m.head, -Math.sin(ph * 2 * TAU + 0.9) * 0.16 * mv - lean * 0.6 + (mv < 0.1 ? Math.sin(t * 0.8) * 0.2 : 0), dt, 80, 7);
+  const headY = -m.bob.v * 0.025;
+  // oreille : ballotte avec la vitesse du rebond
+  const ear = spring(m.ear || (m.ear = { x: 0, v: 0 }), -m.bob.v * 0.02, dt, 120, 6);
+  // queue : la base fouette au rythme du pas, le bout suit en retard (deux ressorts en chaîne)
+  const tail = spring(m.tail, Math.sin(ph * TAU * 2) * 0.35 * mv + (1 - mv) * Math.sin(t * 2.6) * 0.25 - m.speed * 0.004, dt, 70, 6);
+  const tail2 = spring(m.tailTip || (m.tailTip = { x: 0, v: 0 }), -m.tail.v * 0.05, dt, 60, 5);
+  const breath = Math.sin(t * 1.8) * 0.04 * (1 - mv);
+  // trot : patte arrière lointaine + avant proche ensemble, et inversement
+  const trotLegs = [0, 1, 2, 3].map(k => gaitAngle(ph + (k === 0 || k === 3 ? 0 : 0.5)) * mv);
+  g = ctxOf("walkNew");
+  const f2 = sideCreature(g, m.x, 238, { bob, lean, sq, head, headY, ear, tail, tail2, breath, legs: trotLegs });
+  if (Math.floor(m.phase * 2) !== before && mv > 0.3) m.prints.push({ x: f2[before % 2 ? 1 : 0], a: 1 });
+  m.prints.forEach(p => { p.a -= dt / 3; g.globalAlpha = Math.max(0, p.a); g.fillStyle = "#3d7a2a"; g.beginPath(); g.ellipse(p.x, 246, 6, 3, 0, 0, TAU); g.fill(); g.globalAlpha = 1; });
+  m.prints = m.prints.filter(p => p.a > 0);
+  if (mv > 0.5) {
+    tag(g, "empreintes : le pied reste posé", 150, 282);
+    const body = 238 - 38 - bob;
+    const tips = [
+      ["↕ rebondit et s'écrase à chaque pas", m.x, 110, m.x, body - 18],
+      ["la tête hoche avec un petit retard", m.x + 95, 120, m.x + 40, body - 18],
+      ["l'oreille ballotte", m.x + 90, 95, m.x + 33, body - 32],
+      ["la queue fouette, le bout suit", m.x - 105, 150, m.x - 52, body - 4],
+      ["⟲ le corps se balance d'avant en arrière", m.x, 110, m.x, body],
+    ];
+    const tip = tips[Math.floor(t / 1.4) % tips.length];
+    tag(g, ...tip);
+  }
+  else if (!moving && m.speed < 3) { tag(g, "😮‍💨 il respire, la tête bouge", m.x, 120, m.x + 40, 238 - 60); }
+  else if (!moving) tag(g, "il freine et se penche en arrière", m.x, 120);
+  else tag(g, "il démarre et se penche en avant", m.x, 120);
+}
+
+// ---------- 3. Familier qui suit ----------
+const pl = { ang: 0, x: 280, y: 150, trail: [] };
+const pNow = { x: 0, y: 0, trail: [], fl: [] }, pNew = { x: 0, y: 0, ang: 0, frame: 0, angSt: { x: 0, v: 0 }, init: false, trail: [] };
+let lastSeg = -1;
+function playerDot(g, x, y, ang) { g.save(); g.translate(x, y); g.rotate(ang); g.fillStyle = "#ffd34d"; g.strokeStyle = "#1d1a2b"; g.lineWidth = 2.5; g.beginPath(); g.arc(0, 0, 14, 0, TAU); g.fill(); g.stroke(); g.fillStyle = "#1d1a2b"; g.beginPath(); g.moveTo(18, 0); g.lineTo(9, -7); g.lineTo(9, 7); g.fill(); g.restore(); g.fillStyle = "#1d1a2b"; g.font = "bold 12px Segoe UI"; g.textAlign = "center"; g.fillText("toi", x, y + 30); }
+function following(t, dt) {
+  const seg = Math.floor(t / 2);
+  const target = seg * Math.PI / 2 * (seg % 3 === 2 ? -1 : 1);
+  pl.ang += angDiff(pl.ang, target) * Math.min(1, dt * 14);
+  pl.x = 280 + Math.cos(t * 0.5) * 150; pl.y = 150 + Math.sin(t * 1.0) * 65;
+  const slot = [-40, 30];
+  for (const id of ["petNow", "petNew"]) grass(ctxOf(id), 560, 300);
+  // Aujourd'hui
+  const c = Math.cos(pl.ang), s = Math.sin(pl.ang);
+  const tx = pl.x + slot[0] * c - slot[1] * s, ty = pl.y + slot[0] * s + slot[1] * c;
+  const ox = pNow.x, oy = pNow.y, a1 = 1 - Math.exp(-dt * 6);
+  pNow.x += (tx - pNow.x) * a1; pNow.y += (ty - pNow.y) * a1;
+  const mv = Math.hypot(pNow.x - ox, pNow.y - oy);
+  const ang1 = mv > 0.4 ? Math.atan2(pNow.y - oy, pNow.x - ox) : pl.ang;
+  pNow.trail.push({ x: pNow.x, y: pNow.y, a: 1 }); age(pNow.trail, dt, 2.2);
+  let g = ctxOf("petNow"); trail(g, pNow.trail, "#ff3b9a", false); playerDot(g, pl.x, pl.y, pl.ang); topCreature(g, pNow.x, pNow.y, ang1, "#ff9bd2", Math.sin(t * 5) * 0.3);
+  if (seg !== lastSeg) { flash(pNow.fl, "↺ grand arc d'un coup !", 1.3); }
+  drawFlashes(g, pNow.fl, dt, pNow.x, pNow.y - 34);
+  // Proposé
+  if (!pNew.init) { pNew.x = tx; pNew.y = ty; pNew.init = true; }
+  pNew.frame += angDiff(pNew.frame, pl.ang) * Math.min(1, dt * 2);
+  const c2 = Math.cos(pNew.frame), s2 = Math.sin(pNew.frame);
+  const tx2 = pl.x + slot[0] * c2 - slot[1] * s2, ty2 = pl.y + slot[0] * s2 + slot[1] * c2;
+  const ox2 = pNew.x, oy2 = pNew.y, a2 = 1 - Math.exp(-dt * 4);
+  pNew.x += (tx2 - pNew.x) * a2; pNew.y += (ty2 - pNew.y) * a2;
+  const sp = Math.hypot(pNew.x - ox2, pNew.y - oy2) / dt;
+  pNew.ang += angDiff(pNew.ang, sp > 15 ? Math.atan2(pNew.y - oy2, pNew.x - ox2) : pNew.frame) * Math.min(1, dt * 5);
+  const sm = spring(pNew.angSt, pNew.ang, dt, 60, 10);
+  pNew.trail.push({ x: pNew.x, y: pNew.y, a: 1 }); age(pNew.trail, dt, 2.2);
+  g = ctxOf("petNew"); trail(g, pNew.trail, "#2fa84f", false); playerDot(g, pl.x, pl.y, pl.ang); topCreature(g, pNew.x, pNew.y, pNew.ang, "#ff9bd2", -(pNew.ang - sm) * 2.5 + Math.sin(t * 2.2) * 0.15, -(pNew.ang - sm) * 1.2);
+  if ((t % 2) < 1.2) tag(g, "suit en douceur, coupe le virage", pNew.x, pNew.y - 34);
+  lastSeg = seg;
+}
+
+// ---------- 4. Volants ----------
+function bird(g, x, y, roll, wing, color) {
+  g.save(); g.translate(x, y); g.rotate(roll); g.strokeStyle = "#1d1a2b"; g.lineWidth = 2; g.fillStyle = color;
+  for (const side of [-1, 1]) { g.save(); g.translate(side * 11, -3); g.rotate(-side * wing); g.beginPath(); g.ellipse(side * 30, 0, 32, 9, 0, 0, TAU); g.fill(); g.stroke(); g.restore(); }
+  g.beginPath(); g.ellipse(0, 0, 16, 21, 0, 0, TAU); g.fill(); g.stroke();
+  g.beginPath(); g.arc(0, -23, 11, 0, TAU); g.fill(); g.stroke();
+  g.fillStyle = "#1d1a2b"; g.beginPath(); g.arc(-4, -25, 2.2, 0, TAU); g.arc(4, -25, 2.2, 0, TAU); g.fill();
+  g.fillStyle = "#ffb000"; g.beginPath(); g.moveTo(-4, -19); g.lineTo(4, -19); g.lineTo(0, -13); g.fill();
+  g.restore();
+}
+function sky(g) { g.fillStyle = "#bfe0ff"; g.fillRect(0, 0, 560, 300); }
+const fly = { roll: { x: 0, v: 0 }, y: { x: 0, v: 0 } };
+function flying(t, dt) {
+  sky(ctxOf("flyNow")); sky(ctxOf("flyNew"));
+  const x = 280 + Math.sin(t * 0.6) * 180, vx = Math.cos(t * 0.6);
+  let g = ctxOf("flyNow"); bird(g, x, 150 + Math.sin(t * 2) * 6, 0, Math.sin(t * 11) * 0.55, "#ff9a3c");
+  tag(g, Math.abs(vx) < 0.5 ? "il tourne… mais reste tout droit" : "toujours le même battement", 280, 270);
+  // Proposé
+  const glide = (t % 4) > 2.8, ph = (t * 1.8) % 1;
+  const wing = glide ? -0.12 : (ph < 0.3 ? 0.65 - (ph / 0.3) * 1.3 : -0.65 + ((ph - 0.3) / 0.7) * 1.3);
+  const lift = spring(fly.y, glide ? 0 : (ph < 0.3 ? -8 : 4), dt, 120, 10);
+  const roll = spring(fly.roll, -Math.sin(t * 0.6) * 0.45, dt, 50, 9);
+  g = ctxOf("flyNew"); bird(g, x, 150 + lift, roll, wing, "#ff9a3c");
+  let label = glide ? "🪂 vol plané, ailes ouvertes" : (ph < 0.3 ? "⬇ coup d'aile fort (le corps monte)" : "⬆ remontée lente de l'aile");
+  tag(g, label, 280, 40);
+  if (Math.abs(vx) < 0.6) tag(g, Math.sin(t * 0.6) > 0 ? "↘ il penche dans le virage" : "↙ il penche dans le virage", 280, 270);
+}
+
+// ---------- 5. Sauts ----------
+function blob(g, x, gy, h, sx, sy) {
+  g.save(); g.translate(x, gy - h); g.scale(sx, sy); g.fillStyle = "#7ee08a"; g.strokeStyle = "#1d1a2b"; g.lineWidth = 2 / Math.max(sx, sy);
+  g.beginPath(); g.ellipse(0, -26, 30, 26, 0, 0, TAU); g.fill(); g.stroke();
+  g.fillStyle = "#ffffff88"; g.beginPath(); g.ellipse(-10, -38, 8, 5, -0.5, 0, TAU); g.fill();
+  g.fillStyle = "#1d1a2b"; g.beginPath(); g.arc(-9, -28, 3.2, 0, TAU); g.arc(9, -28, 3.2, 0, TAU); g.fill(); g.restore();
+}
+function floor2(g) { g.fillStyle = "#cfe8ff"; g.fillRect(0, 0, 560, 260); g.fillStyle = "#8fd36f"; g.fillRect(0, 200, 560, 60); }
+function hopping(t, dt) {
+  floor2(ctxOf("hopNow")); floor2(ctxOf("hopNew"));
+  const p = (t * 0.55) % 1, x = 80 + ((t * 45) % 400);
+  let g = ctxOf("hopNow"); blob(g, x, 200, Math.abs(Math.sin(p * Math.PI)) * 70, 1, 1);
+  tag(g, "toujours la même boule, rebond sec", 280, 30);
+  let h = 0, sx = 1, sy = 1, label;
+  if (p < 0.2) { const k = p / 0.2; const e = Math.sin(k * Math.PI); sx = 1 + 0.28 * e; sy = 1 - 0.28 * e; label = "1. elle s'écrase pour prendre son élan"; }
+  else if (p < 0.7) { const k = (p - 0.2) / 0.5; h = Math.sin(k * Math.PI) * 80; const v = Math.abs(Math.cos(k * Math.PI)); sx = 1 - 0.14 * v; sy = 1 + 0.22 * v; label = "2. elle s'étire en l'air"; }
+  else { const k = (p - 0.7) / 0.3; const w = Math.exp(-k * 5) * Math.cos(k * 18); sx = 1 + 0.32 * w; sy = 1 - 0.32 * w; label = k < 0.25 ? "3. elle s'aplatit en atterrissant" : "4. elle tremblote comme une gelée"; }
+  g = ctxOf("hopNew"); g.fillStyle = "#00000025"; g.beginPath(); g.ellipse(x, 203, 28 * (1 - h / 170), 6, 0, 0, TAU); g.fill();
+  blob(g, x, 200, h, sx, sy); tag(g, label, 280, 30);
+}
+
+// ---------- 6. Vitrine + œuf ----------
+const sv = { head: { x: 0, v: 0 }, look: 0, lookT: 0 };
+function egg(g, x, y, rot, crack) {
+  g.save(); g.translate(x, y); g.rotate(rot); g.fillStyle = "#ffe9b0"; g.strokeStyle = "#1d1a2b"; g.lineWidth = 2;
+  g.beginPath(); g.ellipse(0, -34, 27, 36, 0, 0, TAU); g.fill(); g.stroke();
+  g.fillStyle = "#ff9bd2"; g.beginPath(); g.arc(-9, -40, 6, 0, TAU); g.arc(11, -24, 5, 0, TAU); g.fill();
+  if (crack) { g.beginPath(); g.moveTo(-20, -36); g.lineTo(-9, -29); g.lineTo(0, -38); g.lineTo(9, -29); g.lineTo(20, -36); g.stroke(); }
+  g.restore();
+}
+function showBg(g) { g.fillStyle = "#3b3560"; g.fillRect(0, 0, 560, 280); g.fillStyle = "#1b1830"; g.fillRect(24, 50, 230, 200); g.strokeStyle = "#dab44a"; g.lineWidth = 6; g.strokeRect(24, 50, 230, 200); g.fillStyle = "#fff"; g.font = "bold 13px Segoe UI"; g.textAlign = "center"; g.fillText("vitrine de la tour", 139, 40); g.fillText("éclosion d'un œuf", 415, 40); }
+function showcase(t, dt) {
+  showBg(ctxOf("showNow")); showBg(ctxOf("showNew"));
+  let g = ctxOf("showNow"); sideCreature(g, 139, 235, { legs: [0, 0, 0, 0] }); tag(g, "statue", 139, 90);
+  if (t > sv.lookT) { sv.look = (Math.random() - 0.5) * 0.55; sv.lookT = t + 1.6 + Math.random() * 1.6; }
+  const head = spring(sv.head, sv.look, dt, 70, 9), shift = Math.sin(t * 0.7);
+  g = ctxOf("showNew"); sideCreature(g, 139, 235, { breath: Math.sin(t * 1.8) * 0.04, head, tail: Math.sin(t * 2.1) * 0.4, lean: shift * 0.03, bob: Math.sin(t * 1.8) * 1.5, legs: [shift * 0.05, -shift * 0.05, shift * 0.05, -shift * 0.05] });
+  tag(g, (t % 3) < 1.5 ? "respire" : "tourne la tête, bouge la queue", 139, 90);
+  const p = t % 6;
+  g = ctxOf("showNow");
+  if (p < 4) { egg(g, 415, 225, (Math.floor(p * 18) % 2 ? 1 : -1) * 0.12 * (p / 4 + 0.3), false); tag(g, "petits sauts saccadés", 415, 255); }
+  else { sideCreature(g, 415, 235, { legs: [0, 0, 0, 0] }); tag(g, "elle apparaît, figée", 415, 90); }
+  g = ctxOf("showNew");
+  if (p < 4) { egg(g, 415, 225, Math.sin(p * (7 + p * 3)) * (0.05 + (p / 4) * 0.28), p > 3); tag(g, p > 3 ? "ça craque !" : "vacille de plus en plus fort", 415, 255); }
+  else { const k = p - 4; const j = k < 0.6 ? Math.sin(k / 0.6 * Math.PI) * 45 : Math.max(0, Math.sin((k - 0.6) / 0.5 * Math.PI)) * 16;
+    sideCreature(g, 415, 235 - j, { lean: -0.12 * (j / 45), head: -0.25 * (j / 45), tail: Math.sin(t * 9) * 0.5, legs: [0.35, -0.35, 0.35, -0.35].map(v => v * (j / 45)) });
+    tag(g, "🎉 saute de joie !", 415, 90); }
+}
+
+let last = performance.now(), T = 0;
+function frame(now) {
+  const real = Math.min(0.05, (now - last) / 1000); last = now;
+  if (!paused) {
+    const dt = real * speed; T += dt;
+    mobs(T, dt); walking(T, dt); following(T, dt); flying(T, dt); hopping(T, dt); showcase(T, dt);
+  }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
