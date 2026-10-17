@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Place ronde et îles</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:10px; margin-top:10px; }
+  .opt { background:var(--card); border-radius:14px; padding:12px 14px; border:3px solid transparent; cursor:pointer; }
+  .opt.on { border-color:var(--accent); background:#3b3560; }
+  .opt h3 { margin:0 0 4px; font-size:16px; }
+  .opt .big { font-size:20px; font-weight:800; color:var(--ok); }
+  .opt ul { margin:6px 0 0; padding-left:18px; font-size:14px; }
+  .opt .tag { display:inline-block; background:var(--ok); color:#123; font-size:11px; font-weight:800; padding:1px 7px; border-radius:8px; margin-left:4px; }
+  .maps { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
+  @media (max-width: 800px) { .maps { grid-template-columns:1fr; } }
+  .map { background:var(--card); border-radius:16px; padding:8px; }
+  .map h3 { margin:2px 6px 6px; font-size:15px; }
+  .map svg { width:100%; height:auto; display:block; border-radius:10px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border-radius:14px; overflow:hidden; font-size:14px; margin-top:10px; }
+  th, td { padding:8px 11px; text-align:left; border-bottom:1px solid #3a3558; }
+  th { color:var(--accent); font-size:13px; } td { color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⭕ Place ronde et îles plus proches</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu. Les chiffres viennent du calcul du jeu lui-même.</p>
+  <div class="note">
+    <b>Pourquoi les îles ne peuvent pas s'approcher davantage aujourd'hui :</b> au <b>niveau maximum</b>, le jardin descend jusqu'à <b>240 studs vers le centre</b> et fait <b>204 studs de large</b>. Plus on s'approche du centre, plus les îles sont serrées : à leur pointe, deux îles voisines doivent garder <b>40 studs d'écart</b>. C'est ce qui fixe le cercle à <b>559</b>. La place, elle, ne gêne pas : il reste de la marge.
+  </div>
+
+  <h2>Choisis une option (clique dessus)</h2>
+  <div class="opts" id="opts"></div>
+  <div class="maps">
+    <div class="map"><h3 style="color:var(--bad)">AUJOURD'HUI : place carrée, cercle des îles à 559</h3><svg id="mapNow" viewBox="-640 -640 1280 1280"></svg></div>
+    <div class="map"><h3 style="color:var(--ok)" id="newTitle">PROPOSÉ</h3><svg id="mapNew" viewBox="-640 -640 1280 1280"></svg></div>
+  </div>
+  <p style="font-size:13px">Sur les cartes : 🟩 l'île et son jardin au niveau de départ, ⬜ le contour du jardin au niveau maximum, ▬ les ponts avec leurs plaques ⚡, ⭐ les 6 portails des zones.</p>
+
+  <table>
+    <thead><tr><th></th><th>Cercle des îles</th><th>Pont au départ</th><th>Pont au jardin max</th><th>Ce qu'on perd</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <h2>La place ronde (zoom)</h2>
+  <div class="map" style="max-width:760px;margin:auto"><svg id="plaza" viewBox="-170 -170 340 340"></svg></div>
+  <div class="note">
+    <b>Organisation proposée de la place ronde</b> (le décor final sera fait d'après tes captures) :
+    <ul>
+      <li><b>Au centre</b> : le spawn, autour d'une fontaine.</li>
+      <li><b>1er anneau</b> : la rangée d'œufs et les incubateurs, en arc de cercle face au spawn.</li>
+      <li><b>2e anneau</b> : les <b>6 portails des zones</b>, chacun <b>tourné vers sa zone</b> (le portail du Volcan regarde vers le Volcan…).</li>
+      <li><b>Au bord</b> : les <b>8 départs de pont</b>, avec une arche par île, entre les portails pour ne pas les gêner.</li>
+      <li>Le panneau des boss, le classement et le portail « Mon île » se trouvent aussi sur le 2e anneau.</li>
+    </ul>
+  </div>
+</div>
+<script>
+// Mesures du jeu (BaseGrid.MaxFootprint) : jardin max 240 vers le centre, 102 de demi-largeur
+const DEPTH_MAX = 240, HALF_MAX = 102, DEPTH_START = 137, HALF_START = 76, BACK = 50;
+const OPTS = [
+  { id: "A", title: "A. Place ronde + îles un peu plus serrées", tag: "aucune perte", n: 8, gap: 16, half: 102, R: 130,
+    text: ["Écart entre îles voisines au max : 16 studs au lieu de 40 (elles restent séparées)", "Place ronde de 260 de diamètre (plus grande qu'aujourd'hui)", "Rien d'autre ne change"] },
+  { id: "B", title: "B. A + jardin max un peu moins large", tag: "recommandé", n: 8, gap: 20, half: 85, R: 130,
+    text: ["Comme A, et le jardin au niveau max fait 170 de large au lieu de 204 (−17 % de largeur)", "Les ponts au départ tombent à ~220 studs, comme promis au début"] },
+  { id: "C", title: "C. 6 îles par serveur", tag: "", n: 6, gap: 40, half: 102, R: 130,
+    text: ["Le jardin ne change pas", "6 joueurs maximum par serveur au lieu de 8"] },
+];
+function ringOf(o) { return DEPTH_MAX + (o.half + o.gap / 2) / Math.sin(Math.PI / o.n); }
+const NOW = { n: 8, gap: 40, half: 102, square: true, R: 117, ring: 559 };
+OPTS.forEach(o => { o.ring = Math.round(ringOf(o)); });
+
+function drawMap(svg, o) {
+  const s = [];
+  s.push('<rect x="-640" y="-640" width="1280" height="1280" fill="#1f5a7a"/>');
+  for (let v = -600; v <= 600; v += 100) { s.push(`<line x1="${v}" y1="-640" x2="${v}" y2="640" stroke="#ffffff0e" stroke-width="3"/><line x1="-640" y1="${v}" x2="640" y2="${v}" stroke="#ffffff0e" stroke-width="3"/>`); }
+  const ring = o.ring, n = o.n, half = o.half;
+  const start = o.n === 8 ? 15 : 0;
+  for (let i = 0; i < n; i++) {
+    const a = (start + i * 360 / n) * Math.PI / 180, dx = Math.sin(a), dz = Math.cos(a);
+    const cx = dx * ring, cz = dz * ring, deg = -(start + i * 360 / n);
+    // pont : bord de la place -> bout du jardin de départ
+    const plazaEdge = o.square ? Math.min(90 / Math.max(Math.abs(dx), 1e-3), 75 / Math.max(Math.abs(dz), 1e-3)) : o.R;
+    const front = ring - DEPTH_START;
+    s.push(`<line x1="${dx * plazaEdge}" y1="${dz * plazaEdge}" x2="${dx * front}" y2="${dz * front}" stroke="#2b2840" stroke-width="14"/>`);
+    for (let d = plazaEdge + 14; d < front - 10; d += 45) s.push(`<rect x="${dx * d - 5}" y="${dz * d - 5}" width="10" height="10" fill="#5ef0ff"/>`);
+    s.push(`<g transform="translate(${cx} ${cz}) rotate(${deg})">`);
+    // jardin max (contour) : de -DEPTH_MAX (vers le centre) à +BACK
+    s.push(`<rect x="${-half}" y="${-DEPTH_MAX}" width="${half * 2}" height="${DEPTH_MAX + BACK}" fill="none" stroke="#ffffffaa" stroke-width="4" stroke-dasharray="14 10"/>`);
+    // île + jardin de départ
+    s.push(`<rect x="${-HALF_START}" y="${-DEPTH_START}" width="${HALF_START * 2}" height="${DEPTH_START + BACK}" fill="#6fcf5a" stroke="#fff" stroke-width="3"/>`);
+    s.push(`<rect x="-40" y="10" width="80" height="40" fill="#cfc6e8"/>`);
+    s.push(`</g>`);
+  }
+  // place
+  if (o.square) s.push('<rect x="-90" y="-75" width="180" height="150" fill="#cfc6e8" stroke="#fff" stroke-width="5"/>');
+  else s.push(`<circle r="${o.R}" fill="#cfc6e8" stroke="#fff" stroke-width="5"/>`);
+  // 6 portails vers les zones
+  [30, 90, 150, 210, 270, 330].forEach(z => { const a = z * Math.PI / 180, r = o.square ? 60 : o.R * 0.68; s.push(`<text x="${Math.sin(a) * r}" y="${Math.cos(a) * r + 9}" font-size="28" text-anchor="middle">⭐</text>`); });
+  s.push(`<text x="0" y="10" font-size="34" text-anchor="middle" font-weight="800" fill="#1d1a2b">Place</text>`);
+  // cercle des îles
+  s.push(`<circle r="${ring}" fill="none" stroke="#ffd34d" stroke-width="3" stroke-dasharray="6 10" opacity=".7"/>`);
+  s.push(`<text x="0" y="${-ring - 14}" font-size="30" text-anchor="middle" fill="#ffd34d" font-weight="700">cercle à ${ring}</text>`);
+  svg.innerHTML = s.join("");
+}
+function bridge(o, depth) { return Math.round(o.ring - depth - (o.square ? 82 : o.R)); }
+drawMap(document.getElementById("mapNow"), NOW);
+const rows = document.getElementById("rows");
+rows.innerHTML = `<tr><td>Aujourd'hui</td><td>559</td><td>~345</td><td>~240</td><td>—</td></tr>` + OPTS.map(o =>
+  `<tr><td>${o.id}</td><td><b>${o.ring}</b></td><td><b>~${bridge(o, DEPTH_START)}</b></td><td>~${Math.max(20, bridge(o, DEPTH_MAX))}</td><td>${o.id === "A" ? "rien" : o.id === "B" ? "jardin max −17 % de largeur" : "2 joueurs par serveur"}</td></tr>`).join("");
+const optsEl = document.getElementById("opts");
+function pick(o) {
+  [...optsEl.children].forEach((el, k) => el.classList.toggle("on", OPTS[k] === o));
+  drawMap(document.getElementById("mapNew"), o);
+  document.getElementById("newTitle").textContent = `PROPOSÉ ${o.id} : place ronde, cercle des îles à ${o.ring}`;
+}
+OPTS.forEach(o => {
+  const d = document.createElement("div"); d.className = "opt";
+  d.innerHTML = `<h3>${o.title}${o.tag ? `<span class="tag">${o.tag}</span>` : ""}</h3><div class="big">îles à ${o.ring} · pont ~${bridge(o, DEPTH_START)} au départ</div><ul>${o.text.map(t => `<li>${t}</li>`).join("")}</ul>`;
+  d.onclick = () => pick(o); optsEl.appendChild(d);
+});
+pick(OPTS[1]);
+
+// Zoom de la place ronde
+(function () {
+  const s = [];
+  s.push('<rect x="-170" y="-170" width="340" height="340" fill="#1f5a7a"/>');
+  s.push('<circle r="130" fill="#d9d2c0" stroke="#fff" stroke-width="3"/>');
+  s.push('<circle r="100" fill="none" stroke="#bfb6a0" stroke-width="2" stroke-dasharray="4 4"/>');
+  s.push('<circle r="55" fill="none" stroke="#bfb6a0" stroke-width="2" stroke-dasharray="4 4"/>');
+  // ponts (8) au bord
+  for (let i = 0; i < 8; i++) { const a = (15 + i * 45) * Math.PI / 180; const x = Math.sin(a), z = Math.cos(a);
+    s.push(`<line x1="${x * 128}" y1="${z * 128}" x2="${x * 170}" y2="${z * 170}" stroke="#2b2840" stroke-width="10"/>`);
+    s.push(`<text x="${x * 118}" y="${z * 118 + 4}" font-size="12" text-anchor="middle">🌉</text>`); }
+  // portails (6) tournés vers leur zone
+  const Z = [["Prairie", 270, "#6fdc5a"], ["Grotte", 330, "#7ab8ff"], ["Glaces", 30, "#bfefff"], ["Ombres", 90, "#b07aff"], ["Volcan", 150, "#ff7a3c"], ["Céleste", 210, "#ffd34d"]];
+  Z.forEach(([n, ang, c]) => { const a = ang * Math.PI / 180; const x = Math.sin(a) * 86, z = Math.cos(a) * 86;
+    s.push(`<g transform="translate(${x} ${z}) rotate(${-ang})"><rect x="-11" y="-4" width="22" height="8" rx="3" fill="${c}" stroke="#1d1a2b" stroke-width="1.5"/></g>`);
+    s.push(`<text x="${Math.sin(a) * 70}" y="${Math.cos(a) * 70 + 3}" font-size="9" text-anchor="middle" fill="#1d1a2b" font-weight="700">${n}</text>`);
+    s.push(`<line x1="${Math.sin(a) * 98}" y1="${Math.cos(a) * 98}" x2="${Math.sin(a) * 160}" y2="${Math.cos(a) * 160}" stroke="${c}" stroke-width="1.5" stroke-dasharray="3 3"/>`); });
+  // œufs et incubateurs en arc
+  for (let k = -3; k <= 3; k++) { const a = (180 + k * 16) * Math.PI / 180; s.push(`<text x="${Math.sin(a) * 42}" y="${Math.cos(a) * 42 + 4}" font-size="11" text-anchor="middle">🥚</text>`); }
+  for (let k = -2; k <= 2; k++) { const a = (0 + k * 20) * Math.PI / 180; s.push(`<text x="${Math.sin(a) * 42}" y="${Math.cos(a) * 42 + 4}" font-size="10" text-anchor="middle">🐣</text>`); }
+  s.push('<circle r="14" fill="#7ab8ff" stroke="#fff" stroke-width="2"/><text y="4" font-size="10" text-anchor="middle" font-weight="700" fill="#1d1a2b">⛲</text>');
+  s.push('<text y="26" font-size="8" text-anchor="middle" fill="#1d1a2b">spawn</text>');
+  [["🏝️ Mon île", 120], ["👑 Boss", 240], ["🏆 Classement", 0]].forEach(([t, ang]) => { const a = ang * Math.PI / 180; s.push(`<text x="${Math.sin(a) * 100}" y="${Math.cos(a) * 100 + 3}" font-size="9" text-anchor="middle" fill="#1d1a2b" font-weight="700">${t}</text>`); });
+  s.push('<text x="0" y="-150" font-size="10" text-anchor="middle" fill="#fff">les pointillés de couleur montrent la direction de chaque zone</text>');
+  document.getElementById("plaza").innerHTML = s.join("");
+})();
+</script>
+</body>
+</html>
