@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Façade du château</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family: "Segoe UI", system-ui, sans-serif; }
+  header { padding:20px 16px 4px; max-width:1100px; margin:auto; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  p { color:var(--muted); line-height:1.5; margin:6px 0; }
+  .main { max-width:1100px; margin:auto; padding:8px 16px 30px; }
+  .stage { background:linear-gradient(#7ec8ff,#bfe6ff 60%,#8fd16a 60%,#6dbb4c); border-radius:18px; padding:10px; }
+  .stage svg { width:100%; height:auto; display:block; }
+  .controls { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+  .controls button { flex:1 1 150px; border:0; border-radius:12px; padding:10px 8px; font-weight:700; font-size:14px;
+    background:var(--card); color:var(--text); cursor:pointer; border:3px solid transparent; }
+  .controls button.on { border-color:var(--accent); background:#3b3560; }
+  .controls small { display:block; font-weight:400; color:var(--muted); }
+  .info { background:var(--card); border-radius:14px; padding:14px 16px; }
+  .info h2 { margin:0 0 6px; font-size:20px; }
+  .info ul { margin:6px 0 0; padding-left:20px; color:var(--muted); line-height:1.6; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-top:16px; }
+  .mini { background:var(--card); border-radius:12px; padding:6px; text-align:center; font-size:13px; cursor:pointer; }
+  .mini svg { width:100%; height:auto; background:linear-gradient(#7ec8ff,#bfe6ff 62%,#8fd16a 62%); border-radius:8px; }
+  .q { margin-top:18px; background:#332d52; border-radius:14px; padding:14px 16px; }
+  .q b { color:var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>🏰 Façade de château qui évolue à chaque renaissance</h1>
+  <p>La tour à vitrines devient la <b>façade d'un château</b> : les 60 vitrines restent les fenêtres où travaillent tes créatures (les places pas encore débloquées sont des volets fermés 🔒). À chaque palier de renaissance, la façade est <b>reconstruite plus grande et plus impressionnante</b>, avec une petite animation (poussière + feu d'artifice) et une annonce au serveur.</p>
+</header>
+<div class="main">
+  <div class="stage"><svg id="big" viewBox="0 0 400 300"></svg></div>
+  <div class="controls" id="controls"></div>
+  <div class="info" id="info"></div>
+  <div class="grid" id="grid"></div>
+  <div class="q">
+    <b>À valider :</b> les 6 paliers (renaissances 0 / 1 / 3 / 5 / 10 / 20), leur style, et l'idée que la façade
+    change d'un coup au palier (pas à chaque renaissance). Les seuils seront réglables dans la config.
+    Les fenêtres débloquées restent celles d'aujourd'hui (4 places + 2 par renaissance).
+  </div>
+</div>
+<script>
+const TIERS = [
+  { r:0,  name:"Fortin de bois", stone:"#8a7a66", dark:"#5c4f40", roof:"#7a4a2a", trim:"#6b5137", glow:null, towers:0, towerH:0, crenel:false, flags:0, gold:false, gate:"wood", extra:[],
+    desc:["Murs de pierre brute et palissade en bois","Porte en planches, deux torches","Toit plat en bois"] },
+  { r:1,  name:"Château fort", stone:"#9b9488", dark:"#6c665c", roof:"#a33b2e", trim:"#7d776b", glow:null, towers:2, towerH:60, crenel:true, flags:2, gold:false, gate:"portcullis", extra:[],
+    desc:["Créneaux sur tout le haut","2 tours rondes à toits pointus rouges","Herse en fer, 2 bannières"] },
+  { r:3,  name:"Château de pierre", stone:"#b4ada0", dark:"#7c766b", roof:"#2f5fb3", trim:"#8e877a", glow:"#ffb347", towers:2, towerH:95, crenel:true, flags:4, gold:false, gate:"bridge", extra:["torches","ivy"],
+    desc:["Tours plus hautes et plus larges, toits bleus","Pont-levis + douves","Torches allumées le long de la façade, lierre"] },
+  { r:5,  name:"Château royal", stone:"#e6e1d6", dark:"#a59f93", roof:"#2b4fd8", trim:"#d9b44a", glow:"#ffe08a", towers:4, towerH:120, crenel:true, flags:6, gold:true, gate:"royal", extra:["torches","rose","banner"],
+    desc:["Pierre blanche et liserés dorés","4 tours, rosace en vitrail au-dessus de la porte","Grande bannière au blason du joueur"] },
+  { r:10, name:"Palais d'or", stone:"#f3e2a6", dark:"#c7a956", roof:"#7d2bd8", trim:"#ffcf3a", glow:"#fff27a", towers:4, towerH:150, crenel:true, flags:6, gold:true, gate:"royal", extra:["rose","banner","crystals","fountain"],
+    desc:["Façade dorée, toits violets","Cristaux lumineux au sommet des tours","Fontaine devant la porte, néons dorés"] },
+  { r:20, name:"Citadelle céleste", stone:"#e9f3ff", dark:"#9fb7d9", roof:"#25d3ff", trim:"#9ff6ff", glow:"#7ff7ff", towers:4, towerH:185, crenel:true, flags:6, gold:true, gate:"portal", extra:["rose","crystals","halo","clouds","stars"],
+    desc:["Château qui flotte sur des nuages","Halo et étoiles qui tournent autour du donjon","Porte-portail lumineuse, néons cyan"] },
+];
+
+function svgTier(t, unlocked) {
+  const W = 400, ground = 250;
+  let s = "";
+  const keepW = 170, keepH = 140, kx = (W - keepW) / 2, ky = ground - keepH;
+  // Nuages / halo (fond)
+  if (t.extra.includes("halo")) s += `<circle cx="200" cy="${ky-10}" r="120" fill="${t.glow}" opacity=".18"/>`;
+  if (t.extra.includes("stars")) for (let i=0;i<14;i++){ const a=i/14*Math.PI*2; s+=`<text x="${200+Math.cos(a)*150}" y="${ky+20+Math.sin(a)*90}" font-size="12" text-anchor="middle">✦</text>`; }
+  if (t.extra.includes("clouds")) { s += `<ellipse cx="200" cy="${ground+18}" rx="190" ry="26" fill="#fff" opacity=".95"/><ellipse cx="90" cy="${ground+8}" rx="70" ry="22" fill="#fff"/><ellipse cx="310" cy="${ground+8}" rx="70" ry="22" fill="#fff"/>`; }
+  // Douves
+  if (t.gate === "bridge" || t.gate === "royal") s += `<rect x="20" y="${ground}" width="360" height="12" fill="#3f8fd6"/>`;
+  // Tours
+  const towerSpots = t.towers === 2 ? [kx-30, kx+keepW-10] : t.towers === 4 ? [kx-62, kx-26, kx+keepW-14, kx+keepW+22] : [];
+  towerSpots.forEach((x, i) => {
+    const outer = t.towers === 4 && (i === 0 || i === 3);
+    const h = outer ? t.towerH * 0.82 : t.towerH;
+    const w = outer ? 34 : 40;
+    const y = ground - h;
+    s += `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${t.stone}" stroke="${t.dark}" stroke-width="2"/>`;
+    for (let k=0;k<3;k++) s += `<rect x="${x+w/2-4}" y="${y+18+k*((h-30)/3)}" width="8" height="12" rx="4" fill="#26213a"/>`;
+    s += `<polygon points="${x-6},${y} ${x+w+6},${y} ${x+w/2},${y-h*0.38}" fill="${t.roof}" stroke="${t.dark}" stroke-width="2"/>`;
+    if (t.gold) s += `<rect x="${x-6}" y="${y-3}" width="${w+12}" height="4" fill="${t.trim}"/>`;
+    if (t.extra.includes("crystals")) s += `<polygon points="${x+w/2-6},${y-h*0.38} ${x+w/2},${y-h*0.38-20} ${x+w/2+6},${y-h*0.38}" fill="${t.glow}" stroke="#fff" stroke-width="1"/>`;
+    if (i < t.flags) s += `<line x1="${x+w/2}" y1="${y-h*0.38}" x2="${x+w/2}" y2="${y-h*0.38-22}" stroke="#333" stroke-width="2"/><polygon points="${x+w/2},${y-h*0.38-22} ${x+w/2+16},${y-h*0.38-17} ${x+w/2},${y-h*0.38-12}" fill="${t.gold?'#ffcf3a':'#d33'}"/>`;
+  });
+  // Donjon (façade à vitrines)
+  s += `<rect x="${kx}" y="${ky}" width="${keepW}" height="${keepH}" fill="${t.stone}" stroke="${t.dark}" stroke-width="2"/>`;
+  if (t.gate === "wood") { // palissade
+    for (let i=0;i<20;i++) s += `<polygon points="${10+i*19},${ground} ${10+i*19},${ground-26} ${19+i*19},${ground-34} ${28+i*19},${ground-26} ${28+i*19},${ground}" fill="#8b5a2b" stroke="#5e3b1b" stroke-width="1.5" opacity="${(i>=7&&i<=12)?0:1}"/>`;
+    s += `<rect x="${kx-4}" y="${ky-8}" width="${keepW+8}" height="10" fill="${t.roof}"/>`;
+  }
+  if (t.crenel) for (let i=0;i<9;i++) s += `<rect x="${kx+i*20}" y="${ky-12}" width="12" height="12" fill="${t.stone}" stroke="${t.dark}" stroke-width="2"/>`;
+  if (t.gold) s += `<rect x="${kx}" y="${ky}" width="${keepW}" height="4" fill="${t.trim}"/><rect x="${kx}" y="${ky+keepH-34}" width="${keepW}" height="3" fill="${t.trim}"/>`;
+  // 60 vitrines : 10 colonnes × 6 étages (on dessine 10 × 4 pour la lisibilité ; débloquées = lumineuses)
+  let idx = 0;
+  for (let row=0; row<4; row++) for (let col=0; col<10; col++) {
+    idx++;
+    const x = kx + 9 + col * 15.5, y = ky + 8 + row * 24;
+    const open = idx <= unlocked;
+    s += `<rect x="${x}" y="${y}" width="11" height="17" rx="${t.r>=3?5:1}" fill="${open ? (t.glow||'#ffe9a8') : '#3b3448'}" stroke="${t.gold ? t.trim : t.dark}" stroke-width="1.5"/>`;
+    if (open) s += `<circle cx="${x+5.5}" cy="${y+10}" r="3" fill="#6a4"/>`;
+  }
+  // Porte
+  const gx = 200, gw = t.gate === "wood" ? 36 : 44, gh = t.gate === "wood" ? 36 : 44;
+  if (t.gate === "portal") s += `<path d="M${gx-gw/2},${ground} v-${gh-gw/2} a${gw/2},${gw/2} 0 0 1 ${gw},0 v${gh-gw/2} z" fill="${t.glow}" opacity=".85"/>`;
+  else s += `<path d="M${gx-gw/2},${ground} v-${gh-gw/2} a${gw/2},${gw/2} 0 0 1 ${gw},0 v${gh-gw/2} z" fill="${t.gate==='wood'?'#7a4a22':'#2b2430'}" stroke="${t.gold?t.trim:t.dark}" stroke-width="3"/>`;
+  if (t.gate === "portcullis" || t.gate === "bridge" || t.gate === "royal") for (let i=1;i<5;i++) s += `<line x1="${gx-gw/2+i*gw/5}" y1="${ground-gh+6}" x2="${gx-gw/2+i*gw/5}" y2="${ground}" stroke="#777" stroke-width="2"/>`;
+  if (t.gate === "bridge" || t.gate === "royal") s += `<polygon points="${gx-gw/2},${ground} ${gx+gw/2},${ground} ${gx+gw/2+8},${ground+14} ${gx-gw/2-8},${ground+14}" fill="#8b5a2b"/>`;
+  if (t.extra.includes("rose")) s += `<circle cx="${gx}" cy="${ground-gh-16}" r="11" fill="${t.glow}" stroke="${t.trim}" stroke-width="3"/><circle cx="${gx}" cy="${ground-gh-16}" r="4" fill="#d94fff"/>`;
+  if (t.extra.includes("banner")) s += `<rect x="${gx-14}" y="${ky+2}" width="28" height="0" fill="none"/>`;
+  if (t.extra.includes("torches") || t.gate === "wood") [gx-gw/2-12, gx+gw/2+12].forEach(x => s += `<rect x="${x-1.5}" y="${ground-26}" width="3" height="12" fill="#5a3a1a"/><circle cx="${x}" cy="${ground-29}" r="4" fill="#ff9a2a"/>`);
+  if (t.extra.includes("ivy")) for (let i=0;i<8;i++) s += `<circle cx="${kx+4+i*3}" cy="${ground-8-i*9}" r="5" fill="#3f8f3a" opacity=".85"/>`;
+  if (t.extra.includes("fountain")) s += `<ellipse cx="${gx}" cy="${ground+26}" rx="26" ry="6" fill="#9cc"/><path d="M${gx},${ground+24} q-10,-18 -18,0 M${gx},${ground+24} q10,-18 18,0" stroke="#7fe" stroke-width="2" fill="none"/>`;
+  // Enseigne
+  s += `<rect x="${gx-50}" y="${ky+keepH-30}" width="100" height="0" fill="none"/>`;
+  s += `<rect x="${gx-56}" y="${ky-36 - (t.crenel?0:0)}" width="112" height="18" rx="4" fill="${t.gold?'#b8892a':'#b0283a'}" stroke="${t.gold?t.trim:'#5a1520'}" stroke-width="2"/>`;
+  s += `<text x="${gx}" y="${ky-23}" font-size="11" font-weight="700" fill="#fff" text-anchor="middle" font-family="Segoe UI">CHÂTEAU DE PSEUDO</text>`;
+  return s;
+}
+
+const big = document.getElementById("big"), info = document.getElementById("info");
+const controls = document.getElementById("controls"), grid = document.getElementById("grid");
+function show(i) {
+  const t = TIERS[i];
+  const unlocked = Math.min(40, 4 + 2 * t.r);
+  big.innerHTML = svgTier(t, unlocked);
+  info.innerHTML = `<h2>Palier ${i+1} · ${t.name} <span style="color:var(--accent)">— dès ${t.r === 0 ? "le début" : t.r + " renaissance" + (t.r>1?"s":"")}</span></h2>
+    <p>Places débloquées à ce moment-là : <b>${4 + 2*t.r}</b> fenêtres lumineuses (les autres ont un volet fermé).</p>
+    <ul>${t.desc.map(d => `<li>${d}</li>`).join("")}</ul>`;
+  [...controls.children].forEach((b, k) => b.classList.toggle("on", k === i));
+}
+TIERS.forEach((t, i) => {
+  const b = document.createElement("button");
+  b.innerHTML = `${t.name}<small>${t.r === 0 ? "départ" : "renaissance " + t.r}</small>`;
+  b.onclick = () => show(i);
+  controls.appendChild(b);
+  const m = document.createElement("div");
+  m.className = "mini";
+  m.innerHTML = `<svg viewBox="0 0 400 300">${svgTier(t, Math.min(40, 4 + 2*t.r))}</svg>${t.name}`;
+  m.onclick = () => { show(i); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  grid.appendChild(m);
+});
+show(0);
+</script>
+</body>
+</html>
