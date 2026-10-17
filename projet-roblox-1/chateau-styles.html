@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Styles de château</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ffab7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1150px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .style { background:var(--card); border-radius:18px; padding:14px; margin-top:18px; }
+  .style h2 { margin:0 0 4px; font-size:22px; }
+  .style h2 span { color:var(--accent); }
+  .views { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0; }
+  @media (max-width: 800px) { .views { grid-template-columns:1fr; } }
+  .views img { width:100%; display:block; border-radius:12px; cursor:zoom-in; }
+  .cols { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width: 800px) { .cols { grid-template-columns:1fr; } }
+  .cols h3 { margin:0 0 4px; font-size:15px; }
+  .plus h3 { color:var(--ok); } .moins h3 { color:var(--bad); }
+  .cols ul { margin:0; padding-left:20px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:18px; }
+  .zoom { position:fixed; inset:0; background:#000d; display:none; align-items:center; justify-content:center; padding:16px; cursor:zoom-out; }
+  .zoom img { max-width:100%; max-height:100%; border-radius:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏰 Trois styles de château, au choix</h1>
+  <p>Ce sont des <b>maquettes en vrai 3D</b>, avec les mêmes pièces Roblox (picots compris) que le jeu, rendues avec le soleil et les ombres. Elles ne sont <b>pas encore dans le jeu</b>.
+  Pour que tu compares seulement les <b>formes</b>, les trois ont les mêmes couleurs (pierre blanche, toits bleus, or) et le même contenu :
+  <b>60 vitrines</b> pour tes créatures (24 débloquées ici, comme avec 10 renaissances) et <b>6 balcons à géants</b>.
+  Le coffre, la machine à fusion violette et l'avatar bleu devant la porte donnent l'échelle. Clique sur une image pour l'agrandir.</p>
+
+  <div class="style">
+    <h2>1. <span>Forteresse</span></h2>
+    <p>Un vrai château fort : des remparts crénelés tout autour d'une cour, une grande porte entre deux tours avec douves et pont-levis, quatre grosses tours d'angle et un haut donjon au fond.</p>
+    <div class="views"><img src="chateau-styles/Forteresse_34.jpg" alt=""><img src="chateau-styles/Forteresse_front.jpg" alt=""></div>
+    <div class="cols">
+      <div class="plus"><h3>Points forts</h3><ul><li>Le plus « château fort » des trois : on a vraiment un volume avec une cour.</li><li>Les géants sont bien répartis : au-dessus de la porte, sur le donjon et sur les 4 tours d'angle.</li></ul></div>
+      <div class="moins"><h3>Points faibles</h3><ul><li>Il prend beaucoup de place en profondeur, il faut agrandir l'île vers l'arrière.</li><li>Le donjon reste un grand mur de fenêtres au milieu.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="style">
+    <h2>2. <span>Château de conte de fées</span></h2>
+    <p>Style princesse : un grand corps de logis, des tours fines en pyramide de plus en plus hautes vers le centre, et une flèche centrale très haute.</p>
+    <div class="views"><img src="chateau-styles/Conte_34.jpg" alt=""><img src="chateau-styles/Conte_front.jpg" alt=""></div>
+    <div class="cols">
+      <div class="plus"><h3>Points forts</h3><ul><li>Le plus impressionnant de loin : la flèche dépasse tout, on voit ton château depuis les autres îles.</li><li>Les vitrines sont bien rangées sur 4 étages en bas, faciles à regarder depuis le coffre.</li></ul></div>
+      <div class="moins"><h3>Points faibles</h3><ul><li>Les géants des tours du côté gauche se chevauchent quand on regarde de biais.</li><li>Moins « forteresse », plus décoratif.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="style">
+    <h2>3. <span>Château sur un rocher</span></h2>
+    <p>Le château est posé sur une falaise. Un grand escalier monte jusqu'à la porte, deux galeries de vitrines sont creusées dans la roche, et une petite cascade tombe sur le côté.</p>
+    <div class="views"><img src="chateau-styles/Rocher_34.jpg" alt=""><img src="chateau-styles/Rocher_front.jpg" alt=""></div>
+    <div class="cols">
+      <div class="plus"><h3>Points forts</h3><ul><li>Le plus original : la falaise et l'escalier donnent de la hauteur et du caractère.</li><li>Les créatures de départ sont dans la roche, tout près du coffre : on les voit bien au début du jeu.</li></ul></div>
+      <div class="moins"><h3>Points faibles</h3><ul><li>La falaise grise prend beaucoup de place dans l'image.</li><li>Il faut aussi agrandir l'île vers l'arrière.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Comment ça évoluerait avec les renaissances :</b> au départ on n'aurait qu'une petite partie du château (par exemple le donjon et la porte, en bois),
+    puis chaque palier ajoute des tours, des remparts et des balcons à géants, jusqu'au château complet que tu vois ici.<br><br>
+    <b>Tu peux aussi mélanger</b>, par exemple la falaise du style 3 avec les tours en pyramide du style 2. Dis-moi ce qui te plaît, et je te montre un nouveau rendu avant de changer quoi que ce soit dans le jeu.
+  </div>
+</div>
+<div class="zoom" id="zoom"><img id="zoomImg" alt=""></div>
+<script>
+const zoom = document.getElementById("zoom");
+document.querySelectorAll(".views img").forEach(img => img.onclick = () => { document.getElementById("zoomImg").src = img.src; zoom.style.display = "flex"; });
+zoom.onclick = () => zoom.style.display = "none";
+</script>
+</body>
+</html>
