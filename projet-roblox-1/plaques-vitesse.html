@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plaques de vitesse</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1100px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:26px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .card { background:var(--card); border-radius:16px; padding:12px; margin-top:12px; }
+  .card svg { width:100%; height:auto; display:block; border-radius:10px; }
+  .opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+  .opt { background:var(--card); border-radius:14px; padding:12px 14px; border:3px solid transparent; }
+  .opt.on { border-color:var(--accent); background:#3b3560; }
+  .opt h3 { margin:0 0 4px; font-size:16px; }
+  .opt ul { margin:6px 0 0; padding-left:18px; font-size:14px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  @keyframes run { from { transform:translateX(0) } to { transform:translateX(60px) } }
+  .runner { animation: run 0.6s linear infinite; }
+  @keyframes glow { 0%,100% { opacity:.55 } 50% { opacity:1 } }
+  .glow { animation: glow 1.2s ease-in-out infinite; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚡ Plaques de vitesse sur les ponts</h1>
+  <p>Ceci est une proposition : rien n'est encore changé dans le jeu. Un pont mesure environ <b>300 à 450 studs</b>, soit <b>20 à 28 s à pied</b>, et c'est long.
+  Je propose des plaques lumineuses posées sur le pont. Quand on marche dessus, on court <b>3 fois plus vite pendant 4 s</b>, avec un son « whoosh » et des traînées derrière le joueur.</p>
+
+  <h2>Vue de dessus d'un pont</h2>
+  <div class="card">
+    <svg viewBox="0 0 1000 230">
+      <rect width="1000" height="230" fill="#7fc8ff"/>
+      <!-- place -->
+      <rect x="0" y="40" width="110" height="150" fill="#d9d2c0"/>
+      <text x="55" y="120" font-size="18" text-anchor="middle" fill="#3a3550" font-weight="700">Place</text>
+      <!-- jardin -->
+      <rect x="890" y="30" width="110" height="170" fill="#6fcf5a"/>
+      <text x="945" y="120" font-size="18" text-anchor="middle" fill="#1f4a1a" font-weight="700">Ton île</text>
+      <!-- pont -->
+      <rect x="110" y="95" width="780" height="40" fill="#b07a4a"/>
+      <g stroke="#8a5a32" stroke-width="2">
+        <line x1="110" y1="95" x2="890" y2="95"/><line x1="110" y1="135" x2="890" y2="135"/>
+      </g>
+      <!-- palier -->
+      <circle cx="500" cy="115" r="48" fill="#6b6780"/>
+      <rect x="110" y="95" width="780" height="40" fill="#b07a4a" opacity="0"/>
+      <text x="500" y="182" font-size="14" text-anchor="middle" fill="#2a2640">palier</text>
+      <!-- plaques -->
+      <g id="pads"></g>
+      <!-- joueur -->
+      <g class="runner"><circle cx="150" cy="115" r="9" fill="#ffd34d" stroke="#3a3550" stroke-width="3"/></g>
+      <text x="500" y="25" font-size="15" text-anchor="middle" fill="#1d1a2b">une plaque environ tous les 70 studs, dans les deux sens (aller et retour)</text>
+    </svg>
+  </div>
+
+  <h2>Une plaque vue de près</h2>
+  <div class="card">
+    <svg viewBox="0 0 1000 300">
+      <rect width="1000" height="300" fill="#7fc8ff"/>
+      <!-- planches -->
+      <polygon points="80,260 920,260 760,120 240,120" fill="#b07a4a"/>
+      <g stroke="#8a5a32" stroke-width="3">
+        <line x1="160" y1="190" x2="840" y2="190"/><line x1="120" y1="225" x2="880" y2="225"/><line x1="200" y1="155" x2="800" y2="155"/>
+      </g>
+      <!-- plaque -->
+      <polygon points="300,240 700,240 640,150 360,150" fill="#26244a" stroke="#5ef0ff" stroke-width="6"/>
+      <g class="glow" fill="#5ef0ff">
+        <polygon points="420,228 500,205 580,228 580,212 500,189 420,212"/>
+        <polygon points="430,195 500,176 570,195 570,182 500,163 430,182"/>
+      </g>
+      <g class="glow" fill="#ff5ed2" style="animation-delay:.6s">
+        <polygon points="345,180 360,170 360,215 345,225" />
+        <polygon points="655,180 640,170 640,215 655,225" />
+      </g>
+      <text x="500" y="40" font-size="20" text-anchor="middle" fill="#1d1a2b" font-weight="700">Dalle sombre à studs, bord néon cyan, chevrons qui clignotent</text>
+      <text x="500" y="70" font-size="16" text-anchor="middle" fill="#1d1a2b">(même style « simulateur » que la machine à œufs)</text>
+      <text x="830" y="140" font-size="16" fill="#1d1a2b">⚡ ×3 pendant 4 s</text>
+    </svg>
+  </div>
+
+  <h2>Deux façons de faire</h2>
+  <div class="opts">
+    <div class="opt on">
+      <h3>A. Plaques espacées (recommandé)</h3>
+      <ul>
+        <li>4 à 6 plaques par pont, selon sa longueur. En sautant de plaque en plaque, on reste à pleine vitesse tout le trajet.</li>
+        <li>Le trajet tombe à <b>environ 8 s</b>.</li>
+        <li>Elles marchent dans les deux sens. Le bonus s'arrête si on quitte le pont (pas de vitesse ×3 dans les zones de farm).</li>
+        <li>Petite barre de vitesse en bas de l'écran pendant le bonus.</li>
+      </ul>
+    </div>
+    <div class="opt">
+      <h3>B. Tapis roulant sur toute la longueur</h3>
+      <ul>
+        <li>Une bande néon au milieu du pont, avec la vitesse ×3 tant qu'on est dessus.</li>
+        <li>C'est plus simple à comprendre, mais il n'y a plus le petit plaisir de « viser » les plaques, et c'est moins joli sur les ponts en bois.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Détails :</b>
+    <ul>
+      <li>La vitesse est gérée par le serveur, en s'ajoutant au boost de vitesse qui existe déjà (BoostService) : pas de triche possible.</li>
+      <li>La couleur du bord suivra plus tard le style du pont (bois, pierre, or…) selon le niveau de château.</li>
+    </ul>
+  </div>
+</div>
+<script>
+  const g = document.getElementById('pads');
+  const xs = [190, 300, 410, 590, 700, 810];
+  for (const x of xs) {
+    g.insertAdjacentHTML('beforeend',
+      `<rect x="${x-18}" y="99" width="36" height="32" rx="3" fill="#26244a" stroke="#5ef0ff" stroke-width="3"/>
+       <polygon class="glow" points="${x-8},106 ${x+6},115 ${x-8},124 ${x-3},115" fill="#5ef0ff"/>`);
+  }
+</script>
+</body>
+</html>
