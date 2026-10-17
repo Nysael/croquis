@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refonte de la carte</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:28px 0 6px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width: 850px) { .two { grid-template-columns:1fr; } }
+  .map { background:var(--card); border-radius:16px; padding:10px; }
+  .map h3 { margin:2px 4px 8px; font-size:16px; }
+  .map svg { width:100%; height:auto; display:block; border-radius:10px; }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 14px; margin:10px 2px 0; font-size:13px; color:var(--muted); }
+  .legend span::before { content:""; display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:5px; vertical-align:-1px; background:var(--c); }
+  .changes { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+  .changes li b.new { color:var(--ok); }
+  .changes li b.move { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🗺️ Refonte de la carte</h1>
+  <p>Plans <b>vus de dessus, à l'échelle</b> (1 carreau = 10 studs), dessinés avec les vraies positions du jeu. Rien n'est changé dans le jeu.
+  Sur le plan de l'île, <b>l'entrée est en bas et le château en haut</b>, comme quand tu arrives par le portail. La gauche et la droite sont celles que tu vois en marchant vers le château.</p>
+
+  <h2>1. Ton île</h2>
+  <div class="two">
+    <div class="map"><h3>Aujourd'hui</h3><svg id="before" viewBox="0 0 200 270"></svg></div>
+    <div class="map"><h3>Proposition avec le nouveau château</h3><svg id="after" viewBox="0 0 200 270"></svg></div>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div class="changes">
+    <b>Ce qui change sur l'île :</b>
+    <ul>
+      <li><b class="new">Île prolongée de 40 studs vers l'arrière</b> pour poser la falaise et le château (de la rive actuelle à z = 90). Le reste de l'île ne bouge pas.</li>
+      <li><b class="new">Falaise + château + cascade de gemmes</b> au fond : les 30 vitrines de la falaise sont juste derrière le coffre.</li>
+      <li><b class="move">Panneaux d'amélioration déplacés</b> sur le côté gauche, en colonne face au chemin. Aujourd'hui ils sont juste devant le château et cacheraient la galerie de vitrines de gauche.</li>
+      <li><b class="move">Autel de renaissance déplacé</b> un peu vers l'entrée, à gauche du chemin, pour laisser la place aux panneaux.</li>
+      <li><b class="move">Machine à fusion déplacée</b> sur la droite, contre la falaise. Aujourd'hui elle serait devant la galerie de vitrines de droite.</li>
+      <li><b class="move">Petit îlot avec un arbre</b> (aujourd'hui derrière la tour) déplacé sur un coin arrière, à côté de la falaise.</li>
+      <li><b>Sans changement :</b> machine à œufs, robot, panneau d'aide, coffre, chemin, portail, panneau de stats, compteur d'œufs, jardin à construire devant l'entrée.</li>
+    </ul>
+  </div>
+
+  <h2>2. Le monde entier</h2>
+  <p>La carte du monde <b>reste organisée pareil</b> : l'arène du boss au centre avec sa promenade, la place centrale avec le spawn au sud, les 3 grandes zones de farm au loin (portails depuis la place) et les 12 îles des joueurs en cercle autour.</p>
+  <div class="two">
+    <div class="map"><h3>Carte du monde (à l'échelle, 1 carreau = 200 studs)</h3><svg id="world" viewBox="-1450 -1450 2900 2900"></svg></div>
+    <div class="map"><h3>Zoom sur le centre et une île (1 carreau = 50 studs)</h3><svg id="zoom" viewBox="-300 -50 1000 1000"></svg></div>
+  </div>
+  <div class="legend" id="legendWorld"></div>
+  <div class="changes">
+    <b>Ce que le nouveau château change dans le monde :</b>
+    <ul>
+      <li><b class="new">Les îles ne se touchent toujours pas.</b> Le château est à l'arrière de chaque île, côté extérieur du cercle, là où il y a le plus de place entre les îles. Il n'est pas nécessaire de les écarter.</li>
+      <li><b class="new">Une couronne de châteaux autour de la carte :</b> chaque château regarde vers le centre. Depuis la place et l'arène, on voit au loin les châteaux de tous les joueurs, et les plus gros (île flottante, flèche) se repèrent de loin.</li>
+      <li><b>Sans changement :</b> la place, l'arène, les portails des zones et les zones de farm.</li>
+      <li><b>Point à vérifier en jeu :</b> la zone du Bois des Ombres déborde un peu de la limite de la mer (z = −1370 pour une limite à −1310). Je regarderai si le nageur y est renvoyé par erreur.</li>
+    </ul>
+    Si tu veux en profiter pour <b>changer aussi le monde</b> (rapprocher les îles, déplacer les zones, ajouter des ponts…), dis-le-moi et je te prépare un plan.
+  </div>
+</div>
+<script>
+// ---------- Plan d'une île (repère de la parcelle ; écran : x = 100 - X, y = 140 - Z) ----------
+const COL = {
+  grass:"#5aa84a", sand:"#e4cf8f", water:"#3d8fd6", garden:"#7cc35f", path:"#cfc8b8", castle:"#e8e2d6", cliff:"#7d7887",
+  machine:"#e8463c", boards:"#ff9f1c", chest:"#c27a2c", altar:"#a24bf0", fusion:"#9a3cdc", portal:"#4fd0ff", sign:"#30324a", gem:"#40c8ff", tree:"#2f7d32", tower:"#cfd6e6",
+};
+const S = (X) => 100 - X, T = (Z) => 140 - Z;
+function rect(svg, x1, z1, x2, z2, fill, opt = {}) {
+  const x = Math.min(S(x1), S(x2)), y = Math.min(T(z1), T(z2));
+  svg.push(`<rect x="${x}" y="${y}" width="${Math.abs(x2 - x1)}" height="${Math.abs(z2 - z1)}" rx="${opt.rx || 0}" fill="${fill}" ${opt.stroke ? `stroke="${opt.stroke}" stroke-width="${opt.sw || 0.6}"` : ""} opacity="${opt.op || 1}" ${opt.dash ? 'stroke-dasharray="2 1.5"' : ""}/>`);
+}
+function circle(svg, X, Z, r, fill, opt = {}) {
+  svg.push(`<circle cx="${S(X)}" cy="${T(Z)}" r="${r}" fill="${fill}" ${opt.stroke ? `stroke="${opt.stroke}" stroke-width="${opt.sw || 0.6}"` : ""} opacity="${opt.op || 1}"/>`);
+}
+function label(svg, X, Z, text, size = 3.6, color = "#fff") {
+  svg.push(`<text x="${S(X)}" y="${T(Z) + size * 0.35}" font-size="${size}" text-anchor="middle" fill="${color}" font-family="Segoe UI" font-weight="700" stroke="#0008" stroke-width="0.5" paint-order="stroke">${text}</text>`);
+}
+function grid(svg) {
+  for (let x = 0; x <= 200; x += 10) svg.push(`<line x1="${x}" y1="0" x2="${x}" y2="270" stroke="#ffffff10" stroke-width="0.3"/>`);
+  for (let y = 0; y <= 270; y += 10) svg.push(`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#ffffff10" stroke-width="0.3"/>`);
+}
+
+function island(after) {
+  const svg = [];
+  svg.push(`<rect x="0" y="0" width="200" height="270" fill="#2a6fb0"/>`); // mer
+  grid(svg);
+  const back = after ? 90 : 50;
+  // Rive de sable puis île (+ jardin devant l'entrée, niveau 1)
+  rect(svg, -74, -158, 74, back + 24, COL.sand, { rx: 16, op: 0.9 });
+  rect(svg, -50, -50, 50, back, COL.grass, { rx: 2 });
+  rect(svg, -48, -134, 48, -50, COL.garden, { stroke: "#ffffff60", dash: true });
+  label(svg, 0, -92, "🌷 Jardin à construire (niveau 1)", 4);
+  if (after) rect(svg, -50, 50, 50, 90, "#73c35a", { stroke: COL.ok || "#8cff7a", sw: 1, dash: true });
+  // Chemin
+  rect(svg, -3, -46.5, 3, 16.5, COL.path);
+  // Portail retour, panneau de stats, compteur d'œufs, arrivée
+  rect(svg, -40, -45, -32, -39, COL.portal, { rx: 1 }); label(svg, -36, -51, "🌀 Portail place", 3);
+  rect(svg, -27, -47, -17, -45, COL.sign); label(svg, -22, -40.5, "📊 Stats", 3);
+  rect(svg, 37, -43, 43, -37, COL.sign); label(svg, 40, -47, "🥚 Compteur", 3);
+  rect(svg, -10, -49, 10, -47, "#5c4636"); label(svg, 0, -54, "⛩️ Entrée", 3.4);
+  circle(svg, 0, -40, 1.6, "#ffffff"); label(svg, 6, -36, "🧍 arrivée", 2.8);
+  // Machine à œufs (à droite du chemin = X négatif)
+  for (const [x, z] of [[-28.1, 11.5], [-19.9, 11.5], [-35.5, 7.9], [-12.5, 7.9], [-40.5, 1.3], [-7.6, 1.3]]) rect(svg, x - 2.1, z - 2.1, x + 2.1, z + 2.1, COL.machine, { rx: 0.8 });
+  rect(svg, -31, -18.25, -25, -13.75, COL.machine, { rx: 0.6 }); label(svg, -28, -21.5, "🎰 Levier", 3);
+  rect(svg, -19.7, -17.3, -16.3, -14.7, "#888"); label(svg, -14, -12, "🤖", 3.4);
+  rect(svg, -46.8, -18.6, -37.2, -17.4, COL.sign); label(svg, -42, -23, "❓ Aide", 3);
+  label(svg, -24, -2, "Machine à œufs", 3.4);
+  // Coffre + cash pad
+  rect(svg, -3, 22, 3, 26, COL.chest, { rx: 0.6 }); label(svg, 0, 29.5, "💰 Coffre", 3.2);
+  if (!after) {
+    // Tour / château actuel + ses tours
+    rect(svg, -17, 33, 17, 45, COL.castle, { stroke: "#999" }); label(svg, 0, 39, "🏰 Façade (60 vitrines)", 3.4, "#333");
+    for (const [x, z, r] of [[-24, 39, 5], [24, 39, 5], [-37, 40, 4.5], [37, 40, 4.5]]) circle(svg, x, z, r, COL.tower, { stroke: "#999" });
+    // Panneaux, fusion, autel aux positions actuelles
+    for (const x of [14, 27, 40]) rect(svg, x - 5.6, 25.4, x + 5.6, 26.6, COL.boards);
+    label(svg, 27, 21, "⬆️ Panneaux d'amélioration", 3.2);
+    rect(svg, -30.4, 27.6, -25.6, 32.4, COL.fusion, { rx: 0.6 }); label(svg, -28, 24.5, "🔮 Fusion", 3);
+    circle(svg, 32, 4, 5.5, COL.altar); label(svg, 32, -3.5, "💜 Renaissance", 3);
+    circle(svg, 22, 57, 6.5, COL.tree); label(svg, 22, 66, "🌳 îlot", 2.8);
+    circle(svg, -57, 22, 6.5, COL.tree); circle(svg, 57, -8, 6.5, COL.tree);
+    label(svg, 0, 74, "Rive (fin de l'île)", 3, "#5a4a20");
+  } else {
+    // Falaise + château mélangé
+    rect(svg, -46, 36, 46, 84, COL.cliff, { rx: 1 });
+    rect(svg, -42, 33, -10, 37, "#4e4a58"); rect(svg, 10, 33, 42, 37, "#4e4a58");
+    label(svg, -26, 31, "🐾 15 vitrines", 2.8); label(svg, 26, 31, "🐾 15 vitrines", 2.8);
+    rect(svg, -6, 22, 6, 36, COL.path); label(svg, 0, 34, "escalier", 2.4, "#333");
+    rect(svg, -25, 45, 25, 59, COL.castle, { stroke: "#999" }); label(svg, 0, 52, "🏰 Château (30 vitrines)", 3.2, "#333");
+    for (const [x, z, r] of [[-27, 47, 5], [27, 47, 5], [-38, 47, 4.4], [38, 47, 4.4], [-17, 56, 4], [17, 56, 4], [0, 68, 5.5]]) circle(svg, x, z, r, COL.tower, { stroke: "#999" });
+    circle(svg, 0, 56, 10, "#a8f0ff", { op: 0.55, stroke: "#7ff7ff" }); label(svg, 0, 62.5, "☁️ île flottante", 2.8, "#123");
+    // Cascade de gemmes
+    for (const side of [-1, 1]) rect(svg, side * 8.4, 25.5, side * 10.4, 36, COL.gem, { op: 0.9 });
+    label(svg, 0, 78, "Falaise + château", 3.6);
+    // Nouvelles positions
+    for (const z of [-6, 6, 18]) rect(svg, 39.4, z - 5.6, 40.6, z + 5.6, COL.boards);
+    label(svg, 33, 25, "⬆️ Panneaux", 3.2);
+    circle(svg, 20, -14, 5.5, COL.altar); label(svg, 20, -21.5, "💜 Renaissance", 3);
+    rect(svg, -46.4, 21.6, -41.6, 26.4, COL.fusion, { rx: 0.6 }); label(svg, -44, 18.5, "🔮 Fusion", 3);
+    circle(svg, -57, 22, 6.5, COL.tree); circle(svg, 57, -8, 6.5, COL.tree); circle(svg, 60, 78, 6.5, COL.tree);
+    label(svg, 60, 87, "🌳 îlot déplacé", 2.8);
+    label(svg, 0, 108, "Rive (fin de l'île)", 3, "#5a4a20");
+  }
+  // Repères
+  label(svg, 0, -150, "⬇ vers le centre de la carte", 3.2, "#cfe7ff");
+  return svg.join("");
+}
+document.getElementById("before").innerHTML = island(false);
+document.getElementById("after").innerHTML = island(true);
+document.getElementById("legend").innerHTML = [
+  ["Île", COL.grass], ["Agrandissement", "#73c35a"], ["Jardin", COL.garden], ["Rive", COL.sand], ["Chemin", COL.path], ["Machine à œufs", COL.machine],
+  ["Panneaux", COL.boards], ["Coffre", COL.chest], ["Renaissance", COL.altar], ["Fusion", COL.fusion], ["Château", COL.castle], ["Falaise", COL.cliff], ["Cascade de gemmes", COL.gem],
+].map(([n, c]) => `<span style="--c:${c}">${n}</span>`).join("");
+
+// ---------- Carte du monde (coordonnées du monde : écran x = X, y = Z ; sud = +Z en bas) ----------
+const R = 711.37;
+function islandShape(angleDeg, extended) {
+  const a = angleDeg * Math.PI / 180;
+  const cx = Math.sin(a) * R, cz = Math.cos(a) * R;
+  // Repère : -Z local vers le centre. Points locaux -> monde
+  const fwd = [-Math.sin(a), -Math.cos(a)]; // vers le centre (local -Z)
+  const right = [Math.cos(a), -Math.sin(a)];
+  const P = (lx, lz) => [cx + right[0] * lx - fwd[0] * lz, cz + right[1] * lx - fwd[1] * lz];
+  const poly = (pts) => pts.map(p => p.join(",")).join(" ");
+  const back = extended ? 90 : 50;
+  return {
+    shore: poly([P(-76, -160), P(76, -160), P(76, back + 26), P(-76, back + 26)]),
+    land: poly([P(-50, -50), P(50, -50), P(50, back), P(-50, back)]),
+    garden: poly([P(-48, -134), P(48, -134), P(48, -50), P(-48, -50)]),
+    castle: extended ? poly([P(-46, 36), P(46, 36), P(46, 84), P(-46, 84)]) : poly([P(-17, 33), P(17, 33), P(17, 45), P(-17, 45)]),
+    max: poly([P(-102, -240), P(102, -240), P(102, back + 26), P(-102, back + 26)]),
+    center: [cx, cz],
+  };
+}
+function world(svgId, detail) {
+  const s = [];
+  s.push(`<rect x="-1450" y="-1450" width="2900" height="2900" fill="#2a6fb0"/>`);
+  const step = detail ? 50 : 200;
+  for (let v = -1400; v <= 1400; v += step) {
+    s.push(`<line x1="${v}" y1="-1450" x2="${v}" y2="1450" stroke="#ffffff12" stroke-width="${detail ? 1 : 3}"/>`);
+    s.push(`<line x1="-1450" y1="${v}" x2="1450" y2="${v}" stroke="#ffffff12" stroke-width="${detail ? 1 : 3}"/>`);
+  }
+  s.push(`<rect x="-1310" y="-1310" width="2620" height="2620" fill="none" stroke="#ffffff55" stroke-dasharray="20 14" stroke-width="${detail ? 2 : 6}"/>`);
+  // Zones de farm
+  for (const [x, z, r, n] of [[-1150, 0, 210, "🌼 Prairie"], [1150, 0, 210, "💎 Grotte de cristal"], [0, -1150, 220, "🌙 Bois des Ombres"]]) {
+    s.push(`<circle cx="${x}" cy="${z}" r="${r}" fill="#4f9a45" stroke="#c9f5a0" stroke-width="6"/>`);
+    s.push(`<text x="${x}" y="${z + 12}" font-size="60" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0008" stroke-width="6" paint-order="stroke">${n}</text>`);
+  }
+  // Arène + promenade + place
+  s.push(`<circle cx="0" cy="0" r="94" fill="#c8c0b0"/><circle cx="0" cy="0" r="64" fill="#9a8f80"/><circle cx="0" cy="0" r="50" fill="#d9a04a"/>`);
+  s.push(`<rect x="-90" y="87" width="180" height="150" fill="#d8d0c0" stroke="#fff" stroke-width="2"/>`);
+  if (detail) {
+    s.push(`<circle cx="0" cy="207" r="6" fill="#fff"/><text x="0" y="226" font-size="14" text-anchor="middle" fill="#333" font-weight="700" font-family="Segoe UI">spawn</text>`);
+    for (const z of [202, 167, 132]) s.push(`<rect x="66" y="${z - 5}" width="8" height="10" fill="#4fd0ff"/>`);
+    s.push(`<text x="40" y="150" font-size="12" text-anchor="middle" fill="#333" font-weight="700" font-family="Segoe UI">portails zones</text>`);
+    s.push(`<rect x="-30" y="193" width="8" height="10" fill="#4fd0ff"/><text x="-26" y="186" font-size="12" text-anchor="middle" fill="#333" font-weight="700" font-family="Segoe UI">🏝️ Mon île</text>`);
+    s.push(`<text x="0" y="6" font-size="20" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0008" stroke-width="3" paint-order="stroke">⚔️ Arène</text>`);
+  } else {
+    s.push(`<text x="0" y="330" font-size="60" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0008" stroke-width="6" paint-order="stroke">Place + arène</text>`);
+  }
+  // Îles des joueurs (12)
+  for (let i = 0; i < 12; i++) {
+    const angle = 15 + i * 30;
+    const sh = islandShape(angle, true);
+    if (detail) s.push(`<polygon points="${sh.max}" fill="none" stroke="#ffffff40" stroke-dasharray="8 6" stroke-width="2"/>`);
+    s.push(`<polygon points="${sh.shore}" fill="#e4cf8f"/>`);
+    s.push(`<polygon points="${sh.land}" fill="#5aa84a"/>`);
+    s.push(`<polygon points="${sh.garden}" fill="#7cc35f"/>`);
+    s.push(`<polygon points="${sh.castle}" fill="#7d7887" stroke="#e8e2d6" stroke-width="${detail ? 3 : 8}"/>`);
+  }
+  if (detail) {
+    const sh = islandShape(15, true);
+    s.push(`<text x="${sh.center[0] + 40}" y="${sh.center[1] + 150}" font-size="18" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0008" stroke-width="3" paint-order="stroke">🏰 château (gris)</text>`);
+    s.push(`<text x="${sh.center[0] - 80}" y="${sh.center[1] - 170}" font-size="16" text-anchor="middle" fill="#fff" font-family="Segoe UI" stroke="#0008" stroke-width="3" paint-order="stroke">pointillés : île au maximum</text>`);
+  } else {
+    s.push(`<text x="0" y="560" font-size="56" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0008" stroke-width="6" paint-order="stroke">12 îles de joueurs</text>`);
+  }
+  document.getElementById(svgId).innerHTML = s.join("");
+}
+world("world", false);
+world("zoom", true);
+document.getElementById("legendWorld").innerHTML = [
+  ["Mer", "#2a6fb0"], ["Île (prolongée)", "#5aa84a"], ["Jardin", "#7cc35f"], ["Rive", "#e4cf8f"], ["Falaise + château", "#7d7887"], ["Arène", "#d9a04a"], ["Place centrale", "#d8d0c0"], ["Zones de farm", "#4f9a45"],
+].map(([n, c]) => `<span style="--c:${c}">${n}</span>`).join("");
+</script>
+</body>
+</html>
