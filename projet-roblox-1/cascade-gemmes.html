@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cascade de gemmes</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1150px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  figure { margin:14px 0; background:var(--card); border-radius:14px; overflow:hidden; position:relative; }
+  figure img { width:100%; display:block; }
+  figcaption { padding:8px 12px; font-size:14px; color:var(--muted); }
+  .tag { position:absolute; background:#ffd34dee; color:#2a1d00; font-weight:800; font-size:14px; padding:4px 10px; border-radius:10px; border:2px solid #2a1d00; white-space:nowrap; }
+  .tag::after { content:""; position:absolute; width:3px; background:#2a1d00; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width: 800px) { .two { grid-template-columns:1fr; } .tag { font-size:11px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>💎 La cascade de gemmes, de près</h1>
+  <p>Les gemmes gagnées par tes créatures partent des vitrines et descendent jusqu'au coffre. Les étiquettes jaunes montrent chaque partie du trajet.</p>
+
+  <figure>
+    <img src="chateau-styles/Melange2_close.jpg" alt="Vue rapprochée de l'escalier, des cascades de gemmes et du coffre">
+    <span class="tag" style="left:4%; top:31%">① Rigoles au-dessus des vitrines</span>
+    <span class="tag" style="left:63%; top:20%">② Rigole du château du haut</span>
+    <span class="tag" style="left:20%; top:47%">③ Cascade le long de l'escalier</span>
+    <span class="tag" style="left:66%; top:44%">③ Cascade</span>
+    <span class="tag" style="left:45%; top:60%">④ Glissière</span>
+    <span class="tag" style="left:22%; top:73%">⑤ Le coffre déborde</span>
+    <figcaption>Vue rapprochée, au pied de l'escalier (le petit bonhomme bleu, c'est toi)</figcaption>
+  </figure>
+
+  <div class="two">
+    <figure><img src="chateau-styles/Melange2_front.jpg" alt=""><figcaption>De loin, de face : les deux cascades bleu-violet de chaque côté de l'escalier</figcaption></figure>
+    <figure><img src="chateau-styles/Melange2_34.jpg" alt=""><figcaption>De loin, de trois-quarts</figcaption></figure>
+  </div>
+
+  <p><b>Dans le jeu, les gemmes bougent</b> : elles glissent dans les rigoles et tombent en continu. Le flot grossit quand tu gagnes plus. C'est seulement visuel, le coffre se remplit comme aujourd'hui.</p>
+</div>
+</body>
+</html>
