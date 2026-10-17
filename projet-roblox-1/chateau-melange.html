@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Château mélangé</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1150px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:22px 0 8px; font-size:20px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .views { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:12px 0; }
+  @media (max-width: 800px) { .views { grid-template-columns:1fr; } }
+  .views figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; }
+  .views img { width:100%; display:block; cursor:zoom-in; }
+  .views figcaption { padding:6px 10px; font-size:13px; color:var(--muted); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:10px; }
+  .box { background:var(--card); border-radius:14px; padding:12px 16px; }
+  .box h3 { margin:0 0 6px; font-size:16px; color:var(--accent); }
+  .box ul { margin:0; padding-left:20px; }
+  .fix { background:#24402c; border-radius:14px; padding:12px 16px; margin-top:12px; }
+  .fix b { color:var(--ok); }
+  .before { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
+  .before img { width:100%; border-radius:10px; display:block; }
+  .before p { margin:4px 0 0; font-size:13px; text-align:center; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:18px; }
+  .zoom { position:fixed; inset:0; background:#000d; display:none; align-items:center; justify-content:center; padding:16px; cursor:zoom-out; }
+  .zoom img { max-width:100%; max-height:100%; border-radius:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏰 Le mélange : la falaise du style 3 + le château du style 2</h1>
+  <p>Maquette en <b>vrai 3D</b> (pièces Roblox avec picots, soleil et ombres). Elle n'est <b>pas encore dans le jeu</b>. Le château complet est montré tel qu'il serait au dernier palier. Clique sur une image pour l'agrandir.</p>
+
+  <div class="views">
+    <figure><img src="chateau-styles/Melange2_34.jpg" alt=""><figcaption>Trois-quarts, en arrivant du jardin</figcaption></figure>
+    <figure><img src="chateau-styles/Melange2_front.jpg" alt=""><figcaption>De face, depuis le coffre</figcaption></figure>
+  </div>
+
+  <div class="fix">
+    <b>✔ Tours collées :</b> sur le style 2, je les avais écartées pour que chaque toit pointu se voie et que les géants ne se cachent pas. Ici, toutes les tours touchent le château :
+    les grandes tours aux coins du corps de logis, les petites tours extérieures reliées par un <b>rempart crénelé</b>, et les deux tours du haut de chaque côté de l'île flottante, devant la flèche.
+    <div class="before">
+      <div><img src="chateau-styles/Conte_front.jpg" alt=""><p>Avant (style 2) : les tours extérieures sont à part</p></div>
+      <div><img src="chateau-styles/Melange2_front.jpg" alt=""><p>Maintenant : tout est collé et relié</p></div>
+    </div>
+  </div>
+
+  <h2>Ce qu'il y a dedans</h2>
+  <div class="grid">
+    <div class="box"><h3>🪨 La falaise</h3><ul>
+      <li>Des blocs de roche en gradins sur les côtés, de l'herbe sur le dessus et une petite cascade à gauche.</li>
+      <li>Un <b>grand escalier</b> qui part du coffre et monte jusqu'à la porte.</li>
+      <li><b>2 galeries de 15 vitrines</b> creusées dans la roche, juste au-dessus du coffre : ce sont tes premières places, on les voit dès le début.</li>
+    </ul></div>
+    <div class="box"><h3>🏰 Le château</h3><ul>
+      <li>Un corps de logis en pierre avec <b>30 vitrines</b>, rangées en 5 + 5 sur 3 étages.</li>
+      <li>Une grande porte à herse dorée, avec des torches, un parvis en haut de l'escalier et une <b>rosace en vitrail</b> au-dessus.</li>
+      <li>La <b>flèche centrale</b>, la plus haute, avec l'île flottante devant elle.</li>
+    </ul></div>
+    <div class="box"><h3>🦣 Les géants</h3><ul>
+      <li><b>6 places en tout</b> au dernier palier : 1 sur la flèche centrale, 4 sur les tours et 1 sur l'île flottante.</li>
+      <li>Plus de géant au-dessus de la porte (retiré à ta demande) : la rosace prend sa place.</li>
+      <li>Sur les tours : 2 en haut des grandes, 2 plus bas sur les petites, pour qu'ils ne se cachent pas.</li>
+    </ul></div>
+    <div class="box"><h3>☁️ L'île flottante (revenue)</h3><ul>
+      <li>La récompense du <b>dernier palier</b>, comme avant : roche, herbe, nuages, halo lumineux en dessous et quatre cristaux.</li>
+      <li>Elle flotte <b>au cœur du château</b>, entre les deux tours du haut et devant la flèche. Elle remplace l'ancien étage en pierre grise du milieu.</li>
+      <li>Le géant de la flèche est monté un peu plus haut pour rester bien visible au-dessus d'elle.</li>
+      <li>Un grand balcon au milieu pour un géant (la 6e place, au dernier palier).</li>
+    </ul></div>
+  </div>
+
+  <h2>💎 La cascade de gemmes (les gains qui vont au coffre)</h2>
+  <div class="views">
+    <figure><img src="chateau-styles/Melange2_close.jpg" alt=""><figcaption>De près : l'escalier, les deux cascades et le coffre qui déborde</figcaption></figure>
+    <div class="box">
+      <h3>Comment ça marche</h3>
+      <ul>
+        <li><b>Des rigoles de pierre</b> au-dessus de chaque galerie de vitrines ramassent les gemmes des créatures et les amènent vers le milieu, en pente.</li>
+        <li>Les gemmes du <b>château du haut</b> descendent par deux rigoles depuis le pied du corps de logis.</li>
+        <li>De chaque côté de l'escalier, elles tombent en <b>cascade le long de la falaise</b>.</li>
+        <li>Une dernière <b>glissière</b> les verse dans le coffre, qui déborde de gemmes.</li>
+      </ul>
+      <h3 style="margin-top:10px">Dans le jeu</h3>
+      <ul>
+        <li>Les gemmes <b>bougent</b> : elles glissent dans les rigoles et tombent en continu.</li>
+        <li>Plus tu gagnes, plus le flot est fort : quelques gemmes au début, une vraie rivière avec les gros gains.</li>
+        <li>C'est <b>seulement visuel</b> : le coffre se remplit toujours de la même façon. L'animation est faite par chaque joueur, pour les châteaux proches seulement, en nombre limité pour les téléphones.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Avant de le construire dans le jeu :</b>
+    <ul><li>Sur la maquette, le coffre est posé sur les premières marches. Dans le jeu, je ferai démarrer l'escalier juste derrière le coffre.</li></ul>
+    <ul>
+      <li>La falaise et le château vont plus loin vers l'arrière que la façade actuelle. J'agrandirai le sol de l'île de ce côté, et je vérifierai que ça ne touche pas les îles voisines.</li>
+      <li><b>Avec les renaissances</b>, je te propose de montrer ensuite le château palier par palier : par exemple d'abord la falaise avec l'escalier et un petit fort en bois, puis le corps de logis, les tours, et enfin la flèche. Je te ferai ces 6 rendus pour validation.</li>
+      <li>Les <b>couleurs</b> sont pour l'instant celles du Château royal. Chaque palier aurait les siennes, comme avant (bois, pierre grise, blanc et or, or, céleste).</li>
+    </ul>
+    Dis-moi si ce mélange te plaît ou ce que tu veux changer, par exemple la hauteur de la falaise, le nombre de tours ou la cascade.
+  </div>
+</div>
+<div class="zoom" id="zoom"><img id="zoomImg" alt=""></div>
+<script>
+const zoom = document.getElementById("zoom");
+document.querySelectorAll("img").forEach(img => { if (img.id !== "zoomImg") img.onclick = () => { document.getElementById("zoomImg").src = img.src; zoom.style.display = "flex"; }; });
+zoom.onclick = () => zoom.style.display = "none";
+</script>
+</body>
+</html>
