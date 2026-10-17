@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monde à 6 zones</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:26px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .layout { display:grid; grid-template-columns:1.1fr 0.9fr; gap:14px; align-items:start; }
+  @media (max-width: 900px) { .layout { grid-template-columns:1fr; } }
+  .map { background:var(--card); border-radius:16px; padding:10px; }
+  .map svg { width:100%; height:auto; display:block; border-radius:10px; }
+  .timer { background:var(--card); border-radius:16px; padding:14px; }
+  .bar { display:flex; height:34px; border-radius:10px; overflow:hidden; margin:10px 0 6px; font-weight:700; font-size:13px; }
+  .bar div { display:flex; align-items:center; justify-content:center; }
+  .zones { display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:10px; }
+  .zone { background:var(--card); border-radius:14px; padding:12px 14px; border-left:6px solid var(--c); }
+  .zone h3 { margin:0 0 2px; font-size:17px; }
+  .zone .lvl { font-weight:800; color:var(--c); font-size:13px; letter-spacing:.5px; }
+  .zone .new { background:#8cff7a; color:#123; font-size:11px; font-weight:800; padding:1px 7px; border-radius:8px; margin-left:6px; vertical-align:2px; }
+  .zone ul { margin:6px 0 0; padding-left:18px; font-size:14px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  .note ul { margin:6px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌍 Nouveau monde : place au centre, 6 zones, 6 boss</h1>
+  <p>Proposition, rien n'est changé dans le jeu. <b>L'arène disparaît</b> : la nouvelle place centrale prend le centre de la carte, avec les 12 îles des joueurs autour et <b>6 zones de farm</b> plus loin, chacune avec <b>son boss</b>.
+  Le look de la place sera fait d'après tes captures : ici, ce n'est que son emplacement.</p>
+
+  <div class="layout">
+    <div class="map"><svg id="world" viewBox="-1650 -1650 3300 3300"></svg></div>
+    <div>
+      <div class="timer">
+        <b>⏱️ Les 6 boss apparaissent EN MÊME TEMPS</b>
+        <div class="bar"><div style="flex:1;background:#e8463c">10 min : les 6 boss sont là</div><div style="flex:2;background:#3b3560;color:#b8b2d6">20 min d'attente</div></div>
+        <ul>
+          <li>Pendant 10 minutes, les 6 boss sont dans leurs zones. Tu choisis lequel affronter selon ta force.</li>
+          <li>Ensuite, 20 minutes sans boss, puis ça recommence.</li>
+          <li>Un minuteur en haut de l'écran annonce l'arrivée, avec une alerte 1 minute avant.</li>
+          <li>Comme aujourd'hui, on se bat <b>seul ou avec ses amis</b>, avec son équipe de créatures. On peut gagner une fois par boss et par passage.</li>
+        </ul>
+      </div>
+      <div class="note">
+        <b>Comment on va dans les zones :</b>
+        <ul>
+          <li><b>6 portails sur la place centrale</b>, un par zone. Un portail est fermé tant que la zone n'est pas débloquée.</li>
+          <li>Dans chaque zone, une <b>clairière du boss</b>, avec un panneau qui dit « Boss dans 12:30 » ou « BOSS PRÉSENT ! ».</li>
+          <li>La mer est agrandie pour que les zones lointaines restent dans la carte. Ça corrige au passage le problème du Bois des Ombres qui dépassait.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>Les 6 zones, de la plus facile à la plus dure</h2>
+  <p>C'est une première proposition d'ordre, à revoir ensemble comme tu l'as demandé. Une zone se débloque avec une créature d'une certaine rareté, comme aujourd'hui. Plus la zone est dure, plus le boss a de vie et frappe fort, et meilleur est son butin.</p>
+  <div class="zones" id="zones"></div>
+
+  <div class="note">
+    <b>À toi de choisir :</b>
+    <ul>
+      <li><b>Les thèmes des 3 nouvelles zones</b> : je propose ❄️ Royaume des glaces, 🌋 Volcan et ☁️ Royaume céleste. On peut prendre 🌊 Fonds marins à la place de l'un d'eux.</li>
+      <li><b>L'ordre de difficulté</b> et la rareté qu'il faut pour entrer dans chaque zone.</li>
+      <li><b>Les boss</b> : les noms sont des idées. Les boss d'Halloween (Roi Citrouille, Dragon Spectral, Liche Ancienne) peuvent remplacer ceux de 3 zones pendant la saison.</li>
+    </ul>
+    Envoie-moi aussi tes <b>captures pour la place centrale</b> : je ferai ensuite son rendu 3D au centre de cette carte.
+  </div>
+</div>
+<script>
+const ZONES = [
+  { n: 1, name: "🌼 La Prairie", lvl: "FACILE", c: "#5fd35a", angle: 270, boss: "le Géant des Prés", need: "Accès libre", hp: "×1", loot: "Œuf du boss, gemmes", isNew: false },
+  { n: 2, name: "💎 La Grotte de Cristal", lvl: "MOYEN", c: "#4fc3ff", angle: 330, boss: "le Golem de Cristal", need: "Une créature Rare", hp: "×3", loot: "Œufs rares, cristaux", isNew: false },
+  { n: 3, name: "❄️ Le Royaume des Glaces", lvl: "DIFFICILE", c: "#bfefff", angle: 30, boss: "le Yéti Géant", need: "Une créature Épique", hp: "×8", loot: "Œufs épiques, cosmétique givré", isNew: true },
+  { n: 4, name: "🌙 Le Bois des Ombres", lvl: "TRÈS DIFFICILE", c: "#a070ff", angle: 90, boss: "la Liche Ancienne", need: "Une créature Légendaire", hp: "×20", loot: "Œufs légendaires, cape maudite", isNew: false },
+  { n: 5, name: "🌋 Le Volcan", lvl: "EXTRÊME", c: "#ff7a3c", angle: 150, boss: "le Dragon de Lave", need: "Une créature Mythique", hp: "×50", loot: "Œufs mythiques, aura de feu", isNew: true },
+  { n: 6, name: "☁️ Le Royaume Céleste", lvl: "LÉGENDAIRE", c: "#ffd34d", angle: 210, boss: "le Griffon Doré", need: "Une créature Divine", hp: "×120", loot: "Œufs divins, ailes célestes", isNew: true },
+];
+document.getElementById("zones").innerHTML = ZONES.map(z => `
+  <div class="zone" style="--c:${z.c}">
+    <div class="lvl">ZONE ${z.n} · ${z.lvl}</div>
+    <h3>${z.name}${z.isNew ? '<span class="new">NOUVELLE</span>' : ""}</h3>
+    <ul>
+      <li>👑 Boss : <b>${z.boss}</b> (vie ${z.hp})</li>
+      <li>🔓 Pour entrer : ${z.need}</li>
+      <li>🎁 Butin : ${z.loot}</li>
+    </ul>
+  </div>`).join("");
+
+// Carte : écran x = X, y = Z (sud en bas)
+const s = [];
+s.push(`<rect x="-1650" y="-1650" width="3300" height="3300" fill="#2a6fb0"/>`);
+for (let v = -1600; v <= 1600; v += 200) {
+  s.push(`<line x1="${v}" y1="-1650" x2="${v}" y2="1650" stroke="#ffffff10" stroke-width="3"/>`);
+  s.push(`<line x1="-1650" y1="${v}" x2="1650" y2="${v}" stroke="#ffffff10" stroke-width="3"/>`);
+}
+s.push(`<rect x="-1560" y="-1560" width="3120" height="3120" fill="none" stroke="#ffffff55" stroke-dasharray="24 16" stroke-width="7"/>`);
+s.push(`<text x="0" y="-1585" font-size="48" text-anchor="middle" fill="#cfe7ff" font-family="Segoe UI">limite de la mer (agrandie)</text>`);
+// Zones (6, tous les 60°) à 1250 du centre
+const ZR = 1250;
+for (const z of ZONES) {
+  const a = z.angle * Math.PI / 180, x = Math.sin(a) * ZR, y = Math.cos(a) * ZR;
+  s.push(`<circle cx="${x}" cy="${y}" r="220" fill="${z.c}" opacity="0.55" stroke="#fff" stroke-width="6"/>`);
+  s.push(`<circle cx="${x}" cy="${y}" r="40" fill="#e8463c" stroke="#fff" stroke-width="5"/>`);
+  s.push(`<text x="${x}" y="${y + 14}" font-size="40" text-anchor="middle">👑</text>`);
+  s.push(`<text x="${Math.max(-1200, Math.min(1200, x))}" y="${y - 80}" font-size="84" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0009" stroke-width="10" paint-order="stroke">${z.n}. ${z.name.split(" ").slice(1).join(" ")}</text>`);
+  s.push(`<text x="${x}" y="${y + 120}" font-size="62" text-anchor="middle" fill="#fff" font-family="Segoe UI" stroke="#0009" stroke-width="6" paint-order="stroke">${z.lvl}</text>`);
+  // lien portail (pointillés) depuis la place
+  s.push(`<line x1="${Math.sin(a) * 200}" y1="${Math.cos(a) * 200}" x2="${Math.sin(a) * (ZR - 230)}" y2="${Math.cos(a) * (ZR - 230)}" stroke="#ffffff70" stroke-width="6" stroke-dasharray="20 18"/>`);
+}
+// Îles des joueurs (12) : anneau à 711, château vers l'extérieur
+const R = 711;
+for (let i = 0; i < 12; i++) {
+  const ang = (15 + i * 30) * Math.PI / 180;
+  const cx = Math.sin(ang) * R, cz = Math.cos(ang) * R;
+  const deg = -(15 + i * 30);
+  s.push(`<g transform="translate(${cx},${cz}) rotate(${deg})">
+    <rect x="-76" y="-160" width="152" height="276" rx="18" fill="#e4cf8f"/>
+    <rect x="-50" y="-50" width="100" height="140" fill="#5aa84a"/>
+    <rect x="-48" y="-134" width="96" height="84" fill="#7cc35f"/>
+    <rect x="-46" y="36" width="92" height="48" fill="#7d7887" stroke="#e8e2d6" stroke-width="6"/>
+  </g>`);
+}
+s.push(`<text x="0" y="440" font-size="46" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0009" stroke-width="7" paint-order="stroke">12 îles de joueurs (château vers l'extérieur)</text>`);
+// Place centrale (placeholder)
+s.push(`<circle cx="0" cy="0" r="200" fill="#d8d0c0" stroke="#fff" stroke-width="8"/>`);
+s.push(`<text x="0" y="-20" font-size="58" text-anchor="middle" fill="#3a3040" font-weight="800" font-family="Segoe UI">🏛️ NOUVELLE PLACE</text>`);
+s.push(`<text x="0" y="45" font-size="40" text-anchor="middle" fill="#5a5060" font-family="Segoe UI">(design d'après tes captures)</text>`);
+s.push(`<text x="0" y="100" font-size="38" text-anchor="middle" fill="#5a5060" font-family="Segoe UI">spawn · œufs · 6 portails</text>`);
+document.getElementById("world").innerHTML = s.join("");
+</script>
+</body>
+</html>
