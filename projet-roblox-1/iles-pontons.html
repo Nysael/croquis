@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Îles et pontons</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:26px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:10px; }
+  .opt { background:var(--card); border-radius:14px; padding:12px 14px; border:3px solid transparent; cursor:pointer; }
+  .opt.on { border-color:var(--accent); background:#3b3560; }
+  .opt h3 { margin:0 0 4px; font-size:16px; }
+  .opt .big { font-size:22px; font-weight:800; color:var(--ok); }
+  .opt ul { margin:6px 0 0; padding-left:18px; font-size:14px; }
+  .map { background:var(--card); border-radius:16px; padding:10px; margin-top:12px; }
+  .map svg { width:100%; max-width:760px; margin:auto; height:auto; display:block; border-radius:10px; }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(330px,1fr)); gap:10px; }
+  .gallery figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; }
+  .gallery img { width:100%; display:block; }
+  .gallery figcaption { padding:8px 12px; font-size:14px; color:var(--muted); }
+  .gallery figcaption b { color:var(--accent); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏝️ Îles plus proches et ponts depuis la place</h1>
+  <p>Proposition, rien n'est changé dans le jeu. Les îles sont <b>longues</b> : au niveau maximum, le jardin s'étend jusqu'à 214 studs vers le centre, et ce sont les coins avant de deux jardins voisins qui empêchent de rapprocher le cercle.
+  Pour rapprocher les îles du centre, il faut donc <b>moins d'îles</b> ou un <b>jardin maximum moins profond</b>. Voici les options avec les vrais chiffres. Clique sur une option pour la voir sur la carte.</p>
+
+  <div class="opts" id="opts"></div>
+  <div class="map"><svg id="map" viewBox="-1000 -1000 2000 2000"></svg></div>
+
+  <div class="note">
+    <b>Comment marchent les pontons :</b>
+    <ul>
+      <li><b>Les ponts partent de la place</b> et vont tout droit jusqu'à chaque île, en étoile. De la place, on peut aller voir n'importe quelle île à pied.</li>
+      <li>Sur la place, chaque pont commence par une <b>arche d'entrée</b> avec le nom du joueur et son niveau de château, pour savoir à qui il mène.</li>
+      <li>Le pont arrive <b>au bout du jardin</b> : on traverse le jardin jusqu'à l'entrée de l'île. Quand le jardin s'agrandit vers la place, <b>le pont raccourcit tout seul</b>.</li>
+      <li>Le pont appartient au joueur : il est <b>entièrement dans le style de son château</b> et change à chaque palier de renaissance (les 6 styles en dessous).</li>
+      <li>Une <b>plateforme de repos</b> à mi-chemin, avec des lanternes et un banc, pour que la traversée ne paraisse pas trop longue.</li>
+      <li>Le portail « 🏝️ Mon île » de la place reste là, pour rentrer chez soi d'un coup.</li>
+    </ul>
+  </div>
+
+  <h2>Les pontons, un style par palier (assortis au château)</h2>
+  <div class="gallery" id="gallery"></div>
+</div>
+<script>
+// Options calculées avec la vraie formule de MapLayout (écart garanti de 40 studs entre les îles au maximum)
+const OPTIONS = [
+  { id: "now", title: "Aujourd'hui", n: 12, r: 711, garden: 214, text: ["12 îles, pas de pont", "Un pont ferait 377 studs (24 s de marche)", "Jardin max : 152 × 164"], current: true },
+  { id: "a", title: "A. 8 îles par serveur (Recommandé)", n: 8, r: 558, garden: 214, text: ["Le jardin ne change pas", "Pont : 224 studs au début (14 s), 144 studs quand le jardin est au max (9 s)", "8 joueurs maximum par serveur"] },
+  { id: "b", title: "B. 12 îles, jardin max réduit", n: 12, r: 647, garden: 150, text: ["Jardin max : 152 × 100 au lieu de 152 × 164 (−39 % de surface au dernier niveau)", "Pont : 313 studs au début (20 s), 297 au max (19 s) : long", "On garde 12 joueurs"] },
+  { id: "c", title: "C. 8 îles + jardin max réduit", n: 8, r: 494, garden: 150, text: ["Le plus proche du centre", "Jardin max : 152 × 100", "Pont : 160 studs au début (10 s), 144 au max (9 s)", "8 joueurs maximum par serveur"] },
+];
+const optsEl = document.getElementById("opts");
+function draw(opt) {
+  const s = [];
+  s.push(`<rect x="-1000" y="-1000" width="2000" height="2000" fill="#2a6fb0"/>`);
+  for (let v = -1000; v <= 1000; v += 100) {
+    s.push(`<line x1="${v}" y1="-1000" x2="${v}" y2="1000" stroke="#ffffff10" stroke-width="2"/><line x1="-1000" y1="${v}" x2="1000" y2="${v}" stroke="#ffffff10" stroke-width="2"/>`);
+  }
+  // Ancienne position (pointillés)
+  s.push(`<circle cx="0" cy="0" r="711" fill="none" stroke="#ffffff50" stroke-width="4" stroke-dasharray="16 12"/>`);
+  s.push(`<text x="0" y="-725" font-size="34" text-anchor="middle" fill="#cfe7ff" font-family="Segoe UI">cercle actuel (711)</text>`);
+  // Place centrale
+  s.push(`<circle cx="0" cy="0" r="200" fill="#d8d0c0" stroke="#fff" stroke-width="6"/>`);
+  s.push(`<text x="0" y="12" font-size="46" text-anchor="middle" fill="#3a3040" font-weight="800" font-family="Segoe UI">🏛️ Place</text>`);
+  const pts = [];
+  for (let i = 0; i < opt.n; i++) {
+    const a = (15 + i * 360 / opt.n) * Math.PI / 180;
+    const cx = Math.sin(a) * opt.r, cz = Math.cos(a) * opt.r;
+    const deg = -(15 + i * 360 / opt.n);
+    // Coins d'accroche des pontons (flancs, près de l'entrée : z local -45)
+    const P = (lx, lz) => [cx + Math.cos(a) * lx + Math.sin(a) * lz, cz - Math.sin(a) * lx + Math.cos(a) * lz];
+    pts.push({ left: P(-76, -45), right: P(76, -45) });
+    // Dans ce groupe, y négatif = vers le centre (entrée + jardin), y positif = vers l'extérieur (château)
+    s.push(`<g transform="translate(${cx},${cz}) rotate(${deg})">
+      <rect x="-102" y="${-(50 + opt.garden + 26)}" width="204" height="${50 + opt.garden + 26 + 116}" rx="20" fill="none" stroke="#ffffff30" stroke-dasharray="10 8" stroke-width="3"/>
+      <rect x="-76" y="-160" width="152" height="276" rx="16" fill="#e4cf8f"/>
+      <rect x="-50" y="-50" width="100" height="140" fill="#5aa84a"/>
+      <rect x="-48" y="-134" width="96" height="84" fill="#7cc35f"/>
+      <rect x="-46" y="36" width="92" height="48" fill="#7d7887" stroke="#e8e2d6" stroke-width="5"/>
+    </g>`);
+  }
+  if (!opt.current) {
+    // Ponts en étoile : du bord de la place (rayon 200) au bout du jardin (niveau 1 : 134 studs devant le centre de l'île)
+    for (let i = 0; i < opt.n; i++) {
+      const a = (15 + i * 360 / opt.n) * Math.PI / 180;
+      const dx = Math.sin(a), dz = Math.cos(a);
+      const r1 = 200, r2 = opt.r - 134;
+      s.push(`<line x1="${dx * r1}" y1="${dz * r1}" x2="${dx * r2}" y2="${dz * r2}" stroke="#a87444" stroke-width="16" stroke-linecap="round"/>`);
+      s.push(`<line x1="${dx * r1}" y1="${dz * r1}" x2="${dx * r2}" y2="${dz * r2}" stroke="#d4a46a" stroke-width="7" stroke-linecap="round" stroke-dasharray="6 8"/>`);
+      // arche d'entrée du pont sur la place
+      s.push(`<circle cx="${dx * (r1 + 8)}" cy="${dz * (r1 + 8)}" r="14" fill="#ffd34d" stroke="#3a2a10" stroke-width="3"/>`);
+    }
+  }
+  s.push(`<text x="0" y="960" font-size="38" text-anchor="middle" fill="#fff" font-weight="700" font-family="Segoe UI" stroke="#0008" stroke-width="5" paint-order="stroke">${opt.title} — îles à ${opt.r} studs du centre${opt.current ? "" : " (" + Math.round((1 - opt.r / 711) * 100) + " % plus près)"}</text>`);
+  document.getElementById("map").innerHTML = s.join("");
+  [...optsEl.children].forEach((el, k) => el.classList.toggle("on", OPTIONS[k] === opt));
+}
+OPTIONS.forEach(opt => {
+  const el = document.createElement("div");
+  el.className = "opt";
+  el.innerHTML = `<h3>${opt.title}</h3><div class="big">${opt.r} studs du centre${opt.current ? "" : " · −" + Math.round((1 - opt.r / 711) * 100) + " %"}</div><ul>${opt.text.map(t => `<li>${t}</li>`).join("")}</ul>`;
+  el.onclick = () => draw(opt);
+  optsEl.appendChild(el);
+});
+draw(OPTIONS[1]);
+
+const BRIDGES = [
+  ["1", "Fortin de bois", "planches inégales sur pilotis, cordes en guise de rambarde"],
+  ["2", "Château fort", "pont de bois sur piles de pierre, rambarde de bois, bannières rouges et torches"],
+  ["3", "Château de pierre", "pont de pierre à arches, parapets crénelés, lanternes"],
+  ["4", "Château royal", "pierre blanche, balustrade dorée à colonnettes, mâts à bannières bleues"],
+  ["5", "Palais d'or", "tablier doré avec tapis, arches dorées au-dessus du passage, lampes en cristal"],
+  ["6", "Citadelle céleste", "pont qui flotte sans piles, bords lumineux, nuages dessous, cristaux"],
+
+];
+document.getElementById("gallery").innerHTML = BRIDGES.map(([id, name, desc]) =>
+  `<figure><img src="pontons/ponton_${id}.jpg" alt=""><figcaption><b>${id === "Rencontre" ? "🤝" : "Palier " + id} · ${name}</b><br>${desc}</figcaption></figure>`).join("");
+</script>
+</body>
+</html>
