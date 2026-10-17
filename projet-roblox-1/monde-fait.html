@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nouveau monde réalisé</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --warn:#ffb86b; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:34px 0 10px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .tag { display:inline-block; background:#3b3560; color:var(--accent); border-radius:8px; padding:2px 9px; font-size:13px; font-weight:700; margin-right:6px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:12px; }
+  .grid.one { grid-template-columns:1fr; }
+  figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; }
+  figure img { width:100%; display:block; }
+  figcaption { padding:9px 13px 12px; font-size:14px; color:var(--muted); line-height:1.45; }
+  figcaption b { color:var(--accent); }
+  .map { background:var(--card); border-radius:16px; padding:10px; }
+  .map svg { width:100%; max-width:820px; height:auto; margin:auto; display:block; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border-radius:14px; overflow:hidden; font-size:14px; }
+  th, td { padding:9px 12px; text-align:left; border-bottom:1px solid #3a3558; }
+  th { color:var(--accent); font-size:13px; }
+  td { color:var(--text); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  .note.warn { border-left:5px solid var(--warn); }
+  .dot { display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌍 Ce qui a été fait : le nouveau monde</h1>
+  <p>Ce sont de <b>vraies captures du jeu dans Studio</b>, prises le 17/10, et non des dessins. Tout est déjà dans le jeu et enregistré.
+    <span class="tag">Carte</span><span class="tag">Boss endormis</span><span class="tag">Plaques de vitesse</span><span class="tag">3 nouvelles zones</span><span class="tag">21 nouveaux modèles</span></p>
+
+  <h2>1. La carte vue d'en haut</h2>
+  <div class="map"><svg id="map" viewBox="-1600 -1600 3200 3200"></svg></div>
+  <p>La place est au centre et les 8 îles des joueurs l'entourent, reliées par des ponts en étoile. Plus loin, les <b>6 zones de farm</b> forment un grand cercle (1250 studs du centre), chacune avec son portail sur la place.</p>
+
+  <div class="grid one">
+    <figure><img src="monde-fait/place.jpg" alt="La place vue d'en haut">
+      <figcaption><b>La place centrale</b> (le décor sera refait d'après tes captures) : les 8 ponts partent de la place, avec leurs plaques de vitesse cyan. Il y a 3 portails de zone à gauche et 3 à droite. Au fond, on aperçoit les Glaces et la Grotte.</figcaption></figure>
+  </div>
+
+  <h2>2. Les plaques de vitesse sur les ponts</h2>
+  <div class="grid">
+    <figure><img src="monde-fait/pont.jpg" alt="Pont avec plaques">
+      <figcaption><b>Une plaque tous les 45 studs</b>, jusqu'à l'île : dalle sombre, bord néon et flèches « < > » dans les deux sens.</figcaption></figure>
+    <figure><img src="monde-fait/vitesse.jpg" alt="Bonus de vitesse">
+      <figcaption><b>Sur une plaque : vitesse ×3 pendant 4 s</b>, avec la barre « ⚡ Vitesse ×3 » en bas de l'écran. Le bonus s'arrête dès qu'on quitte le pont.</figcaption></figure>
+  </div>
+
+  <h2>3. Les 6 zones et leurs boss</h2>
+  <table>
+    <tr><th>Zone</th><th>Pour entrer</th><th>Boss (pendant Halloween)</th><th>Difficulté du boss</th></tr>
+    <tr><td><span class="dot" style="background:#6fdc5a"></span>🌼 Prairie</td><td>accès libre</td><td>🎃 Roi Citrouille</td><td>Facile · PV ×1</td></tr>
+    <tr><td><span class="dot" style="background:#7ab8ff"></span>💎 Grotte</td><td>une créature Rare</td><td>👻 Dragon Spectral</td><td>Moyen · PV ×1,8</td></tr>
+    <tr><td><span class="dot" style="background:#bfefff"></span>❄️ Glaces <b>(nouvelle)</b></td><td>une Épique</td><td>❄️ Yéti Géant</td><td>Difficile · PV ×3</td></tr>
+    <tr><td><span class="dot" style="background:#b07aff"></span>🌙 Bois des Ombres</td><td>une Légendaire</td><td>💀 Liche Ancienne</td><td>Très difficile · PV ×4,5</td></tr>
+    <tr><td><span class="dot" style="background:#ff7a3c"></span>🌋 Volcan <b>(nouvelle)</b></td><td>une Mythique</td><td>🌋 Dragon de Lave</td><td>Extrême · PV ×6,5</td></tr>
+    <tr><td><span class="dot" style="background:#ffd34d"></span>☁️ Céleste <b>(nouvelle)</b></td><td>une Divine</td><td>🦅 Griffon Doré</td><td>Légendaire · PV ×9</td></tr>
+  </table>
+  <p>Pendant 10 minutes, <b>les 6 boss dorment en même temps</b>, chacun dans la clairière de sa zone. Puis ils repartent pendant 20 minutes. Le bouton « ⚔️ Réveiller le boss » ouvre le panneau de groupe (seul ou avec 2 amis). On ne peut gagner qu'une fois par boss et par passage.</p>
+
+  <h2>❄️ Le Royaume des Glaces</h2>
+  <div class="grid">
+    <figure><img src="monde-fait/glaces.jpg" alt="Royaume des Glaces">
+      <figcaption><b>Vue d'ensemble</b> : sol de neige, sapins enneigés, pics de glace lumineux, remparts de glace, flocons qui tombent.</figcaption></figure>
+    <figure><img src="monde-fait/yeti.jpg" alt="Yéti endormi">
+      <figcaption><b>Le Yéti Géant endormi</b> dans sa clairière, avec ses « Z ». Il se réveille quand on lance le combat.</figcaption></figure>
+  </div>
+
+  <h2>🌋 Le Volcan</h2>
+  <div class="grid">
+    <figure><img src="monde-fait/volcan.jpg" alt="Volcan">
+      <figcaption><b>Vue d'ensemble</b> : basalte noir, rivière de lave, cônes fumants, arbres calcinés, piliers de feu, cascades de lave sur les remparts.</figcaption></figure>
+    <figure><img src="monde-fait/dragon-lave.jpg" alt="Dragon de Lave endormi">
+      <figcaption><b>Le Dragon de Lave endormi</b>, les ailes repliées. Autour de lui, un oiseau de feu (à droite) et un scarabée de lave (à gauche).</figcaption></figure>
+  </div>
+
+  <h2>☁️ Le Royaume Céleste</h2>
+  <div class="grid">
+    <figure><img src="monde-fait/celeste.jpg" alt="Royaume Céleste">
+      <figcaption><b>Vue d'ensemble</b> : sol nacré, arbres en fleurs roses, nuages flottants, remparts blancs bordés d'or, arches dorées.</figcaption></figure>
+    <figure><img src="monde-fait/griffon.jpg" alt="Griffon Doré endormi">
+      <figcaption><b>Le Griffon Doré endormi</b> au milieu de sa clairière dorée.</figcaption></figure>
+  </div>
+
+  <h2>Les zones déjà existantes</h2>
+  <div class="grid">
+    <figure><img src="monde-fait/roi-citrouille.jpg" alt="Roi Citrouille endormi">
+      <figcaption><b>Le Roi Citrouille endormi</b> dans la Prairie (le texte du tutoriel est en haut de l'image).</figcaption></figure>
+    <figure><img src="monde-fait/combat.jpg" alt="Combat">
+      <figcaption><b>Le combat</b> : le boss s'est réveillé et attaque (cercle rouge au sol). Les autres joueurs le voient toujours endormi.</figcaption></figure>
+  </div>
+
+  <h2>4. Les 21 nouveaux modèles 3D</h2>
+  <p>Ils ont été générés par l'IA de Studio, dans le même style que les autres créatures du jeu.</p>
+  <div class="grid one">
+    <figure><img src="monde-fait/boss.jpg" alt="Les 3 nouveaux boss">
+      <figcaption><b>Les 3 nouveaux boss</b> : Griffon Doré, Dragon de Lave et Yéti Géant. En jeu, ils mesurent environ 12, 11,5 et 15 studs.</figcaption></figure>
+  </div>
+  <div class="grid">
+    <figure><img src="monde-fait/mobs-glaces.jpg" alt="Mobs des Glaces">
+      <figcaption><b>Mobs des Glaces</b> : wyverne de givre, golem de glace, ours polaire, loup des neiges, hibou des neiges, gelée de givre.</figcaption></figure>
+    <figure><img src="monde-fait/mobs-volcan.jpg" alt="Mobs du Volcan">
+      <figcaption><b>Mobs du Volcan</b> : dragonnet de lave, golem de magma, oiseau de feu, salamandre de feu, scarabée de lave, gelée de magma.</figcaption></figure>
+    <figure><img src="monde-fait/mobs-celeste.jpg" alt="Mobs du Céleste">
+      <figcaption><b>Mobs du Céleste</b> : griffon céleste, baleine des nuages, gardien céleste, pégase des nuages, aigle doré, fée céleste.</figcaption></figure>
+  </div>
+
+  <div class="grid one">
+    <figure><img src="monde-fait/ours-aigle.jpg" alt="Ours polaire et aigle doré refaits">
+      <figcaption><b>Refaits</b> : l'ours polaire marche maintenant à quatre pattes, et l'aigle doré est arrondi, avec une tête blanche et un bec jaune.</figcaption></figure>
+  </div>
+  <div class="note">
+    <b>Corrigé après relecture :</b>
+    <ul>
+      <li>✅ Plus de citrouilles d'Halloween (ni de bonshommes de neige à Noël) dans les 3 nouvelles zones.</li>
+      <li>✅ L'aigle doré et l'ours polaire ont été régénérés (image ci-dessus).</li>
+      <li>✅ Le sol du Royaume Céleste est maintenant crème doré : il ne se confond plus avec la neige des Glaces.</li>
+      <li>✅ Le Volcan est plus lumineux : rivière de lave en néon, deux fois plus de fissures, plus de piliers de feu et de cônes, et une lueur orange sur toute la zone.</li>
+      <li>Les combats contre les nouveaux mobs utilisent le même système que les anciens (aucune erreur). À essayer avec une vraie équipe de bon niveau.</li>
+    </ul>
+  </div>
+  <div class="note">
+    <b>Ensuite :</b> l'étape 4, le château « Mélange ». Je te montrerai d'abord les rendus de chaque palier. Pour la place centrale, j'attends toujours tes captures de référence.
+  </div>
+</div>
+<script>
+  const s = [];
+  s.push('<rect x="-1600" y="-1600" width="3200" height="3200" fill="#1f5a7a"/>');
+  for (let v = -1600; v <= 1600; v += 400) {
+    s.push(`<line x1="${v}" y1="-1600" x2="${v}" y2="1600" stroke="#ffffff10" stroke-width="4"/>`);
+    s.push(`<line x1="-1600" y1="${v}" x2="1600" y2="${v}" stroke="#ffffff10" stroke-width="4"/>`);
+  }
+  // Zones : écran x = X du jeu, y = Z du jeu
+  const Z = [
+    { n: "🌼 Prairie", a: 270, c: "#6fdc5a", d: "Facile" },
+    { n: "💎 Grotte", a: 330, c: "#7ab8ff", d: "Moyen" },
+    { n: "❄️ Glaces", a: 30, c: "#bfefff", d: "Difficile", nw: 1 },
+    { n: "🌙 Ombres", a: 90, c: "#b07aff", d: "Très difficile" },
+    { n: "🌋 Volcan", a: 150, c: "#ff7a3c", d: "Extrême", nw: 1 },
+    { n: "☁️ Céleste", a: 210, c: "#ffd34d", d: "Légendaire", nw: 1 },
+  ];
+  for (const z of Z) {
+    const r = z.a * Math.PI / 180, x = Math.sin(r) * 1250, y = Math.cos(r) * 1250;
+    s.push(`<line x1="0" y1="0" x2="${x * 0.78}" y2="${y * 0.78}" stroke="${z.c}" stroke-width="6" stroke-dasharray="26 22" opacity=".55"/>`);
+    s.push(`<circle cx="${x}" cy="${y}" r="215" fill="${z.c}" opacity=".85" stroke="#fff" stroke-width="${z.nw ? 14 : 0}"/>`);
+    s.push(`<text x="${x}" y="${y - 10}" font-size="78" text-anchor="middle" font-weight="800" fill="#1d1a2b">${z.n}</text>`);
+    s.push(`<text x="${x}" y="${y + 70}" font-size="54" text-anchor="middle" fill="#1d1a2b">${z.d}${z.nw ? " · nouvelle" : ""}</text>`);
+  }
+  // Îles (8) et ponts en étoile
+  for (let i = 0; i < 8; i++) {
+    const r = (15 + i * 45) * Math.PI / 180, x = Math.sin(r) * 559, y = Math.cos(r) * 559;
+    const px = Math.sin(r) * 100, py = Math.cos(r) * 100;
+    s.push(`<line x1="${px}" y1="${py}" x2="${x}" y2="${y}" stroke="#2b2840" stroke-width="22"/>`);
+    for (let k = 1; k <= 6; k++) {
+      const t = 0.2 + k * 0.11, qx = px + (x - px) * t, qy = py + (y - py) * t;
+      s.push(`<rect x="${qx - 10}" y="${qy - 10}" width="20" height="20" fill="#5ef0ff"/>`);
+    }
+    s.push(`<rect x="${x - 70}" y="${y - 70}" width="140" height="140" rx="20" fill="#6fcf5a" stroke="#fff" stroke-width="6" transform="rotate(${-(15 + i * 45)} ${x} ${y})"/>`);
+  }
+  s.push('<rect x="-90" y="-75" width="180" height="150" rx="16" fill="#cfc6e8" stroke="#fff" stroke-width="8"/>');
+  s.push('<text x="0" y="16" font-size="54" text-anchor="middle" font-weight="800" fill="#1d1a2b">Place</text>');
+  s.push('<text x="0" y="-640" font-size="46" text-anchor="middle" fill="#ffffffcc">8 îles · ponts avec plaques ⚡</text>');
+  document.getElementById("map").innerHTML = s.join("");
+</script>
+</body>
+</html>
