@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Château Mélange par palier</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:34px 0 4px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0; }
+  .tab { background:var(--card); color:var(--text); border:3px solid transparent; border-radius:12px; padding:8px 14px; font-weight:700; cursor:pointer; font-size:15px; }
+  .tab.on { border-color:var(--accent); background:#3b3560; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:12px; }
+  figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; }
+  figure img { width:100%; display:block; }
+  figcaption { padding:8px 13px 11px; font-size:14px; color:var(--muted); }
+  .info { background:var(--card); border-radius:14px; padding:12px 16px; margin-top:12px; }
+  .info .new { color:var(--ok); font-weight:700; }
+  table { width:100%; border-collapse:collapse; background:var(--card); border-radius:14px; overflow:hidden; font-size:14px; margin-top:12px; }
+  th, td { padding:8px 11px; text-align:left; border-bottom:1px solid #3a3558; }
+  th { color:var(--accent); font-size:13px; }
+  td { color:var(--text); }
+  .swatch { display:inline-block; width:14px; height:14px; border-radius:4px; vertical-align:-2px; margin-right:3px; border:1px solid #0006; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🏰 Le château « Mélange », palier par palier</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu. Le château combine la <b>falaise</b> (style 3), avec son escalier, ses 2 galeries de vitrines et la cascade de gemmes, et le <b>château de conte de fées</b> (style 2) posé dessus. Il grandit à chaque palier de renaissances. Dans la vitrine, 🔒 = place encore fermée (4 places, puis +2 par renaissance).</p>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="grid">
+    <figure><img id="img34" alt=""><figcaption>Vue de trois quarts, depuis le jardin</figcaption></figure>
+    <figure><img id="imgFront" alt=""><figcaption>Vue de face</figcaption></figure>
+  </div>
+  <div class="info" id="info"></div>
+
+  <h2>Récapitulatif</h2>
+  <table>
+    <tr><th>Palier</th><th>Renaissances</th><th>Couleurs</th><th>Géants</th><th>Ce qui apparaît</th></tr>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <div class="note">
+    <b>Ce que je coderai une fois validé :</b>
+    <ul>
+      <li>Le nouveau château remplace l'ancienne façade, avec les mêmes 60 vitrines et les mêmes places à géants (gain ×1,5).</li>
+      <li>La <b>cascade de gemmes</b> est décorative et son débit grossit avec les gains : gemmes qui roulent dans les rigoles, tombent le long de l'escalier et finissent dans le coffre.</li>
+      <li>Le <b>plan de l'île</b> validé : l'île est agrandie de 40 studs vers l'arrière, les tableaux d'amélioration passent à gauche, la fusion à droite contre la falaise, l'autel un peu vers l'entrée, et l'escalier part de derrière le coffre.</li>
+      <li>Les <b>ponts</b> prendront le style du château de leur île (bois, pierre, or, cristal…).</li>
+    </ul>
+  </div>
+</div>
+<script>
+  const T = [
+    { n: 1, name: "Fortin de bois", r: "0", g: 0, cols: ["#786856", "#7a4a2a", "#ffaa46"], text: "La falaise et ses galeries, l'escalier, la cascade de gemmes, un petit château brun derrière une <span class='new'>palissade de rondins</span>. Pas encore de tour." },
+    { n: 2, name: "Château fort", r: "1", g: 2, cols: ["#969288", "#aa3a2e", "#ffb450"], text: "La palissade disparaît. <span class='new'>2 tours collées au château</span>, avec un balcon à géant chacune, des créneaux sur le corps de logis et des drapeaux rouges." },
+    { n: 3, name: "Château de pierre", r: "3", g: 3, cols: ["#b0aa9e", "#3060b4", "#ffbe5a"], text: "Les tours grandissent. <span class='new'>Balcon du milieu sur le toit</span> (3e géant) et <span class='new'>cascade d'eau</span> le long de la falaise. Toits bleus." },
+    { n: 4, name: "Château royal", r: "5", g: 4, cols: ["#e8e2d6", "#2c50d8", "#dab44a"], text: "Le balcon du milieu laisse la place à <span class='new'>2 tours extérieures reliées par un rempart</span> (4 géants, comme tu l'avais demandé). <span class='new'>Rosace en vitrail</span> au-dessus de la porte et bandeaux dorés." },
+    { n: 5, name: "Palais d'or", r: "10", g: 5, cols: ["#f2e0a0", "#7e2cd8", "#ffcd3a"], text: "La <span class='new'>grande flèche centrale</span> arrive avec son balcon (le 5e géant revient au milieu). S'y ajoutent <span class='new'>2 tours fines</span> en pyramide et des <span class='new'>cristaux lumineux</span> sur les toits." },
+    { n: 6, name: "Citadelle céleste", r: "20", g: 6, cols: ["#e8f2ff", "#26d2ff", "#a0f6ff"], text: "L'<span class='new'>île flottante au cœur du château</span>, avec nuages, halo lumineux, cristaux et un grand balcon pour le 6e géant. Tout devient blanc et cyan." },
+  ];
+  const tabs = document.getElementById("tabs");
+  function show(t) {
+    document.getElementById("img34").src = `chateau-paliers/palier${t.n}_34.jpg`;
+    document.getElementById("imgFront").src = `chateau-paliers/palier${t.n}_front.jpg`;
+    document.getElementById("info").innerHTML = `<b>Palier ${t.n} · ${t.name}</b> (à partir de ${t.r} renaissance${t.r === "0" || t.r === "1" ? "" : "s"}) · <b>${t.g} géant${t.g > 1 ? "s" : ""}</b><br>${t.text}`;
+    [...tabs.children].forEach((el, i) => el.classList.toggle("on", T[i] === t));
+  }
+  T.forEach(t => {
+    const b = document.createElement("button");
+    b.className = "tab";
+    b.textContent = `${t.n}. ${t.name}`;
+    b.onclick = () => show(t);
+    tabs.appendChild(b);
+    document.getElementById("rows").insertAdjacentHTML("beforeend",
+      `<tr><td>${t.n}. ${t.name}</td><td>${t.r}</td><td>${t.cols.map(c => `<span class="swatch" style="background:${c}"></span>`).join("")}</td><td>${"🦣".repeat(t.g) || "—"}</td><td>${t.text.replace(/<[^>]+>/g, "")}</td></tr>`);
+  });
+  show(T[0]);
+</script>
+</body>
+</html>
