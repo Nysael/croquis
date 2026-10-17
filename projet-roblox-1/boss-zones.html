@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Boss des zones</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --wood:#6b4426; --wood2:#8a5a33; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1200px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:26px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
+  .gallery figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; }
+  .gallery img { width:100%; display:block; }
+  .gallery figcaption { padding:8px 12px; font-size:13px; color:var(--muted); }
+  .gallery figcaption b { color:var(--accent); }
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:10px; }
+  .step { background:var(--card); border-radius:14px; padding:12px 14px; }
+  .step .n { display:inline-block; width:28px; height:28px; border-radius:50%; background:var(--accent); color:#2a1d00; font-weight:800; text-align:center; line-height:28px; margin-right:6px; }
+  .step h3 { margin:0 0 6px; font-size:16px; }
+  .step ul { margin:4px 0 0; padding-left:18px; font-size:14px; }
+  .mock { display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:start; }
+  @media (max-width: 850px) { .mock { grid-template-columns:1fr; } }
+  .panel { background:var(--wood2); border:5px solid #2b1c10; border-radius:20px; padding:12px; box-shadow:inset 0 0 0 3px #a8744a; }
+  .panel .title { background:#d23246; color:#fff; font-weight:800; text-align:center; border-radius:12px; padding:7px; border:3px solid #2b1c10; margin-bottom:10px; font-size:18px; }
+  .boss { display:flex; gap:10px; align-items:center; background:#00000030; border-radius:12px; padding:8px; margin-bottom:10px; }
+  .boss img { width:84px; height:84px; object-fit:cover; border-radius:10px; border:3px solid #2b1c10; }
+  .boss .lvl { color:#ffcd3c; font-weight:800; font-size:13px; }
+  .slots { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:10px; }
+  .slot { background:#3b2414; border:3px solid #2b1c10; border-radius:12px; text-align:center; padding:8px 4px; font-size:13px; font-weight:700; }
+  .slot.empty { color:#d9b48a; font-weight:400; }
+  .inv { background:#00000030; border-radius:12px; padding:8px; margin-bottom:10px; font-size:13px; }
+  .inv div { display:flex; justify-content:space-between; align-items:center; padding:4px 2px; border-bottom:1px solid #ffffff15; }
+  .btn { display:inline-block; border-radius:10px; padding:4px 10px; font-weight:800; color:#fff; border:3px solid #2b1c10; font-size:13px; }
+  .go { display:block; text-align:center; background:#37b24d; font-size:18px; padding:9px; }
+  .popup { background:var(--wood2); border:5px solid #2b1c10; border-radius:18px; padding:12px; max-width:330px; margin-top:10px; box-shadow:inset 0 0 0 3px #a8744a; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>😴 Un boss endormi dans chaque zone</h1>
+  <p>Proposition, rien n'est changé dans le jeu. Les images sont les <b>vrais boss du jeu</b>, en rendu 3D, dans une nouvelle pose <b>assis et endormi</b> (couché pour le dragon). Par-dessus, j'ai ajouté ce que le joueur verra : les « Z z z », l'étiquette du boss et le bouton pour l'affronter.</p>
+
+  <h2>1. Le boss dort dans sa clairière</h2>
+  <div class="gallery">
+    <figure><img src="boss-endormis/prairie.jpg" alt=""><figcaption><b>Prairie · le Géant des Prés</b><br>présent : on peut l'affronter</figcaption></figure>
+    <figure><img src="boss-endormis/grotte.jpg" alt=""><figcaption><b>Grotte de Cristal · le Golem de Cristal</b><br>présent</figcaption></figure>
+    <figure><img src="boss-endormis/bois.jpg" alt=""><figcaption><b>Bois des Ombres · la Liche Ancienne</b><br>pendant les 20 min de repos : on le voit dormir, mais il ne se réveille pas</figcaption></figure>
+    <figure><img src="boss-endormis/volcan.jpg" alt=""><figcaption><b>Volcan · le Dragon de Lave</b><br>couché, ailes à plat</figcaption></figure>
+    <figure><img src="boss-endormis/citrouille.jpg" alt=""><figcaption><b>Halloween · le Roi Citrouille</b><br>boss de saison : il remplace celui d'une zone pendant l'événement</figcaption></figure>
+  </div>
+  <p>Dans le jeu, le boss <b>respire doucement</b> : son corps monte et descend. Des « Z » montent au-dessus de sa tête, et un petit ronflement se fait entendre quand on s'approche. Les boss du Royaume des Glaces (le Yéti) et du Royaume Céleste (le Griffon) sont <b>à créer</b>.</p>
+
+  <h2>2. Le déroulement</h2>
+  <div class="steps">
+    <div class="step"><h3><span class="n">1</span>On s'approche</h3><ul><li>Le boss dort au milieu de sa clairière, <b>visible par tout le monde</b>.</li><li>Pendant les <b>10 minutes</b> de présence, le bouton « Affronter le boss » apparaît à côté de lui.</li><li>Pendant les <b>20 minutes</b> de repos, il dort aussi, avec « réveil possible dans 12:30 ».</li></ul></div>
+    <div class="step"><h3><span class="n">2</span>Seul ou avec des amis</h3><ul><li>Le panneau de groupe de la première version s'ouvre (maquette ci-dessous).</li><li>Tu peux <b>inviter jusqu'à 2 joueurs</b> du serveur, amis en premier ⭐.</li><li>Ils reçoivent une invitation <b>Accepter / Refuser</b>.</li></ul></div>
+    <div class="step"><h3><span class="n">3</span>Le boss se réveille</h3><ul><li>« Lancer le combat » : <b>le boss se réveille</b> en se levant d'un coup, avec un rugissement et une onde de choc, et le combat commence.</li><li>Comme avant, <b>chaque groupe a son propre boss</b>. Pour les autres joueurs, le boss continue de dormir, et ils peuvent lancer leur propre combat.</li></ul></div>
+    <div class="step"><h3><span class="n">4</span>Victoire</h3><ul><li>Même système de combat qu'aujourd'hui : esquiver les cercles, ton équipe de créatures attaque.</li><li>Butin selon ta participation, <b>une victoire par boss et par passage</b>.</li><li>Ensuite, pour toi, le boss se rendort.</li></ul></div>
+  </div>
+
+  <h2>3. Le panneau « seul ou avec des amis » (celui de la première version)</h2>
+  <div class="mock">
+    <div class="panel">
+      <div class="title">⚔️ Combat de boss</div>
+      <div class="boss"><img src="boss-endormis/grotte.jpg" alt=""><div><div class="lvl">ZONE 2 · MOYEN</div><b>le Golem de Cristal</b><br><span style="font-size:13px">Vie ×3 · butin : œufs rares, cristaux</span></div></div>
+      <div class="slots">
+        <div class="slot">👑 Toi<br><span style="font-size:11px;color:#ffcd3c">chef</span></div>
+        <div class="slot">Lina ⭐<br><span style="font-size:11px;color:#8cff7a">a accepté</span></div>
+        <div class="slot empty">+ Place libre</div>
+      </div>
+      <div class="inv">
+        <div><span>⭐ Tom (ami)</span><span class="btn" style="background:#3b82f6">Inviter</span></div>
+        <div><span>⭐ Zoé (amie)</span><span class="btn" style="background:#888">Invité…</span></div>
+        <div><span>Kenji</span><span class="btn" style="background:#3b82f6">Inviter</span></div>
+      </div>
+      <span class="btn go">⚔️ Lancer le combat</span>
+      <p style="margin:8px 0 0;font-size:12px;color:#f3e2c8;text-align:center">Tu peux aussi le lancer seul tout de suite.</p>
+    </div>
+    <div>
+      <div class="popup">
+        <div class="title" style="font-size:15px">📨 Invitation</div>
+        <p style="color:#fff;margin:0 0 8px;font-size:14px"><b>Max ⭐</b> t'invite à affronter <b>le Golem de Cristal</b> (Grotte de Cristal).</p>
+        <span class="btn" style="background:#37b24d">Accepter</span> <span class="btn" style="background:#e04848">Refuser</span>
+        <p style="margin:6px 0 0;font-size:12px;color:#f3e2c8">L'invitation expire au bout de 25 s.</p>
+      </div>
+      <div class="note">
+        <b>Ce qui reste comme la première version :</b> groupes de 3 joueurs maximum, invitations, un boss par groupe, un combat de 5 min au plus, une vie qui grandit avec le nombre de joueurs, et un butin selon la participation.
+        <br><br><b>Ce qui change :</b> le boss est <b>dans sa zone</b> au lieu de l'arène, il <b>dort</b> avant le combat, et sa difficulté dépend de la zone.
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Question :</b> pendant les 20 minutes de repos, tu préfères que le boss <b>reste visible endormi</b> (comme sur l'image du Bois des Ombres), ou qu'il <b>disparaisse</b> et que la clairière affiche seulement « Le boss revient dans 12:30 » ?
+  </div>
+</div>
+</body>
+</html>
