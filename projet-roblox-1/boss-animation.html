@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Animation des boss</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --bad:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1150px; margin:auto; padding:18px 16px 40px; }
+  h1 { margin:0 0 6px; font-size:26px; }
+  h2 { margin:24px 0 8px; font-size:20px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .stage { background:var(--card); border-radius:16px; padding:10px; }
+  canvas { width:100%; height:auto; display:block; border-radius:12px; }
+  .bar { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 0; align-items:center; }
+  .bar button { border:0; border-radius:10px; padding:8px 12px; font-weight:700; background:#3b3560; color:var(--text); cursor:pointer; border:2px solid transparent; }
+  .bar button.on { border-color:var(--accent); }
+  .phase { margin-left:auto; font-weight:800; color:var(--accent); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px; }
+  .box { background:var(--card); border-radius:14px; padding:12px 14px; }
+  .box h3 { margin:0 0 6px; font-size:16px; color:var(--accent); }
+  .box ul { margin:0; padding-left:18px; font-size:14px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎬 Animation des boss : version plus vivante</h1>
+  <p>Croquis <b>animé</b>, rien n'est changé dans le jeu. Le boss est simplifié en blocs pour bien voir le mouvement. <b>À gauche : comme aujourd'hui</b>. <b>À droite : la nouvelle proposition</b>, avec un squelette complet (dos en deux parties, coudes, genoux, cou), des ressorts en chaîne, de l'écrasement et de l'étirement, des clignements d'yeux et des micro-mouvements. <b>Il n'est jamais immobile.</b> Le bouton 🐢 Ralenti aide à voir les détails.</p>
+  <div class="stage">
+    <canvas id="c" width="1100" height="540"></canvas>
+    <div class="bar">
+      <button id="b-all" class="on">▶ Toute la scène</button>
+      <button data-p="0">😴 Sommeil</button>
+      <button data-p="1">⏰ Réveil</button>
+      <button data-p="2">🛡️ Garde</button>
+      <button data-p="3">🚶 Marche</button>
+      <button data-p="4">💥 Attaque</button>
+      <button id="slow">🐢 Ralenti</button>
+      <span class="phase" id="phase"></span>
+    </div>
+  </div>
+
+  <h2>Ce qui rend la nouvelle version vivante</h2>
+  <div class="grid">
+    <div class="box"><h3>🔗 Mouvements en chaîne</h3><ul>
+      <li>Le bassin entraîne le dos, qui entraîne les épaules, qui entraînent les coudes puis les poings, <b>chacun avec un petit retard</b>.</li>
+      <li>Quand le corps s'arrête, les bras et la tête <b>continuent un peu</b>, puis reviennent.</li>
+    </ul></div>
+    <div class="box"><h3>🫁 Toujours en vie</h3><ul>
+      <li>La respiration soulève la poitrine et les épaules.</li>
+      <li>De petits mouvements naturels sur toutes les articulations, et <b>des clignements d'yeux</b>.</li>
+      <li>La tête regarde autour d'elle, par petits coups.</li>
+    </ul></div>
+    <div class="box"><h3>🎯 Poids et force</h3><ul>
+      <li>Le corps <b>s'écrase</b> en prenant son élan et en encaissant un impact, et <b>s'étire</b> en frappant ou en se relevant.</li>
+      <li>Les genoux plient à chaque pas, et le corps descend quand le pied touche le sol.</li>
+    </ul></div>
+    <div class="box"><h3>😴 → ⏰ Le réveil en 6 temps</h3><ul>
+      <li>Il sursaute et ouvre les yeux, puis s'appuie sur ses bras.</li>
+      <li>Il passe accroupi, se redresse et s'étire bras en l'air.</li>
+      <li>Il <b>rugit en secouant la tête</b>, puis se met en garde.</li>
+    </ul></div>
+    <div class="box"><h3>💥 L'attaque</h3><ul>
+      <li>Il prend un <b>gros élan</b> : accroupi, bras très haut.</li>
+      <li>La frappe est très rapide, puis il encaisse l'impact, rebondit, et le corps tremble.</li>
+      <li>Il reprend lentement sa garde, en soufflant.</li>
+    </ul></div>
+    <div class="box"><h3>⚙️ Dans le jeu</h3><ul>
+      <li>Les mêmes ressorts seront appliqués aux soudures des vrais boss : têtes, bras, jambes, ailes, queue.</li>
+      <li>Les réglages se font boss par boss : un golem lourd et lent, un dragon souple, une liche qui flotte.</li>
+      <li>Tout est calculé sur l'écran du joueur.</li>
+    </ul></div>
+  </div>
+  <div class="note">Dis-moi si c'est assez vivant maintenant, ou ce qu'il faut accentuer : plus de rebond, plus lourd, plus rapide, plus de secousses…</div>
+</div>
+<script>
+const cv = document.getElementById("c"), g = cv.getContext("2d");
+const W = cv.width, H = cv.height, GROUND = 430;
+const PHASES = [["😴 Sommeil", 4.4], ["⏰ Réveil", 3.2], ["🛡️ Garde", 3.4], ["🚶 Marche", 3.4], ["💥 Attaque", 2.8]];
+const TOTAL = PHASES.reduce((a, p) => a + p[1], 0);
+let only = -1, slow = 1;
+document.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { only = +b.dataset.p; t0 = performance.now(); mark(b); });
+document.getElementById("b-all").onclick = (e) => { only = -1; t0 = performance.now(); mark(e.target); };
+document.getElementById("slow").onclick = (e) => { slow = slow === 1 ? 0.3 : 1; e.target.classList.toggle("on", slow !== 1); };
+function mark(b) { document.querySelectorAll(".bar button").forEach(x => { if (x.id !== "slow") x.classList.toggle("on", x === b); }); }
+
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const lerp = (a, b, t) => a + (b - a) * t;
+const sm = x => { x = clamp(x, 0, 1); return x * x * (3 - 2 * x); };
+const seg = (t, a, b) => sm((t - a) / (b - a)); // 0 -> 1 entre a et b, adouci
+const noise = (t, k) => Math.sin(t * 1.7 + k * 3.1) * 0.5 + Math.sin(t * 2.9 + k * 1.3) * 0.3 + Math.sin(t * 4.3 + k * 7.7) * 0.2;
+
+// Squelette : valeurs en radians (positif = vers l'avant, vers la gauche) et en pixels
+const BASE = { x: 0, pelvis: 122, hipL: 0, hipR: 0, kneeL: 0, kneeR: 0, spine1: 0.05, spine2: 0.03, neck: 0, chest: 1, shoulder: 0,
+  armL: 0.12, armR: 0.1, elbowL: 0.15, elbowR: 0.15, fist: 0, mouth: 0, eyes: 1, sx: 1, sy: 1, roar: 0, impact: 0, shake: 0 };
+
+// ---------- AUJOURD'HUI : poses raides, pas de coudes ni de dos, transitions qui sautent ----------
+function oldPose(p, t) {
+  const P = { ...BASE, elbowL: 0, elbowR: 0, spine2: 0 };
+  if (p === 0 || (p === 1 && t < PHASES[1][1] * 0.55)) {
+    Object.assign(P, { pelvis: 24, hipL: 1.5, hipR: 1.5, kneeL: -0.1, kneeR: -0.1, spine1: 0.45, neck: 0.5, armL: 0.75, armR: 0.75, eyes: 0 });
+  } else if (p === 1) {
+    if (t > PHASES[1][1] * 0.7 && t < PHASES[1][1] * 0.9) { P.roar = 1; P.mouth = 1; }
+  } else if (p === 2) {
+    Object.assign(P, { armL: 0.4, armR: 0.4 });
+  } else if (p === 3) {
+    const ph = t * Math.PI * 2 / 1.1;
+    Object.assign(P, { x: -t * 26, hipL: Math.sin(ph) * 0.5, hipR: -Math.sin(ph) * 0.5, pelvis: 122 - (1 - Math.abs(Math.sin(ph))) * 3 });
+  } else {
+    const u = t / PHASES[4][1];
+    const v = u < 0.4 ? -u / 0.4 : u < 0.55 ? lerp(-1, 1, (u - 0.4) / 0.15) : u < 0.95 ? 1 : 0;
+    if (v < 0) { P.armL = P.armR = 0.12 - v * 3.2; } else { P.armL = P.armR = 0.12 + v * 1.2; P.spine1 = v * 0.35; }
+    P.impact = u > 0.55 && u < 0.7 ? 1 : 0;
+  }
+  return P;
+}
+
+// ---------- PROPOSÉ : pose cible vivante (les ressorts ajoutent le retard et le dépassement) ----------
+function newPose(p, t) {
+  const P = { ...BASE };
+  const breath = Math.sin(t * Math.PI * 2 / (p === 0 ? 3.6 : 2.4));
+  const blink = (t % 3.1) < 0.12 ? 0 : 1;
+  P.eyes = blink;
+  if (p === 0) {
+    // Assis, endormi : respiration ample, tête qui dodeline, sursaut à 2,6 s
+    Object.assign(P, { pelvis: 24, hipL: 1.5, hipR: 1.45, kneeL: -0.25, kneeR: -0.15, spine1: 0.38, spine2: 0.28, neck: 0.55, armL: 0.7, armR: 0.78, elbowL: -0.35, elbowR: -0.25, eyes: 0 });
+    P.chest = 1 + breath * 0.05; P.shoulder = breath * 3; P.spine2 -= breath * 0.06; P.neck += Math.sin(t * 1.1) * 0.1 - breath * 0.05;
+    P.mouth = Math.max(0, breath) * 0.35; // ronfle
+    const startle = Math.exp(-Math.pow((t - 2.6) / 0.12, 2));
+    P.neck -= startle * 0.45; P.shoulder += startle * 6;
+  } else if (p === 1) {
+    const d = PHASES[1][1], u = t / d;
+    // 1. sursaut (0 - 0,1)
+    const a = seg(u, 0, 0.08), up = seg(u, 0.1, 0.34), crouch = seg(u, 0.34, 0.48), stand = seg(u, 0.48, 0.6), roar = Math.sin(clamp((u - 0.6) / 0.22, 0, 1) * Math.PI), guard = seg(u, 0.82, 0.95);
+    Object.assign(P, { pelvis: 24, hipL: 1.5, hipR: 1.45, kneeL: -0.2, kneeR: -0.2, spine1: 0.38, spine2: 0.28, neck: 0.55, armL: 0.7, armR: 0.78, elbowL: -0.35, elbowR: -0.25 });
+    P.neck -= a * 0.7; P.shoulder += a * 8; P.eyes = u > 0.04 ? blink : 0;
+    // 2. s'appuie sur les bras, se met accroupi
+    P.armL = lerp(P.armL, -0.15, up); P.armR = lerp(P.armR, -0.1, up); P.elbowL = lerp(P.elbowL, 0.1, up); P.elbowR = P.elbowL;
+    P.hipL = lerp(P.hipL, 1.1, up); P.hipR = lerp(P.hipR, 1.0, up); P.kneeL = lerp(P.kneeL, -2.0, up); P.kneeR = lerp(P.kneeR, -1.9, up);
+    P.pelvis = lerp(P.pelvis, 58, up); P.spine1 = lerp(P.spine1, 0.75, up); P.neck = lerp(P.neck, -0.2, up);
+    P.sy = 1 - crouch * 0.06; P.sx = 1 + crouch * 0.04;
+    // 3. se redresse en s'étirant
+    P.hipL = lerp(P.hipL, 0, stand); P.hipR = lerp(P.hipR, 0, stand); P.kneeL = lerp(P.kneeL, 0, stand); P.kneeR = lerp(P.kneeR, 0, stand);
+    P.pelvis = lerp(P.pelvis, 126, stand); P.spine1 = lerp(P.spine1, -0.12, stand); P.spine2 = lerp(P.spine2, -0.1, stand);
+    P.armL = lerp(P.armL, 3.3, stand); P.armR = lerp(P.armR, 3.2, stand); P.elbowL = lerp(P.elbowL, 0.3, stand); P.elbowR = P.elbowL;
+    P.sy *= 1 + stand * (1 - roar) * 0.07; P.sx *= 1 - stand * (1 - roar) * 0.04;
+    // 4. rugit : tête en arrière, poitrine gonflée, bras en arrière, secoue la tête
+    P.neck -= roar * 0.7; P.spine2 -= roar * 0.3; P.chest += roar * 0.08; P.mouth = Math.max(P.mouth, roar);
+    P.armL = lerp(P.armL, 3.45, roar); P.armR = lerp(P.armR, 3.35, roar); P.elbowL = lerp(P.elbowL, 0.7, roar); P.elbowR = P.elbowL;
+    P.shake = roar; P.roar = roar;
+    // 5. se met en garde
+    P.armL = lerp(P.armL, 0.55, guard); P.armR = lerp(P.armR, 0.45, guard); P.elbowL = lerp(P.elbowL, 1.3, guard); P.elbowR = lerp(P.elbowR, 1.2, guard);
+    P.kneeL = lerp(P.kneeL, -0.35, guard); P.kneeR = lerp(P.kneeR, -0.3, guard); P.hipL = lerp(P.hipL, 0.25, guard); P.hipR = lerp(P.hipR, 0.15, guard);
+    P.pelvis = lerp(P.pelvis, 112, guard); P.spine1 = lerp(P.spine1, 0.18, guard); P.spine2 = lerp(P.spine2, 0.08, guard); P.neck = lerp(P.neck, -0.05, guard);
+  } else if (p === 2) {
+    // Garde : poids d'un pied à l'autre, poings levés, regarde autour
+    const w = Math.sin(t * 1.4);
+    Object.assign(P, { pelvis: 112 + Math.abs(w) * 3, x: w * 5, hipL: 0.25 + w * 0.08, hipR: 0.15 - w * 0.08, kneeL: -0.35 - Math.max(0, w) * 0.15, kneeR: -0.3 - Math.max(0, -w) * 0.15,
+      spine1: 0.18 + breath * 0.02, spine2: 0.08, armL: 0.55, armR: 0.45, elbowL: 1.3, elbowR: 1.2 });
+    P.chest = 1 + breath * 0.03; P.shoulder = breath * 2;
+    const look = [0.1, -0.25, 0.15, -0.05, 0.3][Math.floor(t / 0.8) % 5]; // regards par petits coups
+    P.neck = look;
+    P.fist = (Math.sin(t * 2.2) + 1) / 2;
+    P.armL += Math.sin(t * 1.4 + 0.6) * 0.05; P.armR += Math.sin(t * 1.4 + 1.6) * 0.05;
+  } else if (p === 3) {
+    // Marche : bassin qui descend au contact, genoux qui plient, bras opposés avec coude souple
+    const ph = t * Math.PI * 2 / 1.0;
+    P.x = -t * 28;
+    P.hipL = Math.sin(ph) * 0.6; P.hipR = -Math.sin(ph) * 0.6;
+    P.kneeL = -Math.max(0, Math.sin(ph + 1.8)) * 1.1 - 0.08; P.kneeR = -Math.max(0, Math.sin(ph + 1.8 + Math.PI)) * 1.1 - 0.08;
+    P.pelvis = 120 - Math.abs(Math.cos(ph)) * 7;
+    P.sy = 1 - Math.pow(Math.abs(Math.cos(ph)), 6) * 0.03;
+    P.spine1 = 0.16 + Math.sin(ph * 2) * 0.03; P.spine2 = 0.06 - Math.sin(ph * 2) * 0.03;
+    P.armL = -Math.sin(ph) * 0.6 + 0.1; P.armR = Math.sin(ph) * 0.6 + 0.1;
+    P.elbowL = 0.35 + Math.max(0, Math.sin(ph)) * 0.45; P.elbowR = 0.35 + Math.max(0, -Math.sin(ph)) * 0.45;
+    P.neck = -Math.sin(ph * 2) * 0.04 + 0.05; P.shoulder = Math.sin(ph * 2) * 1.5;
+  } else {
+    // Attaque : élan (accroupi, bras très haut) -> frappe -> impact -> rebond -> récupération
+    const d = PHASES[4][1], u = t / d;
+    const wind = seg(u, 0, 0.32), strike = clamp((u - 0.32) / 0.07, 0, 1), hit = Math.exp(-Math.pow((u - 0.41) / 0.05, 2)), recover = seg(u, 0.5, 0.95);
+    Object.assign(P, { pelvis: 112, hipL: 0.25, hipR: 0.15, kneeL: -0.35, kneeR: -0.3, spine1: 0.18, spine2: 0.08, armL: 0.55, armR: 0.45, elbowL: 1.3, elbowR: 1.2 });
+    // élan
+    P.armL = lerp(P.armL, 3.5, wind); P.armR = lerp(P.armR, 3.4, wind); P.elbowL = lerp(P.elbowL, 0.6, wind); P.elbowR = P.elbowL;
+    P.spine1 = lerp(P.spine1, -0.15, wind); P.spine2 = lerp(P.spine2, -0.25, wind); P.neck = lerp(P.neck, -0.25, wind);
+    P.kneeL = lerp(P.kneeL, -0.9, wind); P.kneeR = lerp(P.kneeR, -0.85, wind); P.hipL = lerp(P.hipL, 0.5, wind); P.hipR = lerp(P.hipR, 0.4, wind); P.pelvis = lerp(P.pelvis, 96, wind);
+    P.sy = 1 - wind * 0.06 * (1 - strike); P.sx = 1 + wind * 0.04 * (1 - strike);
+    // frappe (très rapide, accélère)
+    const s = strike * strike;
+    P.armL = lerp(P.armL, 1.25, s); P.armR = lerp(P.armR, 1.2, s); P.elbowL = lerp(P.elbowL, 0.05, s); P.elbowR = P.elbowL;
+    P.spine1 = lerp(P.spine1, 0.55, s); P.spine2 = lerp(P.spine2, 0.35, s); P.neck = lerp(P.neck, 0.25, s);
+    P.sy *= 1 + strike * (1 - hit) * 0.06;
+    // impact : écrasé, tremble
+    P.sy *= 1 - hit * 0.09; P.sx *= 1 + hit * 0.06; P.pelvis -= hit * 10; P.shake = hit; P.impact = u > 0.39 && u < 0.6 ? 1 : 0;
+    // récupération lente vers la garde
+    P.armL = lerp(P.armL, 0.55, recover); P.armR = lerp(P.armR, 0.45, recover); P.elbowL = lerp(P.elbowL, 1.3, recover); P.elbowR = lerp(P.elbowR, 1.2, recover);
+    P.spine1 = lerp(P.spine1, 0.18, recover); P.spine2 = lerp(P.spine2, 0.08, recover); P.neck = lerp(P.neck, 0, recover);
+    P.kneeL = lerp(P.kneeL, -0.35, recover); P.kneeR = lerp(P.kneeR, -0.3, recover); P.hipL = lerp(P.hipL, 0.25, recover); P.hipR = lerp(P.hipR, 0.15, recover); P.pelvis = lerp(P.pelvis, 112, recover);
+    P.chest = 1 + Math.sin(t * 9) * 0.03 * recover; // souffle
+  }
+  // Micro-mouvements permanents (jamais immobile)
+  const k = p === 0 ? 0.4 : 1;
+  P.spine2 += noise(t, 1) * 0.02 * k; P.neck += noise(t, 2) * 0.04 * k; P.armL += noise(t, 3) * 0.04 * k; P.armR += noise(t, 4) * 0.04 * k;
+  P.elbowL += noise(t, 5) * 0.05 * k; P.elbowR += noise(t, 6) * 0.05 * k;
+  return P;
+}
+
+// Ressorts amortis par articulation (raideur, amortissement) : plus souple au bout des chaînes
+const SPRING = { pelvis: [220, 22], x: [260, 26], hipL: [260, 24], hipR: [260, 24], kneeL: [240, 22], kneeR: [240, 22], spine1: [180, 16], spine2: [130, 12],
+  neck: [110, 10], armL: [240, 17], armR: [230, 17], elbowL: [150, 11], elbowR: [145, 11], chest: [140, 12], shoulder: [140, 12], sx: [200, 14], sy: [200, 14] };
+const state = {};
+function springStep(target, dt) {
+  const out = { ...target };
+  for (const key in SPRING) {
+    const [k, c] = SPRING[key];
+    const s = state[key] || (state[key] = { x: target[key], v: 0 });
+    let goal = target[key];
+    // Chaîne : le coude et la tête sont « tirés » par la vitesse de l'épaule et du dos
+    if (key === "elbowL") goal -= (state.armL ? state.armL.v : 0) * 0.09;
+    if (key === "elbowR") goal -= (state.armR ? state.armR.v : 0) * 0.09;
+    if (key === "neck") goal -= (state.spine2 ? state.spine2.v : 0) * 0.12 + (state.pelvis ? state.pelvis.v : 0) * 0.0015;
+    if (key === "spine2") goal -= (state.pelvis ? state.pelvis.v : 0) * 0.0012;
+    for (let i = 0; i < 4; i++) { // sous-pas : stable
+      const h = dt / 4;
+      s.v += (k * (goal - s.x) - c * s.v) * h;
+      s.x += s.v * h;
+    }
+    out[key] = s.x;
+  }
+  return out;
+}
+
+// ---------- Dessin ----------
+function rr(x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+const COL = { far: "#6c7592", near: "#8590b2", body: "#8b95b5", dark: "#3a3f56", crystal: "#5fd0ff", head: "#9aa4c4" };
+function legDraw(hx, hip, knee, col) {
+  g.save(); g.translate(hx, 0); g.rotate(hip);
+  g.fillStyle = col; rr(-17, -6, 34, 66, 12); g.fill();
+  g.translate(0, 58); g.rotate(knee);
+  g.fillStyle = col; rr(-15, -4, 30, 60, 11); g.fill();
+  g.fillStyle = COL.dark; rr(-24, 50, 40, 16, 6); g.fill(); // pied (vers l'avant = gauche)
+  g.restore();
+}
+function armDraw(sx, sy, arm, elbow, fist, col) {
+  g.save(); g.translate(sx, sy); g.rotate(arm);
+  g.fillStyle = col; rr(-16, -8, 32, 62, 12); g.fill();
+  g.translate(0, 54); g.rotate(elbow);
+  g.fillStyle = col; rr(-14, -4, 28, 54, 11); g.fill();
+  g.fillStyle = COL.dark; g.beginPath(); g.arc(0, 56, 18 + fist * 3, 0, Math.PI * 2); g.fill();
+  g.restore();
+}
+function drawBoss(ox, P, label, good, time) {
+  const shakeX = P.shake ? Math.sin(time * 70) * 4 * P.shake : 0;
+  const x = ox + P.x + shakeX;
+  g.save();
+  g.fillStyle = "rgba(0,0,0,0.22)"; g.beginPath(); g.ellipse(x, GROUND + 4, 75 * P.sx, 12, 0, 0, Math.PI * 2); g.fill();
+  // écrasement / étirement autour du point au sol
+  g.translate(x, GROUND); g.scale(P.sx, P.sy); g.translate(-x, -GROUND);
+  const py = GROUND - P.pelvis;
+  g.translate(x, py);
+  // jambe et bras du fond
+  legDraw(10, P.hipR, P.kneeR, COL.far);
+  g.save(); g.rotate(-P.spine1); g.translate(0, -66); g.rotate(-P.spine2);
+  armDraw(14, -64 - P.shoulder, P.armR, P.elbowR, P.fist, COL.far);
+  g.restore();
+  legDraw(-10, P.hipL, P.kneeL, COL.near);
+  // dos (2 morceaux) + poitrine qui respire
+  g.save(); g.rotate(-P.spine1);
+  g.fillStyle = COL.body; rr(-50, -72, 100, 82, 20); g.fill();
+  g.translate(0, -66); g.rotate(-P.spine2);
+  g.save(); g.scale(P.chest, 1); g.fillStyle = COL.body; rr(-56, -84, 112, 92, 24); g.fill();
+  g.fillStyle = COL.crystal; rr(-38, -66, 40, 52, 12); g.fill(); g.restore();
+  // tête
+  g.save(); g.translate(-6, -84); g.rotate(-P.neck);
+  g.fillStyle = COL.head; rr(-36, -64, 70, 64, 18); g.fill();
+  g.fillStyle = COL.dark; rr(-34, -76, 14, 22, 4); g.fill(); rr(16, -76, 14, 22, 4); g.fill();
+  g.fillStyle = P.roar > 0.3 ? "#ff4a4a" : "#9ff2ff";
+  const eyeH = Math.max(2, 11 * P.eyes);
+  g.fillRect(-30, -40 + (11 - eyeH) / 2, 13, eyeH); g.fillRect(-10, -40 + (11 - eyeH) / 2, 13, eyeH);
+  if (P.mouth > 0.08) { g.fillStyle = "#3a0d10"; rr(-30, -22, 26, 4 + P.mouth * 16, 4); g.fill(); }
+  g.restore();
+  // bras de devant
+  armDraw(-18, -64 - P.shoulder, P.armL, P.elbowL, P.fist, COL.near);
+  g.restore();
+  g.restore();
+  // Z z z (endormi)
+  if (P.eyes < 0.2 && P.pelvis < 50) {
+    for (let i = 0; i < 3; i++) {
+      const k = ((time * 0.45 + i / 3) % 1);
+      g.globalAlpha = 1 - k; g.font = `bold ${18 + k * 26}px Segoe UI`; g.fillStyle = "#e6f2ff"; g.strokeStyle = "#223"; g.lineWidth = 4;
+      g.strokeText("Z", x + 20 + k * 40, GROUND - 230 - k * 80); g.fillText("Z", x + 20 + k * 40, GROUND - 230 - k * 80);
+    }
+    g.globalAlpha = 1;
+  }
+  if (P.roar > 0.3) { g.strokeStyle = `rgba(255,255,255,${P.roar * 0.7})`; g.lineWidth = 6; g.beginPath(); g.ellipse(x, GROUND, 110 + P.roar * 80, 18 + P.roar * 6, 0, 0, Math.PI * 2); g.stroke(); }
+  if (P.impact) { g.fillStyle = "rgba(170,140,100,0.5)"; for (let i = -3; i <= 3; i++) { g.beginPath(); g.arc(x - 70 + i * 26, GROUND - 6, 15 + ((i * 37 + Math.floor(time * 20)) % 9), 0, Math.PI * 2); g.fill(); } }
+  g.font = "bold 22px Segoe UI"; g.textAlign = "center"; g.fillStyle = good ? "#1f6b2e" : "#7a2020"; g.fillText(label, ox, 40); g.textAlign = "left";
+}
+
+let t0 = performance.now(), last = performance.now();
+const fixed = new URLSearchParams(location.search); // ?p=1&t=1.2 : image figée (vérification)
+function sample(now) {
+  let t = ((now - t0) / 1000) * slow, p = 0;
+  if (fixed.has("p")) { p = +fixed.get("p"); t = +(fixed.get("t") || 0); }
+  else if (only >= 0) { p = only; t = t % PHASES[p][1]; }
+  else { t = t % TOTAL; while (t > PHASES[p][1]) { t -= PHASES[p][1]; p++; } }
+  return [p, t];
+}
+if (fixed.has("p")) { const fp = +fixed.get("p"), ft = +(fixed.get("t") || 0); for (let s = 0; s <= ft; s += 1 / 60) springStep(newPose(fp, s), 1 / 60); }
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000) * (fixed.has("p") ? 0 : slow); last = now;
+  const [p, t] = sample(now);
+  document.getElementById("phase").textContent = PHASES[p][0];
+  const sky = g.createLinearGradient(0, 0, 0, GROUND); sky.addColorStop(0, "#5aa2ff"); sky.addColorStop(1, "#cfe8ff");
+  g.fillStyle = sky; g.fillRect(0, 0, W, GROUND); g.fillStyle = "#6fb35a"; g.fillRect(0, GROUND, W, H - GROUND);
+  g.fillStyle = "rgba(255,255,255,0.18)"; g.fillRect(W / 2 - 1, 60, 2, GROUND - 60);
+  const walkOff = p === 3 ? 60 : 0;
+  drawBoss(W * 0.25 + walkOff, oldPose(p, t), "Aujourd'hui", false, t);
+  const P = dt > 0 ? springStep(newPose(p, t), dt) : (() => { const o = { ...newPose(p, t) }; for (const k in state) o[k] = state[k].x; return o; })();
+  drawBoss(W * 0.75 + walkOff, P, "Nouvelle proposition", true, t);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
