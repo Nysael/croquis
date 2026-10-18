@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Créatures à squelette</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#6fdc6f; --ko:#ff6b6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); margin-top:10px; }
+  .hero img { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  .ok { border-top:5px solid var(--ok); } .wait { border-top:5px solid var(--accent); }
+  table { border-collapse:collapse; width:100%; margin-top:8px; font-size:14px; }
+  td, th { padding:6px 10px; border-bottom:1px solid #3a3460; text-align:left; color:var(--muted); vertical-align:top; }
+  th { color:var(--text); }
+</style>
+</head>
+<body><div class="wrap">
+<h1>Toutes les créatures ont maintenant un vrai squelette</h1>
+<p>Les <b>109 créatures</b> (100 espèces et les 9 boss) sont refaites en <b>une seule peau avec de vrais os</b>, comme le Pégase. La peau se plie aux articulations : plus de trous aux épaules, plus de morceaux qui flottent ni de jointures de couleur. Toutes les photos ci-dessous sont prises <b>en jeu</b>, au repos (ailes repliées).</p>
+
+<div class="note"><b>Ce qui bouge :</b> la marche en diagonale (cuisse, genou, sabot), les ailes repliées au sol et à l'horizontale en vol, la tête qui regarde le joueur, la ou les queues (le Renard à trois queues en a trois), la respiration. Les bipèdes (golems, liches, chevalier) balancent les bras.</div>
+
+<h2>La galerie, en jeu</h2>
+<div class="hero ok"><img src="squelettes/galerie-00.jpg"><p>Aigle · Aigle Doré · Alicorne · Ange Lumineux · Araignée · Araignée de Cristal · Baleine Céleste · Baleine des Nuages</p></div>
+<div class="hero ok"><img src="squelettes/galerie-01.jpg"><p>Bourdon · Cerf des Étoiles · Champi Sauteur · Chat Galactique · Chat-Licorne · Chat Noir · Chauve-Souris · Chauve-Souris de Cristal</p></div>
+<div class="hero ok"><img src="squelettes/galerie-02.jpg"><p>Chauve-Souris d'Ombre · Chevalier d'Ombre · Chiot · Dragon · Dragon Ancien · Dragon Céleste · Dragon Cosmique · Dragon de Lave</p></div>
+<div class="hero ok"><img src="squelettes/galerie-03.jpg"><p>Dragon du Néant · Dragon d'Ombre · Dragon Spectral · Dragonnet de Cristal · Dragonnet de Lave · Écureuil · Esprit Perdu · Fée Céleste</p></div>
+<div class="hero ok"><img src="squelettes/galerie-04.jpg"><p>Fée Lumineuse · Feu Follet · Gardien Céleste · Gargouille · Géant · Gelée de Givre · Gelée de Magma · Gelée Verte</p></div>
+<div class="hero ok"><img src="squelettes/galerie-05.jpg"><p>Golem Ancien · Golem Citrouille · Golem de Cristal · Golem Géode · Golem de Glace · Golem de Magma · Golem Météore · Golem de Pierre</p></div>
+<div class="hero ok"><img src="squelettes/galerie-06.jpg"><p>Grenouille · Griffon · Griffon Céleste · Griffon Doré · Hérisson · Hibou · Hibou des Neiges · Hippocampe</p></div>
+<div class="hero ok"><img src="squelettes/galerie-07.jpg"><p>Hydre · Kirin · Kraken du Vide · Lapin · Lapin Ailé · Lapin Farceur · Lapin-Licorne · Lapin Lunaire</p></div>
+<div class="hero ok"><img src="squelettes/galerie-08.jpg"><p>Liche · Liche Ancienne · Licorne · Licorne Arc-en-ciel · Licorne Divine · Licorne de Glace · Lion des Étoiles · Loup</p></div>
+<div class="hero ok"><img src="squelettes/galerie-09.jpg"><p>Loup des Neiges · Loup Lunaire · Loup d'Ombre · Loutre · Méduse Astrale · Oiseau de Feu · Ours · Ours Polaire</p></div>
+<div class="hero ok"><img src="squelettes/galerie-10.jpg"><p>Panda · Papillon · Pégase · Pégase des Nuages · Pégase d'Or · Petit Kraken · Phénix · Pingouin</p></div>
+<div class="hero ok"><img src="squelettes/galerie-11.jpg"><p>Poney · Poney Étoilé · Poulpe Nébuleuse · Poussin · Prisme Suprême · Raton Laveur · Renard · Renard Aurore</p></div>
+<div class="hero ok"><img src="squelettes/galerie-12.jpg"><p>Renard à trois queues · Roi Citrouille · Salamandre de Feu · Scarabée Géant · Scarabée de Lave · Souris · Spectre · Sphinx Doré</p></div>
+<div class="hero ok"><img src="squelettes/galerie-13.jpg"><p>Taupe Mineuse · Tigre · Tortue de Cristal · Wyverne de Givre · Yéti Géant</p></div>
+
+<h2>En mouvement</h2>
+<div class="cols">
+  <div class="hero ok"><img src="squelettes/loup-marche-1.jpg"><p>Le Loup qui marche (1) : les pattes alternent en diagonale</p></div>
+  <div class="hero ok"><img src="squelettes/loup-marche-2.jpg"><p>Le Loup qui marche (2) : genoux qui se plient, peau qui suit</p></div>
+</div>
+<div class="hero ok"><img src="squelettes/chevaux-ailes.png"><p>Pégase d'Or · Pégase des Nuages · Alicorne · Licorne Divine : la peau du Pégase repeinte d'un seul bloc (pose test : une patte levée, une aile repliée)</p></div>
+<div class="hero ok"><img src="squelettes/planche-peaux.png"><p>Planche de contrôle : chaque créature après la fonte en une seule peau (rendu Blender)</p></div>
+
+<h2>À savoir / à choisir</h2>
+<table>
+<tr><th>Point</th><th>État</th></tr>
+<tr><td>Golem de Cristal, Lion des Étoiles</td><td>J'ai mis la <b>version 2</b> en attendant ton choix (Golem : 2 bras et gros cristaux ; Lion : sans l'anneau).</td></tr>
+<tr><td>Dragon Ancien</td><td>Version à une tête plus imposante, en attendant ton choix (1 tête ou 3 têtes).</td></tr>
+<tr><td>Hibou, Ours, Sphinx, Ours Polaire, Scarabée, Prisme, Griffon Doré, Loup</td><td>Les dernières versions (yeux refaits).</td></tr>
+<tr><td>4 chevaux ailés</td><td>Repeints d'un seul bloc : couleurs proches des précédentes mais pas identiques. Petite marque claire sur le flanc du Pégase d'Or.</td></tr>
+<tr><td>Cornes de l'Alicorne et de la Licorne Divine</td><td>Accrochées à l'os de la tête : elles suivent la tête quand elle bouge.</td></tr>
+<tr><td>Tailles</td><td>Inchangées (taille par espèce). Ta réponse est attendue pour les géants des balcons du château.</td></tr>
+<tr><td>Défauts de génération gardés</td><td>Le Loup du style D d'origine avait deux queues (réglé : on utilise la version aux yeux refaits) ; quelques petites pièces détachées (antennes du Bourdon, piquants du Hérisson) suivent l'os le plus proche.</td></tr>
+</table>
+<div class="note">Dis-moi les créatures qui ne te vont pas (par leur nom). Les œufs viennent ensuite.</div>
+</div></body></html>
