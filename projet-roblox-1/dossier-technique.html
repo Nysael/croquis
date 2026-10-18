@@ -80,7 +80,7 @@
 <div class="wrap">
 
   <h1>📘 Dossier technique du projet</h1>
-  <p class="sub">Projet Roblox · <b>mis à jour le 18/10/2026 à 04:10</b> (dernier commit <span class="commit">8ac61b9</span>) · tout ce qui a été choisi depuis le 16/10 : ce qui est dans le jeu, ce qui est validé mais pas encore codé, et ce qu'il reste à décider.</p>
+  <p class="sub">Projet Roblox · <b>mis à jour le 18/10/2026 à 04:12</b> (dernier commit <span class="commit">9d57e70</span>) · tout ce qui a été choisi depuis le 16/10 : ce qui est dans le jeu, ce qui est validé mais pas encore codé, et ce qu'il reste à décider.</p>
 
   <div class="card soft">
     <b>Comment lire les étiquettes :</b>
@@ -92,7 +92,7 @@
   </div>
 
   <div class="card news">
-    <b>🆕 Depuis la dernière version :</b> l'île en U, le château Mélange élargi et les ponts au style du château sont <b>dans le jeu</b> ; ajout du <b>cycle jour/nuit et de la météo</b>, des <b>sons</b>, des <b>icônes</b> et des <b>ciels</b> ; la monnaie s'appelle maintenant <b>« Éclats de mana » 💠</b> ; les <b>34 monstres des zones deviennent des espèces</b> (88 espèces) ; la refonte des œufs est en cours de croquis.
+    <b>🆕 Depuis la dernière version :</b> l'île en U, le château Mélange élargi et les ponts au style du château sont <b>dans le jeu</b> ; ajout du <b>cycle jour/nuit et de la météo</b>, des <b>sons</b>, des <b>icônes</b> et des <b>ciels</b> ; la monnaie s'appelle maintenant <b>« Éclats de mana » 💠</b> ; les <b>34 monstres des zones deviennent des espèces</b>, <b>12 nouvelles créatures</b> arrivent (<b>100 espèces</b>) et les <b>9 boss</b> deviennent des créatures de rareté « Boss », toujours géantes, à gagner à la roulette après 3 victoires ; la refonte des œufs est en cours de croquis.
   </div>
 
   <div class="chips">
@@ -100,7 +100,7 @@
     <div class="chip"><div class="v">6</div><div class="l">zones, chacune avec son boss</div></div>
     <div class="chip"><div class="v">6</div><div class="l">paliers de château</div></div>
     <div class="chip"><div class="v">60</div><div class="l">vitrines à créatures</div></div>
-    <div class="chip"><div class="v">88</div><div class="l">espèces (100 prévues)</div></div>
+    <div class="chip"><div class="v">100</div><div class="l">espèces + 9 boss</div></div>
     <div class="chip"><div class="v">12 min</div><div class="l">cycle jour / nuit</div></div>
   </div>
 
@@ -213,23 +213,24 @@
 
   <div class="grid2">
     <div class="card">
-      <h3>12 nouvelles créatures (100 espèces) <span class="st wait">⏳ À valider</span> <span class="commit">6a59bff</span></h3>
+      <h3>12 nouvelles créatures (100 espèces) <span class="st ok">✅ Dans le jeu</span> <span class="commit">9d57e70</span></h3>
       <ul>
         <li>Grenouille, Loutre, Pingouin, Sphinx Doré, Méduse Astrale, Cerf des Étoiles, Renard Aurore, Poulpe Nébuleuse, Lapin Lunaire, Golem Météore, Kraken du Vide, et le <b>Dragon du Néant</b> (Secret).</li>
+        <li>Apparence provisoire en mini-voxels : elles seront refaites avec toutes les créatures (étape 2).</li>
       </ul>
     </div>
     <div class="card">
-      <h3>Les 9 boss en rareté « Boss » <span class="st wait">⏳ À valider</span> <span class="commit">6a59bff · 58e1c2d</span></h3>
+      <h3>Les 9 boss en rareté « Boss » <span class="st ok">✅ Dans le jeu</span> <span class="commit">9d57e70</span></h3>
       <ul>
-        <li>Les 6 boss des zones et les 3 d'Halloween deviennent des créatures d'une rareté à part, juste sous Secret, toujours <b>géantes</b>, avec leur onglet dans l'Index.</li>
-        <li>Leur œuf ne sort <b>qu'à la roulette</b>, et seulement après <b>3 victoires</b> contre ce boss.</li>
+        <li>Les 6 boss des zones et les 3 d'Halloween deviennent des créatures d'une rareté à part, juste sous Secret, toujours <b>géantes</b>, avec leur catégorie « 👑 Boss » dans la Collection.</li>
+        <li>Leur œuf ne sort <b>qu'à la roulette</b>, et seulement après <b>3 victoires</b> contre ce boss (la progression s'affiche au-dessus du levier). Un boss précis sort environ 5 fois moins souvent qu'une espèce Céleste précise ; prix 12 M 💠.</li>
       </ul>
     </div>
   </div>
 
   <!-- ===================================================== ŒUFS -->
   <h2 id="oeufs">🥚 Refonte des œufs</h2>
-  <p>L'ordre que tu as choisi : <b>1.</b> les monstres deviennent des espèces (fait) → <b>2.</b> refonte de toutes les créatures → <b>3.</b> un œuf par espèce dans le style « Prisme » → <b>4.</b> éclosion dès l'achat.</p>
+  <p>L'ordre que tu as choisi : <b>1.</b> les monstres deviennent des espèces, 12 nouvelles créatures et les boss (fait) → <b>2.</b> refonte de toutes les créatures → <b>3.</b> un œuf par espèce dans le style « Prisme » → <b>4.</b> éclosion dès l'achat.</p>
   <div class="grid3">
     <div class="card">
       <h3>Éclosion dès l'achat <span class="st todo">🛠️ Validé, à coder</span></h3>
@@ -505,13 +506,12 @@
   <h2 id="feuille">🗺️ Feuille de route</h2>
   <div class="tbl"><table>
     <tr><th>Ordre</th><th>Chantier</th><th>État</th><th>Détail</th></tr>
-    <tr><td class="num">1</td><td>12 nouvelles créatures et boss en rareté « Boss »</td><td><span class="st wait">⏳ croquis à valider</span></td><td class="m">100 espèces, œuf de boss à la roulette après 3 victoires.</td></tr>
-    <tr><td class="num">2</td><td>Refonte de toutes les créatures</td><td><span class="st todo">🛠️ prochaine étape</span></td><td class="m">Croquis d'abord, puis modèles.</td></tr>
-    <tr><td class="num">3</td><td>Un œuf par espèce, style Prisme + auras</td><td><span class="st todo">🛠️ après la refonte</span></td><td class="m">Auras par rareté encore à valider.</td></tr>
-    <tr><td class="num">4</td><td>Éclosion dès l'achat</td><td><span class="st todo">🛠️ validé</span></td><td class="m">Plus d'incubateurs, remboursement de ceux achetés.</td></tr>
-    <tr><td class="num">5</td><td>Décor de la place</td><td><span class="st wait">⏳ tes captures</span></td><td class="m">La forme ronde est faite.</td></tr>
-    <tr><td class="num">6</td><td>Relecture visuelle en jeu</td><td><span class="st wait">⏳ à faire ensemble</span></td><td class="m">Les captures Studio sortent noires : île en U, château, ponts, nuit et sons n'ont été vérifiés que par mesures.</td></tr>
-    <tr><td class="num">7</td><td>Gamepass Robot mineur</td><td><span class="st wait">⏳ avant publication</span></td><td class="m">Créer le gamepass, coller l'ID dans <code>TycoonConfig.GamePasses</code>.</td></tr>
+    <tr><td class="num">1</td><td>Refonte de toutes les créatures</td><td><span class="st todo">🛠️ prochaine étape</span></td><td class="m">Croquis d'abord, puis modèles.</td></tr>
+    <tr><td class="num">2</td><td>Un œuf par espèce, style Prisme + auras</td><td><span class="st todo">🛠️ après la refonte</span></td><td class="m">Auras par rareté encore à valider.</td></tr>
+    <tr><td class="num">3</td><td>Éclosion dès l'achat</td><td><span class="st todo">🛠️ validé</span></td><td class="m">Plus d'incubateurs, remboursement de ceux achetés.</td></tr>
+    <tr><td class="num">4</td><td>Décor de la place</td><td><span class="st wait">⏳ tes captures</span></td><td class="m">La forme ronde est faite.</td></tr>
+    <tr><td class="num">5</td><td>Relecture visuelle en jeu</td><td><span class="st wait">⏳ à faire ensemble</span></td><td class="m">Les captures Studio sortent noires : île en U, château, ponts, nuit et sons n'ont été vérifiés que par mesures.</td></tr>
+    <tr><td class="num">6</td><td>Gamepass Robot mineur</td><td><span class="st wait">⏳ avant publication</span></td><td class="m">Créer le gamepass, coller l'ID dans <code>TycoonConfig.GamePasses</code>.</td></tr>
   </table></div>
 
   <div class="card soft">
@@ -526,6 +526,7 @@
       <li>Château Mélange, cascade selon les travailleurs, château plein ; textes « château » ; ponts au style du château. <span class="commit">e003333 · a8af4f7 · 4c496f1 · 9061d7d · 142249f</span></li>
       <li>Jour / nuit et météo, sons, monnaie « Éclats de mana », icônes, ciels. <span class="commit">19b1922 · 150394e · be03e98 · 21d06ac · d79936c</span></li>
       <li>Les 34 monstres des zones deviennent des espèces (88). <span class="commit">8ac61b9</span></li>
+      <li>12 nouvelles créatures (100 espèces) et les 9 boss en rareté « Boss ». <span class="commit">9d57e70</span></li>
     </ul>
   </div>
 
@@ -556,7 +557,8 @@
     <tr><td>Annonce Divin+, garantie</td><td><code>Configurations/EggConfig.luau</code></td><td class="m">seuil et durée d'affichage</td></tr>
     <tr><td>Poids et géants</td><td><code>Configurations/WeightConfig.luau</code></td><td class="m">plages de poids, taille, gains</td></tr>
     <tr><td>Château et paliers</td><td><code>Configurations/CastleConfig.luau</code> · <code>Modules/CastleBuilder.luau</code></td><td class="m">paliers, places à géants</td></tr>
-    <tr><td>Machine, panneaux</td><td><code>Configurations/EggRollConfig.luau</code></td><td class="m"><code>BoardsFace</code></td></tr>
+    <tr><td>Machine, panneaux</td><td><code>Configurations/EggRollConfig.luau</code></td><td class="m"><code>BoardsFace</code>, <code>BossUnlockWins</code>, chances et prix des Boss</td></tr>
+    <tr><td>Monstres devenus créatures, boss en créatures</td><td><code>Configurations/TycoonConfig.luau</code></td><td class="m"><code>MobSpecies</code>, <code>MobOwnDropChance</code>, <code>BossSpeciesStats</code>, <code>BossCreatureHeight</code></td></tr>
     <tr><td>Picots, jour / nuit, météo, ponts</td><td><code>Configurations/WorldConfig.luau</code></td><td class="m"><code>Art.StudFloorMin</code>, <code>DayNight</code>, <code>RandomWeather</code>, <code>IslandBridges</code></td></tr>
     <tr><td>Sons</td><td><code>Configurations/SoundConfig.luau</code></td><td class="m">identifiants, volumes, <code>QuietAfterJoin</code></td></tr>
     <tr><td>Icônes</td><td><code>UITheme</code></td><td class="m"><code>IconImages</code> / <code>MakeIcon</code></td></tr>
