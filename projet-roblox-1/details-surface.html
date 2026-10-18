@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Détails de surface</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#6fdc6f; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); margin-top:10px; border-top:5px solid var(--ok); }
+  .hero img { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  table { border-collapse:collapse; width:100%; margin-top:8px; font-size:14px; }
+  td, th { padding:6px 10px; border-bottom:1px solid #3a3460; text-align:left; color:var(--muted); vertical-align:top; }
+  th { color:var(--text); }
+</style>
+</head>
+<body><div class="wrap">
+<h1>Essai : petits détails de surface (poils, écailles, plumes, roche)</h1>
+<p>Sur 4 créatures, une par matière. Chaque créature reçoit une <b>carte de relief</b> (la lumière accroche les mèches, les écailles, les plumes, les fissures) et une <b>carte de brillance</b> (pelage mat, écailles luisantes, cristaux très brillants). La forme et la peinture ne changent pas. Rien n'est encore appliqué aux autres créatures.</p>
+
+<h2>En jeu (à gauche : avant · à droite : avec les détails)</h2>
+<div class="hero"><img src="details/jeu-loup.jpg"><p><b>Loup</b> : fini l'aspect plastique brillant ; pelage mat avec des mèches (bien visibles sur le poitrail et les pattes)</p></div>
+<div class="hero"><img src="details/jeu-dragon.jpg"><p><b>Dragon</b> : écailles en relief qui accrochent la lumière ; ventre plus mat</p></div>
+<div class="hero"><img src="details/jeu-phenix.jpg"><p><b>Phénix</b> (de loin) : plumage plus mat et plus texturé</p></div>
+
+<h2>De près (rendu Blender, avant · après)</h2>
+<div class="cols">
+  <div class="hero"><img src="details/blender-Loup.jpg"><p><b>Poils</b> : mèches dans le sens du poil (tête vers queue, de haut en bas sur les pattes)</p></div>
+  <div class="hero"><img src="details/blender-Dragon.jpg"><p><b>Écailles</b> : plus petites sur les pattes, cornes et griffes lisses, ailes en fines rides</p></div>
+  <div class="hero"><img src="details/blender-Phenix.jpg"><p><b>Plumes</b> : longues plumes dans le sens des ailes, petites plumes sur le corps</p></div>
+  <div class="hero"><img src="details/blender-GolemCristal.jpg"><p><b>Roche et cristal</b> : grain et fissures sur la pierre, cristaux lisses et très brillants</p></div>
+</div>
+
+<h2>Ce qui reste à régler si tu valides</h2>
+<table>
+<tr><th>Point</th><th>Proposition</th></tr>
+<tr><td>Ventre du Dragon</td><td>Les plaques claires du ventre ont encore un peu l'air craquelées : je les remplacerai par de larges bandes lisses.</td></tr>
+<tr><td>Plumes</td><td>Le plus discret des quatre : je peux les marquer davantage.</td></tr>
+<tr><td>Force du relief</td><td>Réglable par matière (plus ou moins marqué).</td></tr>
+<tr><td>Les 109 créatures</td><td>Chaque créature reçoit sa matière (poils, écailles, plumes, roche, gelée…), et les créatures mixtes en ont plusieurs (griffon : plumes sur les ailes, poils sur le corps). Environ 10 minutes de calcul, puis envoi des images.</td></tr>
+<tr><td>Téléphones</td><td>Deux images de plus par créature, sans pièce en plus. Un interrupteur permet de tout couper (<code>CreatureSkins.UseDetails</code>).</td></tr>
+</table>
+<div class="note">Dis-moi si ça te plaît, et si tu veux le relief plus fort ou plus discret.</div>
+</div></body></html>
