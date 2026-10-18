@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ailes au repos</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --ok:#6fdc6f; --ko:#ff6b6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); margin-top:10px; }
+  .hero img { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+  .ok { border-top:5px solid var(--ok); } .ko { border-top:5px solid var(--ko); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body><div class="wrap">
+<h1>Ailes au repos : pose naturelle pour chaque créature</h1>
+<p><b>La cause :</b> toutes les créatures ailées utilisaient la <b>même rotation</b> pour replier leurs ailes. Or chaque modèle a ses ailes dans une position de départ différente (relevées, en V, à plat, tournées…) : la même rotation donnait des ailes tordues, plantées dans le sol ou dressées en travers.</p>
+<p><b>La correction :</b> pour chacune des <b>38 créatures ailées</b>, je mesure sa vraie aile (direction de l'épaule vers le bout, et sens de la surface), puis je calcule la rotation qui l'amène dans une pose naturelle :</p>
+<ul>
+  <li><b>Oiseaux, dragons, chevaux ailés, griffons, chauves-souris, sphinx</b> : ailes couchées le long du flanc, bout vers l'arrière et un peu vers le bas, surface tournée vers l'extérieur.</li>
+  <li><b>Papillon, bourdon, fées</b> : ailes posées à plat sur le dos, vers l'arrière.</li>
+  <li><b>Ange, gardien céleste</b> : ailes tombantes dans le dos.</li>
+</ul>
+<p>En vol, rien ne change : les ailes s'ouvrent à l'horizontale et battent comme avant. Au repos, elles gardent un petit frémissement de temps en temps.</p>
+
+<h2>Avant · après (en jeu)</h2>
+<div class="cols">
+  <div class="hero ko"><img src="ailes-repos/avant-aigle.jpg"><p><b>Avant</b> : aile gauche tendue en travers</p></div>
+  <div class="hero ok"><img src="ailes-repos/apres-aigle.jpg"><p><b>Après</b> : les deux ailes rabattues vers l'arrière</p></div>
+  <div class="hero ko"><img src="ailes-repos/avant-dragon.jpg"><p><b>Avant</b> : aile dressée à la verticale</p></div>
+  <div class="hero ok"><img src="ailes-repos/apres-dragon.jpg"><p><b>Après</b> : ailes repliées contre le corps</p></div>
+</div>
+
+<h2>Autres créatures, après</h2>
+<div class="cols">
+  <div class="hero ok"><img src="ailes-repos/apres-aigle-profil.jpg"><p>Aigle de profil</p></div>
+  <div class="hero ok"><img src="ailes-repos/apres-dragon-profil.jpg"><p>Dragon de profil : l'aile se plie le long du flanc</p></div>
+  <div class="hero ok"><img src="ailes-repos/apres-pegase.jpg"><p>Pégase</p></div>
+  <div class="hero ok"><img src="ailes-repos/apres-chauvesouris.jpg"><p>Chauve-Souris</p></div>
+  <div class="hero ok"><img src="ailes-repos/apres-papillon.jpg"><p>Papillon : ailes à plat sur le dos</p></div>
+  <div class="hero ok"><img src="ailes-repos/apres-ange.jpg"><p>Ange Lumineux : ailes tombantes</p></div>
+  <div class="hero ok"><img src="ailes-repos/vol-dragon.jpg"><p>En vol : inchangé, ailes ouvertes</p></div>
+</div>
+<div class="note">Dis-moi les créatures dont les ailes te paraissent encore bizarres (par leur nom) : je peux régler la pose de chacune à part.</div>
+</div></body></html>
