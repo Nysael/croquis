@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auras des œufs</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); }
+  .hero img { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+  figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; border-top:6px solid var(--c); }
+  figure img { width:100%; display:block; aspect-ratio:16/9; object-fit:cover; object-position:50% 62%; }
+  figcaption { padding:8px 12px 12px; font-size:14px; color:var(--muted); }
+  figcaption .t { display:flex; align-items:center; gap:8px; font-size:17px; font-weight:800; color:var(--text); margin-bottom:3px; }
+  figcaption .n { font-size:12px; font-weight:800; background:var(--c); color:#1d1a2b; border-radius:8px; padding:1px 7px; }
+  .plus { color:var(--accent); font-weight:700; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>✨ Une aura pour chaque rareté d'œuf</h1>
+  <p>C'est une proposition à valider. Captures prises dans le jeu, en plein jour, avec les nouveaux œufs (un modèle par rareté). Chaque rareté <b>garde l'aura de la précédente et ajoute un effet</b> : plus l'œuf est rare, plus il brille.</p>
+
+  <div class="hero">
+    <img src="oeufs-raretes/ensemble.jpg" alt="Les 10 œufs côte à côte">
+    <p>Vue d'en haut, comme la caméra du jeu. Devant : Commun → Légendaire. Derrière : Mythique → Secret.</p>
+  </div>
+
+  <h2>Les 10 raretés</h2>
+  <div class="grid">
+    <figure style="--c:#bebec3"><img src="oeufs-raretes/commun.jpg" alt=""><figcaption><div class="t"><span class="n">1</span>Commun</div>Œuf blanc simple, <b>pas d'aura</b>.</figcaption></figure>
+    <figure style="--c:#5ad25a"><img src="oeufs-raretes/peucommun.jpg" alt=""><figcaption><div class="t"><span class="n">2</span>Peu commun</div>Œuf à feuilles. <span class="plus">+ anneau lumineux au sol</span> de sa couleur.</figcaption></figure>
+    <figure style="--c:#4696ff"><img src="oeufs-raretes/rare.jpg" alt=""><figcaption><div class="t"><span class="n">3</span>Rare</div>Œuf à vague. <span class="plus">+ étincelles qui montent</span> autour de l'œuf.</figcaption></figure>
+    <figure style="--c:#aa50ff"><img src="oeufs-raretes/epique.jpg" alt=""><figcaption><div class="t"><span class="n">4</span>Épique</div>Œuf à spirales. <span class="plus">+ bulle de lueur</span> et lumière colorée sur le sol.</figcaption></figure>
+    <figure style="--c:#ffc828"><img src="oeufs-raretes/legendaire.jpg" alt=""><figcaption><div class="t"><span class="n">5</span>Légendaire</div>Œuf doré à vagues. <span class="plus">+ rayons de lumière</span> qui tournent lentement derrière l'œuf.</figcaption></figure>
+    <figure style="--c:#ff4682"><img src="oeufs-raretes/mythique.jpg" alt=""><figcaption><div class="t"><span class="n">6</span>Mythique</div>Œuf à écailles de dragon. <span class="plus">+ flammes roses</span> qui l'entourent.</figcaption></figure>
+    <figure style="--c:#fffceb"><img src="oeufs-raretes/divin.jpg" alt=""><figcaption><div class="t"><span class="n">7</span>Divin</div>Œuf ailé à couronne. <span class="plus">+ auréole dorée</span> au-dessus (bien visible d'en haut).</figcaption></figure>
+    <figure style="--c:#50e6ff"><img src="oeufs-raretes/celeste.jpg" alt=""><figcaption><div class="t"><span class="n">8</span>Céleste</div>Œuf de glace en coquille. <span class="plus">+ étoiles</span> qui scintillent tout autour.</figcaption></figure>
+    <figure style="--c:#9646ff"><img src="oeufs-raretes/cosmique.jpg" alt=""><figcaption><div class="t"><span class="n">9</span>Cosmique</div>Œuf violet à étoiles. <span class="plus">+ fumée de galaxie</span> violette qui tourbillonne.</figcaption></figure>
+    <figure style="--c:#ff9ae0"><img src="oeufs-raretes/secret.jpg" alt=""><figcaption><div class="t"><span class="n">10</span>Secret</div>Œuf nacré. <span class="plus">Toute l'aura en arc-en-ciel</span> ; en jeu, l'anneau et l'auréole changeront de couleur en continu.</figcaption></figure>
+  </div>
+
+  <div class="note">
+    <b>Où on verra les auras :</b> sur les socles de la machine à œufs, au comptoir et sur la place.
+    Dans les menus (« 🥚 Œufs », boutique), l'œuf aura un fond de la couleur de sa rareté.<br>
+    <b>Téléphone :</b> peu de particules par œuf (léger), et les auras des œufs loin de la caméra sont coupées.
+  </div>
+</div>
+</body>
+</html>
