@@ -25,6 +25,12 @@
   .opt h3 { margin:0 0 4px; font-size:16px; }
   .opt ul { margin:6px 0 0; padding-left:18px; font-size:14px; }
   .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+  .wx { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:10px; }
+  .wx .card { background:var(--card); border-radius:14px; overflow:hidden; }
+  .wx .card svg { border-bottom:1px solid #3a3558; }
+  .wx .card .t { padding:8px 12px 0; font-weight:800; color:var(--text); }
+  .wx .card .d { padding:4px 12px 4px; font-size:13px; color:var(--muted); line-height:1.45; }
+  .wx .card .b { padding:0 12px 10px; font-size:13px; color:var(--ok); font-weight:700; }
   .timeline { display:flex; height:46px; border-radius:12px; overflow:hidden; margin-top:8px; font-weight:800; font-size:14px; }
   .timeline div { display:flex; align-items:center; justify-content:center; color:#1d1a2b; }
 </style>
@@ -51,6 +57,15 @@
 
   <h2>Le minuteur à l'écran</h2>
   <div class="box"><svg viewBox="0 0 400 110" id="hud"></svg><p>Une petite pastille en haut, sous « Mon île / Place » : « ☀️ Nuit dans 3:12 » le jour, « 🌙 Jour dans 1:40 » la nuit. Quand la nuit approche (30 s avant), une notification prévient tout le monde.</p></div>
+
+  <h2>🌦️ Météo aléatoire (ajoutée à ta demande)</h2>
+  <p>À chaque nouveau cycle (toutes les 12 minutes), le serveur tire une météo au hasard pour tout le monde. La pastille du minuteur montre aussi la météo du moment.</p>
+  <div class="wx" id="wx"></div>
+  <div class="note">La météo de saison reste prioritaire : à Noël, la pluie devient de la <b>neige</b> ; à Halloween, le brouillard devient <b>vert et inquiétant</b>. Chaque météo s'annonce par une notification (« 🌧️ La pluie arrive ! »).</div>
+  <div class="opts" style="margin-top:10px">
+    <div class="opt"><h3>Météo 1. Juste l'ambiance</h3><ul><li>Pluie, orage, brouillard, arc-en-ciel… sans effet sur le jeu.</li></ul></div>
+    <div class="opt reco"><h3>Météo 2. Ambiance + petits bonus (Recommandé)</h3><ul><li>Chaque météo spéciale donne un petit bonus, écrit dans la pastille (voir la colonne « Bonus » ci-dessus).</li><li>Les joueurs guettent l'arc-en-ciel et les étoiles filantes.</li></ul></div>
+  </div>
 
   <h2>Que se passe-t-il la nuit ? (à choisir)</h2>
   <div class="opts">
@@ -95,6 +110,29 @@ function scene(id, night) {
 }
 scene("day", false);
 scene("night", true);
+
+// Météos : petite scène + chance + effet + bonus proposé
+const WX = [
+  { t: "☀️ Beau temps", p: "55 %", d: "Comme aujourd'hui.", b: "—", sky: "#5aa8ff", fx: "" },
+  { t: "🌧️ Pluie", p: "18 %", d: "Gouttes partout, flaques qui brillent, ciel gris. Après la pluie : un arc-en-ciel pendant 1 minute.", b: "Pendant l'arc-en-ciel : 5 % de chance qu'une créature naisse « Arc-en-ciel » (aujourd'hui, seulement par fusion)", sky: "#7d8ea8", fx: "rain" },
+  { t: "🌫️ Brouillard", p: "12 %", d: "Brume douce au lever du jour, les îles au loin disparaissent à moitié.", b: "Monstres des zones : +20 % de ressources", sky: "#b9c3cf", fx: "fog" },
+  { t: "⛈️ Orage", p: "8 %", d: "La nuit seulement : pluie forte, éclairs et tonnerre (sans danger).", b: "Boss des zones : butin x1,5", sky: "#2a3050", fx: "storm" },
+  { t: "🌠 Pluie d'étoiles filantes", p: "7 %", d: "La nuit seulement, très rare : des étoiles tombent sur la place et sur les îles. On les ramasse.", b: "Chaque étoile ramassée : des gemmes", sky: "#0e1838", fx: "stars" },
+];
+const wx = document.getElementById("wx");
+WX.forEach((w, i) => {
+  const s = [`<rect width="200" height="90" fill="${w.sky}"/>`, `<rect y="70" width="200" height="20" fill="${w.fx === 'stars' || w.fx === 'storm' ? '#1a2d5a' : '#3d8fd8'}"/>`, `<rect x="60" y="52" width="80" height="20" fill="#62b048"/><rect x="80" y="30" width="40" height="24" fill="#e8e2d6"/><polygon points="76,30 100,14 124,30" fill="#2c50d8"/>`];
+  if (w.fx === "" ) s.push('<circle cx="168" cy="22" r="12" fill="#ffe66b"/>');
+  if (w.fx === "rain" || w.fx === "storm") for (let k = 0; k < 40; k++) s.push(`<rect x="${(k * 37) % 200}" y="${(k * 23) % 70}" width="1.5" height="7" fill="#dfefff" opacity=".8"/>`);
+  if (w.fx === "rain") s.push('<path d="M20 70 A80 60 0 0 1 180 70" stroke="#ff5a5a" stroke-width="3" fill="none" opacity=".8"/><path d="M26 70 A74 54 0 0 1 174 70" stroke="#ffd34d" stroke-width="3" fill="none" opacity=".8"/><path d="M32 70 A68 48 0 0 1 168 70" stroke="#5ad65a" stroke-width="3" fill="none" opacity=".8"/><path d="M38 70 A62 42 0 0 1 162 70" stroke="#5a8aff" stroke-width="3" fill="none" opacity=".8"/>');
+  if (w.fx === "storm") s.push('<polyline points="150,0 140,25 152,25 138,55" stroke="#fff6a0" stroke-width="3" fill="none"/>');
+  if (w.fx === "fog") for (let k = 0; k < 4; k++) s.push(`<rect x="0" y="${20 + k * 14}" width="200" height="10" fill="#fff" opacity=".35"/>`);
+  if (w.fx === "stars") { for (let k = 0; k < 20; k++) s.push(`<rect x="${(k * 53) % 200}" y="${(k * 17) % 50}" width="2" height="2" fill="#fff"/>`); for (const [x, y] of [[40, 10], [120, 4], [170, 20]]) s.push(`<line x1="${x}" y1="${y}" x2="${x - 18}" y2="${y + 12}" stroke="#ffe9a0" stroke-width="2"/><circle cx="${x}" cy="${y}" r="2.5" fill="#fff6c8"/>`); }
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `<svg viewBox="0 0 200 90">${s.join("")}</svg><div class="t">${w.t} · ${w.p}</div><div class="d">${w.d}</div><div class="b">Bonus : ${w.b}</div>`;
+  wx.appendChild(card);
+});
 document.getElementById("hud").innerHTML = `
   <rect width="400" height="110" fill="#3a6fb8"/>
   <text x="120" y="32" font-size="18" font-weight="800" fill="#fff" text-anchor="middle">🏝️ Mon île</text>
