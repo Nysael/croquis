@@ -229,13 +229,13 @@
   </div>
 
   <div class="card">
-    <h3>Refonte : vrais squelettes, une seule peau <span class="st todo">🛠️ en cours (pas encore commité)</span></h3>
+    <h3>Refonte : vrais squelettes, une seule peau <span class="st ok">✅ Dans le jeu</span> <span class="commit">262c6fa</span></h3>
     <ul>
       <li>Chaque créature devient <b>une seule peau</b> (un MeshPart) avec <b>de vrais os</b> : dos, cou, tête, queue(s) en 3 segments, pattes ou bras à 3 os, ailes à 3 os. La peau se plie aux articulations : <b>plus de trou à l'épaule</b> ni de pièces qui flottent.</li>
       <li>Chaîne automatique sur la machine : export depuis Studio, peau fondue et texture reportée dans Blender, squelette calculé, fichier 3D, puis <b>import automatique</b> dans Studio (souris pilotée, bandeau rouge et notification Noctu).</li>
       <li>Les 5 chevaux ailés partagent la peau et le squelette du Pégase ; seule la peinture change.</li>
       <li>En jeu : <code>CreatureSkins</code> construit la peau à partir de <code>CreatureRigsData</code> (identifiant du mesh, texture, os) ; <code>CreatureBones</code> anime les os (marche en diagonale, ailes repliées ou en vol, tête, queues, respiration), branché dans <code>CreatureMotion</code> et dans les vitrines.</li>
-      <li>Testé en jeu sur le Pégase, le Loup et le Dragon. Import des 108 autres en cours.</li>
+      <li>Les <b>109 créatures</b> sont importées et testées en jeu (galerie : <code>docs/croquis/squelettes.html</code>), en attente de ta validation créature par créature.</li>
     </ul>
   </div>
 
@@ -517,7 +517,7 @@
   <h2 id="feuille">🗺️ Feuille de route</h2>
   <div class="tbl"><table>
     <tr><th>Ordre</th><th>Chantier</th><th>État</th><th>Détail</th></tr>
-    <tr><td class="num">1</td><td>Refonte de toutes les créatures</td><td><span class="st todo">🛠️ en cours</span></td><td class="m">Style D choisi ; vrais squelettes en cours d'import. Restent : choix Dragon Ancien, Golem et Lion, cornes des licornes ailées.</td></tr>
+    <tr><td class="num">1</td><td>Refonte de toutes les créatures</td><td><span class="st todo">🛠️ en cours</span></td><td class="m">Style D choisi ; vrais squelettes pour les 109 (262c6fa). Restent : choix Dragon Ancien, Golem et Lion, cornes des licornes ailées.</td></tr>
     <tr><td class="num">2</td><td>Un œuf par espèce, style Prisme + auras</td><td><span class="st todo">🛠️ après la refonte</span></td><td class="m">Auras par rareté encore à valider.</td></tr>
     <tr><td class="num">3</td><td>Éclosion dès l'achat</td><td><span class="st todo">🛠️ validé</span></td><td class="m">Plus d'incubateurs, remboursement de ceux achetés.</td></tr>
     <tr><td class="num">4</td><td>Décor de la place</td><td><span class="st wait">⏳ tes captures</span></td><td class="m">La forme ronde est faite.</td></tr>
@@ -538,6 +538,7 @@
       <li>Jour / nuit et météo, sons, monnaie « Éclats de mana », icônes, ciels. <span class="commit">19b1922 · 150394e · be03e98 · 21d06ac · d79936c</span></li>
       <li>Les 34 monstres des zones deviennent des espèces (88). <span class="commit">8ac61b9</span></li>
       <li>12 nouvelles créatures (100 espèces) et les 9 boss en rareté « Boss ». <span class="commit">9d57e70</span></li>
+      <li>Toutes les créatures à vrai squelette, une seule peau. <span class="commit">262c6fa</span></li>
     </ul>
   </div>
 
