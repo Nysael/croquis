@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Nysa</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --card2:#332d52; --line:#3a3558; --text:#f3f0ff; --muted:#b8b2d6;
+          --accent:#c9a6ff; --gold:#ffd34d; --work:#a98bff; --wait:#ffb84d; --ok:#7dffb0; --err:#ff7a8a; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:var(--bg); color:var(--text);
+               font:14px "Segoe UI", system-ui, sans-serif; user-select:none; }
+  button { font:inherit; color:inherit; cursor:pointer; border:0; }
+
+  /* ---------- pastille ---------- */
+  #pill { display:flex; align-items:center; gap:10px; height:42px; padding:0 14px 0 8px; cursor:default; }
+  body.open #pill { display:none; }
+  #pill .txt { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-weight:600; font-size:13px; }
+  #pill .txt small { color:var(--muted); font-weight:400; }
+  .badge { min-width:20px; height:20px; border-radius:10px; padding:0 6px; font-size:12px; font-weight:800;
+           display:inline-grid; place-items:center; }
+  .badge.wait { background:var(--wait); color:#2a1a00; }
+  .badge.work { background:#3b3560; color:var(--work); }
+
+  /* ---------- visage de Nysa ---------- */
+  .orb { --c:var(--accent); position:relative; flex:none; width:28px; height:28px; border-radius:50%;
+         background:radial-gradient(circle at 35% 30%, #fff8 0 8%, transparent 9%), radial-gradient(circle at 50% 55%, var(--c), #4b2a8a 75%);
+         box-shadow:0 0 10px var(--c); transition:box-shadow .3s, --c .3s; }
+  .orb.big { width:34px; height:34px; }
+  .orb .eye { position:absolute; top:40%; width:16%; height:26%; background:#1d1a2b; border-radius:50%;
+              animation:blink 4.5s infinite; }
+  .orb .eye.l { left:30%; } .orb .eye.r { right:30%; }
+  .orb.work { --c:var(--work); animation:pulse 1.4s ease-in-out infinite; }
+  .orb.work .eye { animation:blink 4.5s infinite, look 2.6s ease-in-out infinite; }
+  .orb.wait { --c:var(--wait); animation:hop .9s ease-in-out infinite; }
+  .orb.done { --c:var(--ok); }
+  .orb.done .eye { height:12%; top:45%; border-radius:0 0 50% 50% / 0 0 100% 100%; background:transparent;
+                   border:2.5px solid #1d1a2b; border-top:0; animation:none; }
+  .orb.err { --c:var(--err); }
+  .orb.idle { --c:#8f86c2; }
+  @keyframes blink { 0%, 92%, 100% { transform:scaleY(1); } 95% { transform:scaleY(.1); } }
+  @keyframes look { 0%, 100% { translate:0 0; } 30% { translate:-2px 0; } 65% { translate:2px 0; } }
+  @keyframes pulse { 0%, 100% { box-shadow:0 0 6px var(--c); } 50% { box-shadow:0 0 16px var(--c); } }
+  @keyframes hop { 0%, 100% { transform:translateY(0); } 50% { transform:translateY(-2px); } }
+
+  /* ---------- panneau ---------- */
+  #panel { display:none; flex-direction:column; height:100%; }
+  body.open #panel { display:flex; }
+  header { display:flex; align-items:center; gap:10px; padding:10px 12px 6px; }
+  header h1 { margin:0; font-size:18px; flex:1; }
+  header h1 small { display:block; font-size:12px; color:var(--muted); font-weight:400; }
+  .icon { width:30px; height:30px; border-radius:9px; background:var(--card); font-size:15px; }
+  .icon:hover { background:#3b3560; } .icon.on { background:#4b3d80; }
+  nav { display:flex; gap:6px; padding:4px 12px 8px; border-bottom:1px solid var(--line); }
+  nav button { flex:1; background:var(--card); padding:7px 4px; border-radius:10px; font-weight:600; font-size:13px; position:relative; }
+  nav button.on { background:#4b3d80; }
+  nav .badge { position:absolute; top:-6px; right:-4px; }
+  main { flex:1; overflow-y:auto; padding:10px 12px 14px; user-select:text; }
+  main::-webkit-scrollbar { width:8px; } main::-webkit-scrollbar-thumb { background:#3b3560; border-radius:4px; }
+  .tab { display:none; } .tab.on { display:block; }
+  .empty { color:var(--muted); text-align:center; padding:40px 10px; line-height:1.6; }
+
+  .card { background:var(--card); border-radius:14px; padding:11px 13px; margin-bottom:9px; }
+  .row { display:flex; align-items:center; gap:8px; }
+  .proj { font-weight:700; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .chip { font-size:11px; font-weight:800; padding:2px 8px; border-radius:999px; white-space:nowrap; }
+  .chip.working { background:#a98bff26; color:var(--work); } .chip.waiting { background:#ffb84d26; color:var(--wait); }
+  .chip.done { background:#7dffb026; color:var(--ok); } .chip.error { background:#ff7a8a26; color:var(--err); }
+  .chip.idle, .chip.ended { background:#ffffff14; color:var(--muted); }
+  .act { color:var(--text); margin-top:6px; font-size:13px; }
+  .meta { color:var(--muted); font-size:12px; margin-top:5px; line-height:1.45; }
+  .meta i { color:#8f86c2; }
+  .small-btn { background:#3b3560; padding:4px 9px; border-radius:8px; font-size:12px; }
+  .small-btn:hover { background:#4b3d80; }
+
+  .perm { border:2px solid #ffb84d66; }
+  .perm .detail { background:#14121f; color:#ffe08a; font:12px Consolas, monospace; padding:8px 10px; border-radius:9px;
+                  margin-top:8px; white-space:pre-wrap; word-break:break-all; max-height:140px; overflow:auto; }
+  .perm .btns { display:flex; gap:7px; margin-top:10px; }
+  .perm .btns button { flex:1; padding:8px; border-radius:10px; font-weight:700; }
+  .yes { background:#2f7d55; } .yes:hover { background:#38946a; }
+  .no { background:#7d2f3d; } .no:hover { background:#943848; }
+  .always { background:#3b3560; font-size:12px; } .always:hover { background:#4b3d80; }
+
+  /* chat */
+  #chatlog { display:flex; flex-direction:column; gap:8px; }
+  .msg { max-width:88%; padding:9px 12px; border-radius:14px; line-height:1.5; font-size:13.5px; word-wrap:break-word; }
+  .msg.me { align-self:flex-end; background:#4b3d80; border-bottom-right-radius:4px; white-space:pre-wrap; }
+  .msg.nysa { align-self:flex-start; background:var(--card); border-bottom-left-radius:4px; }
+  .msg .p { font-size:11px; color:var(--muted); margin-bottom:3px; }
+  .msg code { background:#14121f; color:#ffe08a; padding:1px 5px; border-radius:5px; font-size:12px; }
+  .msg pre { background:#14121f; padding:8px; border-radius:8px; overflow-x:auto; font-size:12px; }
+  .msg ul { margin:4px 0; padding-left:18px; } .msg a { color:var(--accent); }
+  .typing { color:var(--muted); font-style:italic; font-size:13px; }
+  #chatbar { border-top:1px solid var(--line); padding:8px 12px 12px; display:none; }
+  body.chat #chatbar { display:block; }
+  #chatbar .row { margin-bottom:6px; }
+  select { background:var(--card); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:4px 6px; font:inherit; font-size:12px; flex:1; }
+  textarea { width:100%; resize:none; height:58px; background:var(--card); color:var(--text); border:1px solid var(--line);
+             border-radius:12px; padding:8px 10px; font:inherit; outline:none; }
+  textarea:focus { border-color:#6b58b0; }
+
+  /* résumés */
+  .sum h3 { margin:0; font-size:15px; flex:1; }
+  .sum .body { margin-top:8px; line-height:1.55; font-size:13.5px; color:var(--text); }
+  .sum .body h1, .sum .body h2, .sum .body h3 { font-size:14px; color:var(--gold); margin:10px 0 4px; }
+  .sum .body ul { margin:4px 0; padding-left:18px; }
+</style>
+</head>
+<body>
+  <div id="pill">
+    <div class="orb" id="pillOrb"><span class="eye l"></span><span class="eye r"></span></div>
+    <div class="txt" id="pillText">Nysa</div>
+    <span id="pillBadges"></span>
+  </div>
+
+  <div id="panel">
+    <header>
+      <div class="orb big" id="headOrb"><span class="eye l"></span><span class="eye r"></span></div>
+      <h1>Nysa <small id="headSub">prête</small></h1>
+      <button class="icon" id="pinBtn" title="Garder ouvert">📌</button>
+      <button class="icon" id="closeBtn" title="Réduire">▴</button>
+      <button class="icon" id="quitBtn" title="Quitter Nysa">⏻</button>
+    </header>
+    <nav>
+      <button data-tab="sessions" class="on">Sessions</button>
+      <button data-tab="perms">Autorisations <span id="permBadge"></span></button>
+      <button data-tab="chat">Chat</button>
+      <button data-tab="sums">Résumés</button>
+    </nav>
+    <main>
+      <section class="tab on" id="tab-sessions"></section>
+      <section class="tab" id="tab-perms"></section>
+      <section class="tab" id="tab-chat"><div id="chatlog"></div></section>
+      <section class="tab" id="tab-sums"></section>
+    </main>
+    <div id="chatbar">
+      <div class="row">
+        <select id="chatProject"></select>
+        <button class="small-btn" id="newChat" title="Oublier la conversation de ce projet">🆕 Nouvelle</button>
+      </div>
+      <textarea id="chatInput" placeholder="Demande quelque chose à Nysa… (Entrée pour envoyer, Maj+Entrée pour aller à la ligne)"></textarea>
+    </div>
+  </div>
+
+<script>
+  let api = null, version = -1, state = null, tab = "sessions", hover = false, leaveTimer = null;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const STATUS = { working: "travaille", waiting: "t'attend", done: "a fini", error: "erreur", idle: "en pause", ended: "fermée" };
+  const ORB = { working: "work", waiting: "wait", done: "done", error: "err", idle: "idle", ended: "idle" };
+
+  function ago(t) {
+    const s = Math.max(0, Date.now() / 1000 - t);
+    if (s < 60) return "à l'instant";
+    if (s < 3600) return `il y a ${Math.floor(s / 60)} min`;
+    return `il y a ${Math.floor(s / 3600)} h`;
+  }
+
+  // Mini Markdown : titres, gras, italique, code, listes, liens (le texte est échappé d'abord)
+  function md(text) {
+    const blocks = esc(text).split(/```/);
+    return blocks.map((b, i) => {
+      if (i % 2) return `<pre>${b.replace(/^\w*\n/, "")}</pre>`;
+      const lines = b.split("\n"), out = [];
+      let list = false;
+      for (let l of lines) {
+        l = l.replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
+             .replace(/(^|\s)\*([^*]+)\*/g, "$1<i>$2</i>").replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+        const item = l.match(/^\s*(?:[-*•]|\d+\.)\s+(.*)/), head = l.match(/^#{1,4}\s+(.*)/);
+        if (item) { if (!list) { out.push("<ul>"); list = true; } out.push(`<li>${item[1]}</li>`); continue; }
+        if (list) { out.push("</ul>"); list = false; }
+        if (head) out.push(`<h3>${head[1]}</h3>`); else if (l.trim()) out.push(`<div>${l}</div>`); else out.push("<div style='height:6px'></div>");
+      }
+      if (list) out.push("</ul>");
+      return out.join("");
+    }).join("");
+  }
+
+  function mood(s) {
+    if (s.pending.length) return "waiting";
+    if (s.toast) return s.toast.kind === "error" ? "error" : "done";
+    if (s.sessions.some((x) => x.status === "working")) return "working";
+    if (s.sessions.some((x) => x.status === "waiting")) return "waiting";
+    return "idle";
+  }
+
+  function renderPill(s) {
+    const m = mood(s), working = s.sessions.filter((x) => x.status === "working");
+    $("pillOrb").className = "orb " + ORB[m];
+    $("headOrb").className = "orb big " + ORB[m];
+    let text;
+    if (s.pending.length) text = `🔐 ${esc(s.pending[0].project)} <small>veut</small> ${esc(s.pending[0].action)}`;
+    else if (s.toast) text = esc(s.toast.text);
+    else if (working.length) text = `${esc(working[0].project)} <small>· ${esc(working[0].action)}</small>`;
+    else if (s.sessions.length) text = `Nysa <small>· ${s.sessions.length} session${s.sessions.length > 1 ? "s" : ""}, tout est calme</small>`;
+    else text = "Nysa <small>· aucune session Claude</small>";
+    $("pillText").innerHTML = text;
+    $("headSub").textContent = { working: `${working.length} session${working.length > 1 ? "s" : ""} au travail`, waiting: "attend ta réponse", done: "une tâche vient de finir", error: "une session a un souci", idle: "tout est calme" }[m];
+    $("pillBadges").innerHTML = (s.pending.length ? `<span class="badge wait">${s.pending.length}</span> ` : "") +
+                                (working.length > 1 ? `<span class="badge work">${working.length}</span>` : "");
+    $("permBadge").innerHTML = s.pending.length ? `<span class="badge wait">${s.pending.length}</span>` : "";
+  }
+
+  function renderSessions(s) {
+    $("tab-sessions").innerHTML = s.sessions.length ? s.sessions.map((x) => `
+      <div class="card">
+        <div class="row"><span class="proj">${esc(x.title || x.project)}</span><span class="chip ${x.status}">${STATUS[x.status] || x.status}</span></div>
+        <div class="act">${esc(x.action)}</div>
+        ${x.prompt ? `<div class="meta"><i>Demande :</i> ${esc(x.prompt)}</div>` : ""}
+        ${x.status === "done" && x.answer ? `<div class="meta"><i>Réponse :</i> ${esc(x.answer)}</div>` : ""}
+        <div class="row" style="margin-top:7px"><span class="meta" style="flex:1;margin:0">${esc(x.project)} · ${ago(x.updated)}</span>
+          ${x.cwd ? `<button class="small-btn" data-open="${esc(x.cwd)}">Ouvrir dans VS Code</button>` : ""}</div>
+      </div>`).join("") : `<div class="empty">Aucune session Claude pour l'instant.<br>Lance Claude Code dans VS Code : Nysa la suivra ici.</div>`;
+  }
+
+  function renderPerms(s) {
+    $("tab-perms").innerHTML = s.pending.length ? s.pending.map((p) => `
+      <div class="card perm">
+        <div class="row"><span class="proj">🔐 ${esc(p.project)}</span><span class="meta" style="margin:0">${ago(p.at)}</span></div>
+        <div class="act">${esc(p.action)} <span class="meta">(${esc(p.tool)})</span></div>
+        <div class="detail">${esc(p.detail)}</div>
+        <div class="btns">
+          <button class="yes" data-allow="${p.id}">✅ Autoriser</button>
+          <button class="no" data-deny="${p.id}">❌ Refuser</button>
+        </div>
+        ${p.suggestions.length ? `<div class="btns"><button class="always" data-always="${p.id}">✅ Autoriser et ne plus demander pour ce genre d'action</button></div>` : ""}
+      </div>`).join("") : `<div class="empty">Aucune demande d'autorisation.<br>Quand Claude aura besoin de ton accord, la demande apparaîtra ici et la pastille s'ouvrira toute seule.</div>`;
+  }
+
+  function renderChat(s) {
+    const log = $("chatlog"), atBottom = log.parentElement.scrollHeight - log.parentElement.scrollTop - log.parentElement.clientHeight < 40;
+    log.innerHTML = (s.chat.messages.length ? "" : `<div class="empty">Pose une question ou donne une tâche à Nysa.<br>Choisis d'abord le projet concerné en bas.</div>`) +
+      s.chat.messages.map((m) => `<div class="msg ${m.who}">${m.who === "nysa" ? `<div class="p">Nysa · ${esc(m.project)}</div>${md(m.text)}` : esc(m.text)}</div>`).join("") +
+      (s.chat.busy ? `<div class="typing">Nysa travaille… (les autorisations apparaîtront dans l'onglet Autorisations)</div>` : "");
+    if (atBottom) log.parentElement.scrollTop = log.parentElement.scrollHeight;
+    const sel = $("chatProject"), cur = sel.value;
+    if (sel.options.length !== s.projects.length) {
+      sel.innerHTML = s.projects.map((p) => `<option>${esc(p)}</option>`).join("");
+      if (cur && s.projects.includes(cur)) sel.value = cur;
+    }
+    $("chatInput").disabled = s.chat.busy;
+  }
+
+  function renderSums(s) {
+    const card = (kind, title, time) => {
+      const x = s.summaries[kind] || {};
+      return `<div class="card sum">
+        <div class="row"><h3>${title}</h3><button class="small-btn" data-sum="${kind}" ${x.busy ? "disabled" : ""}>${x.busy ? "En cours…" : "Générer maintenant"}</button></div>
+        <div class="meta">Automatique chaque jour à ${esc(time)}, aussi envoyé sur Discord.${x.at ? ` Dernier : ${ago(x.at)}.` : ""}</div>
+        <div class="body">${x.text ? md(x.text) : `<span class="meta">Pas encore de ${kind === "briefing" ? "briefing" : "récap"}.</span>`}</div>
+      </div>`;
+    };
+    $("tab-sums").innerHTML = card("briefing", "☀️ Briefing du matin", s.times.briefing) + card("recap", "🌙 Récap du soir", s.times.recap);
+  }
+
+  function render(s) {
+    document.body.classList.toggle("open", s.expanded);
+    $("pinBtn").classList.toggle("on", s.pinned);
+    renderPill(s); renderSessions(s); renderPerms(s); renderChat(s); renderSums(s);
+  }
+
+  function showTab(name) {
+    tab = name;
+    document.querySelectorAll("nav button").forEach((b) => b.classList.toggle("on", b.dataset.tab === name));
+    document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("on", t.id === "tab-" + name));
+    document.body.classList.toggle("chat", name === "chat");
+  }
+
+  async function poll() {
+    try {
+      const s = await api.get_state(version);
+      if (s.version !== version) {
+        const hadPending = state && state.pending.length;
+        version = s.version; state = s; render(s);
+        if (s.pending.length && !hadPending) showTab("perms");
+      }
+    } catch (e) { /* l'API peut ne pas encore être prête */ }
+    setTimeout(poll, 700);
+  }
+
+  // ----- interactions -----
+  document.documentElement.addEventListener("mouseenter", () => { hover = true; clearTimeout(leaveTimer); api && api.expand(true); });
+  document.documentElement.addEventListener("mouseleave", () => {
+    hover = false;
+    clearTimeout(leaveTimer);
+    leaveTimer = setTimeout(() => { if (!hover && document.activeElement !== $("chatInput")) api.expand(false); }, 900);
+  });
+  document.addEventListener("mousemove", () => { if (!hover) { hover = true; api && api.expand(true); } });
+  document.querySelectorAll("nav button").forEach((b) => b.onclick = () => showTab(b.dataset.tab));
+  $("pinBtn").onclick = () => api.pin(!(state && state.pinned));
+  $("closeBtn").onclick = () => { api.pin(false); api.expand(false); };
+  $("quitBtn").onclick = () => { if (confirm("Quitter Nysa ?")) api.quit(); };
+  $("newChat").onclick = () => api.new_chat($("chatProject").value);
+  $("chatInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      const t = e.target.value;
+      if (t.trim()) { api.send_chat(t, $("chatProject").value); e.target.value = ""; }
+    }
+  });
+  document.addEventListener("click", (e) => {
+    const d = e.target.dataset;
+    if (d.allow) api.decide(d.allow, "allow", false);
+    else if (d.always) api.decide(d.always, "allow", true);
+    else if (d.deny) api.decide(d.deny, "deny", false);
+    else if (d.sum) api.summary(d.sum);
+    else if (d.open) api.open_vscode(d.open);
+  });
+  window.addEventListener("pywebviewready", () => { api = window.pywebview.api; poll(); });
+</script>
+</body>
+</html>
