@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monstres en créatures</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:12px; }
+  .step { background:var(--card); border-radius:14px; padding:12px 16px; border-left:6px solid #6f61c9; }
+  .step.now { border-left-color:var(--accent); }
+  .step h3 { margin:0 0 4px; font-size:17px; }
+  .step .tag { font-size:11px; font-weight:800; background:var(--accent); color:#1d1a2b; border-radius:8px; padding:1px 7px; margin-left:4px; }
+  .zones { display:grid; grid-template-columns:repeat(auto-fill,minmax(360px,1fr)); gap:12px; }
+  @media (max-width: 420px) { .zones { grid-template-columns:1fr; } }
+  .zone { background:var(--card); border-radius:14px; padding:10px 14px 12px; }
+  .zone h3 { margin:0 0 6px; font-size:18px; }
+  .zone .req { font-size:13px; color:var(--muted); font-weight:400; }
+  .row { display:flex; align-items:center; gap:8px; padding:5px 0; border-top:1px solid #3a3558; font-size:14px; }
+  .row:first-of-type { border-top:none; }
+  .dot { width:14px; height:14px; border-radius:50%; flex:none; border:1px solid #0004; }
+  .row .name { flex:1; min-width:0; }
+  .rar { font-size:12px; font-weight:800; border-radius:8px; padding:1px 8px; color:#1d1a2b; white-space:nowrap; }
+  .r-Commun { background:#bebec3; } .r-PeuCommun { background:#5ad25a; } .r-Rare { background:#4696ff; }
+  .r-Epique { background:#aa50ff; color:#fff; } .r-Legendaire { background:#ffc828; } .r-Mythique { background:#ff4682; color:#fff; }
+  .r-Divin { background:#fffceb; } .r-Celeste { background:#50e6ff; }
+  .same { font-size:12px; color:var(--accent); }
+  table { border-collapse:collapse; width:100%; max-width:640px; background:var(--card); border-radius:14px; overflow:hidden; }
+  td, th { padding:6px 12px; text-align:left; font-size:14px; border-top:1px solid #3a3558; }
+  th { color:var(--text); }
+  td { color:var(--muted); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐾 Les monstres des zones deviennent des créatures</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu.</p>
+
+  <h2>L'ordre des étapes</h2>
+  <div class="steps">
+    <div class="step now"><h3>1. Monstres → créatures <span class="tag">ce croquis</span></h3>Chaque monstre des 6 zones devient une espèce qu'on peut avoir en œuf, et donc la poser dans son château.</div>
+    <div class="step"><h3>2. Refonte de toutes les créatures</h3>Nouveau look pour les 88 espèces (les 54 actuelles + les 34 monstres). On verra le style ensemble dans un croquis.</div>
+    <div class="step"><h3>3. Les œufs</h3>Un œuf par espèce dans le style du <b>Prisme Suprême</b> (cristal à facettes, fissures lumineuses), aux couleurs de l'espèce. Ensuite, l'éclosion dès l'achat.</div>
+  </div>
+
+  <h2>Les 35 monstres et leur rareté</h2>
+  <p>Chaque monstre garde <b>son nom et son apparence</b>. Sa rareté dépend de sa zone : les plus faibles de la zone ont la rareté de la zone, et les 2 plus forts ont la rareté au-dessus.</p>
+  <div class="zones">
+    <div class="zone"><h3>🌼 La Prairie <span class="req">· accès libre</span></h3>
+      <div class="row"><span class="dot" style="background:#6ee16e"></span><span class="name">Gelée Verte</span><span class="rar r-Commun">Commun</span></div>
+      <div class="row"><span class="dot" style="background:#eb4646"></span><span class="name">Champi Sauteur</span><span class="rar r-Commun">Commun</span></div>
+      <div class="row"><span class="dot" style="background:#ffd232"></span><span class="name">Bourdon</span><span class="rar r-Commun">Commun</span></div>
+      <div class="row"><span class="dot" style="background:#d2aa82"></span><span class="name">Lapin Farceur</span><span class="rar r-PeuCommun">Peu commun</span></div>
+      <div class="row"><span class="dot" style="background:#3c8c5a"></span><span class="name">Scarabée Géant</span><span class="rar r-PeuCommun">Peu commun</span></div>
+    </div>
+    <div class="zone"><h3>💎 La Grotte de Cristal <span class="req">· il faut une créature Rare</span></h3>
+      <div class="row"><span class="dot" style="background:#785ac8"></span><span class="name">Chauve-souris Cristal</span><span class="rar r-Rare">Rare</span></div>
+      <div class="row"><span class="dot" style="background:#50506e"></span><span class="name">Araignée Cristal</span><span class="rar r-Rare">Rare</span></div>
+      <div class="row"><span class="dot" style="background:#6e503c"></span><span class="name">Taupe Mineuse</span><span class="rar r-Rare">Rare</span></div>
+      <div class="row"><span class="dot" style="background:#78c8ff"></span><span class="name">Golem de Cristal</span><span class="rar r-Rare">Rare</span></div>
+      <div class="row"><span class="dot" style="background:#6eaaf0"></span><span class="name">Dragonnet de Cristal</span><span class="rar r-Epique">Épique</span></div>
+      <div class="row"><span class="dot" style="background:#605c6e"></span><span class="name">Golem Géode</span><span class="rar r-Epique">Épique</span></div>
+    </div>
+    <div class="zone"><h3>❄️ Le Royaume des Glaces <span class="req">· il faut une Épique</span></h3>
+      <div class="row"><span class="dot" style="background:#aae1ff"></span><span class="name">Gelée de Givre</span><span class="rar r-Epique">Épique</span></div>
+      <div class="row"><span class="dot" style="background:#f0f4fa"></span><span class="name">Hibou des Neiges</span><span class="rar r-Epique">Épique</span></div>
+      <div class="row"><span class="dot" style="background:#e2eaf4"></span><span class="name">Loup des Neiges</span><span class="rar r-Epique">Épique</span></div>
+      <div class="row"><span class="dot" style="background:#f6f8fc"></span><span class="name">Ours Polaire</span><span class="rar r-Epique">Épique</span></div>
+      <div class="row"><span class="dot" style="background:#96cdf0"></span><span class="name">Golem de Glace</span><span class="rar r-Legendaire">Légendaire</span></div>
+      <div class="row"><span class="dot" style="background:#a0d2f0"></span><span class="name">Wyverne de Givre</span><span class="rar r-Legendaire">Légendaire</span></div>
+    </div>
+    <div class="zone"><h3>🌙 Le Bois des Ombres <span class="req">· il faut une Légendaire</span></h3>
+      <div class="row"><span class="dot" style="background:#78dcbe"></span><span class="name">Feu Follet <span class="same">· existe déjà (Épique), rien à changer</span></span><span class="rar r-Epique">Épique</span></div>
+      <div class="row"><span class="dot" style="background:#46325f"></span><span class="name">Chauve-souris d'Ombre</span><span class="rar r-Legendaire">Légendaire</span></div>
+      <div class="row"><span class="dot" style="background:#a0c8ff"></span><span class="name">Esprit Perdu</span><span class="rar r-Legendaire">Légendaire</span></div>
+      <div class="row"><span class="dot" style="background:#3c3a4c"></span><span class="name">Loup d'Ombre</span><span class="rar r-Legendaire">Légendaire</span></div>
+      <div class="row"><span class="dot" style="background:#323040"></span><span class="name">Chevalier d'Ombre</span><span class="rar r-Mythique">Mythique</span></div>
+      <div class="row"><span class="dot" style="background:#3a2e4e"></span><span class="name">Dragon d'Ombre</span><span class="rar r-Mythique">Mythique</span></div>
+    </div>
+    <div class="zone"><h3>🌋 Le Volcan <span class="req">· il faut une Mythique</span></h3>
+      <div class="row"><span class="dot" style="background:#ff6e1e"></span><span class="name">Gelée de Magma</span><span class="rar r-Mythique">Mythique</span></div>
+      <div class="row"><span class="dot" style="background:#322828"></span><span class="name">Scarabée de Lave</span><span class="rar r-Mythique">Mythique</span></div>
+      <div class="row"><span class="dot" style="background:#e6501e"></span><span class="name">Salamandre de Feu</span><span class="rar r-Mythique">Mythique</span></div>
+      <div class="row"><span class="dot" style="background:#ff7828"></span><span class="name">Oiseau de Feu</span><span class="rar r-Mythique">Mythique</span></div>
+      <div class="row"><span class="dot" style="background:#2e282a"></span><span class="name">Golem de Magma</span><span class="rar r-Divin">Divin</span></div>
+      <div class="row"><span class="dot" style="background:#462824"></span><span class="name">Dragonnet de Lave</span><span class="rar r-Divin">Divin</span></div>
+    </div>
+    <div class="zone"><h3>☁️ Le Royaume Céleste <span class="req">· il faut une Divine</span></h3>
+      <div class="row"><span class="dot" style="background:#ffe696"></span><span class="name">Fée Céleste</span><span class="rar r-Divin">Divin</span></div>
+      <div class="row"><span class="dot" style="background:#f0be46"></span><span class="name">Aigle Doré</span><span class="rar r-Divin">Divin</span></div>
+      <div class="row"><span class="dot" style="background:#fafaff"></span><span class="name">Pégase des Nuages</span><span class="rar r-Divin">Divin</span></div>
+      <div class="row"><span class="dot" style="background:#f0ece2"></span><span class="name">Gardien Céleste</span><span class="rar r-Divin">Divin</span></div>
+      <div class="row"><span class="dot" style="background:#c8dcff"></span><span class="name">Baleine des Nuages</span><span class="rar r-Celeste">Céleste</span></div>
+      <div class="row"><span class="dot" style="background:#fad26e"></span><span class="name">Griffon Céleste</span><span class="rar r-Celeste">Céleste</span></div>
+    </div>
+  </div>
+
+  <h2>Combien d'espèces par rareté</h2>
+  <table>
+    <tr><th>Rareté</th><th>Aujourd'hui</th><th>Avec les monstres</th></tr>
+    <tr><td>Commun</td><td>6</td><td><b>9</b></td></tr>
+    <tr><td>Peu commun</td><td>7</td><td><b>9</b></td></tr>
+    <tr><td>Rare</td><td>8</td><td><b>12</b></td></tr>
+    <tr><td>Épique</td><td>10</td><td><b>16</b></td></tr>
+    <tr><td>Légendaire</td><td>7</td><td><b>12</b></td></tr>
+    <tr><td>Mythique</td><td>8</td><td><b>14</b></td></tr>
+    <tr><td>Divin</td><td>3</td><td><b>9</b></td></tr>
+    <tr><td>Céleste</td><td>2</td><td><b>4</b></td></tr>
+    <tr><td>Cosmique</td><td>2</td><td>2</td></tr>
+    <tr><td>Secret</td><td>1</td><td>1</td></tr>
+    <tr><td><b>Total</b></td><td>54</td><td><b>88</b></td></tr>
+  </table>
+
+  <h2>Ce qui change dans le jeu</h2>
+  <ul>
+    <li><b>Machine à œufs</b> : les monstres sortent des œufs comme les autres espèces, avec la rareté du tableau.</li>
+    <li><b>En combat</b> : un monstre vaincu a une <b>petite chance de te donner sa créature</b> (environ 1 sur 200, moins pour les plus forts). Les œufs et reliques qu'il donne déjà restent.</li>
+    <li><b>Index</b> : les monstres apparaissent aussi dans « Créatures ». Les compléter compte pour les collections.</li>
+    <li><b>Puissance</b> : un monstre gagné a la force normale des créatures de sa rareté (pas les points de vie énormes qu'il a dans la zone).</li>
+    <li>Les <b>boss de zone</b> (endormis) ne deviennent pas des créatures : ils restent des boss. Dis-moi si tu les veux aussi (par exemple en Cosmique).</li>
+  </ul>
+
+  <div class="note">Les monstres gardent leur look actuel pour cette étape. L'étape 2 refera toutes les créatures, monstres compris, dans le même style.</div>
+</div>
+</body>
+</html>
