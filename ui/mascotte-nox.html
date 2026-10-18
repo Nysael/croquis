@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nox retravaillé</title>
+<style>
+  :root { --bg:#0b0b0f; --card:#141419; --line:rgba(255,255,255,.08); --text:#f1f1f5; --muted:#8b8b98; --gold:#ffd25a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1100px; margin:auto; padding:28px 18px 60px; }
+  h1 { margin:0 0 6px; font-size:28px; } .sub { color:var(--muted); margin:0 0 22px; line-height:1.5; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; margin-bottom:16px; }
+  .card h2 { margin:0; font-size:19px; display:flex; align-items:center; gap:10px; }
+  .card h2 span { font-size:13px; color:var(--gold); background:#ffd25a1a; padding:2px 9px; border-radius:99px; }
+  .card p { color:var(--muted); margin:6px 0 14px; line-height:1.5; font-size:14px; }
+  .row { display:grid; grid-template-columns:1.3fr repeat(4, 1fr); gap:10px; align-items:stretch; }
+  .stage { border-radius:16px; background:radial-gradient(circle at 50% 60%, #1c1830, #0d0c14); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:10px 6px; }
+  .stage svg { width:92px; height:92px; overflow:visible; } .stage.big svg { width:150px; height:150px; }
+  .stage small { color:var(--muted); font-size:12px; margin-top:4px; }
+  .island { margin:14px auto 0; width:260px; height:36px; background:#000; border-radius:0 0 19px 19px; display:flex; align-items:center;
+            padding:0 14px 0 10px; gap:10px; box-shadow:0 10px 24px -8px #000; }
+  .island svg { width:29px; height:29px; overflow:visible; } .island .fill { flex:1; }
+  .island .blobs { display:grid; grid-template-columns:repeat(2,14px); gap:3px 4px; }
+  .island .blobs i { width:14px; height:11px; border-radius:7px 7px 5px 5px; background:#a48bff; } .island .blobs i:nth-child(2) { background:#4ade80; }
+  @media (max-width:760px) { .row { grid-template-columns:repeat(2, 1fr); } .stage.big { grid-column:1 / -1; } }
+
+  .float { animation:float 3.2s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 100%; }
+  .blink { animation:blink 4.6s infinite; transform-box:fill-box; transform-origin:50% 50%; }
+  .look { animation:look 2.6s ease-in-out infinite; }
+  .hop { animation:hop .65s cubic-bezier(.3,0,.3,1) infinite; transform-box:fill-box; transform-origin:50% 100%; }
+  .joy { animation:joy 1.1s cubic-bezier(.22,1.28,.36,1) infinite; transform-box:fill-box; transform-origin:50% 100%; }
+  .glow { animation:glow 2.6s ease-in-out infinite; }
+  .ear-l { animation:earl 5s ease-in-out infinite; transform-box:fill-box; transform-origin:70% 100%; }
+  .tail { animation:tail 2.4s ease-in-out infinite; transform-box:fill-box; transform-origin:0% 100%; }
+  .z { font:700 7px "Segoe UI"; fill:#c8b8ff; animation:zz 2.8s ease-in-out infinite; }
+  .z2 { animation-delay:1.4s; }
+  .twinkle { animation:tw 1s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 50%; }
+  @keyframes float { 50% { transform:translateY(-1.6px); } }
+  @keyframes blink { 0%, 92%, 100% { transform:scaleY(1); } 95% { transform:scaleY(.1); } }
+  @keyframes look { 0%, 100% { transform:translateX(0); } 30% { transform:translateX(-1.5px); } 65% { transform:translateX(1.5px); } }
+  @keyframes hop { 0%, 100% { transform:none; } 35% { transform:translateY(-3px) scale(.97,1.03); } 70% { transform:scale(1.03,.97); } }
+  @keyframes joy { 0%, 100% { transform:none; } 30% { transform:translateY(-4px) scale(1.04,.96); } 60% { transform:scale(.97,1.04); } }
+  @keyframes glow { 50% { opacity:.45; } }
+  @keyframes earl { 0%, 90%, 100% { transform:rotate(0); } 94% { transform:rotate(-12deg); } }
+  @keyframes tail { 50% { transform:rotate(-14deg); } }
+  @keyframes zz { 0% { opacity:0; transform:translate(0,2px); } 40% { opacity:1; } 100% { opacity:0; transform:translate(4px,-7px); } }
+  @keyframes tw { 50% { opacity:.25; transform:scale(.6); } }
+  .note { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 18px; color:var(--muted); line-height:1.6; }
+  .note b { color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Nox, retravaillé</h1>
+  <p class="sub">Quatre versions du chat noir. Pour chacune : en grand, puis ses quatre expressions dans Nysa, et en situation dans l'île. Les yeux brillent, il cligne, bouge une oreille de temps en temps.</p>
+  <div id="list"></div>
+  <div class="note">Dis-moi le numéro (par exemple « <b>C2</b> »), ou ce que tu veux ajuster : taille des yeux, couleur des yeux, oreilles, moustaches, avec ou sans la lune… On peut aussi mélanger deux versions.</div>
+</div>
+
+<script>
+  const HEAD = "M12 30 C11 22 13 15 15.2 8.2 C16 6 18.2 5.8 19.6 7.4 L25.6 14.4 C28.6 13.5 31.4 13.5 34.4 14.4 L40.4 7.4 C41.8 5.8 44 6 44.8 8.2 C47 15 49 22 48 30 C47.5 41 40 48 30 48 C20 48 12.5 41 12 30 Z";
+  const CHIBI = "M9 31 C9 22 12 16 14.5 10 C15.5 7.8 17.8 7.6 19.2 9.2 L24.5 15 C28 14 32 14 35.5 15 L40.8 9.2 C42.2 7.6 44.5 7.8 45.5 10 C48 16 51 22 51 31 C51 42.5 42 49.5 30 49.5 C18 49.5 9 42.5 9 31 Z";
+
+  function defs(id) {
+    return `<defs>
+      <radialGradient id="${id}f" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#2e2850"/><stop offset=".7" stop-color="#16121f"/><stop offset="1" stop-color="#0b0a12"/></radialGradient>
+      <linearGradient id="${id}r" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a84ff"/><stop offset=".55" stop-color="#5a48b0" stop-opacity=".5"/><stop offset="1" stop-color="#5a48b0" stop-opacity="0"/></linearGradient>
+      <linearGradient id="${id}e" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb7dc"/><stop offset="1" stop-color="#6a4aa8"/></linearGradient>
+      <radialGradient id="${id}y" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#f1e9ff"/><stop offset=".55" stop-color="#b69bff"/><stop offset="1" stop-color="#7a58f0"/></radialGradient>
+      <linearGradient id="${id}m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff4b8"/><stop offset="1" stop-color="#ffc23a"/></linearGradient>
+      <filter id="${id}g" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="1.8"/></filter>
+      <filter id="${id}a" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3.5"/></filter>
+    </defs>`;
+  }
+
+  // yeux selon l'expression ; (lx, rx) centres, y, taille
+  function eyes(id, st, lx, rx, y, s) {
+    const w = 4.9 * s, h = 3.3 * s;
+    const almond = (cx) => `M${cx - w} ${y} C${cx - w * .6} ${y - h * 1.15} ${cx + w * .6} ${y - h * 1.15} ${cx + w} ${y} C${cx + w * .6} ${y + h * 1.05} ${cx - w * .6} ${y + h * 1.05} ${cx - w} ${y} Z`;
+    if (st === "sleep") return `<g fill="none" stroke="#b69bff" stroke-width="${1.5 * s}" stroke-linecap="round">
+      <path d="M${lx - w * .8} ${y} Q${lx} ${y + h} ${lx + w * .8} ${y}"/><path d="M${rx - w * .8} ${y} Q${rx} ${y + h} ${rx + w * .8} ${y}"/></g>`;
+    if (st === "happy") return `<g fill="none" stroke="#c7b2ff" stroke-width="${1.7 * s}" stroke-linecap="round">
+      <path d="M${lx - w * .8} ${y + 1} Q${lx} ${y - h * 1.1} ${lx + w * .8} ${y + 1}"/><path d="M${rx - w * .8} ${y + 1} Q${rx} ${y - h * 1.1} ${rx + w * .8} ${y + 1}"/></g>`;
+    const pupilH = st === "wait" ? 3.1 * s : 2.7 * s, pupilW = st === "wait" ? 1.9 * s : 1.15 * s;
+    const one = (cx) => `<path d="${almond(cx)}" fill="#a98bff" filter="url(#${id}g)" class="glow"/>
+      <path d="${almond(cx)}" fill="url(#${id}y)"/>
+      <g class="${st === "work" ? "look" : ""}"><ellipse cx="${cx}" cy="${y}" rx="${pupilW}" ry="${pupilH}" fill="#140d26"/>
+      <circle cx="${cx + 1.3 * s}" cy="${y - 1.2 * s}" r="${.95 * s}" fill="#fff"/><circle cx="${cx - 1.4 * s}" cy="${y + 1.3 * s}" r="${.45 * s}" fill="#fff" opacity=".7"/></g>`;
+    return `<g class="blink">${one(lx)}${one(rx)}</g>`;
+  }
+
+  function face(id, st, y0 = 0) {
+    return `<path d="M28.4 ${35.2 + y0} Q30 ${34.6 + y0} 31.6 ${35.2 + y0} Q30.9 ${36.9 + y0} 30 ${37.1 + y0} Q29.1 ${36.9 + y0} 28.4 ${35.2 + y0} Z" fill="#ff9fcf"/>
+      <path d="M30 ${37.1 + y0} Q29 ${39.2 + y0} 27 ${38.6 + y0} M30 ${37.1 + y0} Q31 ${39.2 + y0} 33 ${38.6 + y0}" stroke="#8f7bd6" stroke-width="1.05" fill="none" stroke-linecap="round"/>
+      ${st === "happy" ? `<path d="M27.4 ${38.8 + y0} Q30 ${41.6 + y0} 32.6 ${38.8 + y0}" fill="#ff8fc8" opacity=".85"/>` : ""}
+      <ellipse cx="18.5" cy="${36 + y0}" rx="3" ry="1.6" fill="#ff8fc8" opacity="${st === "happy" ? .5 : .22}"/><ellipse cx="41.5" cy="${36 + y0}" rx="3" ry="1.6" fill="#ff8fc8" opacity="${st === "happy" ? .5 : .22}"/>
+      <g stroke="#7a6bc4" stroke-width=".75" stroke-linecap="round" opacity=".55">
+        <path d="M15.5 ${36 + y0} L7 ${34.8 + y0}"/><path d="M15.5 ${38 + y0} L7.5 ${39 + y0}"/><path d="M44.5 ${36 + y0} L53 ${34.8 + y0}"/><path d="M44.5 ${38 + y0} L52.5 ${39 + y0}"/></g>`;
+  }
+
+  function extras(st) {
+    if (st === "sleep") return `<text class="z" x="44" y="12">z</text><text class="z z2" x="48" y="7">z</text>`;
+    if (st === "wait") return `<circle cx="48" cy="9" r="5" fill="#ffa94d"/><text x="48" y="12" text-anchor="middle" font-size="8" font-weight="900" fill="#2a1600" font-family="Segoe UI">!</text>`;
+    if (st === "happy") return `<g fill="#ffe27a"><path class="twinkle" d="M6 12 l1 2.4 2.4 1 -2.4 1 -1 2.4 -1 -2.4 -2.4 -1 2.4 -1z"/><path class="twinkle" style="animation-delay:.4s" d="M52 18 l.8 1.9 1.9 .8 -1.9 .8 -.8 1.9 -.8 -1.9 -1.9 -.8 1.9 -.8z"/></g>`;
+    return "";
+  }
+
+  const motion = { sleep: "float", work: "float", wait: "hop", happy: "joy" };
+
+  const V = [
+    { key: "C1", name: "Nox affiné", desc: "Le même chat, en plus soigné : contours lumineux violets, oreilles roses à l'intérieur, yeux en amande brillants avec reflets, petit nez et moustaches fines.",
+      draw: (id, st) => `${defs(id)}<ellipse cx="30" cy="31" rx="19" ry="17" fill="#7b5cff" opacity=".18" filter="url(#${id}a)"/>
+        <g class="${motion[st]}"><path d="${HEAD}" fill="url(#${id}f)" stroke="url(#${id}r)" stroke-width="1.5"/>
+        <path class="ear-l" d="M17.6 10.6 C18.1 14 19.3 16.8 21.8 18.3 L24.2 15.5 Z" fill="url(#${id}e)" opacity=".75"/>
+        <path d="M42.4 10.6 C41.9 14 40.7 16.8 38.2 18.3 L35.8 15.5 Z" fill="url(#${id}e)" opacity=".75"/>
+        ${eyes(id, st, 22.3, 37.7, 28.6, 1)}${face(id, st)}</g>${extras(st)}` },
+    { key: "C2", name: "Nox mignon", desc: "Une tête plus ronde et de plus grands yeux, des oreilles plus petites : plus mignon et plus lisible en petit dans l'île.",
+      draw: (id, st) => `${defs(id)}<ellipse cx="30" cy="32" rx="20" ry="17" fill="#7b5cff" opacity=".18" filter="url(#${id}a)"/>
+        <g class="${motion[st]}"><path d="${CHIBI}" fill="url(#${id}f)" stroke="url(#${id}r)" stroke-width="1.5"/>
+        <path class="ear-l" d="M16.8 12.2 C17.4 15.2 18.6 17.4 21 18.6 L23.4 16 Z" fill="url(#${id}e)" opacity=".75"/>
+        <path d="M43.2 12.2 C42.6 15.2 41.4 17.4 39 18.6 L36.6 16 Z" fill="url(#${id}e)" opacity=".75"/>
+        ${eyes(id, st, 21.6, 38.4, 30, 1.25)}${face(id, st, 2)}</g>${extras(st)}` },
+    { key: "C3", name: "Nox de la lune", desc: "La version affinée avec un petit croissant de lune doré sur le front : le chat de Nysa, avec sa touche à elle.",
+      draw: (id, st) => `${defs(id)}<ellipse cx="30" cy="31" rx="19" ry="17" fill="#7b5cff" opacity=".18" filter="url(#${id}a)"/>
+        <g class="${motion[st]}"><path d="${HEAD}" fill="url(#${id}f)" stroke="url(#${id}r)" stroke-width="1.5"/>
+        <path class="ear-l" d="M17.6 10.6 C18.1 14 19.3 16.8 21.8 18.3 L24.2 15.5 Z" fill="url(#${id}e)" opacity=".75"/>
+        <path d="M42.4 10.6 C41.9 14 40.7 16.8 38.2 18.3 L35.8 15.5 Z" fill="url(#${id}e)" opacity=".75"/>
+        <path d="M29.2 17 A3.6 3.6 0 1 0 33.4 21.6 A2.9 2.9 0 1 1 29.2 17 Z" fill="url(#${id}m)" filter="url(#${id}g)" opacity=".7"/>
+        <path d="M29.2 17 A3.6 3.6 0 1 0 33.4 21.6 A2.9 2.9 0 1 1 29.2 17 Z" fill="url(#${id}m)"/>
+        ${eyes(id, st, 22.3, 37.7, 28.6, 1)}${face(id, st)}</g>${extras(st)}` },
+    { key: "C4", name: "Nox assis", desc: "Le chat en entier, assis, vu de face, avec sa queue qui ondule. Plus de présence, mais plus petit dans l'île.",
+      draw: (id, st) => `${defs(id)}<ellipse cx="30" cy="36" rx="18" ry="18" fill="#7b5cff" opacity=".16" filter="url(#${id}a)"/>
+        <g class="${motion[st]}">
+        <path class="tail" d="M41 50 C50 49 53 42 50 36 C49 33 46 33 46.5 36 C48 41 46 45 40 46 Z" fill="url(#${id}f)" stroke="url(#${id}r)" stroke-width="1.2"/>
+        <path d="M18 54 C16 44 19 36 24 33 L36 33 C41 36 44 44 42 54 Z" fill="url(#${id}f)" stroke="url(#${id}r)" stroke-width="1.3"/>
+        <g transform="translate(9 2) scale(.7)"><path d="${HEAD}" fill="url(#${id}f)" stroke="url(#${id}r)" stroke-width="2"/>
+        <path class="ear-l" d="M17.6 10.6 C18.1 14 19.3 16.8 21.8 18.3 L24.2 15.5 Z" fill="url(#${id}e)" opacity=".75"/>
+        <path d="M42.4 10.6 C41.9 14 40.7 16.8 38.2 18.3 L35.8 15.5 Z" fill="url(#${id}e)" opacity=".75"/>
+        ${eyes(id, st, 22.3, 37.7, 28.6, 1)}${face(id, st)}</g></g>${extras(st)}` },
+  ];
+
+  let n = 0;
+  const svg = (v, st, cls = "") => `<svg viewBox="0 0 60 60" class="${cls}">${v.draw("x" + (++n), st)}</svg>`;
+  document.getElementById("list").innerHTML = V.map((v) => `
+    <div class="card">
+      <h2>${v.key} · ${v.name}</h2>
+      <p>${v.desc}</p>
+      <div class="row">
+        <div class="stage big">${svg(v, "work")}</div>
+        <div class="stage">${svg(v, "sleep")}<small>dort</small></div>
+        <div class="stage">${svg(v, "work")}<small>travaille</small></div>
+        <div class="stage">${svg(v, "wait")}<small>t'attend</small></div>
+        <div class="stage">${svg(v, "happy")}<small>contente</small></div>
+      </div>
+      <div class="island">${svg(v, "work")}<span class="fill"></span><span class="blobs"><i></i><i></i></span></div>
+    </div>`).join("");
+</script>
+</body>
+</html>
