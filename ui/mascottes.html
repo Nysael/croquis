@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mascottes de Nysa</title>
+<style>
+  :root { --bg:#0b0b0f; --card:#141419; --line:rgba(255,255,255,.08); --text:#f1f1f5; --muted:#8b8b98; --gold:#ffd25a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1100px; margin:auto; padding:28px 18px 60px; }
+  h1 { margin:0 0 6px; font-size:28px; } .sub { color:var(--muted); margin:0 0 22px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:18px; }
+  .card h2 { margin:0; font-size:19px; display:flex; align-items:center; gap:10px; }
+  .card h2 span { font-size:13px; color:var(--gold); background:#ffd25a1a; padding:2px 9px; border-radius:99px; }
+  .card p { color:var(--muted); margin:6px 0 14px; line-height:1.5; font-size:14px; }
+  .stage { height:170px; border-radius:16px; background:radial-gradient(circle at 50% 60%, #1c1830, #0d0c14); display:grid; place-items:center; }
+  .stage svg { width:130px; height:130px; overflow:visible; }
+  .island { margin:14px auto 0; width:236px; height:36px; background:#000; border-radius:0 0 19px 19px; display:flex; align-items:center;
+            padding:0 14px 0 11px; gap:10px; box-shadow:0 10px 24px -8px #000; }
+  .island svg { width:27px; height:27px; overflow:visible; }
+  .island .fill { flex:1; } .island .blobs { display:grid; grid-template-columns:repeat(2,14px); gap:3px 4px; }
+  .island .blobs i { width:14px; height:11px; border-radius:7px 7px 5px 5px; background:#a48bff; } .island .blobs i:nth-child(2) { background:#4ade80; }
+  .float { animation:float 3s ease-in-out infinite; transform-box:fill-box; transform-origin:50% 100%; }
+  .blink { animation:blink 4.4s infinite; transform-box:fill-box; transform-origin:50% 50%; }
+  .glow { animation:glow 3s ease-in-out infinite; }
+  .spin { animation:hue 8s linear infinite; }
+  .tail { animation:wag 1.6s ease-in-out infinite; transform-box:fill-box; transform-origin:0% 100%; }
+  @keyframes float { 50% { transform:translateY(-3px); } }
+  @keyframes blink { 0%, 92%, 100% { transform:scaleY(1); } 95% { transform:scaleY(.1); } }
+  @keyframes glow { 50% { opacity:.55; } }
+  @keyframes hue { to { filter:hue-rotate(360deg); } }
+  @keyframes wag { 50% { transform:rotate(10deg); } }
+  .note { margin-top:26px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 18px; color:var(--muted); line-height:1.6; }
+  .note b { color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Choisis la mascotte de Nysa</h1>
+  <p class="sub">Chaque proposition est animée (elle flotte et cligne des yeux) et montrée en grand puis en situation, dans l'île. Une fois choisie, je lui fais toutes ses expressions : elle dort, elle travaille, elle t'attend, elle est contente.</p>
+  <div class="grid" id="grid"></div>
+  <div class="note">Dis-moi simplement la lettre (par exemple « <b>B</b> »), ou ce que tu veux changer : couleur, forme, mélange de deux propositions… Si aucune ne te plaît, décris-moi l'idée et je t'en fais d'autres.</div>
+</div>
+
+<script>
+  const star = (cx, cy, R, r) => Array.from({ length: 10 }, (_, k) => {
+    const a = (-90 + k * 36) * Math.PI / 180, d = k % 2 ? r : R;
+    return `${(cx + d * Math.cos(a)).toFixed(1)},${(cy + d * Math.sin(a)).toFixed(1)}`;
+  }).join(" ");
+
+  const M = [
+    { key: "A", name: "Luna", tag: "lune", desc: "Un croissant de lune qui somnole, doré et lumineux. Très épuré, élégant sur le noir de l'île.",
+      svg: (id) => `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff6c2"/><stop offset="1" stop-color="#ffb627"/></linearGradient>
+        <filter id="${id}f"><feGaussianBlur stdDeviation="3"/></filter></defs>
+        <path class="glow" d="M34 8 A22 22 0 1 0 52 40 A18 18 0 1 1 34 8 Z" fill="#ffc94d" opacity=".55" filter="url(#${id}f)"/>
+        <g class="float"><path d="M34 8 A22 22 0 1 0 52 40 A18 18 0 1 1 34 8 Z" fill="url(#${id})"/>
+        <g class="blink"><ellipse cx="22" cy="31" rx="1.9" ry="2.6" fill="#3a2600"/><ellipse cx="30" cy="38" rx="1.9" ry="2.6" fill="#3a2600"/></g>
+        <ellipse cx="18.5" cy="36.5" rx="2.6" ry="1.5" fill="#ff9d6b" opacity=".7"/><path d="M23.5 40.5 Q25.5 42.5 27.6 41" stroke="#3a2600" stroke-width="1.3" fill="none" stroke-linecap="round"/></g>` },
+    { key: "B", name: "Hiboo", tag: "hibou", desc: "Un petit hibou de nuit, rond et doux, avec de grands yeux dorés. Il veille sur tes sessions.",
+      svg: (id) => `<defs><radialGradient id="${id}" cx="40%" cy="30%" r="80%"><stop offset="0" stop-color="#8d7bff"/><stop offset="1" stop-color="#3b2f9e"/></radialGradient></defs>
+        <g class="float"><path d="M15 18 L19 8 L25 16 Z M45 18 L41 8 L35 16 Z" fill="#4a3cc0"/>
+        <ellipse cx="30" cy="33" rx="18" ry="19" fill="url(#${id})"/><ellipse cx="30" cy="40" rx="10.5" ry="10" fill="#b3a6ff" opacity=".35"/>
+        <circle cx="23" cy="27" r="7.4" fill="#fff4c9"/><circle cx="37" cy="27" r="7.4" fill="#fff4c9"/>
+        <g class="blink"><circle cx="23.6" cy="27.6" r="3.9" fill="#1b1140"/><circle cx="37.6" cy="27.6" r="3.9" fill="#1b1140"/><circle cx="24.9" cy="26.2" r="1.2" fill="#fff"/><circle cx="38.9" cy="26.2" r="1.2" fill="#fff"/></g>
+        <path d="M30 31 L27.6 34.4 L32.4 34.4 Z" fill="#ffc23a"/><path d="M24 51 l2-3 2 3 M32 51 l2-3 2 3" stroke="#ffc23a" stroke-width="1.6" fill="none" stroke-linecap="round"/></g>` },
+    { key: "C", name: "Nox", tag: "chat noir", desc: "Un chat noir aux yeux violets lumineux. Mystérieux et stylé, il se fond dans l'île et ses yeux brillent.",
+      svg: (id) => `<defs><radialGradient id="${id}" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#2a2440"/><stop offset="1" stop-color="#0e0c16"/></radialGradient>
+        <filter id="${id}f"><feGaussianBlur stdDeviation="1.6"/></filter></defs>
+        <g class="float"><path d="M13 26 L15 7 L25 16 Q30 14.6 35 16 L45 7 L47 26 Q49 46 30 48 Q11 46 13 26 Z" fill="url(#${id})" stroke="#5b4aa8" stroke-width="1.2"/>
+        <path d="M17 12 L18.5 21 L23 17 Z M43 12 L41.5 21 L37 17 Z" fill="#3b2f6e"/>
+        <g class="blink"><ellipse cx="23" cy="29" rx="4.6" ry="3.6" fill="#b79cff" filter="url(#${id}f)"/><ellipse cx="37" cy="29" rx="4.6" ry="3.6" fill="#b79cff" filter="url(#${id}f)"/>
+        <ellipse cx="23" cy="29" rx="4" ry="3.1" fill="#cbb6ff"/><ellipse cx="37" cy="29" rx="4" ry="3.1" fill="#cbb6ff"/><ellipse cx="23" cy="29" rx="1" ry="2.8" fill="#120d22"/><ellipse cx="37" cy="29" rx="1" ry="2.8" fill="#120d22"/></g>
+        <path d="M28.6 35 L31.4 35 L30 36.8 Z" fill="#ff8fc8"/><path d="M30 36.8 Q28 39 26 38 M30 36.8 Q32 39 34 38" stroke="#6b5aa8" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M14 35 L6 34 M14 38 L7 40 M46 35 L54 34 M46 38 L53 40" stroke="#4a3d80" stroke-width=".9" stroke-linecap="round"/></g>` },
+    { key: "D", name: "Stella", tag: "étoile", desc: "Une petite étoile aux branches arrondies, joyeuse et pétillante, qui scintille quand une tâche se termine.",
+      svg: (id) => `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0a3"/><stop offset="1" stop-color="#ffb02e"/></linearGradient>
+        <filter id="${id}f"><feGaussianBlur stdDeviation="3"/></filter></defs>
+        <polygon class="glow" points="${star(30, 32, 23, 11)}" fill="#ffd25a" opacity=".4" filter="url(#${id}f)"/>
+        <g class="float"><polygon points="${star(30, 32, 21, 10.5)}" fill="url(#${id})" stroke="url(#${id})" stroke-width="5" stroke-linejoin="round"/>
+        <g class="blink"><ellipse cx="25.5" cy="32" rx="2" ry="2.8" fill="#4a2a00"/><ellipse cx="34.5" cy="32" rx="2" ry="2.8" fill="#4a2a00"/><circle cx="26.2" cy="31" r=".8" fill="#fff"/><circle cx="35.2" cy="31" r=".8" fill="#fff"/></g>
+        <ellipse cx="21.5" cy="36.5" rx="2.4" ry="1.4" fill="#ff8f6b" opacity=".75"/><ellipse cx="38.5" cy="36.5" rx="2.4" ry="1.4" fill="#ff8f6b" opacity=".75"/>
+        <path d="M28 37 Q30 39 32 37" stroke="#4a2a00" stroke-width="1.3" fill="none" stroke-linecap="round"/></g>` },
+    { key: "E", name: "Orbe", tag: "minimal", desc: "Une sphère lumineuse avec deux yeux, dont les couleurs tournent doucement. Le style le plus « premium » et moderne.",
+      svg: (id) => `<defs><radialGradient id="${id}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#e9e2ff"/><stop offset=".35" stop-color="#9f7bff"/><stop offset=".75" stop-color="#4f8bff"/><stop offset="1" stop-color="#1f1a6b"/></radialGradient>
+        <filter id="${id}f"><feGaussianBlur stdDeviation="4"/></filter></defs>
+        <g class="spin"><circle class="glow" cx="30" cy="31" r="21" fill="#8f6bff" opacity=".5" filter="url(#${id}f)"/>
+        <g class="float"><circle cx="30" cy="31" r="18" fill="url(#${id})"/><ellipse cx="24" cy="23" rx="6" ry="3.4" fill="#fff" opacity=".35" transform="rotate(-25 24 23)"/>
+        <g class="blink"><rect x="23.4" y="27" width="4" height="8" rx="2" fill="#fff"/><rect x="32.6" y="27" width="4" height="8" rx="2" fill="#fff"/></g></g></g>` },
+    { key: "F", name: "Kitsu", tag: "renard", desc: "Un petit renard malicieux, orange et crème, qui remue la queue. Plus chaleureux et coloré.",
+      svg: (id) => `<defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffab5e"/><stop offset="1" stop-color="#f06a22"/></linearGradient></defs>
+        <g class="float"><path class="tail" d="M44 44 Q56 38 52 26 Q50 36 42 40 Z" fill="url(#${id})"/><path d="M52 26 Q53 30 51 33 Q49 30 52 26 Z" fill="#fff1e0"/>
+        <path d="M10 15 L23 21 Q30 18.5 37 21 L50 15 L45 33 Q39 46 30 47 Q21 46 15 33 Z" fill="url(#${id})"/>
+        <path d="M13.5 18 L21 21.5 L17 26 Z M46.5 18 L39 21.5 L43 26 Z" fill="#5a2a14"/>
+        <path d="M17 33 Q22 37 30 37.5 Q38 37 43 33 Q39 45 30 46 Q21 45 17 33 Z" fill="#fff1e0"/>
+        <g class="blink"><ellipse cx="23.5" cy="29" rx="2.1" ry="2.9" fill="#2a1408"/><ellipse cx="36.5" cy="29" rx="2.1" ry="2.9" fill="#2a1408"/><circle cx="24.2" cy="28" r=".8" fill="#fff"/><circle cx="37.2" cy="28" r=".8" fill="#fff"/></g>
+        <ellipse cx="30" cy="37" rx="2.2" ry="1.6" fill="#2a1408"/></g>` },
+  ];
+
+  document.getElementById("grid").innerHTML = M.map((m, i) => `
+    <div class="card">
+      <h2>${m.key} · ${m.name} <span>${m.tag}</span></h2>
+      <p>${m.desc}</p>
+      <div class="stage"><svg viewBox="0 0 60 60">${m.svg("g" + i + "a")}</svg></div>
+      <div class="island"><svg viewBox="0 0 60 60">${m.svg("g" + i + "b")}</svg><span class="fill"></span><span class="blobs"><i></i><i></i></span></div>
+    </div>`).join("");
+</script>
+</body>
+</html>
