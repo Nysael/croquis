@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Créatures refaites</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1300px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h3 { margin:22px 0 8px; font-size:20px; }
+  code { background:#3a3460; padding:0 6px; border-radius:5px; color:var(--muted); font-size:12px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .row { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:10px; }
+  figure { margin:0; background:var(--card); border-radius:12px; overflow:hidden; border-top:5px solid var(--accent); }
+  figure.old { border-top-color:#6b6390; opacity:.75; }
+  figure img { width:100%; display:block; aspect-ratio:1.45/0.83; object-fit:cover; }
+  figcaption { padding:6px 10px 9px; font-size:14px; color:var(--muted); }
+  .n { font-size:12px; font-weight:800; background:var(--accent); color:#1d1a2b; border-radius:7px; padding:1px 7px; margin-right:4px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  @media (max-width:700px) { .row { grid-template-columns:1fr 1fr; } figure.old { grid-column:span 2; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Les 26 créatures refaites : choisis la version</h1>
+  <p>Refaites pour coller à la DA des autres : anatomie naturelle (plus de corps gonflés), textures nettes, couleurs plus riches, boss plus imposants. Pour chacune : <b>l'ancienne refusée</b> à gauche, puis <b>2 nouvelles versions</b>.</p>
+  <div class="note"><b>Pour répondre :</b> « Loup 2, Ours 1, … » et « à refaire » pour celles où aucune version ne va. Sans réponse pour une créature, je prends la version 1.</div>
+  {{ROWS}}
+</div>
+</body>
+</html>
