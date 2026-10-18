@@ -36,6 +36,15 @@
   td, th { padding:6px 12px; text-align:left; font-size:14px; border-top:1px solid #3a3558; }
   th { color:var(--text); }
   td { color:var(--muted); }
+  .new { font-size:11px; font-weight:800; background:#ffd34d; color:#1d1a2b; border-radius:8px; padding:1px 7px; }
+  .r-Cosmique { background:#9646ff; color:#fff; } .r-Secret { background:#14081e; color:#d9b3ff; border:1px solid #7a3fc0; }
+  .r-Boss { background:linear-gradient(90deg,#8a0f1e,#e0302a); color:#fff; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:10px; }
+  .card { background:var(--card); border-radius:14px; padding:10px 14px; }
+  .card .top { display:flex; align-items:center; gap:8px; margin-bottom:3px; }
+  .card .em { font-size:22px; }
+  .card .nm { flex:1; font-weight:800; color:var(--text); }
+  .card p { margin:0; font-size:14px; }
   .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
 </style>
 </head>
@@ -47,7 +56,7 @@
   <h2>L'ordre des étapes</h2>
   <div class="steps">
     <div class="step now"><h3>1. Monstres → créatures <span class="tag">ce croquis</span></h3>Chaque monstre des 6 zones devient une espèce qu'on peut avoir en œuf, et donc la poser dans son château.</div>
-    <div class="step"><h3>2. Refonte de toutes les créatures</h3>Nouveau look pour les 88 espèces (les 54 actuelles + les 34 monstres). On verra le style ensemble dans un croquis.</div>
+    <div class="step"><h3>2. Refonte de toutes les créatures</h3>Nouveau look pour les <b>100 espèces + 9 boss</b>. On verra le style ensemble dans un croquis.</div>
     <div class="step"><h3>3. Les œufs</h3>Un œuf par espèce dans le style du <b>Prisme Suprême</b> (cristal à facettes, fissures lumineuses), aux couleurs de l'espèce. Ensuite, l'éclosion dès l'achat.</div>
   </div>
 
@@ -103,20 +112,57 @@
     </div>
   </div>
 
+  <h2>12 nouvelles créatures pour arriver à 100 <span class="new">nouveau</span></h2>
+  <p>Elles comblent surtout les raretés les plus hautes, où il y a peu d'espèces. Elles sortent de la machine à œufs comme les autres.</p>
+  <div class="cards">
+    <div class="card"><div class="top"><span class="em">🐸</span><span class="nm">Grenouille</span><span class="rar r-Commun">Commun</span></div><p>Petite grenouille verte qui saute partout.</p></div>
+    <div class="card"><div class="top"><span class="em">🦦</span><span class="nm">Loutre</span><span class="rar r-PeuCommun">Peu commun</span></div><p>Loutre brune qui flotte sur le dos en tenant un galet.</p></div>
+    <div class="card"><div class="top"><span class="em">🐧</span><span class="nm">Pingouin</span><span class="rar r-Rare">Rare</span></div><p>Pingouin à écharpe rouge, glisse sur le ventre.</p></div>
+    <div class="card"><div class="top"><span class="em">🦁</span><span class="nm">Sphinx Doré</span><span class="rar r-Divin">Divin</span></div><p>Lion ailé doré coiffé d'une couronne de pharaon.</p></div>
+    <div class="card"><div class="top"><span class="em">🪼</span><span class="nm">Méduse Astrale</span><span class="rar r-Celeste">Céleste</span></div><p>Méduse transparente remplie d'étoiles, flotte dans l'air.</p></div>
+    <div class="card"><div class="top"><span class="em">🦌</span><span class="nm">Cerf des Étoiles</span><span class="rar r-Celeste">Céleste</span></div><p>Cerf blanc aux bois en constellations lumineuses.</p></div>
+    <div class="card"><div class="top"><span class="em">🦊</span><span class="nm">Renard Aurore</span><span class="rar r-Celeste">Céleste</span></div><p>Renard dont la queue ondule aux couleurs d'une aurore boréale.</p></div>
+    <div class="card"><div class="top"><span class="em">🐙</span><span class="nm">Poulpe Nébuleuse</span><span class="rar r-Cosmique">Cosmique</span></div><p>Poulpe violet aux tentacules de galaxie.</p></div>
+    <div class="card"><div class="top"><span class="em">🐇</span><span class="nm">Lapin Lunaire</span><span class="rar r-Cosmique">Cosmique</span></div><p>Lapin argenté assis sur un croissant de lune.</p></div>
+    <div class="card"><div class="top"><span class="em">☄️</span><span class="nm">Golem Météore</span><span class="rar r-Cosmique">Cosmique</span></div><p>Golem de roche spatiale avec un cœur de comète.</p></div>
+    <div class="card"><div class="top"><span class="em">🌀</span><span class="nm">Kraken du Vide</span><span class="rar r-Cosmique">Cosmique</span></div><p>Petit kraken noir et violet sorti d'un trou noir.</p></div>
+    <div class="card"><div class="top"><span class="em">🐲</span><span class="nm">Dragon du Néant</span><span class="rar r-Secret">Secret</span></div><p>Dragon en cristal noir fendu de violet, comme l'œuf du Prisme. 2e Secret, avec l'aura noire.</p></div>
+  </div>
+
+  <h2>Les boss : une catégorie à part <span class="new">nouveau</span></h2>
+  <p>Les 9 boss deviennent aussi des créatures, avec leur <b>propre rareté « Boss » 👑</b>, placée juste sous Secret. Ils ont leur propre onglet dans l'Index.</p>
+  <ul>
+    <li><b>Toujours géants</b> : un boss sort de l'œuf directement en taille géante (même taille et même bonus de gains que les 2 % de géants actuels).</li>
+    <li><b>Œuf de boss</b> : il n'est pas dans la machine. Il tombe seulement quand on bat ce boss (environ 1 chance sur 100 par victoire).</li>
+    <li><b>Aura des boss</b> : rouge sang avec des flammes noires et une couronne au-dessus de l'œuf (on la verra en croquis à l'étape 3).</li>
+  </ul>
+  <div class="cards">
+    <div class="card"><div class="top"><span class="em">👑</span><span class="nm">Le Géant</span><span class="rar r-Boss">Boss</span></div><p>Boss de la Prairie.</p></div>
+    <div class="card"><div class="top"><span class="em">🗿</span><span class="nm">Le Golem Ancien</span><span class="rar r-Boss">Boss</span></div><p>Boss de la Grotte de Cristal.</p></div>
+    <div class="card"><div class="top"><span class="em">❄️</span><span class="nm">Le Yéti Géant</span><span class="rar r-Boss">Boss</span></div><p>Boss du Royaume des Glaces.</p></div>
+    <div class="card"><div class="top"><span class="em">🐉</span><span class="nm">Le Dragon Ancien</span><span class="rar r-Boss">Boss</span></div><p>Boss du Bois des Ombres.</p></div>
+    <div class="card"><div class="top"><span class="em">🌋</span><span class="nm">Le Dragon de Lave</span><span class="rar r-Boss">Boss</span></div><p>Boss du Volcan.</p></div>
+    <div class="card"><div class="top"><span class="em">🦅</span><span class="nm">Le Griffon Doré</span><span class="rar r-Boss">Boss</span></div><p>Boss du Royaume Céleste.</p></div>
+    <div class="card"><div class="top"><span class="em">🎃</span><span class="nm">Le Roi Citrouille</span><span class="rar r-Boss">Boss</span></div><p>Boss d'Halloween : seulement pendant la saison.</p></div>
+    <div class="card"><div class="top"><span class="em">👻</span><span class="nm">Le Dragon Spectral</span><span class="rar r-Boss">Boss</span></div><p>Boss d'Halloween : seulement pendant la saison.</p></div>
+    <div class="card"><div class="top"><span class="em">💀</span><span class="nm">La Liche Ancienne</span><span class="rar r-Boss">Boss</span></div><p>Boss d'Halloween : seulement pendant la saison.</p></div>
+  </div>
+
   <h2>Combien d'espèces par rareté</h2>
   <table>
-    <tr><th>Rareté</th><th>Aujourd'hui</th><th>Avec les monstres</th></tr>
-    <tr><td>Commun</td><td>6</td><td><b>9</b></td></tr>
-    <tr><td>Peu commun</td><td>7</td><td><b>9</b></td></tr>
-    <tr><td>Rare</td><td>8</td><td><b>12</b></td></tr>
-    <tr><td>Épique</td><td>10</td><td><b>16</b></td></tr>
-    <tr><td>Légendaire</td><td>7</td><td><b>12</b></td></tr>
-    <tr><td>Mythique</td><td>8</td><td><b>14</b></td></tr>
-    <tr><td>Divin</td><td>3</td><td><b>9</b></td></tr>
-    <tr><td>Céleste</td><td>2</td><td><b>4</b></td></tr>
-    <tr><td>Cosmique</td><td>2</td><td>2</td></tr>
-    <tr><td>Secret</td><td>1</td><td>1</td></tr>
-    <tr><td><b>Total</b></td><td>54</td><td><b>88</b></td></tr>
+    <tr><th>Rareté</th><th>Aujourd'hui</th><th>+ monstres</th><th>+ 12 nouvelles</th></tr>
+    <tr><td>Commun</td><td>6</td><td>9</td><td><b>10</b></td></tr>
+    <tr><td>Peu commun</td><td>7</td><td>9</td><td><b>10</b></td></tr>
+    <tr><td>Rare</td><td>8</td><td>12</td><td><b>13</b></td></tr>
+    <tr><td>Épique</td><td>10</td><td>16</td><td><b>16</b></td></tr>
+    <tr><td>Légendaire</td><td>7</td><td>12</td><td><b>12</b></td></tr>
+    <tr><td>Mythique</td><td>8</td><td>14</td><td><b>14</b></td></tr>
+    <tr><td>Divin</td><td>3</td><td>9</td><td><b>10</b></td></tr>
+    <tr><td>Céleste</td><td>2</td><td>4</td><td><b>7</b></td></tr>
+    <tr><td>Cosmique</td><td>2</td><td>2</td><td><b>6</b></td></tr>
+    <tr><td>Secret</td><td>1</td><td>1</td><td><b>2</b></td></tr>
+    <tr><td><b>Total</b></td><td>54</td><td>88</td><td><b>100</b></td></tr>
+    <tr><td>👑 Boss (à part)</td><td>—</td><td>—</td><td><b>9</b></td></tr>
   </table>
 
   <h2>Ce qui change dans le jeu</h2>
@@ -125,7 +171,6 @@
     <li><b>En combat</b> : un monstre vaincu a une <b>petite chance de te donner sa créature</b> (environ 1 sur 200, moins pour les plus forts). Les œufs et reliques qu'il donne déjà restent.</li>
     <li><b>Index</b> : les monstres apparaissent aussi dans « Créatures ». Les compléter compte pour les collections.</li>
     <li><b>Puissance</b> : un monstre gagné a la force normale des créatures de sa rareté (pas les points de vie énormes qu'il a dans la zone).</li>
-    <li>Les <b>boss de zone</b> (endormis) ne deviennent pas des créatures : ils restent des boss. Dis-moi si tu les veux aussi (par exemple en Cosmique).</li>
   </ul>
 
   <div class="note">Les monstres gardent leur look actuel pour cette étape. L'étape 2 refera toutes les créatures, monstres compris, dans le même style.</div>
