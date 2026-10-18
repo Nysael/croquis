@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciel du jour et de la nuit</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:28px 0 8px; font-size:21px; }
+  p { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(330px,1fr)); gap:12px; }
+  figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; border:3px solid transparent; }
+  figure.reco { border-color:var(--accent); }
+  figure img { width:100%; display:block; }
+  figcaption { padding:8px 12px 11px; font-size:14px; color:var(--muted); }
+  figcaption b.t { display:block; font-size:16px; margin-bottom:2px; }
+  .tag { display:inline-block; font-size:11px; font-weight:800; padding:2px 7px; border-radius:8px; background:var(--accent); color:#1d1a2b; margin-left:6px; vertical-align:2px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>☁️ Le ciel du jour et de la nuit</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu. Chaque ciel de la boutique (gratuit, aucun script, rien de lourd pour le téléphone) est posé derrière un rendu de ton château, pour juger l'effet. Dans le jeu, le ciel tourne autour de toi : on le voit surtout au-dessus de la mer.</p>
+
+  <h2>Le jour</h2>
+  <div class="grid">
+    <figure><img src="ciel/aujourdhui.jpg" alt=""><figcaption><b class="t">Aujourd'hui</b>Ciel bleu uni de Roblox, sans nuages dessinés.</figcaption></figure>
+    <figure class="reco"><img src="ciel/jour_bandes.jpg" alt=""><figcaption><b class="t">A. Nuages en bandes <span class="tag">mon choix</span></b>Cyan vif et couches de nuages cartoon : le plus « simulateur », va bien avec les briques.</figcaption></figure>
+    <figure><img src="ciel/jour_nuages_ronds.jpg" alt=""><figcaption><b class="t">B. Nuages ronds</b>Bleu clair et petits nuages tout ronds, très doux.</figcaption></figure>
+    <figure><img src="ciel/jour_horizon.jpg" alt=""><figcaption><b class="t">C. Dégradé + nuages à l'horizon</b>Plus calme, les nuages restent bas.</figcaption></figure>
+    <figure><img src="ciel/jour_bleu_vif.jpg" alt=""><figcaption><b class="t">D. Bleu vif, gros nuages</b>Le plus audacieux, très plat.</figcaption></figure>
+    <figure><img src="ciel/jour_anime.jpg" alt=""><figcaption><b class="t">E. Style anime</b>Très joli, mais plus « peinture » que briques.</figcaption></figure>
+  </div>
+
+  <h2>La nuit</h2>
+  <div class="grid">
+    <figure class="reco"><img src="ciel/nuit_etoilee.jpg" alt=""><figcaption><b class="t">1. Nuit étoilée sur une mer de nuages <span class="tag">mon choix</span></b>Violet-bleu plein d'étoiles : parfait avec les étoiles filantes.</figcaption></figure>
+    <figure><img src="ciel/nuit_sombre.jpg" alt=""><figcaption><b class="t">2. Nuit bleu profond</b>Plus sombre et réaliste, bien pour l'orage.</figcaption></figure>
+  </div>
+
+  <div class="note"><b>Comment ça marcherait :</b> le ciel du jour laisse la place à celui de la nuit au milieu du coucher du soleil (quand la lumière est déjà basse, pour que le changement passe inaperçu), et revient au lever. Pendant la pluie et l'orage, les nuages gris de la météo restent par-dessus. Les saisons qui ont leur propre ciel (Halloween, Noël…) le gardent.</div>
+</div>
+</body>
+</html>
