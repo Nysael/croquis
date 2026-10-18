@@ -228,6 +228,17 @@
     </div>
   </div>
 
+  <div class="card">
+    <h3>Refonte : vrais squelettes, une seule peau <span class="st todo">🛠️ en cours (pas encore commité)</span></h3>
+    <ul>
+      <li>Chaque créature devient <b>une seule peau</b> (un MeshPart) avec <b>de vrais os</b> : dos, cou, tête, queue(s) en 3 segments, pattes ou bras à 3 os, ailes à 3 os. La peau se plie aux articulations : <b>plus de trou à l'épaule</b> ni de pièces qui flottent.</li>
+      <li>Chaîne automatique sur la machine : export depuis Studio, peau fondue et texture reportée dans Blender, squelette calculé, fichier 3D, puis <b>import automatique</b> dans Studio (souris pilotée, bandeau rouge et notification Noctu).</li>
+      <li>Les 5 chevaux ailés partagent la peau et le squelette du Pégase ; seule la peinture change.</li>
+      <li>En jeu : <code>CreatureSkins</code> construit la peau à partir de <code>CreatureRigsData</code> (identifiant du mesh, texture, os) ; <code>CreatureBones</code> anime les os (marche en diagonale, ailes repliées ou en vol, tête, queues, respiration), branché dans <code>CreatureMotion</code> et dans les vitrines.</li>
+      <li>Testé en jeu sur le Pégase, le Loup et le Dragon. Import des 108 autres en cours.</li>
+    </ul>
+  </div>
+
   <!-- ===================================================== ŒUFS -->
   <h2 id="oeufs">🥚 Refonte des œufs</h2>
   <p>L'ordre que tu as choisi : <b>1.</b> les monstres deviennent des espèces, 12 nouvelles créatures et les boss (fait) → <b>2.</b> refonte de toutes les créatures → <b>3.</b> un œuf par espèce dans le style « Prisme » → <b>4.</b> éclosion dès l'achat.</p>
@@ -506,7 +517,7 @@
   <h2 id="feuille">🗺️ Feuille de route</h2>
   <div class="tbl"><table>
     <tr><th>Ordre</th><th>Chantier</th><th>État</th><th>Détail</th></tr>
-    <tr><td class="num">1</td><td>Refonte de toutes les créatures</td><td><span class="st todo">🛠️ prochaine étape</span></td><td class="m">Croquis d'abord, puis modèles.</td></tr>
+    <tr><td class="num">1</td><td>Refonte de toutes les créatures</td><td><span class="st todo">🛠️ en cours</span></td><td class="m">Style D choisi ; vrais squelettes en cours d'import. Restent : choix Dragon Ancien, Golem et Lion, cornes des licornes ailées.</td></tr>
     <tr><td class="num">2</td><td>Un œuf par espèce, style Prisme + auras</td><td><span class="st todo">🛠️ après la refonte</span></td><td class="m">Auras par rareté encore à valider.</td></tr>
     <tr><td class="num">3</td><td>Éclosion dès l'achat</td><td><span class="st todo">🛠️ validé</span></td><td class="m">Plus d'incubateurs, remboursement de ceux achetés.</td></tr>
     <tr><td class="num">4</td><td>Décor de la place</td><td><span class="st wait">⏳ tes captures</span></td><td class="m">La forme ronde est faite.</td></tr>
@@ -566,6 +577,7 @@
     <tr><td>Disposition des îles</td><td><code>Modules/MapLayout.luau</code></td><td class="m"><code>GetIslandRingRadius()</code></td></tr>
     <tr><td>Boss des zones</td><td><code>Modules/ZoneBosses.luau</code> · <code>Configurations/BossConfig.luau</code></td><td class="m">cycle 10 / 20 min, difficultés</td></tr>
     <tr><td>Mouvements des créatures</td><td><code>Modules/CreatureMotion.luau</code></td><td class="m">ressorts, pas, ailes</td></tr>
+    <tr><td>Créatures à squelette</td><td><code>Configurations/CreatureRigsData.luau</code> (généré) · <code>Modules/CreatureSkins.luau</code> · <code>Modules/CreatureBones.luau</code></td><td class="m">angles des pattes, repli des ailes ; chaîne de fabrication dans <code>tools/mesh-gen/rig/</code></td></tr>
   </table></div>
   <p>Les chemins partent de <code>src/ReplicatedStorage/</code>, sauf <code>CastleBuilder</code> qui est dans <code>src/ServerScriptService/Modules/</code>. Le code part dans Studio par Rojo (port 34872).</p>
 
