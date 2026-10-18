@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refonte des créatures</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1300px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 10px; font-size:22px; }
+  h2 small { color:var(--muted); font-size:14px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:10px; }
+  figure { margin:0; background:var(--card); border-radius:12px; overflow:hidden; border-top:5px solid var(--c); }
+  figure img { width:100%; display:block; aspect-ratio:300/250; object-fit:cover; }
+  figcaption { padding:7px 10px 10px; font-size:15px; }
+  figcaption small { color:var(--muted); font-size:12px; }
+  .n { font-size:12px; font-weight:800; background:var(--c); color:#1d1a2b; border-radius:7px; padding:1px 7px; }
+  code { background:#3a3460; padding:0 5px; border-radius:5px; color:var(--muted); font-size:11px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Refonte des créatures : style D, {{COUNT}} modèles à valider</h1>
+  <p>Toutes les espèces et les 9 boss régénérés dans le style validé (petits yeux lumineux, formes sculptées, un peu sauvages). Capturés dans Studio, <b>tous à la même taille</b> pour bien les voir (en jeu, chacun garde sa taille). Rangés par rareté.</p>
+  <div class="note"><b>Pour valider :</b> donne-moi les <b>numéros</b> (ou les noms) de celles à refaire, avec ce qui ne va pas si tu veux (« #12 trop mignon », « #40 pas assez de cornes »…). Tout le reste sera considéré comme bon. Rien n'est encore dans le jeu.</div>
+  {{SECTIONS}}
+  <h2>8 créatures en double : choisis la version</h2>
+  <p>Ces 8 ont été générées deux fois (version A à gauche, <b>version B</b> à droite). Dis-moi laquelle garder, sinon je prends la A.</p>
+  {{ALTS}}
+  <h2>Ensuite (après ta validation)</h2>
+  <ul>
+    <li>Je refais celles que tu signales, puis je te remontre seulement celles-là.</li>
+    <li>Mise en jeu : tailles réglées, animations (démarche, battements d'ailes, queue) vérifiées sur chaque créature.</li>
+    <li>Puis les œufs-gemmes avec les détails de chaque créature.</li>
+  </ul>
+</div>
+</body>
+</html>
