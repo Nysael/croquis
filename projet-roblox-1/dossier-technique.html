@@ -13,7 +13,7 @@
   .wrap { max-width:1100px; margin:auto; padding:18px 16px 60px; }
   h1 { margin:0 0 6px; font-size:30px; }
   h2 { margin:44px 0 6px; font-size:24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-  h3 { margin:22px 0 6px; font-size:17px; color:var(--accent); }
+  h3 { margin:22px 0 6px; font-size:17px; color:var(--accent); display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
   p, li { color:var(--muted); line-height:1.55; }
   b, strong { color:var(--text); }
   code { background:#14121f; color:#ffe08a; padding:1px 6px; border-radius:6px; font-size:13px; }
@@ -35,6 +35,7 @@
 
   .card { background:var(--card); border-radius:14px; padding:14px 18px; margin-top:12px; }
   .card.soft { background:var(--card2); }
+  .card.news { border:2px solid #ffd34d55; }
   .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
   .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; }
   .card ul { margin:6px 0 0; padding-left:20px; }
@@ -70,7 +71,7 @@
   .steps li:last-child { border-bottom:none; }
   .steps li::before { content:counter(s); position:absolute; left:0; top:7px; width:28px; height:28px; border-radius:50%;
                       background:#3b3560; color:var(--accent); font-weight:800; display:grid; place-items:center; font-size:14px; }
-  .commit { font-family:Consolas, monospace; font-size:12px; color:#9d97c4; }
+  .commit { font-family:Consolas, monospace; font-size:12px; color:#9d97c4; font-weight:400; }
   footer { margin-top:50px; color:#8a84ad; font-size:13px; border-top:1px solid var(--line); padding-top:14px; }
   @media (max-width:520px) { h1 { font-size:24px; } h2 { font-size:20px; } .chip .v { font-size:20px; } }
 </style>
@@ -78,35 +79,41 @@
 <body>
 <div class="wrap">
 
-  <h1>📘 Dossier technique : toutes les propositions validées</h1>
-  <p class="sub">Projet Roblox · état au <b>18/10/2026</b> · reprend tout ce qui a été choisi depuis le 16/10, ce qui est déjà dans le jeu, ce qui est validé mais pas encore codé, et ce qu'il reste à décider.</p>
+  <h1>📘 Dossier technique du projet</h1>
+  <p class="sub">Projet Roblox · <b>mis à jour le 18/10/2026 à 04:10</b> (dernier commit <span class="commit">8ac61b9</span>) · tout ce qui a été choisi depuis le 16/10 : ce qui est dans le jeu, ce qui est validé mais pas encore codé, et ce qu'il reste à décider.</p>
 
   <div class="card soft">
     <b>Comment lire les étiquettes :</b>
     <div class="legend" style="margin-top:6px">
       <span><span class="st ok">✅ Dans le jeu</span> codé, testé et enregistré (commit indiqué)</span>
       <span><span class="st todo">🛠️ Validé, à coder</span> tu as dit oui, pas encore dans le jeu</span>
-      <span><span class="st wait">⏳ À décider</span> en attente de ton avis ou d'un élément de ta part</span>
+      <span><span class="st wait">⏳ À décider</span> croquis ou élément en attente de ta part</span>
     </div>
   </div>
 
+  <div class="card news">
+    <b>🆕 Depuis la dernière version :</b> l'île en U, le château Mélange élargi et les ponts au style du château sont <b>dans le jeu</b> ; ajout du <b>cycle jour/nuit et de la météo</b>, des <b>sons</b>, des <b>icônes</b> et des <b>ciels</b> ; la monnaie s'appelle maintenant <b>« Éclats de mana » 💠</b> ; les <b>34 monstres des zones deviennent des espèces</b> (88 espèces) ; la refonte des œufs est en cours de croquis.
+  </div>
+
   <div class="chips">
-    <div class="chip"><div class="v">8</div><div class="l">îles par serveur</div></div>
+    <div class="chip"><div class="v">8</div><div class="l">îles par serveur, à 341 studs</div></div>
     <div class="chip"><div class="v">6</div><div class="l">zones, chacune avec son boss</div></div>
     <div class="chip"><div class="v">6</div><div class="l">paliers de château</div></div>
     <div class="chip"><div class="v">60</div><div class="l">vitrines à créatures</div></div>
-    <div class="chip"><div class="v">341</div><div class="l">studs : cercle des îles visé</div></div>
-    <div class="chip"><div class="v">121</div><div class="l">studs : pont fixe visé</div></div>
+    <div class="chip"><div class="v">88</div><div class="l">espèces (100 prévues)</div></div>
+    <div class="chip"><div class="v">12 min</div><div class="l">cycle jour / nuit</div></div>
   </div>
 
   <nav>
-    <a href="#economie">💎 Économie</a>
+    <a href="#economie">💠 Économie</a>
     <a href="#interface">🖥️ Interface</a>
     <a href="#creatures">🐉 Créatures</a>
+    <a href="#oeufs">🥚 Œufs</a>
     <a href="#chateau">🏰 Château</a>
     <a href="#ile">🏝️ Île en U</a>
     <a href="#monde">🌍 Monde</a>
     <a href="#zones">⚔️ Zones et boss</a>
+    <a href="#ambiance">🌗 Ambiance</a>
     <a href="#animations">🎬 Animations</a>
     <a href="#feuille">🗺️ Feuille de route</a>
     <a href="#ecarte">🚫 Écarté</a>
@@ -114,36 +121,35 @@
   </nav>
 
   <!-- ===================================================== ÉCONOMIE -->
-  <h2 id="economie">💎 Boucle de jeu et économie <span class="st ok">✅ Dans le jeu</span></h2>
-  <p>La boucle : tu tires le levier, tu achètes l'œuf d'une espèce sur un socle, il couve, tu places tes créatures dans le château, elles remplissent le coffre de gemmes, tu améliores la machine et tu renais pour gagner des places. <span class="commit">601075e · 75fb3cd</span></p>
+  <h2 id="economie">💠 Boucle de jeu et économie <span class="st ok">✅ Dans le jeu</span></h2>
+  <p>La boucle : tu tires le levier, tu achètes l'œuf d'une espèce sur un socle, tes créatures travaillent dans les vitrines du château, la cascade remplit le coffre d'<b>éclats de mana 💠</b>, tu améliores la machine et tu renais pour gagner des places. <span class="commit">601075e · 75fb3cd · be03e98</span></p>
 
   <div class="grid2">
     <div class="card">
-      <h3>Départ</h3>
+      <h3>Monnaie</h3>
       <ul>
-        <li><b>500 💎</b> au départ : le premier œuf s'achète dès le tutoriel.</li>
-        <li><b>Coffre de départ : 5 000 💎</b> (un débutant produit environ 4 💎/s).</li>
+        <li>La monnaie s'appelle <b>« Éclats de mana » 💠</b> dans tous les textes (avant : « Gemmes »). La ressource Cristal prend l'icône 💎. <span class="commit">be03e98</span></li>
+        <li><b>500 💠</b> au départ : le premier œuf s'achète dès le tutoriel. <b>Coffre de départ : 5 000 💠</b>.</li>
       </ul>
       <h3>Renaissances (×4 à chaque fois)</h3>
       <p class="num"><b>50K → 200K → 800K → 3,2M → …</b></p>
       <ul>
-        <li><b>Gardé :</b> la taille du coffre et les emplacements.</li>
-        <li><b>Remis à zéro :</b> les gemmes et les panneaux Puissance, Vitesse et Chance.</li>
+        <li><b>Gardé :</b> la taille du coffre et les emplacements. <b>Remis à zéro :</b> les éclats et les panneaux Puissance, Vitesse et Chance.</li>
         <li>Chaque renaissance donne <b>+2 places</b> dans le château (4 au départ).</li>
       </ul>
     </div>
     <div class="card">
       <h3>Robux</h3>
       <ul>
-        <li><b>Robot mineur</b> : uniquement en gamepass, affiché <b>149 R$</b>. Sans lui, le robot refuse de démarrer.</li>
-        <li><b>Packs de gemmes</b> : tu reçois le montant prévu, ou plusieurs minutes de ta production si c'est plus. Exemple : la Poignée à 25 R$ donne 1 000 💎 ou 15 min de production.</li>
+        <li><b>Robot mineur</b> : uniquement en gamepass, affiché <b>149 R$</b>.</li>
+        <li><b>Packs d'éclats</b> : le montant prévu, ou plusieurs minutes de ta production si c'est plus (la Poignée à 25 R$ : 1 000 💠 ou 15 min de production).</li>
       </ul>
       <p><span class="st wait">⏳ Avant de publier</span> crée le gamepass sur Roblox et colle son ID à la place de <code>Id = 0</code> dans <code>TycoonConfig.GamePasses</code>.</p>
     </div>
   </div>
 
   <div class="tbl"><table>
-    <tr><th>Œuf</th><th>Machine à œufs</th><th>Place centrale</th></tr>
+    <tr><th>Œuf (prix en 💠)</th><th>Machine à œufs</th><th>Place centrale</th></tr>
     <tr><td>Basique / Commun</td><td class="num m">inchangé</td><td class="num">600</td></tr>
     <tr><td>Rare</td><td class="num">3 000</td><td class="num">3 000</td></tr>
     <tr><td>Épique</td><td class="num">12 000</td><td class="num">18 000</td></tr>
@@ -156,81 +162,120 @@
 
   <!-- ===================================================== INTERFACE -->
   <h2 id="interface">🖥️ Interface et récompenses <span class="st ok">✅ Dans le jeu</span></h2>
-  <p class="commit">75fb3cd</p>
   <div class="grid2">
     <div class="card">
-      <h3>Disposition de l'écran</h3>
+      <h3>Disposition de l'écran <span class="commit">75fb3cd · 21d06ac · 9061d7d</span></h3>
       <ul>
-        <li><b>En haut</b> : « 🏝️ Mon île » et « 🏛️ Place », qui téléportent directement.</li>
-        <li><b>À gauche</b> : Index, Boutique, Rebirth, Ma tour, en gros, sans cadre et avec un contour noir.</li>
-        <li><b>À droite</b> : les autres menus en plus petit (Équipe, Œufs, Incubateurs, Zones, Quêtes, Capsules, Cosmétiques, Construire).</li>
-        <li><b>En bas à gauche</b> : la chance « x1 🍀 » au-dessus des gemmes en très gros.</li>
-        <li>Index et Rebirth apparaissent après les premières créatures.</li>
+        <li><b>En haut</b> : « Mon île » et « Place », qui téléportent directement, avec la pastille jour/nuit et météo à côté.</li>
+        <li><b>À gauche</b> : Index, Boutique, Rebirth, <b>Mon château</b>, en gros, sans cadre. <b>À droite</b> : les autres menus en plus petit.</li>
+        <li><b>En bas à gauche</b> : la chance au-dessus du compteur d'éclats de mana.</li>
+        <li><b>Icônes</b> des packs Simulator Icon Pack et Flibpook à la place des emojis (menus, voyage, Quotidien, Cadeau, compteur). <span class="commit">21d06ac</span></li>
+        <li>Tous les textes parlent du <b>château</b> au lieu de la tour. <span class="commit">9061d7d</span></li>
       </ul>
     </div>
     <div class="card">
-      <h3>Récompenses gratuites (en bas à droite)</h3>
+      <h3>Récompenses gratuites</h3>
       <ul>
-        <li><b>📅 Quotidien</b> : 7 jours, de 500 💎 au jour 1 jusqu'à « Œuf Épique + 10 000 💎 » au jour 7. Si tu rates un jour, la série repart au jour 1. Une pastille rouge apparaît quand c'est prêt.</li>
-        <li><b>🎁 Cadeau</b> : toutes les 15 min de jeu, il vaut 5 min de production (minimum 300 💎). Il affiche « Prêt ! » en jaune et rebondit.</li>
+        <li><b>Quotidien</b> : 7 jours, de 500 💠 au jour 1 jusqu'à « Œuf Épique + 10 000 💠 » au jour 7. Si tu rates un jour, la série repart au jour 1.</li>
+        <li><b>Cadeau</b> : toutes les 15 min de jeu, il vaut 5 min de production (minimum 300 💠).</li>
       </ul>
     </div>
   </div>
 
   <!-- ===================================================== CRÉATURES -->
-  <h2 id="creatures">🐉 Créatures : poids, géants et raretés <span class="st ok">✅ Dans le jeu</span></h2>
-  <p class="commit">abd2a91 · aaa9dc0</p>
+  <h2 id="creatures">🐉 Créatures</h2>
   <div class="grid2">
     <div class="card">
-      <h3>Poids et taille</h3>
+      <h3>Poids, taille et géants <span class="st ok">✅ Dans le jeu</span> <span class="commit">abd2a91</span></h3>
       <ul>
-        <li>Chaque espèce a un poids typique. Un individu pèse de <b>×0,1 à ×3,3</b> ce poids : un Dragon va de <b>60 kg à 1 980 kg</b>, un Papillon de 1 g à 33 g, une Baleine céleste de 4 t à 132 t.</li>
-        <li>Environ <b>2 % sont des GÉANTS 🦣</b> : badge, et message à tout le serveur.</li>
-        <li><b>Taille</b> : de ×0,7 (le plus léger) à ×2 (un géant).</li>
-        <li><b>Gains dans le château</b> : de ×0,8 à ×2. « Placer les meilleurs » en tient compte.</li>
-        <li><b>Fusion</b> : la créature obtenue garde le poids de la plus lourde des 5.</li>
-        <li>En moyenne, les créatures rapportent environ 10 % de plus qu'avant (passer le minimum à ×0,7 rendrait ça neutre).</li>
+        <li>Un individu pèse de <b>×0,1 à ×3,3</b> le poids typique de son espèce : un Dragon va de <b>60 kg à 1 980 kg</b>.</li>
+        <li>Environ <b>2 % sont des GÉANTS 🦣</b> : badge et message à tout le serveur.</li>
+        <li><b>Taille</b> de ×0,7 à ×2, <b>gains</b> de ×0,8 à ×2. La fusion garde le poids de la plus lourde des 5.</li>
       </ul>
     </div>
     <div class="card">
-      <h3>Grande annonce Divin+</h3>
+      <h3>Annonce Divin+ et garantie <span class="st ok">✅ Dans le jeu</span> <span class="commit">aaa9dc0</span></h3>
       <ul>
-        <li>Pour une créature Divine ou mieux : bannière chez tout le serveur pendant 5 s, avec un son, la créature en 3D, le pseudo et la rareté. Les annonces passent l'une après l'autre.</li>
-        <li>Légendaire et Mythique gardent le petit message habituel.</li>
+        <li>Créature Divine ou mieux : bannière chez tout le serveur pendant 5 s, avec la créature en 3D.</li>
+        <li>Après 49 œufs sans Légendaire+, le suivant en est un. Compteur au-dessus du levier.</li>
       </ul>
-      <h3>Garantie Légendaire+ après 50 œufs</h3>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Les monstres des zones deviennent des espèces <span class="st ok">✅ Dans le jeu</span> <span class="commit">8ac61b9</span></h3>
+    <ul>
+      <li>Les <b>34 monstres des zones</b> deviennent des espèces obtenables : on passe à <b>88 espèces</b>.</li>
+      <li>Leur rareté dépend de leur zone, et ils gardent le modèle 3D du monstre.</li>
+      <li>En battant un monstre, environ <b>1 chance sur 200</b> de gagner sa créature.</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>12 nouvelles créatures (100 espèces) <span class="st wait">⏳ À valider</span> <span class="commit">6a59bff</span></h3>
       <ul>
-        <li>Après 49 œufs sans Légendaire+, le suivant en est un. Le compteur « 🎁 Légendaire garanti dans X œufs » s'affiche au-dessus du levier.</li>
-        <li>Les tirages du robot et les re-remplissages comptent. Les œufs de la place ont un compteur par type.</li>
-        <li>Les œufs d'espèce achetés à la machine ne comptent pas.</li>
+        <li>Grenouille, Loutre, Pingouin, Sphinx Doré, Méduse Astrale, Cerf des Étoiles, Renard Aurore, Poulpe Nébuleuse, Lapin Lunaire, Golem Météore, Kraken du Vide, et le <b>Dragon du Néant</b> (Secret).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Les 9 boss en rareté « Boss » <span class="st wait">⏳ À valider</span> <span class="commit">6a59bff · 58e1c2d</span></h3>
+      <ul>
+        <li>Les 6 boss des zones et les 3 d'Halloween deviennent des créatures d'une rareté à part, juste sous Secret, toujours <b>géantes</b>, avec leur onglet dans l'Index.</li>
+        <li>Leur œuf ne sort <b>qu'à la roulette</b>, et seulement après <b>3 victoires</b> contre ce boss.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================================================== ŒUFS -->
+  <h2 id="oeufs">🥚 Refonte des œufs</h2>
+  <p>L'ordre que tu as choisi : <b>1.</b> les monstres deviennent des espèces (fait) → <b>2.</b> refonte de toutes les créatures → <b>3.</b> un œuf par espèce dans le style « Prisme » → <b>4.</b> éclosion dès l'achat.</p>
+  <div class="grid3">
+    <div class="card">
+      <h3>Éclosion dès l'achat <span class="st todo">🛠️ Validé, à coder</span></h3>
+      <ul>
+        <li>L'œuf commence à éclore <b>dès qu'on l'achète</b>, sans limite, et la créature naît toute seule avec une petite notification.</li>
+        <li><b>Plus d'incubateurs</b> ni d'animation d'éclosion : le menu et les 4 incubateurs de la place disparaissent, ceux achetés sont remboursés.</li>
+        <li>Le bouton ⚡ « éclore maintenant » reste.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Un œuf par espèce, style Prisme <span class="st todo">🛠️ Après la refonte</span></h3>
+      <ul>
+        <li>Tu as adoré l'œuf du <b>Prisme Suprême</b> : cristal à facettes, fissures lumineuses. C'est ce style qui sera décliné pour chaque espèce.</li>
+        <li>Les œufs « à l'image de l'animal » des autres essais ne t'ont pas plu.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Une aura par rareté <span class="st wait">⏳ À valider</span> <span class="commit">bf32181 · 4c67489</span></h3>
+      <ul>
+        <li>10 raretés, de Commun à Secret, chacune avec son aura : anneau, étincelles, rayons, feu, étoiles, fumée galactique…</li>
+        <li>L'<b>aura noire</b> est réservée au Secret. Les auras lointaines sont coupées sur téléphone.</li>
       </ul>
     </div>
   </div>
 
   <!-- ===================================================== CHÂTEAU -->
-  <h2 id="chateau">🏰 Le château « Mélange » <span class="st todo">🛠️ Validé, à coder</span></h2>
-  <p>La <b>falaise</b> (style 3), avec son escalier, ses galeries de vitrines et la cascade de gemmes, sous le <b>château de conte de fées</b> (style 2), toutes les tours collées, avec <b>l'île flottante au cœur du château</b> au dernier palier. Il remplace la façade actuelle, qui est en place dans le jeu mais que tu n'aimais pas (<span class="commit">b6b4917 → 5695da9</span>). Les rendus palier par palier attendent encore un dernier « oui » de ta part.</p>
+  <h2 id="chateau">🏰 Le château « Mélange » <span class="st ok">✅ Dans le jeu</span></h2>
+  <p>La <b>falaise</b> avec son escalier, ses galeries de vitrines et la cascade, sous le <b>château de conte de fées</b>, élargi pour <b>remplir tout le dessus du rocher</b> : façade sur toute la largeur avec un pavillon central, ailes sur les côtés et au fond autour d'une cour intérieure, grand donjon carré, tourelles, flèche à l'arrière et île flottante au-dessus du donjon. <span class="commit">e003333 · a8af4f7 · 4c496f1</span></p>
 
   <div class="grid2">
     <div class="card">
       <h3>Composition</h3>
       <ul>
-        <li><b>60 vitrines</b> : 30 dans deux galeries de 15 creusées dans la falaise, juste au-dessus du coffre (les premières places, à hauteur des yeux), et 30 dans le château (5 + 5 sur 3 étages).</li>
-        <li><b>4 places au départ, +2 par renaissance</b>. Chaque vitrine montre la créature en 3D qui bouge, son poids et son gain. 🔒 = place pas encore débloquée.</li>
-        <li><b>Porte à herse dorée</b>, avec une <b>rosace en vitrail</b> au-dessus à la place d'un géant.</li>
-        <li><b>6 places à géants</b> au maximum (gain ×1,5) : 4 sur les tours, 1 sur la flèche, 1 sur l'île flottante.</li>
+        <li><b>60 vitrines</b> : 30 dans deux galeries de la falaise, juste au-dessus du coffre (les premières places débloquées), et 30 dans le château.</li>
+        <li><b>4 places au départ, +2 par renaissance</b>. Chaque vitrine montre la créature en 3D, son poids et son gain.</li>
+        <li><b>Rosace en vitrail</b> au-dessus de la porte, <b>porte arrière</b> vers le parc.</li>
+        <li><b>6 places à géants</b> au maximum (gain ×1,5) : 0 / 2 / 3 / 4 / 5 / 6 selon le palier.</li>
       </ul>
     </div>
     <div class="card">
-      <h3>💎 Cascade de gemmes (seulement visuelle)</h3>
-      <ol style="margin:6px 0 0; padding-left:20px">
-        <li>Des rigoles au-dessus des galeries ramassent les gemmes des vitrines.</li>
-        <li>Deux rigoles descendent du château du haut.</li>
-        <li>Les gemmes tombent en cascade de chaque côté de l'escalier.</li>
-        <li>Une glissière les verse dans le coffre…</li>
-        <li>… qui déborde de gemmes.</li>
-      </ol>
-      <p>Le flot grossit avec les gains. L'animation est calculée sur l'écran de chaque joueur, seulement pour les châteaux proches. Le coffre se remplit exactement comme aujourd'hui.</p>
+      <h3>Cascade d'éclats de mana</h3>
+      <ul>
+        <li>Les éclats glissent dans des rigoles au-dessus des vitrines, tombent de chaque côté de l'escalier et finissent dans le coffre par une glissière.</li>
+        <li><b>Vide sans travailleur</b>, de plus en plus fournie, <b>pleine à 12 travailleurs</b>. <span class="commit">a8af4f7</span></li>
+        <li>C'est seulement visuel : le coffre se remplit comme avant.</li>
+      </ul>
     </div>
   </div>
 
@@ -239,9 +284,9 @@
     <tr><td><b>1. Fortin de bois</b></td><td class="num">0</td><td><span class="sw" style="background:#786856"></span><span class="sw" style="background:#7a4a2a"></span><span class="sw" style="background:#ffaa46"></span></td><td>0</td><td class="m">La falaise et ses galeries, l'escalier, la cascade, un petit château brun derrière une palissade de rondins.</td></tr>
     <tr><td><b>2. Château fort</b></td><td class="num">1</td><td><span class="sw" style="background:#969288"></span><span class="sw" style="background:#aa3a2e"></span><span class="sw" style="background:#ffb450"></span></td><td>2</td><td class="m">2 tours collées au château avec un balcon chacune, des créneaux et des drapeaux rouges.</td></tr>
     <tr><td><b>3. Château de pierre</b></td><td class="num">3</td><td><span class="sw" style="background:#b0aa9e"></span><span class="sw" style="background:#3060b4"></span><span class="sw" style="background:#ffbe5a"></span></td><td>3</td><td class="m">Les tours grandissent, balcon du milieu sur le toit, cascade d'eau le long de la falaise, toits bleus.</td></tr>
-    <tr><td><b>4. Château royal</b></td><td class="num">5</td><td><span class="sw" style="background:#e8e2d6"></span><span class="sw" style="background:#2c50d8"></span><span class="sw" style="background:#dab44a"></span></td><td>4</td><td class="m">Le balcon du milieu laisse la place à 2 tours extérieures reliées par un rempart, rosace en vitrail, bandeaux dorés.</td></tr>
-    <tr><td><b>5. Palais d'or</b></td><td class="num">10</td><td><span class="sw" style="background:#f2e0a0"></span><span class="sw" style="background:#7e2cd8"></span><span class="sw" style="background:#ffcd3a"></span></td><td>5</td><td class="m">La grande flèche centrale arrive avec son balcon (le géant du milieu revient), 2 tours fines, des cristaux sur les toits.</td></tr>
-    <tr><td><b>6. Citadelle céleste</b></td><td class="num">20</td><td><span class="sw" style="background:#e8f2ff"></span><span class="sw" style="background:#26d2ff"></span><span class="sw" style="background:#a0f6ff"></span></td><td>6</td><td class="m">L'île flottante au cœur du château : nuages, halo, quatre cristaux et un grand balcon pour le 6ᵉ géant. Tout devient blanc et cyan.</td></tr>
+    <tr><td><b>4. Château royal</b></td><td class="num">5</td><td><span class="sw" style="background:#e8e2d6"></span><span class="sw" style="background:#2c50d8"></span><span class="sw" style="background:#dab44a"></span></td><td>4</td><td class="m">2 tours extérieures reliées par un rempart à la place du balcon du milieu, rosace, bandeaux dorés.</td></tr>
+    <tr><td><b>5. Palais d'or</b></td><td class="num">10</td><td><span class="sw" style="background:#f2e0a0"></span><span class="sw" style="background:#7e2cd8"></span><span class="sw" style="background:#ffcd3a"></span></td><td>5</td><td class="m">La grande flèche arrive avec son balcon, 2 tours fines, des cristaux sur les toits.</td></tr>
+    <tr><td><b>6. Citadelle céleste</b></td><td class="num">20</td><td><span class="sw" style="background:#e8f2ff"></span><span class="sw" style="background:#26d2ff"></span><span class="sw" style="background:#a0f6ff"></span></td><td>6</td><td class="m">L'île flottante au-dessus du donjon : nuages, halo, quatre cristaux et un grand balcon pour le 6ᵉ géant. Tout devient blanc et cyan.</td></tr>
   </table></div>
 
   <div class="thumbs">
@@ -252,11 +297,11 @@
     <figure><img src="chateau-paliers/palier5_34.jpg" alt="Palier 5"><figcaption><b>5</b> · Palais d'or</figcaption></figure>
     <figure><img src="chateau-paliers/palier6_34.jpg" alt="Palier 6"><figcaption><b>6</b> · Citadelle céleste</figcaption></figure>
   </div>
-  <p>Au passage d'un palier, le château se reconstruit avec de la poussière et des étincelles, et tout le serveur est prévenu. La tour du palier suivant est annoncée par un échafaudage. <b>Les ponts prendront le style du château</b> de leur île (bois, pierre, or, cristal…).</p>
+  <p>Rendus du château Mélange par palier, avant son élargissement à toute la largeur du rocher (voir le croquis <code>chateau-large.html</code> pour la version finale).</p>
 
   <!-- ===================================================== ÎLE EN U -->
-  <h2 id="ile">🏝️ L'île en U <span class="st todo">🛠️ Validé, à coder</span></h2>
-  <p>Ton idée : en arrivant sur l'île, on tombe sur le château en premier. Le château est devant, côté pont, un jardin étroit longe chacun de ses côtés, et le grand parc derrière grandit vers la mer. L'île reste carrée. Validée le 18/10 à 00:11 (<span class="commit">c952691 · 5b7bfa7</span>), c'est la prochaine étape du code.</p>
+  <h2 id="ile">🏝️ L'île en U <span class="st ok">✅ Dans le jeu</span></h2>
+  <p>En arrivant par le pont, on tombe sur le château en premier. Le château est devant, côté place, un jardin étroit longe chacun de ses côtés, et le grand parc derrière grandit vers la mer. L'île reste carrée. <span class="commit">9df7f37 · 6c9e5bf</span></p>
 
   <div class="diagram">
     <svg viewBox="0 0 640 560" role="img" aria-label="Plan de l'île en U vue de dessus">
@@ -265,9 +310,7 @@
         <pattern id="grow" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#5f9e4a"/><line x1="0" y1="0" x2="0" y2="10" stroke="#6fb357" stroke-width="5"/></pattern>
       </defs>
       <rect width="640" height="560" fill="url(#water)" rx="12"/>
-      <!-- île -->
       <rect x="150" y="40" width="340" height="440" rx="18" fill="#c8b98a"/>
-      <!-- parc par niveaux -->
       <rect x="170" y="60" width="300" height="200" rx="10" fill="url(#grow)"/>
       <g stroke="#ffffff99" stroke-dasharray="6 5" fill="none">
         <line x1="170" y1="220" x2="470" y2="220"/><line x1="170" y1="180" x2="470" y2="180"/>
@@ -277,35 +320,29 @@
         <text x="476" y="244">niv. 1</text><text x="476" y="204">niv. 2</text><text x="476" y="164">niv. 3</text>
         <text x="476" y="124">niv. 4</text><text x="476" y="84">niv. 5 (max)</text>
       </g>
-      <!-- belvédère -->
       <rect x="290" y="64" width="60" height="18" rx="5" fill="#e9e2c8"/><text x="320" y="77" font-size="11" text-anchor="middle" fill="#3a2e10" font-family="Segoe UI, sans-serif">belvédère</text>
-      <!-- allées côtés -->
       <rect x="170" y="262" width="44" height="160" rx="8" fill="#6fb357"/>
       <rect x="426" y="262" width="44" height="160" rx="8" fill="#6fb357"/>
       <g fill="#ffd34d"><circle cx="192" cy="280" r="3"/><circle cx="192" cy="320" r="3"/><circle cx="192" cy="360" r="3"/><circle cx="192" cy="400" r="3"/>
         <circle cx="448" cy="280" r="3"/><circle cx="448" cy="320" r="3"/><circle cx="448" cy="360" r="3"/><circle cx="448" cy="400" r="3"/></g>
-      <!-- château -->
       <rect x="222" y="262" width="196" height="130" rx="8" fill="#9d93c9" stroke="#fff" stroke-width="2"/>
-      <text x="320" y="320" font-size="18" text-anchor="middle" fill="#1d1a2b" font-weight="700" font-family="Segoe UI, sans-serif">🏰 château</text>
-      <text x="320" y="340" font-size="11" text-anchor="middle" fill="#1d1a2b" font-family="Segoe UI, sans-serif">façade tournée vers le pont</text>
+      <text x="320" y="316" font-size="18" text-anchor="middle" fill="#1d1a2b" font-weight="700" font-family="Segoe UI, sans-serif">🏰 château</text>
+      <text x="320" y="336" font-size="11" text-anchor="middle" fill="#1d1a2b" font-family="Segoe UI, sans-serif">façade tournée vers le pont</text>
+      <text x="320" y="352" font-size="10" text-anchor="middle" fill="#1d1a2b" font-family="Segoe UI, sans-serif">cour arrière : portail, stats, comptoir</text>
       <rect x="306" y="256" width="28" height="10" rx="3" fill="#3a2e10"/><text x="320" y="252" font-size="10" text-anchor="middle" fill="#fff" font-family="Segoe UI, sans-serif">porte arrière</text>
-      <!-- fusion et autel -->
       <circle cx="244" cy="246" r="10" fill="#ff7ad7"/><text x="244" y="230" font-size="10" text-anchor="middle" fill="#fff" font-family="Segoe UI, sans-serif">fusion</text>
       <circle cx="396" cy="246" r="10" fill="#ffb84d"/><text x="396" y="230" font-size="10" text-anchor="middle" fill="#fff" font-family="Segoe UI, sans-serif">autel</text>
-      <!-- cour d'honneur -->
       <rect x="222" y="396" width="196" height="76" rx="8" fill="#d9d2bd"/>
       <text x="320" y="420" font-size="12" text-anchor="middle" fill="#3a2e10" font-weight="700" font-family="Segoe UI, sans-serif">cour d'honneur</text>
       <rect x="306" y="428" width="28" height="18" rx="3" fill="#ffd34d"/><text x="320" y="461" font-size="10" text-anchor="middle" fill="#3a2e10" font-family="Segoe UI, sans-serif">coffre + cascade</text>
       <rect x="232" y="430" width="40" height="22" rx="4" fill="#7ad7ff"/><text x="252" y="445" font-size="9" text-anchor="middle" fill="#1d1a2b" font-family="Segoe UI, sans-serif">œufs</text>
       <rect x="368" y="430" width="40" height="22" rx="4" fill="#8cff7a"/><text x="388" y="445" font-size="9" text-anchor="middle" fill="#1d1a2b" font-family="Segoe UI, sans-serif">tableaux</text>
-      <!-- pont -->
       <rect x="304" y="480" width="32" height="80" fill="#7a5a3a"/>
       <g fill="#26d2ff"><rect x="310" y="500" width="20" height="8" rx="2"/><rect x="310" y="530" width="20" height="8" rx="2"/></g>
-      <text x="345" y="530" font-size="12" fill="#fff" font-family="Segoe UI, sans-serif">pont fixe 121 studs → place</text>
-      <!-- cotes -->
+      <text x="345" y="530" font-size="12" fill="#fff" font-family="Segoe UI, sans-serif">pont fixe ≈ 124 studs → place</text>
       <g font-size="11" fill="#fff" font-family="Segoe UI, sans-serif">
         <text x="192" y="438" text-anchor="middle">5 col.</text><text x="448" y="438" text-anchor="middle">5 col.</text>
-        <text x="320" y="56" text-anchor="middle">grand parc : jusqu'à 40 colonnes, s'étend vers la mer ↑</text>
+        <text x="320" y="56" text-anchor="middle">grand parc : 32 → 40 colonnes, s'étend vers la mer ↑</text>
       </g>
     </svg>
     <div class="legend">
@@ -315,21 +352,20 @@
 
   <div class="grid3">
     <div class="card"><h3>Chiffres</h3><ul>
-      <li>Îles à <b>341 studs</b> du centre (559 aujourd'hui).</li>
-      <li><b>Pont de 121 studs</b> qui ne change jamais.</li>
-      <li>Le jardin garde <b>autant de cases qu'aujourd'hui</b> à chaque niveau, de 348 au niveau 1 à 1 300 au maximum.</li>
-      <li>Au niveau maximum, les îles ne se touchent pas.</li>
+      <li>Îles à <b>341 studs</b> du centre (559 avant).</li>
+      <li><b>Pont fixe d'environ 124 studs</b>, qui ne change jamais.</li>
+      <li>Allées : <b>5 colonnes</b> de chaque côté. Parc : 32×4, 34×10, 36×16, 38×22, puis <b>40×27</b> au maximum.</li>
+      <li>Autant de cases qu'avant à chaque niveau. Les décorations déjà posées sont rangées dans la nouvelle grille ou remboursées.</li>
     </ul></div>
     <div class="card"><h3>Pour que ce soit beau</h3><ul>
-      <li><b>Cour d'honneur</b> pavée face à la façade : cascade, coffre et géants accueillent le visiteur.</li>
-      <li><b>Deux allées-jardins</b> symétriques, avec une haie basse côté mer et des lanternes, comme un château à la française.</li>
+      <li><b>Cour d'honneur</b> face à la façade : on arrive face au château, avec le coffre et la cascade au centre.</li>
+      <li><b>Deux allées-jardins</b> symétriques avec haie et lanternes.</li>
       <li><b>Grand parc</b> où se promènent tes créatures, avec un <b>belvédère sur la mer</b> au fond.</li>
     </ul></div>
     <div class="card"><h3>Où va chaque élément</h3><ul>
-      <li>Machine à œufs : à gauche de la cour.</li>
-      <li>Tableaux d'amélioration : à droite de la cour.</li>
-      <li>Fusion et autel : aux deux coins du parc, de chaque côté de la porte arrière.</li>
-      <li>On passe par la porte arrière ou par les allées : on n'est jamais bloqué.</li>
+      <li>Machine à œufs à gauche de la cour, tableaux d'amélioration à droite.</li>
+      <li>Fusion et autel aux deux coins du parc, de chaque côté de la porte arrière.</li>
+      <li>Dans la cour arrière : portail de parcelle, portail retour, panneau de stats, comptoir d'œufs.</li>
     </ul></div>
   </div>
 
@@ -339,21 +375,19 @@
     <div class="card">
       <h3>Place centrale ronde <span class="st ok">✅ Dans le jeu</span></h3>
       <ul>
-        <li>L'arène est supprimée, la place est au centre de la carte, et on y apparaît. <span class="commit">1428085</span></li>
-        <li>Disque de pierre de <b>260 studs de diamètre</b>, avec des garde-fous et des lampadaires en cercle. <span class="commit">c9905d2</span></li>
-        <li><b>6 portails de zone</b> en anneau à 86 studs du centre, chacun tourné dans la direction de sa zone, avec son panneau.</li>
-        <li>Prévu : spawn autour d'une fontaine, œufs et incubateurs en arc, 8 arches de départ de pont, panneau des boss, classement et portail « Mon île ».</li>
+        <li>L'arène est supprimée, la place est au centre, et on y apparaît. <span class="commit">1428085</span></li>
+        <li>Disque de pierre de <b>260 studs de diamètre</b>, avec des garde-fous et des lampadaires. <span class="commit">c9905d2</span></li>
+        <li><b>6 portails de zone</b> en anneau à 86 studs du centre, chacun tourné vers sa zone.</li>
       </ul>
       <p><span class="st wait">⏳ À fournir</span> tes captures de référence pour le décor final de la place.</p>
     </div>
     <div class="card">
-      <h3>Ponts en étoile et plaques <span class="st ok">✅ Dans le jeu</span></h3>
+      <h3>Ponts en étoile <span class="st ok">✅ Dans le jeu</span></h3>
       <ul>
-        <li><b>Un pont par île</b>, de la place jusqu'à l'île, avec une arche au nom du joueur et un palier de repos sur les longs ponts. <span class="commit">1428085</span></li>
-        <li><b>Plaques de vitesse</b> : une dalle néon tous les 45 studs, <b>×3 pendant 4 s</b> dans les deux sens, avec des traînées, une caméra élargie et la barre « ⚡ Vitesse ×3 ». Le bonus s'arrête hors du pont et de la place. <span class="commit">0575119</span></li>
-        <li><b>8 îles par serveur</b>, aujourd'hui à 559 studs du centre.</li>
+        <li><b>Un pont par île</b>, de la place à la cour d'honneur, avec une <b>arche au nom du joueur</b> sur la place.</li>
+        <li><b>Au style du château</b>, selon le palier : planches, bois sur piles, pierre à arches, pierre blanche et or, palais d'or, céleste sur nuages. Les îles libres ont un pont de pierre neutre. <span class="commit">142249f</span></li>
+        <li><b>Plaques de vitesse</b> tous les 45 studs : <b>×3 pendant 4 s</b>, dans les deux sens, seulement sur le pont et la place. <span class="commit">0575119</span></li>
       </ul>
-      <p><span class="st todo">🛠️ À coder</span> le rapprochement à 341 avec l'île en U, et le style du pont qui suit le palier du château.</p>
     </div>
   </div>
 
@@ -370,7 +404,7 @@
       <g id="zones" font-family="Segoe UI, sans-serif"></g>
       <text y="5" text-anchor="middle" font-size="11" fill="#1d1a2b" font-weight="700" font-family="Segoe UI, sans-serif" dy="26">place</text>
     </svg>
-    <div class="legend"><span>⚪ place ronde (Ø 260)</span><span>⭐ portails des zones</span><span>🟫 ponts en étoile ⚡</span><span>🟩 8 îles (cible 341 studs)</span><span>zones sur un cercle de 1 250 studs (rapproché sur le schéma)</span></div>
+    <div class="legend"><span>⚪ place ronde (Ø 260)</span><span>⭐ portails des zones</span><span>🟫 ponts en étoile ⚡</span><span>🟩 8 îles à 341 studs, château côté place</span><span>zones sur un cercle de 1 250 studs (rapproché sur le schéma)</span></div>
   </div>
 
   <!-- ===================================================== ZONES -->
@@ -379,7 +413,7 @@
   <div class="tbl"><table>
     <tr><th>Zone</th><th>Pour entrer</th><th>Boss</th><th>Difficulté</th><th>Ressource · décor</th></tr>
     <tr><td>🌼 Prairie</td><td>libre</td><td>🎃 Roi Citrouille (Halloween)</td><td class="num">Facile · PV ×1</td><td class="m">—</td></tr>
-    <tr><td>💎 Grotte</td><td>une Rare</td><td>👻 Dragon Spectral</td><td class="num">Moyen · PV ×1,8</td><td class="m">dégâts ×1,25, gemmes ×1,6</td></tr>
+    <tr><td>💎 Grotte</td><td>une Rare</td><td>👻 Dragon Spectral</td><td class="num">Moyen · PV ×1,8</td><td class="m">dégâts ×1,25, éclats ×1,6</td></tr>
     <tr><td>❄️ Glaces <i>(nouvelle)</i></td><td>une Épique</td><td>❄️ Yéti Géant</td><td class="num">Difficile · PV ×3</td><td class="m">❄️ Givre · neige, sapins, pics de glace, flocons</td></tr>
     <tr><td>🌙 Bois des Ombres</td><td>une Légendaire</td><td>💀 Liche Ancienne</td><td class="num">Très difficile · PV ×4,5</td><td class="m">—</td></tr>
     <tr><td>🌋 Volcan <i>(nouvelle)</i></td><td>une Mythique</td><td>🌋 Dragon de Lave</td><td class="num">Extrême · PV ×6,5</td><td class="m">🔥 Magma · basalte, rivière de lave en néon</td></tr>
@@ -390,21 +424,21 @@
     <div class="card">
       <h3>Déroulement d'un boss</h3>
       <ol class="steps">
-        <li><b>Les 6 boss dorment en même temps</b> pendant 10 min dans la clairière de leur zone (respiration, « Zzz »), puis disparaissent 20 min. Un minuteur les annonce.</li>
-        <li>Le bouton <b>« ⚔️ Réveiller le boss »</b> ouvre le panneau de groupe : <b>seul ou avec 2 joueurs</b> (amis en premier ⭐), qui reçoivent une invitation.</li>
+        <li><b>Les 6 boss dorment en même temps</b> pendant 10 min dans la clairière de leur zone, puis disparaissent 20 min.</li>
+        <li>Le bouton <b>« ⚔️ Réveiller le boss »</b> ouvre le panneau de groupe : <b>seul ou avec 2 joueurs</b> (amis en premier ⭐).</li>
         <li>Au lancement, le boss <b>se réveille en 6 temps</b>. Chaque groupe a son boss : les autres le voient toujours endormi.</li>
-        <li>Le combat ne change pas : butin selon la participation, <b>une victoire par boss et par passage</b>.</li>
+        <li>Butin selon la participation, <b>une victoire par boss et par passage</b>. Pendant un orage, éclats des boss ×1,5.</li>
       </ol>
     </div>
     <div class="card">
       <h3>21 nouveaux modèles 3D</h3>
       <ul>
-        <li><b>Boss</b> : Yéti Géant (~15 studs), Dragon de Lave (~11,5), Griffon Doré (~12).</li>
+        <li><b>Boss</b> : Yéti Géant, Dragon de Lave, Griffon Doré.</li>
         <li><b>Glaces</b> : wyverne de givre, golem de glace, ours polaire, loup des neiges, hibou des neiges, gelée de givre.</li>
         <li><b>Volcan</b> : dragonnet de lave, golem de magma, oiseau de feu, salamandre de feu, scarabée de lave, gelée de magma.</li>
         <li><b>Céleste</b> : griffon céleste, baleine des nuages, gardien céleste, pégase des nuages, aigle doré, fée céleste.</li>
       </ul>
-      <p><span class="st wait">⏳ À vérifier</span> un vrai combat contre les nouveaux mobs avec une équipe forte (aucune erreur, mais pas encore observé).</p>
+      <p>Tous ces monstres sont maintenant aussi des <b>espèces</b> à collectionner.</p>
     </div>
   </div>
   <div class="thumbs">
@@ -416,28 +450,54 @@
     <figure><img src="monde-fait/griffon.jpg" alt="Griffon Doré endormi"><figcaption><b>Griffon Doré</b> endormi</figcaption></figure>
   </div>
 
+  <!-- ===================================================== AMBIANCE -->
+  <h2 id="ambiance">🌗 Ambiance : jour, nuit, météo et sons <span class="st ok">✅ Dans le jeu</span></h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Cycle jour / nuit <span class="commit">19b1922 · d79936c</span></h3>
+      <ul>
+        <li><b>12 minutes</b>, le même pour tout le serveur : jour 7 min 30, coucher 30 s, nuit 3 min 30, lever 30 s.</li>
+        <li><b>La nuit : Chance de la machine +0,25</b> (ajoutée, pas multipliée).</li>
+        <li>Ciel cartoon à nuages en bandes le jour, nuit étoilée la nuit. Une pastille indique l'heure et la météo.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Météo aléatoire (tirée à chaque cycle)</h3>
+      <div class="tbl" style="margin-top:4px"><table style="min-width:0">
+        <tr><th>Météo</th><th>Chance</th><th>Effet</th></tr>
+        <tr><td>☀️ Clair</td><td class="num">55 %</td><td class="m">—</td></tr>
+        <tr><td>🌧️ Pluie</td><td class="num">18 %</td><td class="m">puis 1 min d'arc-en-ciel : 5 % des naissances en variante Arc-en-ciel</td></tr>
+        <tr><td>🌫️ Brouillard</td><td class="num">12 %</td><td class="m">ambiance seulement</td></tr>
+        <tr><td>⛈️ Orage (nuit)</td><td class="num">8 %</td><td class="m">éclats des boss ×1,5</td></tr>
+        <tr><td>🌠 Étoiles (nuit)</td><td class="num">7 %</td><td class="m">étoiles à ramasser = 6 s de production (min 20 💠)</td></tr>
+      </table></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Sons <span class="commit">150394e · c931411 · 8d4c4b7 · 53cdd17 · e9ac01f · 4a9bea6</span></h3>
+    <ul>
+      <li><b>Gardés</b> : clics, menus, notifications, machine à œufs, éclosion, plaques de vitesse, combats, rugissement des boss, pluie et tonnerre, carillon des étoiles.</li>
+      <li><b>Retirés à ta demande</b> : la musique de jour et de nuit, la téléportation, l'ambiance oiseaux / grillons, la clochette de succès. Les notifications sont silencieuses pendant les 10 premières secondes de partie.</li>
+    </ul>
+  </div>
+
   <!-- ===================================================== ANIMATIONS -->
   <h2 id="animations">🎬 Animations <span class="st ok">✅ Dans le jeu</span></h2>
   <div class="grid2">
     <div class="card">
       <h3>Boss plus vivants <span class="commit">f4b35cf</span></h3>
       <ul>
-        <li><b>Ressorts en chaîne</b> : le bassin entraîne le dos, les épaules, puis les bras, chacun avec un petit retard et un léger dépassement.</li>
-        <li><b>Buste</b> qui se plie autour des hanches, <b>tête</b> qui regarde le joueur le plus proche, <b>respiration</b> et changements d'appui.</li>
-        <li><b>Réveil en 6 temps</b> : sursaut, appui sur les bras, accroupi, redressement, rugissement, garde. Le dragon relève la tête, se redresse, rugit et décolle.</li>
-        <li>Fins d'attaque en 0,4 s au lieu d'un saut de pose. Le serveur attend 4 s avant la première attaque.</li>
+        <li><b>Ressorts en chaîne</b> du bassin jusqu'aux poings, buste qui se plie, tête qui regarde le joueur proche, respiration.</li>
+        <li><b>Réveil en 6 temps</b> : sursaut, appui sur les bras, accroupi, redressement, rugissement, garde. Le dragon décolle.</li>
       </ul>
     </div>
     <div class="card">
       <h3>Créatures fluides <span class="commit">01ad744 → 653a7e8</span></h3>
-      <ol class="steps">
-        <li><b>Moteur commun</b> <code>CreatureMotion</code> : virages, vrais pas en trot, rebond, respiration, tête, queue, ailes avec planés, sauts élastiques.</li>
-        <li><b>Mobs</b> lissés et prédits sur ton écran, sans saccades. Le serveur ne déplace plus les mobs des zones vides.</li>
-        <li><b>Familiers</b> qui suivent en douceur, avec de l'élan à l'attaque et une bascule au K.O.</li>
-        <li><b>Créatures de l'île</b> : accélèrent, freinent, se couchent pour dormir.</li>
-        <li><b>Vitrines, géants, Index et éclosion</b> vivants, avec un œuf qui vacille et une créature qui saute de joie.</li>
-      </ol>
-      <p>Sur téléphone : animation complète de près, version simplifiée de loin, rien pour ce qu'on ne voit pas.</p>
+      <ul>
+        <li>Moteur commun <code>CreatureMotion</code> : virages, vrais pas, rebond, tête, queue, ailes, sauts élastiques.</li>
+        <li>Mobs lissés sans saccades, familiers qui suivent en douceur, créatures de l'île qui se couchent pour dormir, vitrines et Index vivants.</li>
+        <li>Sur téléphone : animation complète de près, simplifiée de loin.</li>
+      </ul>
     </div>
   </div>
 
@@ -445,32 +505,27 @@
   <h2 id="feuille">🗺️ Feuille de route</h2>
   <div class="tbl"><table>
     <tr><th>Ordre</th><th>Chantier</th><th>État</th><th>Détail</th></tr>
-    <tr><td class="num">1</td><td>Île en U : placement</td><td><span class="st todo">🛠️ prochaine étape</span></td><td class="m">Îles à 341 du centre, pont fixe de 121 studs qui arrive dans la cour d'honneur.</td></tr>
-    <tr><td class="num">2</td><td>Île en U : construction</td><td><span class="st todo">🛠️ à coder</span></td><td class="m">Cour, deux allées-jardins, grand parc qui grandit vers la mer. Grille de construction en plusieurs morceaux.</td></tr>
-    <tr><td class="num">3</td><td>Île en U : sauvegardes</td><td><span class="st todo">🛠️ à coder</span></td><td class="m">Mise à jour qui replace les décorations déjà posées et rembourse celles qui ne rentrent plus.</td></tr>
-    <tr><td class="num">4</td><td>Château Mélange</td><td><span class="st todo">🛠️ à coder</span></td><td class="m">Remplace la façade actuelle : 6 paliers, 60 vitrines, 6 géants, île flottante, cascade de gemmes.</td></tr>
-    <tr><td class="num">5</td><td>Ponts au style du château</td><td><span class="st todo">🛠️ à coder</span></td><td class="m">Bois, pierre, or, cristal… selon le palier. Le bord des plaques suit la couleur du pont.</td></tr>
-    <tr><td class="num">6</td><td>Décor de la place</td><td><span class="st wait">⏳ tes captures</span></td><td class="m">La forme ronde est faite, le décor final viendra de tes références.</td></tr>
-    <tr><td class="num">7</td><td>Gamepass Robot mineur</td><td><span class="st wait">⏳ avant publication</span></td><td class="m">Créer le gamepass sur Roblox, fixer le prix, coller l'ID dans <code>TycoonConfig.GamePasses</code>.</td></tr>
-    <tr><td class="num">8</td><td>Combats des nouveaux mobs</td><td><span class="st wait">⏳ à observer</span></td><td class="m">Essai avec une équipe soignée au Volcan et au Céleste.</td></tr>
+    <tr><td class="num">1</td><td>12 nouvelles créatures et boss en rareté « Boss »</td><td><span class="st wait">⏳ croquis à valider</span></td><td class="m">100 espèces, œuf de boss à la roulette après 3 victoires.</td></tr>
+    <tr><td class="num">2</td><td>Refonte de toutes les créatures</td><td><span class="st todo">🛠️ prochaine étape</span></td><td class="m">Croquis d'abord, puis modèles.</td></tr>
+    <tr><td class="num">3</td><td>Un œuf par espèce, style Prisme + auras</td><td><span class="st todo">🛠️ après la refonte</span></td><td class="m">Auras par rareté encore à valider.</td></tr>
+    <tr><td class="num">4</td><td>Éclosion dès l'achat</td><td><span class="st todo">🛠️ validé</span></td><td class="m">Plus d'incubateurs, remboursement de ceux achetés.</td></tr>
+    <tr><td class="num">5</td><td>Décor de la place</td><td><span class="st wait">⏳ tes captures</span></td><td class="m">La forme ronde est faite.</td></tr>
+    <tr><td class="num">6</td><td>Relecture visuelle en jeu</td><td><span class="st wait">⏳ à faire ensemble</span></td><td class="m">Les captures Studio sortent noires : île en U, château, ponts, nuit et sons n'ont été vérifiés que par mesures.</td></tr>
+    <tr><td class="num">7</td><td>Gamepass Robot mineur</td><td><span class="st wait">⏳ avant publication</span></td><td class="m">Créer le gamepass, coller l'ID dans <code>TycoonConfig.GamePasses</code>.</td></tr>
   </table></div>
 
   <div class="card soft">
     <h3>Déjà dans le jeu (du plus ancien au plus récent)</h3>
     <ul>
-      <li>Esplanade ouverte, machine à œufs en grand arc espacé (rayon 18, environ 8 studs entre les socles), panneaux de biais, <b>picots sur tous les sols</b>. <span class="commit">3414829 → 9122c92</span></li>
-      <li>Interface, quotidien, cadeau, coffre à 5 000. <span class="commit">75fb3cd</span></li>
-      <li>Prix, renaissances ×4, robot en gamepass. <span class="commit">601075e</span></li>
-      <li>Annonce Divin+ et garantie Légendaire+. <span class="commit">aaa9dc0</span></li>
-      <li>Poids, taille et géants. <span class="commit">abd2a91</span></li>
-      <li>Première façade de château par palier (sera remplacée par le Mélange). <span class="commit">b6b4917 → 5695da9</span></li>
-      <li>Boss plus vivants. <span class="commit">f4b35cf</span></li>
-      <li>Carte : arène retirée, place au centre, 8 îles, ponts en étoile. <span class="commit">1428085</span></li>
-      <li>Boss endormis dans les zones. <span class="commit">cd40fa5</span></li>
-      <li>Plaques de vitesse. <span class="commit">0575119</span></li>
-      <li>Monde à 6 zones, 21 modèles, corrections. <span class="commit">f6d193c · 85d7bdd · c7e4701</span></li>
-      <li>Créatures fluides, 5 étapes. <span class="commit">01ad744 → 653a7e8</span></li>
-      <li>Place centrale ronde. <span class="commit">c9905d2</span></li>
+      <li>Esplanade, machine en grand arc, panneaux de biais, picots sur tous les sols. <span class="commit">3414829 → 9122c92</span></li>
+      <li>Interface, quotidien, cadeau ; prix, renaissances, robot en gamepass. <span class="commit">75fb3cd · 601075e</span></li>
+      <li>Annonce Divin+, garantie ; poids et géants. <span class="commit">aaa9dc0 · abd2a91</span></li>
+      <li>Boss plus vivants ; carte avec place au centre et ponts en étoile ; boss endormis ; plaques de vitesse. <span class="commit">f4b35cf · 1428085 · cd40fa5 · 0575119</span></li>
+      <li>Monde à 6 zones et 21 modèles ; créatures fluides. <span class="commit">f6d193c · 85d7bdd · c7e4701 · 01ad744 → 653a7e8</span></li>
+      <li>Place ronde ; île en U et placements. <span class="commit">c9905d2 · 9df7f37 · 6c9e5bf</span></li>
+      <li>Château Mélange, cascade selon les travailleurs, château plein ; textes « château » ; ponts au style du château. <span class="commit">e003333 · a8af4f7 · 4c496f1 · 9061d7d · 142249f</span></li>
+      <li>Jour / nuit et météo, sons, monnaie « Éclats de mana », icônes, ciels. <span class="commit">19b1922 · 150394e · be03e98 · 21d06ac · d79936c</span></li>
+      <li>Les 34 monstres des zones deviennent des espèces (88). <span class="commit">8ac61b9</span></li>
     </ul>
   </div>
 
@@ -478,18 +533,18 @@
   <h2 id="ecarte">🚫 Ce qui a été écarté <span class="st no">à ne pas refaire</span></h2>
   <div class="grid2">
     <div class="card"><ul>
-      <li><b>Façade seule</b> : pas assez impressionnante, d'où le château Mélange en volume.</li>
-      <li><b>Tour au milieu</b> du château : remplacée par un balcon, puis par la flèche.</li>
-      <li><b>Géant au-dessus de la porte</b> : remplacé par la rosace en vitrail.</li>
-      <li><b>Tours détachées</b> du style 2 : toutes les tours sont collées.</li>
+      <li><b>Façade seule</b>, <b>tour au milieu</b>, <b>géant au-dessus de la porte</b>, <b>tours détachées</b> : remplacés par le château Mélange plein.</li>
+      <li><b>Château trop plat</b> : élargi à toute la largeur du rocher.</li>
+      <li><b>Cascade qui coule sans travailleur</b> : corrigé.</li>
       <li><b>Boss en blocs</b> pour les croquis : les vrais boss sont plus réalistes.</li>
+      <li><b>Musique</b> (les deux morceaux), <b>son de téléportation</b>, <b>oiseaux / grillons</b>, <b>clochette</b> : retirés. Peu de sons, et demander avant d'en ajouter.</li>
     </ul></div>
     <div class="card"><ul>
-      <li><b>Pontons entre îles voisines</b> : remplacés par des ponts en étoile depuis la place.</li>
-      <li><b>Tapis roulant</b> sur tout le pont (option B) : plaques espacées choisies.</li>
-      <li><b>Île ronde</b> (jardin autour du château) : tu préfères une île carrée.</li>
-      <li><b>Jardins larges à gauche et à droite</b> : éloigne les îles (cercle ~597) ou déborde chez les voisines à 341.</li>
-      <li><b>Jardin en éventail / qui grandit vers la place</b> : dépassés par l'île en U.</li>
+      <li><b>Pontons entre îles voisines</b> et <b>tapis roulant</b> : ponts en étoile et plaques espacées.</li>
+      <li><b>Île ronde</b>, <b>jardins larges à gauche et à droite</b>, <b>éventail</b>, <b>jardin vers la place</b> : remplacés par l'île en U.</li>
+      <li><b>Nuit ×1,25</b> : trop fort en fin de partie, remplacé par +0,25.</li>
+      <li><b>Œufs à l'image de l'animal</b> : seul le style Prisme est gardé.</li>
+      <li><b>Le nom « Gemmes »</b> : la monnaie s'appelle « Éclats de mana » 💠.</li>
     </ul></div>
   </div>
 
@@ -497,21 +552,22 @@
   <h2 id="technique">⚙️ Où se règle quoi</h2>
   <div class="tbl"><table>
     <tr><th>Sujet</th><th>Fichier</th><th>Réglage</th></tr>
-    <tr><td>Gamepasses (Robot)</td><td><code>Configurations/TycoonConfig.luau</code></td><td class="m"><code>GamePasses</code></td></tr>
+    <tr><td>Monnaie, gamepasses</td><td><code>Configurations/TycoonConfig.luau</code></td><td class="m"><code>Currency</code>, <code>GamePasses</code></td></tr>
     <tr><td>Annonce Divin+, garantie</td><td><code>Configurations/EggConfig.luau</code></td><td class="m">seuil et durée d'affichage</td></tr>
     <tr><td>Poids et géants</td><td><code>Configurations/WeightConfig.luau</code></td><td class="m">plages de poids, taille, gains</td></tr>
     <tr><td>Château et paliers</td><td><code>Configurations/CastleConfig.luau</code> · <code>Modules/CastleBuilder.luau</code></td><td class="m">paliers, places à géants</td></tr>
-    <tr><td>Machine, panneaux</td><td><code>Configurations/EggRollConfig.luau</code></td><td class="m"><code>BoardsFace</code> (angle des panneaux)</td></tr>
-    <tr><td>Picots au sol</td><td><code>Configurations/WorldConfig.luau</code></td><td class="m"><code>Art.StudFloorMin</code></td></tr>
+    <tr><td>Machine, panneaux</td><td><code>Configurations/EggRollConfig.luau</code></td><td class="m"><code>BoardsFace</code></td></tr>
+    <tr><td>Picots, jour / nuit, météo, ponts</td><td><code>Configurations/WorldConfig.luau</code></td><td class="m"><code>Art.StudFloorMin</code>, <code>DayNight</code>, <code>RandomWeather</code>, <code>IslandBridges</code></td></tr>
+    <tr><td>Sons</td><td><code>Configurations/SoundConfig.luau</code></td><td class="m">identifiants, volumes, <code>QuietAfterJoin</code></td></tr>
+    <tr><td>Icônes</td><td><code>UITheme</code></td><td class="m"><code>IconImages</code> / <code>MakeIcon</code></td></tr>
     <tr><td>Quotidien, cadeau</td><td><code>Configurations/RewardConfig.luau</code></td><td class="m">récompenses des 7 jours</td></tr>
     <tr><td>Disposition des îles</td><td><code>Modules/MapLayout.luau</code></td><td class="m"><code>GetIslandRingRadius()</code></td></tr>
     <tr><td>Boss des zones</td><td><code>Modules/ZoneBosses.luau</code> · <code>Configurations/BossConfig.luau</code></td><td class="m">cycle 10 / 20 min, difficultés</td></tr>
     <tr><td>Mouvements des créatures</td><td><code>Modules/CreatureMotion.luau</code></td><td class="m">ressorts, pas, ailes</td></tr>
-    <tr><td>Vitesse des plaques</td><td><code>Modules/BoostService.luau</code> (serveur)</td><td class="m">×3 pendant 4 s, sans triche possible</td></tr>
   </table></div>
-  <p>Les chemins partent de <code>src/ReplicatedStorage/</code>, sauf <code>CastleBuilder</code> et <code>BoostService</code> qui sont dans <code>src/ServerScriptService/Modules/</code>. Le code part dans Studio par Rojo (port 34872).</p>
+  <p>Les chemins partent de <code>src/ReplicatedStorage/</code>, sauf <code>CastleBuilder</code> qui est dans <code>src/ServerScriptService/Modules/</code>. Le code part dans Studio par Rojo (port 34872).</p>
 
-  <footer>Dossier rédigé à partir de l'historique des sessions, des croquis validés et du dépôt Git du projet. Il sera mis à jour au fil des étapes.</footer>
+  <footer>Ce dossier est tenu à jour à chaque changement validé, et republié automatiquement dans le salon Discord <b>#document-technique</b>.</footer>
 </div>
 
 <script>
@@ -530,11 +586,11 @@
   const RING = 190, PLAZA = 62;
   for (let i = 0; i < 8; i++) {
     const a = (i / 8) * Math.PI * 2 - Math.PI / 2, c = Math.cos(a), s = Math.sin(a);
-    el("line", { x1: c * PLAZA, y1: s * PLAZA, x2: c * (RING - 22), y2: s * (RING - 22) }, bridges);
-    for (let d = PLAZA + 20; d < RING - 26; d += 22) el("circle", { cx: c * d, cy: s * d, r: 2.4 }, pads);
+    el("line", { x1: c * PLAZA, y1: s * PLAZA, x2: c * (RING - 26), y2: s * (RING - 26) }, bridges);
+    for (let d = PLAZA + 20; d < RING - 30; d += 22) el("circle", { cx: c * d, cy: s * d, r: 2.4 }, pads);
     const g = el("g", { transform: `translate(${c * RING} ${s * RING}) rotate(${a * 180 / Math.PI + 90})` }, islands);
-    el("rect", { x: -20, y: -24, width: 40, height: 52, rx: 6, fill: "#6fb357", stroke: "#c8b98a", "stroke-width": 3 }, g);
-    el("rect", { x: -11, y: -24, width: 22, height: 14, rx: 2, fill: "#9d93c9" }, g);
+    el("rect", { x: -20, y: -26, width: 40, height: 54, rx: 6, fill: "#6fb357", stroke: "#c8b98a", "stroke-width": 3 }, g);
+    el("rect", { x: -11, y: 12, width: 22, height: 14, rx: 2, fill: "#9d93c9" }, g);
   }
   const Z = [["🌼", "Prairie"], ["💎", "Grotte"], ["❄️", "Glaces"], ["🌙", "Ombres"], ["🌋", "Volcan"], ["☁️", "Céleste"]];
   Z.forEach(([icon, name], i) => {
