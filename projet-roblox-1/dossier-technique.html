@@ -237,6 +237,12 @@
       <li>En jeu : <code>CreatureSkins</code> construit la peau à partir de <code>CreatureRigsData</code> (identifiant du mesh, texture, os) ; <code>CreatureBones</code> anime les os (marche en diagonale, ailes repliées ou en vol, tête, queues, respiration), branché dans <code>CreatureMotion</code> et dans les vitrines.</li>
       <li>Les <b>109 créatures</b> sont importées et testées en jeu (galerie : <code>docs/croquis/squelettes.html</code>), en attente de ta validation créature par créature.</li>
     </ul>
+    <h3>Détails de surface (poils, écailles, plumes, roche) <span class="st todo">🛠️ essai sur 4 créatures</span></h3>
+    <ul>
+      <li>Chaque créature reçoit une carte de relief et une carte de brillance, calculées dans Blender (<code>tools/mesh-gen/rig/detail_bake.py</code>) et posées sur la peau (<code>CreatureSurfaces/&lt;clé&gt;</code>, interrupteur <code>CreatureSkins.UseDetails</code>).</li>
+      <li>Poils (Loup), écailles (Dragon), roche et cristal (Golem de Cristal) validés le 19/10. Plumes refaites (Phénix) : plumes en rangées qui se chevauchent, avec un tuyau central ; en attente de ton avis (<code>docs/croquis/details-surface.html</code>).</li>
+      <li>Ensuite : chaque créature reçoit sa matière, et les créatures mixtes en ont plusieurs.</li>
+    </ul>
   </div>
 
   <!-- ===================================================== ŒUFS -->
