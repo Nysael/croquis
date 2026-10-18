@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Œufs et éclosion</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --no:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width: 860px) { .duo { grid-template-columns:1fr; } }
+  .box { background:var(--card); border-radius:14px; padding:12px 16px; }
+  .box h3 { margin:0 0 6px; font-size:17px; }
+  .box.before h3 { color:var(--no); }
+  .box.after h3 { color:var(--ok); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:12px; }
+  figure { margin:0; background:var(--card); border-radius:14px; overflow:hidden; border:3px solid transparent; }
+  figure.reco { border-color:var(--accent); }
+  figure img { width:100%; display:block; }
+  figcaption { padding:8px 12px 11px; font-size:14px; color:var(--muted); }
+  figcaption b.t { display:block; font-size:16px; margin-bottom:2px; }
+  .tag { display:inline-block; font-size:11px; font-weight:800; padding:2px 7px; border-radius:8px; background:var(--accent); color:#1d1a2b; margin-left:6px; vertical-align:2px; }
+  .panel { background:#352f55; border:3px solid #6f61c9; border-radius:18px; padding:12px; max-width:520px; }
+  .panel .title { font-weight:900; font-size:20px; margin-bottom:8px; }
+  .egg { display:flex; align-items:center; gap:10px; background:#2a2640; border-radius:12px; padding:8px 10px; margin-top:6px; }
+  .egg .ic { width:38px; height:46px; border-radius:50% 50% 46% 46% / 60% 60% 40% 40%; flex:none; }
+  .egg .info { flex:1; min-width:0; }
+  .egg .name { font-weight:800; font-size:14px; }
+  .bar { height:10px; background:#1d1a2b; border-radius:6px; overflow:hidden; margin-top:4px; }
+  .bar span { display:block; height:100%; background:linear-gradient(90deg,#8cff7a,#ffd34d); }
+  .egg .time { font-size:13px; color:var(--muted); margin-top:2px; }
+  .egg .btn { background:#00b06b; color:#fff; font-weight:900; font-size:12px; border-radius:10px; padding:6px 8px; white-space:nowrap; }
+  .toast { display:inline-block; background:#1d1a2be0; border:2px solid var(--ok); border-radius:12px; padding:8px 12px; font-weight:800; margin-top:10px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🥚 Les œufs : nouvelle éclosion et nouvelle apparence</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu.</p>
+
+  <h2>1. L'éclosion commence dès qu'on a l'œuf</h2>
+  <div class="duo">
+    <div class="box before"><h3>Aujourd'hui</h3><ul>
+      <li>Un œuf acheté va dans un <b>incubateur</b> de la place. 1 seul est gratuit ; les 3 autres coûtent 1 500, 7 500 et 50 000 💠.</li>
+      <li>Les autres œufs <b>attendent</b> qu'un incubateur se libère.</li>
+      <li>À la fin, il faut cliquer <b>« Ouvrir ! »</b>, puis une <b>grande animation</b> plein écran (œuf qui tremble, explosion, carte).</li>
+    </ul></div>
+    <div class="box after"><h3>Proposition</h3><ul>
+      <li>Chaque œuf (machine, comptoir, boss, coffres, récompenses…) <b>commence à éclore tout de suite</b>. Pas de limite, plus d'incubateurs à acheter.</li>
+      <li>À la fin du temps, la créature <b>naît toute seule</b>, sans animation : un petit message et elle apparaît dans tes créatures.</li>
+      <li>Si tes créatures sont pleines, l'œuf attend (« Prêt ») jusqu'à ce que tu fasses de la place.</li>
+    </ul></div>
+  </div>
+
+  <div class="duo" style="margin-top:12px">
+    <div>
+      <div class="panel">
+        <div class="title">🥚 Mes œufs (3 en éclosion)</div>
+        <div class="egg"><div class="ic" style="background:#ffc828"></div><div class="info"><div class="name">Œuf de Dragon · Légendaire</div><div class="bar"><span style="width:62%"></span></div><div class="time">⏱️ 7:35 restantes</div></div><div class="btn">⚡ Éclore R$35</div></div>
+        <div class="egg"><div class="ic" style="background:#4696ff"></div><div class="info"><div class="name">Œuf de Loup · Rare</div><div class="bar"><span style="width:85%"></span></div><div class="time">⏱️ 0:27 restantes</div></div><div class="btn">⚡ Éclore R$5</div></div>
+        <div class="egg"><div class="ic" style="background:#bebec3"></div><div class="info"><div class="name">Œuf de Lapin · Commun</div><div class="bar"><span style="width:20%"></span></div><div class="time">⏱️ 0:24 restantes</div></div><div class="btn">⚡ Éclore R$5</div></div>
+      </div>
+      <div class="toast">🐣 Ton Loup (Rare) est né ! Il t'attend dans tes créatures.</div>
+    </div>
+    <div class="box"><h3>Ce qui change aussi</h3><ul>
+      <li>Le bouton <b>« 🐣 Incubateurs »</b> disparaît ; tout se voit dans <b>« 🥚 Œufs »</b> (temps qui reste, barre de progression).</li>
+      <li>Les <b>4 incubateurs de la place</b> sont retirés.</li>
+      <li>Le bouton Robux <b>« ⚡ Éclore maintenant »</b> reste (il fait naître l'œuf tout de suite).</li>
+      <li><b>Remboursement</b> : un joueur qui avait payé des incubateurs récupère ses éclats de mana.</li>
+      <li>Les œufs déjà en stock dans les sauvegardes commencent à éclore à la prochaine connexion.</li>
+      <li>Tutoriel : l'étape « ouvre ton œuf » devient « ton œuf éclot… patiente ! ».</li>
+    </ul></div>
+  </div>
+
+  <h2>2. L'apparence des œufs (vus en jeu, en plein jour)</h2>
+  <div class="grid">
+    <figure><img src="oeufs/voxel.jpg" alt=""><figcaption><b class="t">A. Aujourd'hui : œuf en voxels</b>Pixels et motifs en blocs. Lisible, mais chargé.</figcaption></figure>
+    <figure><img src="oeufs/lisse.jpg" alt=""><figcaption><b class="t">B. Œuf lisse à taches</b>Fait avec des pièces simples : un peu trop rond, ressemble à une balle.</figcaption></figure>
+    <figure><img src="oeufs/brique.jpg" alt=""><figcaption><b class="t">C. Œuf en briques</b>Couches empilées : dans le style briques, mais un peu « toupie ».</figcaption></figure>
+    <figure class="reco"><img src="oeufs/ia.jpg" alt=""><figcaption><b class="t">D. Œufs dessinés (modèle 3D généré) <span class="tag">mon choix</span></b>Vraie forme d'œuf, brillant, motifs nets (zigzag, pois, étoiles) : le look des simulateurs. Je ferais <b>un modèle par rareté</b> (Commun, Peu commun, Rare, Épique, Légendaire, Mythique, Divin, Céleste) avec ses couleurs et un motif plus riche à chaque rareté, plus un halo lumineux pour les très rares.</figcaption></figure>
+  </div>
+  <div class="note"><b>Où on verrait les nouveaux œufs :</b> sur les socles de la machine à œufs, au comptoir, dans le menu « Œufs » et dans la boutique. Ils seraient tous du même style partout (aujourd'hui la machine a un œuf différent du reste).</div>
+</div>
+</body>
+</html>
