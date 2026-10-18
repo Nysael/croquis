@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icônes de l'interface</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:26px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width: 860px) { .duo { grid-template-columns:1fr; } }
+  .screen { position:relative; border-radius:16px; overflow:hidden; aspect-ratio:16/10;
+    background:linear-gradient(#59b4ff 0%, #a9dcff 55%, #6cc04a 56%, #4f9a36 100%); }
+  .screen h3 { position:absolute; top:8px; left:50%; transform:translateX(-50%); margin:0; font-size:14px; background:#0008; padding:3px 10px; border-radius:10px; z-index:2; }
+  .col { position:absolute; left:10px; top:44px; display:grid; grid-template-columns:repeat(2, 64px); gap:4px 6px; }
+  .btn { display:flex; flex-direction:column; align-items:center; width:64px; }
+  .btn .ic { width:46px; height:46px; display:flex; align-items:center; justify-content:center; font-size:36px; filter:drop-shadow(0 2px 0 #000); }
+  .btn .ic img { width:46px; height:46px; }
+  .btn .cap { font-size:11px; font-weight:900; color:#fff; -webkit-text-stroke:3px #000; paint-order:stroke fill; white-space:nowrap; margin-top:-4px; }
+  .top { position:absolute; top:34px; left:50%; transform:translateX(-50%); display:flex; gap:14px; }
+  .money { position:absolute; left:50%; bottom:14px; transform:translateX(-50%); background:#1d1a2bcc; border:3px solid #28b9ff; border-radius:16px; padding:4px 14px; display:flex; align-items:center; gap:8px; font-weight:900; font-size:22px; color:#fff; }
+  .money img { width:30px; height:30px; }
+  .money span.e { font-size:24px; }
+  .right { position:absolute; right:10px; bottom:10px; display:flex; gap:8px; }
+  .map { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:8px; }
+  .row { background:var(--card); border-radius:12px; padding:8px 10px; display:flex; align-items:center; gap:10px; }
+  .row .e { font-size:28px; width:36px; text-align:center; }
+  .row img { width:40px; height:40px; }
+  .row .n { font-size:14px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎨 Les icônes de l'interface</h1>
+  <p>C'est une proposition à valider : rien n'est changé dans le jeu. On remplace les emojis des boutons par les icônes du pack « Simulator Icon Pack » (et quelques-unes du pack « Flibpook » : cristal, couronne, œuf arc-en-ciel, globe). Les deux packs ont été vérifiés : aucun script.</p>
+
+  <h2>Avant / après (maquette de l'écran)</h2>
+  <div class="duo">
+    <div class="screen" id="before"><h3>Aujourd'hui (emojis)</h3></div>
+    <div class="screen" id="after"><h3>Proposition (icônes)</h3></div>
+  </div>
+
+  <h2>Chaque bouton</h2>
+  <div class="map" id="map"></div>
+  <div class="note"><b>Les éclats de mana</b> prennent le <b>cristal bleu</b> : ça colle au nom « éclat ». Les icônes de luck, vitesse, etc. pourront aussi servir dans les panneaux d'amélioration de la machine. Ce qui ne change pas : la place des boutons, leurs noms, et les couleurs du jeu.</div>
+</div>
+<script>
+const MENU = [
+  ["📖", "Index", "Index"], ["⚔️", "Équipe", "Power"], ["🛒", "Boutique", "Shop"], ["🔮", "Rebirth", "Rebirth"],
+  ["🏰", "Mon château", "CrownF"], ["🥚", "Œufs", "Eggs"], ["🐣", "Incubateurs", "magicEgg"], ["🗺️", "Zones", "World"],
+  ["🔨", "Construire", "Paint"], ["📜", "Quêtes", "Quests"], ["📦", "Capsules", "Box"], ["🎩", "Cosmétiques", "Star"],
+  ["🏆", "Parcs", "Trophies"],
+];
+const TOP = [["🏝️", "Mon île", "House"], ["🏛️", "Place", "Locate"]];
+const RIGHT = [["📅", "Quotidien", "Shop2"], ["🎁", "Cadeau", "Gift"]];
+function btn(item, icons) {
+  const ic = icons ? `<img src="icones/${item[2]}.png" alt="">` : item[0];
+  return `<div class="btn"><div class="ic">${ic}</div><div class="cap">${item[1]}</div></div>`;
+}
+function screen(id, icons) {
+  const el = document.getElementById(id);
+  el.insertAdjacentHTML("beforeend", `<div class="col">${MENU.map(m => btn(m, icons)).join("")}</div>`);
+  el.insertAdjacentHTML("beforeend", `<div class="top">${TOP.map(m => btn(m, icons)).join("")}</div>`);
+  el.insertAdjacentHTML("beforeend", `<div class="right">${RIGHT.map(m => btn(m, icons)).join("")}</div>`);
+  el.insertAdjacentHTML("beforeend", `<div class="money">${icons ? '<img src="icones/GemBlueF.png" alt="">' : '<span class="e">💠</span>'} 12,4K</div>`);
+}
+screen("before", false);
+screen("after", true);
+const all = [...MENU, ...TOP, ...RIGHT, ["💠", "Éclats de mana", "GemBlueF"]];
+document.getElementById("map").innerHTML = all.map(m => `<div class="row"><span class="e">${m[0]}</span>➜<img src="icones/${m[2]}.png" alt=""><span class="n">${m[1]}</span></div>`).join("");
+</script>
+</body>
+</html>
