@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style mature des créatures</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); margin-top:12px; }
+  .hero img { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:12px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  code { background:#3a3460; padding:1px 6px; border-radius:6px; color:var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Refonte des créatures : style moins « bébé »</h1>
+  <p>Lot test de 8 créatures générées dans Studio avec un nouveau style : <b>proportions naturelles, tête de taille normale, regard perçant, posture assurée</b>, fourrure / écailles détaillées, style fantasy épique. Plus de chibi, plus de grosses têtes ni de grands yeux brillants.</p>
+
+  <div class="hero">
+    <img src="style-mature/avant-apres.jpg" alt="Avant / après">
+    <p><b>Avant / après</b> : au fond, l'ancien style (chibi) ; devant, le nouveau. De gauche à droite : renard, loup, ours, hibou.</p>
+  </div>
+
+  <h2>Nouveau : le style intermédiaire (B)</h2>
+  <p>Entre les deux : proportions de <b>film d'animation</b>, tête et yeux un peu plus grands que le style mature mais <b>pas chibi</b>, allure assurée / aventurière, couleurs vives.</p>
+  <div class="hero">
+    <img src="style-mature/trois-styles.jpg" alt="Trois styles">
+    <p><b>Les 3 styles côte à côte</b> : au fond <b>A</b> mignon (ancien), au milieu <b>B</b> intermédiaire, devant <b>C</b> mature.</p>
+  </div>
+  <div class="hero">
+    <img src="style-mature/mid-a.jpg" alt="Style B : renard, loup, tigre, ours, dragon">
+    <p><b>Style B</b> : Renard · Loup · Tigre · Ours · Dragon (la tête du tigre est sortie noire : texture ratée, il serait régénéré)</p>
+  </div>
+  <div class="hero">
+    <img src="style-mature/mid-b.jpg" alt="Style B : ours, dragon, hibou, araignée, golem">
+    <p><b>Style B</b> : Ours · Dragon · Hibou · Araignée · Golem de cristal</p>
+  </div>
+
+  <h2>Style C (mature) : le lot test complet</h2>
+  <div class="hero">
+    <img src="style-mature/lot1-a.jpg" alt="Renard, loup, tigre, ours, dragon">
+    <p>Renard · Loup · Tigre · Ours · Dragon</p>
+  </div>
+  <div class="hero">
+    <img src="style-mature/lot1-b.jpg" alt="Ours, dragon, hibou, araignée, golem de cristal">
+    <p>Ours · Dragon · Hibou · Araignée · Golem de cristal</p>
+  </div>
+
+  <h2>Ce qui change dans la demande au générateur</h2>
+  <div class="cols">
+    <div class="note"><b>Avant</b><br>« Cute stylized pet… chibi proportions with a big head and large glossy expressive eyes, soft rounded chunky shapes »</div>
+    <div class="note"><b>Maintenant</b><br>« Stylized creature for a fantasy adventure game… natural athletic proportions, normal-sized head, sharp focused eyes, confident stance, detailed fur/scales, epic fantasy style, not cute, not chibi »</div>
+  </div>
+  <p>Les descriptions sont aussi durcies : « bébé dragon » → <b>jeune dragon féroce</b> aux écailles en armure ; « ours dodu » → <b>grizzly massif</b> balafré ; araignée rose → <b>araignée menaçante</b> aux yeux rouges, etc. Les créatures « douces » (lapin, poussin, papillon…) resteront jolies mais réalistes, sans effet peluche.</p>
+
+  <h2>Ensuite (après ton OK)</h2>
+  <ul>
+    <li>Les 100 espèces + les 9 boss régénérés dans ce style (même découpage tête / corps / pattes / ailes / queue, donc les animations restent).</li>
+    <li>Les œufs-gemmes à facettes refaits avec les détails de ces nouvelles créatures (cornes, crocs, écailles…) au lieu des détails « mignons ».</li>
+    <li>Mouvements : démarche, battements d'ailes et queue réglés sur des silhouettes plus longues (pas plus lourds, plus félins).</li>
+    <li>Captures en jeu de tout le lot dans un croquis final.</li>
+  </ul>
+  <div class="note">L'ancienne version reste en place tant que tu n'as pas validé (rien n'est remplacé dans le jeu).</div>
+</div>
+</body>
+</html>
