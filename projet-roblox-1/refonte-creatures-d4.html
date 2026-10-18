@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Créatures sans bugs</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#6fdc6f; --ko:#ff6b6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); margin-top:10px; }
+  .hero img { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  .ko { border-top:5px solid var(--ko); } .ok { border-top:5px solid var(--ok); }
+  table { border-collapse:collapse; width:100%; margin-top:8px; font-size:14px; }
+  td, th { padding:6px 10px; border-bottom:1px solid #3a3460; text-align:left; color:var(--muted); vertical-align:top; }
+  th { color:var(--text); }
+</style>
+</head>
+<body><div class="wrap">
+<h1>Les « petits bugs » : cause trouvée et corrigée</h1>
+<p>Presque tous venaient de la même chose : l'outil de peinture repeignait <b>chaque morceau séparément</b> (pattes, queue, ailes). D'où des pattes d'une autre couleur, des queues bleues, des jointures visibles et des ailes mal posées.</p>
+<div class="cols">
+  <div class="hero ko"><img src="refonte-d4/avant-lapin-aile.jpg"><p><b>Avant</b> : patte et queue bleues, ailes en vrac</p></div>
+  <div class="hero ko"><img src="refonte-d4/avant-hibou-dos.jpg"><p><b>Avant</b> : ailes d'une autre teinte que le corps</p></div>
+</div>
+<div class="note"><b>Nouvelle méthode :</b> la créature est générée d'<b>un seul bloc</b>, peinte <b>en une fois</b> (pelage uniforme, sans jointures), puis découpée en morceaux pour les animations. Les ailes et les cornes sont ensuite posées en mesurant le corps (garrot, front).</div>
+
+<h2>Famille cheval, refaite (photos <b>en jeu</b>)</h2>
+<div class="hero ok"><img src="refonte-d4/jeu-chevaux-ailes.jpg"><p>Pégase · Pégase d'Or · Alicorne · Licorne Divine, en jeu, <b>ailes au repos</b> (repliées le long du corps)</p></div>
+<div class="hero ok"><img src="refonte-d4/jeu-licorne.jpg"><p>En jeu : Licorne, Pégase d'Or, Licorne Divine. Pelage uniforme, plus de jointures.</p></div>
+<div class="hero ok"><img src="refonte-d4/chevaux-1.jpg"><p>Poney · Poney Étoilé · Licorne · Licorne de Glace · Licorne Arc-en-ciel (plus de « symbole » sur la croupe)</p></div>
+<div class="hero ok"><img src="refonte-d4/chevaux-2.jpg"><p>Pégase · Pégase des Nuages · Pégase d'Or · Alicorne · Licorne Divine : ailes déployées (pose de base)</p></div>
+
+<h2>Nouveau : ailes au repos</h2>
+<p>Toutes les créatures ailées (pégases, griffons, dragons, oiseaux, chauves-souris…) <b>replient leurs ailes</b> quand elles sont posées ou qu'elles marchent : vers le bas et vers l'arrière, le long du corps. Elles les <b>entrouvrent</b> quand elles courent, ont un petit frémissement de temps en temps, et les <b>déploient</b> pour voler.</p>
+<div class="cols">
+  <div class="hero ok"><img src="refonte-d4/ailes-repos.jpg"><p><b>Au repos</b> : ailes repliées le long du flanc</p></div>
+  <div class="hero ok"><img src="refonte-d4/ailes-vol.jpg"><p><b>En vol</b> : ailes ouvertes, battements</p></div>
+</div>
+
+<h2>Famille lapin, refaite (photo en jeu)</h2>
+<div class="hero ok"><img src="refonte-d4/jeu-lapins.jpg"><p>Lapin · Lapin-Licorne · Lapin Lunaire (noir, lune jaune) · Lapin Ailé · Lapin Farceur (bandana) : même corps, pelage uniforme</p></div>
+
+<h2>Golem de Cristal et Lion des Étoiles : choisis 1 ou 2</h2>
+<div class="hero ok"><img src="refonte-d4/golems-lions.jpg"><p>De gauche à droite : <b>Golem 1</b> · <b>Golem 2</b> (2 bras, gros cristaux, jambes de la même couleur) · <b>Lion 1</b> · <b>Lion 2</b> (plus d'anneau)</p></div>
+
+<h2>Ce qui reste</h2>
+<table>
+<tr><th>Point</th><th>État</th></tr>
+<tr><td>Yeux des chevaux</td><td>Mieux qu'avant mais encore un peu « dessin animé » (cils) : l'outil de peinture a du mal avec les yeux. Dis-moi si ça passe.</td></tr>
+<tr><td>Corne de la Licorne</td><td>Un peu trop longue en jeu : je la raccourcis.</td></tr>
+<tr><td>Dragon Ancien</td><td>Toujours en attente de ton choix : 1 tête plus imposante, ou 3 têtes assemblées par moi.</td></tr>
+<tr><td>Hibou, Ours, Sphinx, Ours Polaire, Scarabée, Prisme, Griffon, Loup</td><td>Versions de la dernière fois (yeux refaits), à confirmer.</td></tr>
+</table>
+<div class="note">Rien n'est encore dans le jeu officiel : ces tests sont à part.</div>
+</div></body></html>
