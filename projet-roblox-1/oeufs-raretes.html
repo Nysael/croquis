@@ -23,6 +23,7 @@
   figcaption .t { display:flex; align-items:center; gap:8px; font-size:17px; font-weight:800; color:var(--text); margin-bottom:3px; }
   figcaption .n { font-size:12px; font-weight:800; background:var(--c); color:#1d1a2b; border-radius:8px; padding:1px 7px; }
   .plus { color:var(--accent); font-weight:700; }
+  .new { font-size:11px; font-weight:800; background:#ffd34d; color:#1d1a2b; border-radius:8px; padding:1px 7px; }
   .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
 </style>
 </head>
@@ -33,7 +34,7 @@
 
   <div class="hero">
     <img src="oeufs-raretes/ensemble.jpg" alt="Les 10 œufs côte à côte">
-    <p>Vue d'en haut, comme la caméra du jeu. Devant : Commun → Légendaire. Derrière : Mythique → Secret.</p>
+    <p>Vue d'en haut, comme la caméra du jeu. Devant : Commun → Légendaire. Derrière : Mythique → Secret (ici encore l'ancien Secret arc-en-ciel ; le nouveau, noir, est plus bas).</p>
   </div>
 
   <h2>Les 10 raretés</h2>
@@ -47,8 +48,25 @@
     <figure style="--c:#fffceb"><img src="oeufs-raretes/divin.jpg" alt=""><figcaption><div class="t"><span class="n">7</span>Divin</div>Œuf ailé à couronne. <span class="plus">+ auréole dorée</span> au-dessus (bien visible d'en haut).</figcaption></figure>
     <figure style="--c:#50e6ff"><img src="oeufs-raretes/celeste.jpg" alt=""><figcaption><div class="t"><span class="n">8</span>Céleste</div>Œuf de glace en coquille. <span class="plus">+ étoiles</span> qui scintillent tout autour.</figcaption></figure>
     <figure style="--c:#9646ff"><img src="oeufs-raretes/cosmique.jpg" alt=""><figcaption><div class="t"><span class="n">9</span>Cosmique</div>Œuf violet à étoiles. <span class="plus">+ fumée de galaxie</span> violette qui tourbillonne.</figcaption></figure>
-    <figure style="--c:#ff9ae0"><img src="oeufs-raretes/secret.jpg" alt=""><figcaption><div class="t"><span class="n">10</span>Secret</div>Œuf nacré. <span class="plus">Toute l'aura en arc-en-ciel</span> ; en jeu, l'anneau et l'auréole changeront de couleur en continu.</figcaption></figure>
+    <figure style="--c:#2a1040"><img src="oeufs-especes/prisme.jpg" alt=""><figcaption><div class="t"><span class="n">10</span>Secret <span class="new">nouveau</span></div><span class="plus">Aura NOIRE, réservée au Secret</span> : fumée d'ombre, rayons sombres, étoiles noires, anneau et auréole violet foncé. (Exemple : l'œuf du Prisme Suprême.)</figcaption></figure>
   </div>
+
+  <h2>Un œuf pour chaque espèce <span class="new">nouveau</span></h2>
+  <p>Chaque espèce (54 en tout) a <b>son propre œuf à son image</b> : ses couleurs, son visage et un détail (oreilles, cornes, ailes…). L'aura reste celle de sa rareté. Voici un échantillon de 7 espèces, une par rareté :</p>
+  <div class="hero">
+    <img src="oeufs-especes/ensemble.jpg" alt="7 œufs d'espèce">
+    <p>De droite à gauche : Lapin (Commun), Renard (Peu commun), Loup (Rare), Renard à trois queues (Épique), Licorne (Légendaire), Dragon (Mythique), Prisme Suprême (Secret, aura noire).</p>
+  </div>
+  <div class="grid" style="margin-top:12px">
+    <figure style="--c:#bebec3"><img src="oeufs-especes/lapin.jpg" alt=""><figcaption><div class="t">Œuf de Lapin</div>Commun : longues oreilles, patte rose.</figcaption></figure>
+    <figure style="--c:#5ad25a"><img src="oeufs-especes/renard.jpg" alt=""><figcaption><div class="t">Œuf de Renard</div>Peu commun : oreilles pointues, frimousse, zigzag blanc.</figcaption></figure>
+    <figure style="--c:#4696ff"><img src="oeufs-especes/loup.jpg" alt=""><figcaption><div class="t">Œuf de Loup</div>Rare : pelage rayé gris, pattes qui sortent de la coquille.</figcaption></figure>
+    <figure style="--c:#aa50ff"><img src="oeufs-especes/renard3q.jpg" alt=""><figcaption><div class="t">Œuf de Renard à trois queues</div>Épique : masque blanc, queues violettes.</figcaption></figure>
+    <figure style="--c:#ffc828"><img src="oeufs-especes/licorne.jpg" alt=""><figcaption><div class="t">Œuf de Licorne</div>Légendaire : crinière rose. ⚠️ Il a 2 cornes au lieu d'une : je le regénérerai.</figcaption></figure>
+    <figure style="--c:#ff4682"><img src="oeufs-especes/dragon.jpg" alt=""><figcaption><div class="t">Œuf de Dragon</div>Mythique : écailles rouges, cornes, petites ailes. (Un peu petit : tous les œufs seront mis à la même taille.)</figcaption></figure>
+    <figure style="--c:#2a1040"><img src="oeufs-especes/prisme.jpg" alt=""><figcaption><div class="t">Œuf du Prisme Suprême</div>Secret : cristal noir fendu de violet, aura noire.</figcaption></figure>
+  </div>
+  <p>Si ça te va, je génère les 47 autres de la même façon et je vérifie chacun ; ceux qui sont ratés seront refaits. Les œufs « mystère » (Œuf Basique, Rare, Épique, Légendaire, Citrouille, Boss) gardent un œuf de leur rareté.</p>
 
   <div class="note">
     <b>Où on verra les auras :</b> sur les socles de la machine à œufs, au comptoir et sur la place.
