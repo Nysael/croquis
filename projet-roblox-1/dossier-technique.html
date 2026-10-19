@@ -234,7 +234,8 @@
       <li>Chaque créature devient <b>une seule peau</b> (un MeshPart) avec <b>de vrais os</b> : dos, cou, tête, queue(s) en 3 segments, pattes ou bras à 3 os, ailes à 3 os. La peau se plie aux articulations : <b>plus de trou à l'épaule</b> ni de pièces qui flottent.</li>
       <li>Chaîne automatique sur la machine : export depuis Studio, peau fondue et texture reportée dans Blender, squelette calculé, fichier 3D, puis <b>import automatique</b> dans Studio (souris pilotée, bandeau rouge et notification Noctu).</li>
       <li>Les 5 chevaux ailés partagent la peau et le squelette du Pégase ; seule la peinture change.</li>
-      <li>En jeu : <code>CreatureSkins</code> construit la peau à partir de <code>CreatureRigsData</code> (identifiant du mesh, texture, os) ; <code>CreatureBones</code> anime les os (marche en diagonale, ailes repliées ou en vol, tête, queues, respiration), branché dans <code>CreatureMotion</code> et dans les vitrines.</li>
+      <li>En jeu : <code>CreatureSkins</code> construit la peau à partir de <code>CreatureRigsData</code> (identifiant du mesh, texture, os) ; <code>CreatureBones</code> anime les os (marche en diagonale, vol, tête, queues, respiration), branché dans <code>CreatureMotion</code> et dans les vitrines.</li>
+      <li><b>Décision du 20/10 : les créatures ailées sont toujours en vol</b>. À l'arrêt, elles font du sur-place en battant des ailes ; dans les vitrines, sur les balcons et dans l'Index, elles volent sur place (pattes repliées, léger flottement). Plus d'ailes repliées. Seul le Poussin reste au sol.</li>
       <li>Les <b>109 créatures</b> sont importées et testées en jeu (galerie : <code>docs/croquis/squelettes.html</code>), en attente de ta validation créature par créature.</li>
     </ul>
     <h3>Détails de surface (poils, écailles, plumes, roche) <span class="st todo">🛠️ essai sur 4 créatures</span></h3>
