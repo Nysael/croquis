@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corrections créatures</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --ok:#6fdc6f; --ko:#ff6b6b; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); margin-top:10px; border-top:5px solid #6a62a0; }
+  .hero.ok { border-top-color:var(--ok); } .hero.ko { border-top-color:var(--ko); }
+  .hero img { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+</style>
+</head>
+<body><div class="wrap">
+<h1>Corrections : Renard et Griffon</h1>
+<p>Les deux défauts que tu as vus venaient des <b>modèles 3D eux-mêmes</b>, pas des détails de surface : le Renard avait <b>deux queues</b> (une derrière, une enroulée contre l'avant du corps, celle qui « sort de l'épaule »), et le Griffon n'avait que <b>deux petits paquets de plumes collés au cou</b> à la place des ailes. Je les regénère, puis je leur refais un squelette.</p>
+
+<h2>Avant (modèles actuels)</h2>
+<div class="cols">
+  <div class="hero ko"><img src="corrections-creatures/renard-actuel.png"><p><b>Renard actuel</b> : la 2e queue, enroulée devant (en bas)</p></div>
+  <div class="hero ko"><img src="corrections-creatures/griffon-actuel.png"><p><b>Griffon actuel</b> : les « ailes » blanches collées au cou</p></div>
+</div>
+
+<h2>Nouveaux Renards (une seule queue)</h2>
+<div class="cols">
+  <div class="hero"><img src="corrections-creatures/renards-face.jpg"><p>De face : <b>v1</b> (orange, à gauche) · <b>v2</b> (rouge à taches sombres, à droite)</p></div>
+  <div class="hero"><img src="corrections-creatures/renards-cote.jpg"><p>De côté : v1 au premier plan (queue qui retombe derrière), v2 derrière (longue queue tendue)</p></div>
+</div>
+
+<h2>Nouveaux Griffons (vraies ailes)</h2>
+<div class="cols">
+  <div class="hero ko"><img src="corrections-creatures/griffon-v1.jpg"><p><b>v1</b> : raté, tête de lion au lieu d'une tête d'aigle</p></div>
+  <div class="hero ok"><img src="corrections-creatures/griffon-v2.jpg"><p><b>v2</b> : tête d'aigle et crinière, grandes ailes blanches, corps de lion. <b>Mon choix.</b></p></div>
+</div>
+
+<div class="note">Dis-moi <b>Renard v1 ou v2</b>, et si le <b>Griffon v2</b> te va. Ensuite : squelette, import, détails de surface (poils + plumes sur les ailes), et vidéo de contrôle.</div>
+</div></body></html>
