@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attaques des boss</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --ok:#6fdc6f; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .hero { border-radius:14px; overflow:hidden; background:var(--card); margin-top:10px; border-top:5px solid var(--ok); }
+  .hero img, .hero video { width:100%; display:block; }
+  .hero p { margin:0; padding:8px 14px 12px; font-size:14px; }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  table { border-collapse:collapse; width:100%; margin-top:8px; font-size:14px; }
+  td, th { padding:6px 10px; border-bottom:1px solid #3a3460; text-align:left; color:var(--muted); vertical-align:top; }
+  th { color:var(--text); }
+</style>
+</head>
+<body><div class="wrap">
+<h1>Nouvelles attaques des boss (squelette)</h1>
+<p>Les anciennes animations sont abandonnées. Chaque attaque est refaite <b>os par os</b>, en trois temps : une <b>préparation</b> longue et lisible (elle se termine pile quand le cercle d'alerte disparaît, le joueur sait quand esquiver), un <b>impact</b> très court et violent, puis un <b>retour</b> amorti. Deux familles : les <b>bipèdes</b> (Géant, Golem, Yéti, Roi Citrouille, Liche) et les <b>dragons / griffons</b>. Pas encore branché en combat : je les montre d'abord.</p>
+
+<div class="hero"><video src="boss-attaques/attaques-v1.mp4" controls loop muted playsinline></video><p>Vidéo (23 s, ralentie ×2) : les 5 attaques, Yéti Géant à gauche et Dragon de Lave à droite</p></div>
+
+<h2>Les 5 attaques</h2>
+<table>
+<tr><th>Attaque (jeu)</th><th>Bipède</th><th>Dragon / griffon</th></tr>
+<tr><td><b>Frappe au sol</b> (Slam)</td><td>Lève les deux poings au-dessus de la tête, buste cambré, puis les abat au sol en se pliant, genoux fléchis</td><td>Se cabre, pattes avant et ailes levées, puis retombe, pattes avant au sol, tête basse, ailes rabattues</td></tr>
+<tr><td><b>Onde de choc</b> (Stomp)</td><td>S'accroupit, saute bras levés, retombe accroupi, bras écartés</td><td>Rugit ailes grandes ouvertes, puis donne un grand battement vers le bas</td></tr>
+<tr><td><b>Projectiles</b> (Pumpkins / Barrage)</td><td>Trois lancers en alternant les bras, épaules qui tournent</td><td><b>Souffle</b> : tête rejetée en arrière, puis cou tendu qui balaie la zone</td></tr>
+<tr><td><b>Balayage</b> (Sweep)</td><td>Buste vrillé, bras armé sur le côté, puis grand revers</td><td><b>Coup de queue</b> : queue armée d'un côté, puis fouet de l'autre</td></tr>
+<tr><td><b>Racines / geysers</b> (Thorns)</td><td>Bras levés, puis poings plantés dans le sol, à genoux</td><td>Se cabre, puis plante ses griffes, tête au sol</td></tr>
+<tr><td><b>Mort</b></td><td colspan="2">Titube, puis tombe à genoux (bipède) ou s'effondre, ailes qui retombent (dragon)</td></tr>
+</table>
+
+<h2>Moments clés</h2>
+<div class="cols">
+  <div class="hero"><img src="boss-attaques/slam-prep.jpg"><p>Frappe au sol : préparation (poings levés / dragon cabré)</p></div>
+  <div class="hero"><img src="boss-attaques/slam-impact.jpg"><p>Frappe au sol : impact</p></div>
+  <div class="hero"><img src="boss-attaques/stomp-air.jpg"><p>Onde de choc : en l'air / rugissement ailes ouvertes</p></div>
+  <div class="hero"><img src="boss-attaques/stomp-impact.jpg"><p>Onde de choc : réception / battement</p></div>
+  <div class="hero"><img src="boss-attaques/lancer.jpg"><p>Projectiles : lancer / souffle</p></div>
+  <div class="hero"><img src="boss-attaques/balayage.jpg"><p>Balayage / coup de queue</p></div>
+  <div class="hero"><img src="boss-attaques/racines-prep.jpg"><p>Racines : bras levés</p></div>
+  <div class="hero"><img src="boss-attaques/racines-impact.jpg"><p>Racines : poings et griffes plantés</p></div>
+</div>
+<div class="note">Dis-moi ce qui te plaît ou pas (attaque par attaque si besoin), et si tu veux des gestes plus amples, plus rapides ou plus lourds. Ensuite je les branche dans les combats.</div>
+</div></body></html>
