@@ -1,20 +1,29 @@
 <title>Auras des œufs en jeu</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; color-scheme: dark; }
+  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; color-scheme: dark; }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
-  .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 16px; }
+  .wrap { max-width: 1050px; margin: 0 auto; display: grid; gap: 16px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
-  p { margin: 0; color: var(--muted); max-width: 75ch; }
-  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  p { margin: 0; color: var(--muted); max-width: 78ch; }
+  .tag { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; align-content: start; }
   video, img { width: 100%; max-width: 100%; border-radius: 8px; display: block; background: #000; }
   figcaption { font-size: 14px; color: var(--muted); }
 </style>
 <div class="wrap">
+  <span class="tag">Version 3 · 22/10</span>
   <h1>Auras des œufs en jeu</h1>
-  <p>Les nouvelles auras (une signature par rareté), filmées dans Studio le 22/10 sur des œufs de test, en plein jour. Dans le jeu, elles s'affichent sur les vrais œufs de chaque espèce.</p>
-  <figure><video src="auras-en-jeu.mp4" controls muted loop playsinline></video><figcaption>Les 10 raretés, de gauche à droite : Commun, Peu commun, Rare, Épique, Légendaire, Mythique, Divin, Céleste, Cosmique, Secret (première version : feuilles, rayons et ailes corrigés ensuite).</figcaption></figure>
-  <figure><video src="auras-corrigees.mp4" controls muted loop playsinline></video><figcaption>Après correction : feuilles qui tombent (Peu commun), rayons dorés (Légendaire), Divin.</figcaption></figure>
-  <figure><img src="divin-ailes.jpg" alt="Œuf Divin avec ses ailes de lumière"><figcaption>Divin, de près : les deux ailes de lumière (elles battent en jeu) et l'auréole.</figcaption></figure>
+  <p>Même idée par rareté, mais chaque aura est maintenant faite de plusieurs couches : un halo doux de la couleur de la rareté derrière l'œuf, un cercle lumineux animé au sol (anneau, ondes, runes, couronne de feu, givre, galaxie…) et la signature avec de belles textures (traînées derrière les orbes, vraies flammes, rayons à deux couches, anneau d'étoiles qui défile). Filmé dans Studio sur des œufs de test, de gauche à droite : Commun → Secret. Dans la machine, l'aura se pose maintenant sous l'œuf de son socle.</p>
+  <figure><video src="auras-v3-rangee.mp4" controls autoplay muted loop playsinline></video><figcaption>Les 10 raretés, deux par deux.</figcaption></figure>
+  <div class="grid">
+    <figure><img src="v3-9.jpg" alt=""><figcaption>Peu commun (feuilles, anneau doux) · Rare (bulles, ondes)</figcaption></figure>
+    <figure><img src="v3-15.jpg" alt=""><figcaption>Épique (orbes et traînées, runes) · Légendaire (rayons dorés, runes d'or)</figcaption></figure>
+    <figure><img src="v3-21.jpg" alt=""><figcaption>Mythique (flammes roses, couronne de feu) · Divin (ailes, auréole)</figcaption></figure>
+    <figure><img src="v3-25.jpg" alt=""><figcaption>Divin · Céleste (anneau de flocons, givre)</figcaption></figure>
+    <figure><img src="v3-31.jpg" alt=""><figcaption>Cosmique (anneau d'étoiles, galaxie) · Secret (fumée noire, éclairs)</figcaption></figure>
+  </div>
 </div>
