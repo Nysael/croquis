@@ -455,6 +455,7 @@
         <li><b>Animations</b> : chacun des 9 boss a ses propres attaques et sa mort, animées à la main dans Blender et publiées comme vraies animations Roblox.</li>
         <li><b>Projectiles</b> : ils partent de la main, de la gueule ou du bâton au moment du geste, avec un aspect, une trajectoire et un son propres à chaque boss (comète de givre, boule de feu, orbe maudit, plume dorée...).</li>
         <li><b>Effets magiques</b> : cercles d'alerte lumineux qui se remplissent jusqu'à l'impact, éclats d'étoiles, ondes de choc, fissures lumineuses, cristaux, geysers de lave, mort en lumière.</li>
+        <li><b>Entrée en combat</b> (21/10, <code>BossArenaClient</code>) : cinématique de 4,2 s (bandes noires, caméra qui glisse vers le boss, nom au rugissement, retour derrière le joueur, un clic la passe) ; un <b>mur</b> sort du sol autour de la clairière et bloque jusqu'à la fin (sur l'écran des joueurs du combat seulement) ; bouton <b>« Abandonner »</b> pour sortir. 1re attaque à 5 s. Décors à thème des murs : croquis <code>boss-murs.html</code>, en attente d'avis.</li>
         <li><b>Marche et vol</b> animés dans Blender (21/10, <code>poses/_locomotion.py</code>) : boucle « Walk » (Géant, Golem, Roi Citrouille, Yéti ; la Liche glisse) jouée quand le boss avance, à la cadence de ses pas (<code>BossLocomotion</code>), boucle « Fly » en continu pour les 4 boss ailés ; arrêtées pendant les attaques, le réveil et la mort. Vidéo : <code>boss-deplacements.html</code>.</li>
       </ul>
     </div>
