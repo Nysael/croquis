@@ -1,29 +1,38 @@
-<title>Auras des œufs en jeu</title>
+<title>Œufs d'espèce : essai</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; color-scheme: dark; }
+  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; --warn: #ff8a7a; color-scheme: dark; }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
-  .wrap { max-width: 1050px; margin: 0 auto; display: grid; gap: 16px; }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
   p { margin: 0; color: var(--muted); max-width: 78ch; }
+  b { color: var(--fg); }
   .tag { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
   figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; align-content: start; }
-  video, img { width: 100%; max-width: 100%; border-radius: 8px; display: block; background: #000; }
+  img { width: 100%; max-width: 100%; border-radius: 8px; display: block; }
   figcaption { font-size: 14px; color: var(--muted); }
+  .warn { color: var(--warn); font-weight: 700; }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; }
 </style>
 <div class="wrap">
-  <span class="tag">Version 3 · 22/10</span>
-  <h1>Auras des œufs en jeu</h1>
-  <p>Même idée par rareté, mais chaque aura est maintenant faite de plusieurs couches : un halo doux de la couleur de la rareté derrière l'œuf, un cercle lumineux animé au sol (anneau, ondes, runes, couronne de feu, givre, galaxie…) et la signature avec de belles textures (traînées derrière les orbes, vraies flammes, rayons à deux couches, anneau d'étoiles qui défile). Filmé dans Studio sur des œufs de test, de gauche à droite : Commun → Secret. Dans la machine, l'aura se pose maintenant sous l'œuf de son socle.</p>
-  <figure><video src="auras-v3-rangee.mp4" controls autoplay muted loop playsinline></video><figcaption>Les 10 raretés, deux par deux.</figcaption></figure>
+  <span class="tag">Essai · 6 espèces sur 109</span>
+  <h1>Œufs d'espèce : essai</h1>
+  <p>Un œuf généré en 3D pour chaque espèce : base d'œuf en cristal taillé (le style du Prisme Suprême que tu as aimé), aux couleurs de l'espèce, avec de petits détails qui la rappellent, et <b>aucun visage</b>. Vus de près dans Studio. Sur chaque photo, l'œuf de l'espèce est celui du milieu.</p>
+  <figure><img src="rangee.jpg" alt="Rangée"><figcaption>De loin : Dragonnet, Phénix, Méduse, et à droite l'œuf du Prisme Suprême (référence de style).</figcaption></figure>
   <div class="grid">
-    <figure><img src="v3-9.jpg" alt=""><figcaption>Peu commun (feuilles, anneau doux) · Rare (bulles, ondes)</figcaption></figure>
-    <figure><img src="v3-15.jpg" alt=""><figcaption>Épique (orbes et traînées, runes) · Légendaire (rayons dorés, runes d'or)</figcaption></figure>
-    <figure><img src="v3-21.jpg" alt=""><figcaption>Mythique (flammes roses, couronne de feu) · Divin (ailes, auréole)</figcaption></figure>
-    <figure><img src="v3-25.jpg" alt=""><figcaption>Divin · Céleste (anneau de flocons, givre)</figcaption></figure>
-    <figure><img src="v3-31.jpg" alt=""><figcaption>Cosmique (anneau d'étoiles, galaxie) · Secret (fumée noire, éclairs)</figcaption></figure>
+    <figure><img src="lapin.jpg" alt=""><figcaption><b>Lapin</b> (Commun) : grandes oreilles, pompon, cristal rose nacré. <span class="warn">Le haut blanc fait un peu « paupières fermées » : je le referais.</span></figcaption></figure>
+    <figure><img src="renard.jpg" alt=""><figcaption><b>Renard</b> (Peu commun) : oreilles pointues, coquille fendue, queue enroulée au pied.</figcaption></figure>
+    <figure><img src="loup.jpg" alt=""><figcaption><b>Loup</b> (Rare) : oreilles, pelage gris, griffures bleues. <span class="warn">De face, les griffures ressemblent à des yeux : je les mettrais sur le côté.</span></figcaption></figure>
+    <figure><img src="dragonnet.jpg" alt=""><figcaption><b>Dragonnet de Cristal</b> (Épique) : écailles de cristal, petites cornes, ailes repliées.</figcaption></figure>
+    <figure><img src="phenix.jpg" alt=""><figcaption><b>Phénix</b> (Mythique) : œuf taillé dans une couronne de plumes de feu (plus rouge-orange en jeu avec son aura).</figcaption></figure>
+    <figure><img src="meduse.jpg" alt=""><figcaption><b>Méduse Astrale</b> (Céleste) : cloche étoilée et tentacules.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p><b>Si ce style te va</b>, je génère les 103 autres de la même façon, par lots de 6, en vérifiant chacun (pas de visage, espèce reconnaissable) et en refaisant les ratés. Je te montre une planche par lot. Ensuite je les branche dans la machine à œufs, avec les auras.</p>
+    <p>Dis-moi aussi si tu veux plus de cristal (plus proche du Prisme) ou plus de détails d'animal.</p>
   </div>
 </div>
