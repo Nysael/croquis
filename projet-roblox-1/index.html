@@ -1,30 +1,31 @@
-<title>Murs d'arène en jeu</title>
+<title>Modèles pour les murs d'arène</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #eef1f8; --panel: #ffffff; --fg: #1d2236; --muted: #5b6380; --line: #d7dcec; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; color-scheme: dark } }
-  :root[data-theme="dark"] { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; color-scheme: dark }
+  :root { --bg: #eef1f8; --panel: #ffffff; --fg: #1d2236; --muted: #5b6380; --line: #d7dcec; --accent: #d9534f; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; --accent: #ff7b77; color-scheme: dark } }
+  :root[data-theme="dark"] { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; --accent: #ff7b77; color-scheme: dark }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
   .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
-  p { margin: 0; color: var(--muted); max-width: 75ch; }
+  h2 { margin: 0; font-size: 19px; }
+  p { margin: 0; color: var(--muted); max-width: 78ch; }
   .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
-  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; align-content: start; }
   img { width: 100%; border-radius: 8px; display: block; }
-  figcaption { font-size: 14px; color: var(--muted); }
-  figcaption b { color: var(--fg); }
+  figcaption { font-size: 14px; color: var(--muted); display: grid; gap: 4px; }
+  .rec { color: var(--accent); font-weight: 700; }
 </style>
 <div class="wrap">
-  <h1>Murs d'arène en jeu</h1>
-  <p>Captures dans Studio le 21/10, vues depuis l'intérieur de l'arène, en plein jour. Les flammes fantômes, la brume, les braises et le givre (des particules) et les lueurs ne se voient pas sur ces captures : ils n'apparaissent qu'en jeu.</p>
+  <h1>Modèles pour les murs d'arène</h1>
+  <p>De vrais modèles gratuits de la boutique Roblox, comme la citrouille. Beaucoup n'ont pas de texture (gris) : je leur donne la couleur et la matière du thème (glace transparente, os beige, cristal violet qui brille…). Regarde surtout la FORME. Au fond des images, on voit les autres rangées : ne regarde que la rangée du devant.</p>
   <div class="grid">
-    <figure><img src="potager.jpg" alt="Mur du Potager"><figcaption><b>Potager aux Citrouilles</b> : pieux tordus, deux rangées de ronces à épines, vraies citrouilles-lanternes.</figcaption></figure>
-    <figure><img src="grotte.jpg" alt="Mur de la Grotte"><figcaption><b>Grotte des Fantômes</b> : cristaux violets mi-transparents (+ flammes vertes en jeu).</figcaption></figure>
-    <figure><img src="glaces.jpg" alt="Mur des Glaces"><figcaption><b>Royaume des Glaces</b> : blocs de glace transparents enneigés, pics de glace au pied (+ givre en jeu).</figcaption></figure>
-    <figure><img src="ombres.jpg" alt="Mur du Bois des Ombres"><figcaption><b>Bois des Ombres</b> : côtes d'os géantes, crânes aux yeux violets (+ brume violette en jeu).</figcaption></figure>
-    <figure><img src="volcan.jpg" alt="Mur du Volcan"><figcaption><b>Volcan</b> : roche noire, fissures de lave en zigzag, ligne de lave au pied (+ braises en jeu).</figcaption></figure>
-    <figure><img src="celeste.jpg" alt="Mur du Royaume Céleste"><figcaption><b>Royaume Céleste</b> : mur de nuages, colonnes de marbre à chapiteau doré.</figcaption></figure>
+    <figure><img src="cristaux.jpg" alt="Cristaux"><h2>Grotte des Fantômes · cristaux</h2><figcaption><span>1 : deux prismes de quartz · 2 : pointes fines bleu foncé · 4 : grappe de cristaux taillés</span><span class="rec">Mon conseil : 4 (en violet), avec des 1 plus petits entre eux.</span></figcaption></figure>
+    <figure><img src="glace.jpg" alt="Glace"><h2>Royaume des Glaces · glace</h2><figcaption><span>1 : bloc d'iceberg · 2 : grand pic (stalagmite) · 3 : plaque de cristaux à plat</span><span class="rec">Mon conseil : 1 pour le mur, et des 2 en pics de glace.</span></figcaption></figure>
+    <figure><img src="os.jpg" alt="Os"><h2>Bois des Ombres · os et crânes</h2><figcaption><span>1 : rangée d'os · 2 : cage de côtes · 3 : crâne de bête · 4 : crâne humain · 5 : crâne à bois de cerf</span><span class="rec">Mon conseil : 2 pour le mur (cage de côtes), avec des 4 au pied.</span></figcaption></figure>
+    <figure><img src="lave.jpg" alt="Lave"><h2>Volcan · roche et lave</h2><figcaption><span>1 : dalle de lave · 2 : grande pointe de roche à lave rouge · 3 : gros rocher noir · 4 : rocher clair</span><span class="rec">Mon conseil : 2 (déjà texturé avec de la lave) en alternance avec des 3.</span></figcaption></figure>
+    <figure><img src="nuages.jpg" alt="Nuages"><h2>Royaume Céleste · nuages</h2><figcaption><span>1 : nuage plat · 2 : nuage en champignon · 3 : nuage en boule · 4 : nuage moelleux allongé</span><span class="rec">Mon conseil : 4, empilés en mur.</span></figcaption></figure>
+    <figure><img src="colonnes.jpg" alt="Colonnes"><h2>Royaume Céleste · colonnes</h2><figcaption><span>1 : colonne grecque blanche · 2 : colonne lisse · 3 : colonne de marbre sombre · 4 : pilier sculpté sombre</span><span class="rec">Mon conseil : 1 (marbre blanc), avec chapiteau doré.</span></figcaption></figure>
   </div>
 </div>
