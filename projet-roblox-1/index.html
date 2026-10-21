@@ -1,4 +1,4 @@
-<title>Choix des citrouilles</title>
+<title>Murs d'arène en jeu</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
   :root { --bg: #eef1f8; --panel: #ffffff; --fg: #1d2236; --muted: #5b6380; --line: #d7dcec; }
@@ -6,25 +6,25 @@
   :root[data-theme="dark"] { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; color-scheme: dark }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
-  .wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 14px; }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
-  p { margin: 0; color: var(--muted); max-width: 72ch; }
-  figure { margin: 0; display: grid; gap: 6px; }
-  img { width: 100%; border-radius: 12px; border: 1px solid var(--line); }
+  p { margin: 0; color: var(--muted); max-width: 75ch; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  img { width: 100%; border-radius: 8px; display: block; }
   figcaption { font-size: 14px; color: var(--muted); }
-  ol { margin: 0; padding-left: 22px; color: var(--muted); display: grid; gap: 3px; }
+  figcaption b { color: var(--fg); }
 </style>
 <div class="wrap">
-  <h1>Choix des citrouilles</h1>
-  <p>Cinq vraies citrouilles gratuites de la boutique Roblox, posées dans Studio à la même taille. Celle que tu choisis remplacera les boules orange au pied de la palissade du Potager (avec des yeux qui brillent la nuit).</p>
-  <figure><img src="potager.jpg" alt="La palissade du Potager avec les nouvelles citrouilles au pied"><figcaption>Choisie : la n°1, installée au pied de la palissade du Potager (21/10).</figcaption></figure>
-  <figure><img src="visages.jpg" alt="Les 5 citrouilles vues de face, avec leurs visages"><figcaption>Vue de face (visages). De gauche à droite : 5, 4, 3, 2, 1.</figcaption></figure>
-  <figure><img src="dos.jpg" alt="Les 5 citrouilles vues de dos"><figcaption>Vue de dos. De gauche à droite : 1, 2, 3, 4, 5.</figcaption></figure>
-  <ol>
-    <li>Citrouille large et côtelée, visage discret</li>
-    <li>Citrouille ronde, visage classique bien noir</li>
-    <li>Visage sculpté, mais grise (on peut la recolorer en orange)</li>
-    <li>Citrouille côtelée, visage qui brille</li>
-    <li>Rouge et noire, abîmée</li>
-  </ol>
+  <h1>Murs d'arène en jeu</h1>
+  <p>Captures dans Studio le 21/10, vues depuis l'intérieur de l'arène, en plein jour. Les flammes fantômes, la brume, les braises et le givre (des particules) et les lueurs ne se voient pas sur ces captures : ils n'apparaissent qu'en jeu.</p>
+  <div class="grid">
+    <figure><img src="potager.jpg" alt="Mur du Potager"><figcaption><b>Potager aux Citrouilles</b> : pieux tordus, deux rangées de ronces à épines, vraies citrouilles-lanternes.</figcaption></figure>
+    <figure><img src="grotte.jpg" alt="Mur de la Grotte"><figcaption><b>Grotte des Fantômes</b> : cristaux violets mi-transparents (+ flammes vertes en jeu).</figcaption></figure>
+    <figure><img src="glaces.jpg" alt="Mur des Glaces"><figcaption><b>Royaume des Glaces</b> : blocs de glace transparents enneigés, pics de glace au pied (+ givre en jeu).</figcaption></figure>
+    <figure><img src="ombres.jpg" alt="Mur du Bois des Ombres"><figcaption><b>Bois des Ombres</b> : côtes d'os géantes, crânes aux yeux violets (+ brume violette en jeu).</figcaption></figure>
+    <figure><img src="volcan.jpg" alt="Mur du Volcan"><figcaption><b>Volcan</b> : roche noire, fissures de lave en zigzag, ligne de lave au pied (+ braises en jeu).</figcaption></figure>
+    <figure><img src="celeste.jpg" alt="Mur du Royaume Céleste"><figcaption><b>Royaume Céleste</b> : mur de nuages, colonnes de marbre à chapiteau doré.</figcaption></figure>
+  </div>
 </div>
