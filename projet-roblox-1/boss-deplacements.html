@@ -1,0 +1,24 @@
+<title>Boss qui marchent et volent</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  :root { --bg: #eef1f8; --panel: #ffffff; --fg: #1d2236; --muted: #5b6380; --line: #d7dcec; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; color-scheme: dark } }
+  :root[data-theme="dark"] { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; color-scheme: dark }
+  body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
+  .wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 14px; }
+  h1 { margin: 0; font-size: 28px; text-wrap: balance; }
+  p { margin: 0; color: var(--muted); max-width: 72ch; }
+  ul { margin: 0; padding-left: 20px; color: var(--muted); }
+  video { width: 100%; max-width: 100%; border-radius: 12px; border: 1px solid var(--line); background: #000; }
+</style>
+<div class="wrap">
+  <h1>Boss qui marchent et volent</h1>
+  <p>Boucles de déplacement animées dans Blender le 21/10 : chaque boss joue 3 fois sa boucle. Dans le jeu, la marche suit la vitesse du boss et s'arrête pendant ses attaques ; le vol tourne en continu entre les attaques.</p>
+  <ul>
+    <li>Marche : Géant, Golem Ancien (lent et lourd), Roi Citrouille (grands pas), Yéti Géant.</li>
+    <li>Glisse : Liche Ancienne (elle flotte, bâton tenu droit).</li>
+    <li>Vol : Dragon Ancien, Dragon de Lave, Dragon Spectral, Griffon Doré (le corps remonte à chaque coup d'aile, la queue ondule).</li>
+  </ul>
+  <video src="boss-deplacements.mp4" controls autoplay muted loop playsinline></video>
+</div>
