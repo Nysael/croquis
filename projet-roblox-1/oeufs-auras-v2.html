@@ -1,0 +1,202 @@
+<title>Auras des œufs v2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700&display=swap">
+<style>
+  /* Mise en page : intro, grille de 10 aperçus animés (5 colonnes, 2 sur téléphone), puis les règles */
+  :root {
+    --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d;
+    --display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: dark;
+  }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 26px 48px; }
+  .wrap { max-width: 1150px; margin: 0 auto; display: grid; gap: 22px; }
+  h1, h2 { font-family: var(--display); margin: 0; line-height: 1.15; text-wrap: balance; }
+  h1 { font-size: clamp(28px, 5vw, 38px); }
+  h2 { font-size: 22px; }
+  p { margin: 0; color: var(--muted); max-width: 75ch; }
+  b { color: var(--fg); }
+  .grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-top: 5px solid var(--c); border-radius: 12px; overflow: hidden; display: grid; align-content: start; min-width: 0; }
+  canvas { width: 100%; max-width: 100%; aspect-ratio: 1 / 1; display: block; background: #2c3a5a; }
+  .cap { padding: 8px 10px 12px; display: grid; gap: 3px; }
+  .t { font-family: var(--display); font-size: 17px; font-weight: 800; display: flex; gap: 6px; align-items: center; }
+  .n { font-size: 12px; background: var(--c); color: #1b1830; border-radius: 7px; padding: 0 6px; font-family: var(--body); }
+  .cap span { font-size: 13px; color: var(--muted); }
+  .sig { color: var(--accent); font-weight: 700; }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 8px; }
+  ul { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 4px; }
+  .ask { color: var(--fg); font-weight: 700; }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <span style="font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)">Croquis · œufs · v2</span>
+    <h1>Auras des œufs v2</h1>
+    <p>Avant, chaque rareté reprenait tous les effets de la précédente : à partir de l'Épique, tout devenait une grosse lueur blanche avec des rayons, et on ne voyait plus la différence. Maintenant chaque rareté a <b>sa propre signature</b> : une forme, un mouvement et une couleur bien à elle, qu'on reconnaît d'un coup d'œil, même de loin. Plus c'est rare, plus l'effet est grand, mais il ne ressemble jamais au précédent.</p>
+  </header>
+
+  <section class="grid" aria-label="Dix auras animées">
+    <div class="card" style="--c:#bebec3"><canvas width="240" height="240" data-r="0"></canvas><div class="cap"><div class="t"><span class="n">1</span>Commun</div><span>Rien : œuf simple.</span></div></div>
+    <div class="card" style="--c:#5ad25a"><canvas width="240" height="240" data-r="1"></canvas><div class="cap"><div class="t"><span class="n">2</span>Peu commun</div><span class="sig">Petites feuilles vertes</span><span>qui tombent doucement autour.</span></div></div>
+    <div class="card" style="--c:#4696ff"><canvas width="240" height="240" data-r="2"></canvas><div class="cap"><div class="t"><span class="n">3</span>Rare</div><span class="sig">Bulles bleues</span><span>qui montent et éclatent.</span></div></div>
+    <div class="card" style="--c:#aa50ff"><canvas width="240" height="240" data-r="3"></canvas><div class="cap"><div class="t"><span class="n">4</span>Épique</div><span class="sig">3 orbes violets en orbite</span><span>qui tournent autour de l'œuf.</span></div></div>
+    <div class="card" style="--c:#ffc828"><canvas width="240" height="240" data-r="4"></canvas><div class="cap"><div class="t"><span class="n">5</span>Légendaire</div><span class="sig">Rayons dorés</span><span>qui tournent derrière (le seul avec des rayons).</span></div></div>
+    <div class="card" style="--c:#ff4682"><canvas width="240" height="240" data-r="5"></canvas><div class="cap"><div class="t"><span class="n">6</span>Mythique</div><span class="sig">Vraies flammes roses</span><span>qui montent du socle, braises.</span></div></div>
+    <div class="card" style="--c:#fff2b0"><canvas width="240" height="240" data-r="6"></canvas><div class="cap"><div class="t"><span class="n">7</span>Divin</div><span class="sig">Deux ailes de lumière + auréole</span><span>qui battent lentement, plumes qui tombent.</span></div></div>
+    <div class="card" style="--c:#50e6ff"><canvas width="240" height="240" data-r="7"></canvas><div class="cap"><div class="t"><span class="n">8</span>Céleste</div><span class="sig">Anneau de flocons de givre</span><span>qui tourne à plat, cristaux qui scintillent.</span></div></div>
+    <div class="card" style="--c:#9646ff"><canvas width="240" height="240" data-r="8"></canvas><div class="cap"><div class="t"><span class="n">9</span>Cosmique</div><span class="sig">Anneau de planète incliné</span><span>et petite galaxie qui tourbillonne dessous.</span></div></div>
+    <div class="card" style="--c:#2a1040"><canvas width="240" height="240" data-r="9"></canvas><div class="cap"><div class="t"><span class="n">10</span>Secret</div><span class="sig">Aura NOIRE + éclairs violets</span><span>fumée d'ombre, l'œuf a l'air de « grésiller ».</span></div></div>
+  </section>
+
+  <section class="box">
+    <h2>Les règles</h2>
+    <ul>
+      <li>Un seul effet principal par rareté, plus un petit socle lumineux de sa couleur (sauf Commun).</li>
+      <li>Les formes ne se répètent pas : feuilles, bulles, orbes, rayons, flammes, ailes, flocons, anneau de planète, éclairs.</li>
+      <li>Les couleurs suivent la rareté (vert, bleu, violet, or, rose, blanc doré, cyan, violet profond, noir).</li>
+      <li>Toujours léger pour le téléphone, et coupé quand l'œuf est loin de la caméra.</li>
+    </ul>
+    <p class="ask">Ça te va comme ça ? Dis-moi si tu veux changer l'effet d'une rareté.</p>
+  </section>
+</div>
+
+<script>
+(() => {
+  const TAU = Math.PI * 2;
+  const rnd = (i) => { const x = Math.sin(i * 91.7) * 43758.5; return x - Math.floor(x); };
+  const EGG = ["#e8e8ee", "#7fd96a", "#5fa8ff", "#b46cff", "#ffd04a", "#ff5c92", "#fffaf0", "#7ee9ff", "#8a55ff", "#1a0d28"];
+  function egg(g, color, x, y, s, dark) {
+    g.save(); g.translate(x, y);
+    g.fillStyle = color; g.beginPath(); g.ellipse(0, 0, 26 * s, 34 * s, 0, 0, TAU); g.fill();
+    g.fillStyle = dark ? "rgba(150,70,255,.5)" : "rgba(255,255,255,.35)";
+    g.beginPath(); g.ellipse(-9 * s, -12 * s, 7 * s, 11 * s, -0.4, 0, TAU); g.fill();
+    g.restore();
+  }
+  function socle(g, color, cx, cy, a = 0.8) {
+    g.save(); g.globalAlpha = a; g.strokeStyle = color; g.lineWidth = 4;
+    g.beginPath(); g.ellipse(cx, cy, 44, 12, 0, 0, TAU); g.stroke(); g.restore();
+  }
+  const D = [
+    // 0 Commun
+    (g, t, cx, cy) => { egg(g, EGG[0], cx, cy, 1); },
+    // 1 feuilles
+    (g, t, cx, cy) => {
+      socle(g, "#5ad25a", cx, cy + 36);
+      for (let i = 0; i < 9; i++) {
+        const k = (t * 0.25 + rnd(i)) % 1, x = cx + (rnd(i + 3) - 0.5) * 120 + Math.sin(t * 2 + i) * 10, y = cy - 70 + k * 120;
+        g.save(); g.translate(x, y); g.rotate(Math.sin(t * 3 + i) * 0.8); g.globalAlpha = 1 - k * 0.6;
+        g.fillStyle = i % 2 ? "#6ad04e" : "#3fae3a"; g.beginPath(); g.ellipse(0, 0, 7, 3.5, 0, 0, TAU); g.fill(); g.restore();
+      }
+      egg(g, EGG[1], cx, cy, 1);
+    },
+    // 2 bulles
+    (g, t, cx, cy) => {
+      socle(g, "#4696ff", cx, cy + 36);
+      egg(g, EGG[2], cx, cy, 1);
+      for (let i = 0; i < 10; i++) {
+        const k = (t * 0.35 + rnd(i)) % 1, x = cx + (rnd(i + 5) - 0.5) * 100 + Math.sin(t * 2 + i * 2) * 6, y = cy + 40 - k * 140, r = 3 + rnd(i + 9) * 6;
+        g.save(); g.globalAlpha = k > 0.92 ? (1 - k) * 12 : 0.85; g.strokeStyle = "#bfe0ff"; g.lineWidth = 2;
+        g.beginPath(); g.arc(x, y, r * (k > 0.92 ? 1.6 : 1), 0, TAU); g.stroke();
+        g.fillStyle = "rgba(160,210,255,.25)"; g.fill(); g.restore();
+      }
+    },
+    // 3 orbes
+    (g, t, cx, cy) => {
+      socle(g, "#aa50ff", cx, cy + 36);
+      const orbs = [0, 1, 2].map((i) => ({ a: t * 1.6 + i * TAU / 3 }));
+      const draw = (o, front) => { const z = Math.sin(o.a); if ((z > 0) !== front) return;
+        const x = cx + Math.cos(o.a) * 50, y = cy + 6 + z * 14;
+        const gr = g.createRadialGradient(x, y, 1, x, y, 14); gr.addColorStop(0, "#fff"); gr.addColorStop(0.35, "#c58bff"); gr.addColorStop(1, "rgba(170,80,255,0)");
+        g.fillStyle = gr; g.beginPath(); g.arc(x, y, 14, 0, TAU); g.fill(); };
+      orbs.forEach((o) => draw(o, false)); egg(g, EGG[3], cx, cy, 1); orbs.forEach((o) => draw(o, true));
+    },
+    // 4 rayons dorés
+    (g, t, cx, cy) => {
+      g.save(); g.translate(cx, cy); g.rotate(t * 0.4);
+      for (let i = 0; i < 10; i++) { g.rotate(TAU / 10); g.fillStyle = "rgba(255,210,80,.35)"; g.beginPath(); g.moveTo(0, 0); g.lineTo(-9, -110); g.lineTo(9, -110); g.closePath(); g.fill(); }
+      g.restore();
+      socle(g, "#ffc828", cx, cy + 36);
+      egg(g, EGG[4], cx, cy, 1);
+    },
+    // 5 flammes roses
+    (g, t, cx, cy) => {
+      socle(g, "#ff4682", cx, cy + 36, 1);
+      for (let i = 0; i < 14; i++) {
+        const k = (t * 0.9 + rnd(i)) % 1, x = cx + (rnd(i + 2) - 0.5) * 70, y = cy + 34 - k * 90, s = (1 - k) * 16 + 3;
+        const gr = g.createRadialGradient(x, y, 0, x, y, s); gr.addColorStop(0, "rgba(255,230,240,.95)"); gr.addColorStop(0.4, "rgba(255,80,150,.8)"); gr.addColorStop(1, "rgba(255,40,120,0)");
+        g.fillStyle = gr; g.beginPath(); g.arc(x, y, s, 0, TAU); g.fill();
+      }
+      egg(g, EGG[5], cx, cy, 1);
+      for (let i = 0; i < 5; i++) { const k = (t * 0.5 + rnd(i + 20)) % 1; g.fillStyle = `rgba(255,200,120,${1 - k})`; g.fillRect(cx + (rnd(i + 30) - 0.5) * 80, cy - 20 - k * 70, 2.5, 2.5); }
+    },
+    // 6 ailes + auréole
+    (g, t, cx, cy) => {
+      socle(g, "#fff2b0", cx, cy + 36);
+      const flap = Math.sin(t * 1.8) * 0.25;
+      for (const side of [-1, 1]) {
+        g.save(); g.translate(cx + side * 20, cy - 8); g.scale(side, 1); g.rotate(-0.3 - flap);
+        for (let f = 0; f < 4; f++) { g.fillStyle = `rgba(255,250,225,${0.75 - f * 0.12})`; g.beginPath(); g.ellipse(26 + f * 9, -6 + f * 9, 30 - f * 4, 8, 0.5 + f * 0.25, 0, TAU); g.fill(); }
+        g.restore();
+      }
+      egg(g, EGG[6], cx, cy, 1);
+      g.save(); g.strokeStyle = "#ffd85a"; g.lineWidth = 4; g.shadowColor = "#ffd85a"; g.shadowBlur = 10;
+      g.beginPath(); g.ellipse(cx, cy - 46 + Math.sin(t * 2) * 2, 20, 6, 0, 0, TAU); g.stroke(); g.restore();
+      for (let i = 0; i < 4; i++) { const k = (t * 0.3 + rnd(i + 40)) % 1; g.save(); g.globalAlpha = 1 - k; g.translate(cx + (rnd(i + 41) - 0.5) * 110 + Math.sin(t + i) * 8, cy - 60 + k * 110); g.rotate(Math.sin(t * 2 + i)); g.fillStyle = "#fffbe8"; g.beginPath(); g.ellipse(0, 0, 3, 8, 0, 0, TAU); g.fill(); g.restore(); }
+    },
+    // 7 anneau de flocons
+    (g, t, cx, cy) => {
+      socle(g, "#50e6ff", cx, cy + 36);
+      const flakes = 10;
+      const flake = (x, y, s) => { g.save(); g.translate(x, y); g.strokeStyle = "#dff8ff"; g.lineWidth = 1.6; for (let k = 0; k < 3; k++) { g.rotate(Math.PI / 3); g.beginPath(); g.moveTo(-s, 0); g.lineTo(s, 0); g.stroke(); } g.restore(); };
+      const pts = []; for (let i = 0; i < flakes; i++) { const a = t * 0.8 + i * TAU / flakes; pts.push({ a, z: Math.sin(a) }); }
+      pts.filter((p) => p.z < 0).forEach((p) => flake(cx + Math.cos(p.a) * 56, cy + 22 + p.z * 10, 5));
+      egg(g, EGG[7], cx, cy, 1);
+      pts.filter((p) => p.z >= 0).forEach((p) => flake(cx + Math.cos(p.a) * 56, cy + 22 + p.z * 10, 6));
+      for (let i = 0; i < 6; i++) { const tw = (Math.sin(t * 5 + i * 2) + 1) / 2; g.fillStyle = `rgba(220,250,255,${tw})`; g.beginPath(); g.arc(cx + (rnd(i + 50) - 0.5) * 110, cy - 50 + rnd(i + 51) * 60, 2, 0, TAU); g.fill(); }
+    },
+    // 8 anneau de planète + galaxie
+    (g, t, cx, cy) => {
+      g.save(); g.translate(cx, cy + 38); g.scale(1, 0.32);
+      for (let i = 0; i < 40; i++) { const a = t * 0.9 + i * 0.5, r = 6 + i * 1.3; g.fillStyle = `rgba(${150 + i * 2},${90},255,${0.6 - i * 0.012})`; g.beginPath(); g.arc(Math.cos(a) * r, Math.sin(a) * r, 2.5, 0, TAU); g.fill(); }
+      g.restore();
+      const ring = (front) => { g.save(); g.translate(cx, cy); g.rotate(-0.35); g.strokeStyle = "rgba(200,170,255,.9)"; g.lineWidth = 5;
+        g.beginPath(); g.ellipse(0, 0, 52, 14, 0, front ? 0 : Math.PI, front ? Math.PI : TAU); g.stroke();
+        g.strokeStyle = "rgba(150,90,255,.6)"; g.lineWidth = 3; g.beginPath(); g.ellipse(0, 0, 60, 17, 0, front ? 0 : Math.PI, front ? Math.PI : TAU); g.stroke(); g.restore(); };
+      ring(false); egg(g, EGG[8], cx, cy, 1); ring(true);
+      for (let i = 0; i < 6; i++) { const a = t * 1.2 + i; g.fillStyle = "#fff"; g.fillRect(cx + Math.cos(a) * 55 - 1, cy + Math.sin(a) * 15 - 1 - 0.35 * Math.cos(a) * 55 * 0.35, 2, 2); }
+    },
+    // 9 Secret : noir + éclairs
+    (g, t, cx, cy) => {
+      for (let i = 0; i < 8; i++) { const k = (t * 0.3 + rnd(i)) % 1; g.fillStyle = `rgba(10,4,18,${0.6 * (1 - k)})`; g.beginPath(); g.arc(cx + (rnd(i + 1) - 0.5) * 80, cy + 30 - k * 100, 18 + k * 20, 0, TAU); g.fill(); }
+      socle(g, "#6a2aa8", cx, cy + 36);
+      const jit = Math.sin(t * 40) > 0.85 ? 2 : 0;
+      egg(g, EGG[9], cx + jit, cy, 1, true);
+      const flash = (Math.floor(t * 3) % 2 === 0) && (t % 0.333) < 0.12;
+      if (flash) {
+        g.save(); g.strokeStyle = "#c78bff"; g.lineWidth = 2.5; g.shadowColor = "#a050ff"; g.shadowBlur = 12;
+        for (let b = 0; b < 2; b++) { let x = cx + (b ? 30 : -34), y = cy - 50; g.beginPath(); g.moveTo(x, y); for (let s = 0; s < 5; s++) { x += (rnd(b * 10 + s + Math.floor(t * 3)) - 0.5) * 22; y += 18; g.lineTo(x, y); } g.stroke(); }
+        g.restore();
+      }
+    },
+  ];
+  const items = [...document.querySelectorAll("canvas[data-r]")].map((c) => ({ g: c.getContext("2d"), r: +c.dataset.r }));
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const t0 = performance.now();
+  function frame(now) {
+    const t = still ? 1.3 : (now - t0) / 1000;
+    for (const it of items) {
+      const g = it.g; g.clearRect(0, 0, 240, 240);
+      const sky = g.createLinearGradient(0, 0, 0, 240); sky.addColorStop(0, "#5ec8ff"); sky.addColorStop(0.55, "#3c5a8a"); sky.addColorStop(1, "#4b4570");
+      g.fillStyle = sky; g.fillRect(0, 0, 240, 240);
+      g.fillStyle = "#5a5486"; g.fillRect(0, 168, 240, 72);
+      D[it.r](g, t, 120, 132);
+    }
+    if (!still) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
