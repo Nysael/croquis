@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Effets magiques des boss</title>
+<style>
+  :root { --bg:#14111f; --card:#221d36; --text:#f3f0ff; --muted:#b8b2d6; --line:#3a3460; --accent:#ffd34d; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .note { background:#2e2750; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:14px; margin-top:12px; }
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(520px,1fr)); gap:14px; margin-top:12px; }
+  .card { background:var(--card); border-radius:14px; overflow:hidden; border-top:5px solid var(--c, var(--accent)); }
+  .card svg { width:100%; height:auto; display:block; background:radial-gradient(ellipse at 50% 80%, #2b2547, #15121f 75%); }
+  .card .t { padding:10px 14px 4px; font-size:18px; font-weight:700; }
+  .card ul { margin:0; padding:0 14px 12px 30px; font-size:14px; }
+  .card li { margin:3px 0; }
+  .lbl { font-size:12px; font-weight:700; fill:#b8b2d6; letter-spacing:.08em; }
+  .tag { display:inline-block; font-size:12px; padding:2px 8px; border-radius:10px; background:#433b6e; color:var(--text); margin-left:6px; vertical-align:middle; font-weight:600; }
+  .tools { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin-top:10px; }
+  .tool { background:var(--card); border-radius:12px; padding:10px 14px; font-size:14px; color:var(--muted); }
+  .tool b { display:block; margin-bottom:3px; }
+</style>
+</head>
+<body><div class="wrap">
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="g1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="g2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="g3" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="14"/></filter>
+    <radialGradient id="core" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="redfill" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff4a5a" stop-opacity=".05"/><stop offset=".8" stop-color="#ff4a5a" stop-opacity=".35"/><stop offset="1" stop-color="#ff4a5a" stop-opacity=".6"/></radialGradient>
+  </defs>
+</svg>
+
+<h1>Effets des boss : version « magique brillante »</h1>
+<p>Tu trouves les attaques un peu moches : projectiles, impacts, cercles rouges et autres attaques. Proposition : tout refaire dans le style des gros simulateurs Roblox. Chaque effet a un <b>cœur blanc très lumineux</b>, un <b>halo de couleur</b>, une <b>traînée en ruban</b>, des <b>étoiles qui scintillent</b> et une <b>vraie lumière</b> qui éclaire le sol autour. Les dégâts, les durées et les cercles d'alerte (taille, moment) ne changent pas.</p>
+
+<h2>La boîte à outils (ce qui change techniquement)</h2>
+<div class="tools">
+  <div class="tool"><b>✨ Textures lumineuses</b>Étoiles, halos doux, anneaux, éclairs et « slashs » pris dans la boutique de créateurs (gratuits), au lieu des 3 textures de base de Roblox (fumée, feu, étincelle).</div>
+  <div class="tool"><b>🎀 Traînées en ruban</b>Les projectiles laissent un ruban lisse qui s'affine (objet <i>Trail</i>), plus des étincelles, au lieu d'une simple fumée.</div>
+  <div class="tool"><b>💡 Vraie lumière</b>Chaque projectile et chaque impact éclaire le sol et le boss autour (lumière colorée, flash à l'impact).</div>
+  <div class="tool"><b>⭕ Anneaux et ondes</b>Les impacts et les ondes de choc deviennent des anneaux lumineux qui s'élargissent au ras du sol.</div>
+</div>
+
+<h2>1. Les cercles d'alerte</h2>
+<div class="grid2">
+<div class="card" style="--c:#ff4a5a">
+<svg viewBox="0 0 560 230">
+  <text x="20" y="24" class="lbl">AVANT</text>
+  <ellipse cx="140" cy="140" rx="95" ry="32" fill="#ff2828" opacity=".5"/>
+  <text x="60" y="210" class="lbl" font-weight="400">un disque rouge plein qui grandit</text>
+  <text x="300" y="24" class="lbl">APRÈS</text>
+  <g transform="translate(420 140)">
+    <ellipse rx="110" ry="38" fill="url(#redfill)"/>
+    <ellipse rx="110" ry="38" fill="none" stroke="#ff5a6a" stroke-width="7" filter="url(#g1)"/>
+    <ellipse rx="110" ry="38" fill="none" stroke="#ffd0d6" stroke-width="2.5"/>
+    <ellipse rx="70" ry="24" fill="none" stroke="#ff8a96" stroke-width="3" opacity=".9"/>
+    <ellipse rx="70" ry="24" fill="#ff4a5a" opacity=".25"/>
+    <g stroke="#ffb0ba" stroke-width="2" opacity=".75" fill="none">
+      <path d="M-96 -12 l8 -6 l4 8"/><path d="M-40 -32 l6 -4 l2 7 l5 -3"/><path d="M38 -33 l7 3 l-3 6"/><path d="M90 -16 l6 7 l-7 3"/><path d="M78 24 l-6 6 l8 2"/><path d="M-12 36 l6 -5 l4 6"/><path d="M-80 22 l-6 5 l7 3"/>
+    </g>
+    <g fill="#fff"><circle cx="-60" cy="-30" r="2"/><circle cx="66" cy="28" r="2.4"/><circle cx="104" cy="-6" r="1.8"/></g>
+  </g>
+  <text x="310" y="210" class="lbl" font-weight="400">bord lumineux + remplissage qui monte</text>
+</svg>
+<div class="t">Cercle d'alerte <span class="tag">tous les boss</span></div>
+<ul>
+  <li><b>Bord lumineux</b> fin et net dès le début : on voit tout de suite la zone exacte.</li>
+  <li><b>Remplissage</b> qui part du centre et monte jusqu'au bord : quand il touche le bord, <b>ça tombe</b>. On lit le compte à rebours d'un coup d'œil.</li>
+  <li><b>Runes</b> qui tournent lentement sur l'anneau, de la couleur du boss (neige pour le Yéti, violet pour la Liche...). Le fond reste rouge pour le danger.</li>
+  <li>Dernier quart de seconde : le cercle clignote, puis <b>flash blanc</b> à l'impact.</li>
+</ul>
+</div>
+<div class="card" style="--c:#ffb03a">
+<svg viewBox="0 0 560 230">
+  <text x="20" y="24" class="lbl">ONDE DE CHOC (grand cercle autour du boss)</text>
+  <g transform="translate(280 150)">
+    <ellipse rx="240" ry="62" fill="none" stroke="#ff7a3a" stroke-width="10" filter="url(#g1)" opacity=".8"/>
+    <ellipse rx="240" ry="62" fill="none" stroke="#ffe0b0" stroke-width="3"/>
+    <ellipse rx="160" ry="42" fill="#ff6a2a" opacity=".18"/>
+    <ellipse rx="160" ry="42" fill="none" stroke="#ffb070" stroke-width="3" stroke-dasharray="14 10" opacity=".8"/>
+    <rect x="-30" y="-110" width="60" height="90" rx="20" fill="#3a3355"/>
+    <g fill="#ffe0b0"><circle cx="-200" cy="-30" r="2.5"/><circle cx="190" cy="34" r="2.5"/><circle cx="-120" cy="44" r="2"/><circle cx="130" cy="-44" r="2"/></g>
+  </g>
+</svg>
+<div class="t">Grand cercle d'onde <span class="tag">Stomp</span></div>
+<ul>
+  <li>Même principe en grand : anneau extérieur lumineux, anneau intérieur en pointillés qui tourne.</li>
+  <li>Le remplissage monte vers l'extérieur pendant les 2,2 s, comme les petits cercles.</li>
+</ul>
+</div>
+</div>
+
+<h2>2. Les projectiles</h2>
+<p>Même départ et même trajectoire qu'aujourd'hui. Ce qui change, c'est l'aspect : un cœur blanc brillant, un halo coloré, un ruban derrière, des étoiles et une lumière.</p>
+<div class="grid">
+
+<div class="card" style="--c:#bfe8ff"><svg viewBox="0 0 400 170">
+  <path d="M30 140 Q140 10 290 60" fill="none" stroke="#9fdcff" stroke-width="18" opacity=".25" filter="url(#g2)"/>
+  <path d="M120 66 Q200 30 290 60" fill="none" stroke="#e8f6ff" stroke-width="6" stroke-linecap="round" opacity=".7"/>
+  <circle cx="300" cy="62" r="34" fill="#9fdcff" opacity=".45" filter="url(#g3)"/>
+  <circle cx="300" cy="62" r="18" fill="url(#core)"/>
+  <g fill="#fff" filter="url(#g1)"><circle cx="250" cy="50" r="3"/><circle cx="230" cy="64" r="2.5"/><circle cx="270" cy="40" r="2"/></g>
+  <g stroke="#fff" stroke-width="2"><path d="M210 40 l0 10 M205 45 l10 0"/><path d="M180 56 l0 8 M176 60 l8 0"/></g>
+</svg><div class="t">Yéti : comète de givre</div><ul><li>Boule de neige blanche avec un halo bleu glacé, un ruban de givre et des flocons-étoiles.</li><li>Quand elle éclate en 3 : petit flash bleu et éclats de cristal.</li></ul></div>
+
+<div class="card" style="--c:#ff8c3a"><svg viewBox="0 0 400 170">
+  <path d="M40 100 Q170 80 300 96" fill="none" stroke="#ff7a1a" stroke-width="24" opacity=".35" filter="url(#g2)"/>
+  <path d="M130 92 Q220 84 300 96" fill="none" stroke="#ffd27a" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="306" cy="96" r="36" fill="#ff7a1a" opacity=".55" filter="url(#g3)"/>
+  <circle cx="306" cy="96" r="17" fill="url(#core)"/>
+  <g fill="#ffd27a"><circle cx="250" cy="78" r="3"/><circle cx="210" cy="110" r="2.5"/><circle cx="270" cy="116" r="2"/></g>
+</svg><div class="t">Géant : boule de feu</div><ul><li>Cœur blanc-jaune, flammes orange autour, long ruban de feu, braises qui tombent.</li></ul></div>
+
+<div class="card" style="--c:#ff9a2a"><svg viewBox="0 0 400 170">
+  <path d="M40 140 Q170 0 300 70" fill="none" stroke="#ff9a2a" stroke-width="16" opacity=".3" filter="url(#g2)"/>
+  <circle cx="300" cy="70" r="36" fill="#ff8a1a" opacity=".5" filter="url(#g3)"/>
+  <g transform="translate(300 70) rotate(20)"><ellipse rx="20" ry="17" fill="#f08a2a"/><path d="M-9 -4 l6 3 M4 -4 l6 3 M-9 6 q9 6 18 0" stroke="#fff5b0" stroke-width="3.5" fill="none" filter="url(#g1)"/><path d="M-9 -4 l6 3 M4 -4 l6 3 M-9 6 q9 6 18 0" stroke="#fff" stroke-width="1.5" fill="none"/></g>
+  <g fill="#ffd27a"><circle cx="255" cy="48" r="3"/><circle cx="240" cy="62" r="2"/></g>
+</svg><div class="t">Roi Citrouille : citrouille-lanterne</div><ul><li>Garde sa citrouille, mais son visage <b>brille vraiment</b> (lumière orange), halo de feu et ruban de flammes.</li></ul></div>
+
+<div class="card" style="--c:#a46bff"><svg viewBox="0 0 400 170">
+  <path d="M40 110 C110 40 150 150 220 80 S280 60 300 80" fill="none" stroke="#a46bff" stroke-width="16" opacity=".35" filter="url(#g2)"/>
+  <path d="M170 104 C200 70 250 70 300 80" fill="none" stroke="#e0ccff" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+  <circle cx="300" cy="80" r="38" fill="#a46bff" opacity=".55" filter="url(#g3)"/>
+  <circle cx="300" cy="80" r="16" fill="url(#core)"/>
+  <g transform="translate(300 80)"><circle cx="-5" cy="-2" r="3" fill="#5a2a9a"/><circle cx="5" cy="-2" r="3" fill="#5a2a9a"/></g>
+  <circle cx="300" cy="80" r="26" fill="none" stroke="#e0ccff" stroke-width="1.5" stroke-dasharray="4 5"/>
+</svg><div class="t">Liche : orbe maudit</div><ul><li>Orbe blanc-violet avec un petit crâne dedans, un anneau de runes qui tourne autour, ruban violet en vague.</li></ul></div>
+
+<div class="card" style="--c:#ff5a1f"><svg viewBox="0 0 400 170">
+  <path d="M40 120 Q170 10 300 70" fill="none" stroke="#ff4a10" stroke-width="20" opacity=".35" filter="url(#g2)"/>
+  <circle cx="300" cy="70" r="36" fill="#ff5a1f" opacity=".55" filter="url(#g3)"/>
+  <g transform="translate(300 70) rotate(-15)"><path d="M-16 -8 L2 -18 L17 -4 L12 13 L-8 15 L-17 3 Z" fill="#3a1a14"/><path d="M-10 -4 L2 3 L11 -6 M-3 3 L-6 11 M5 -12 L2 3" stroke="#ffb03a" stroke-width="3.5" fill="none" filter="url(#g1)"/><path d="M-10 -4 L2 3 L11 -6 M-3 3 L-6 11 M5 -12 L2 3" stroke="#fff0b0" stroke-width="1.2" fill="none"/></g>
+  <g fill="#8a7070" opacity=".5" filter="url(#g1)"><circle cx="250" cy="56" r="9"/><circle cx="226" cy="70" r="7"/></g>
+</svg><div class="t">Dragon de Lave : rocher en fusion</div><ul><li>Rocher sombre aux <b>fissures qui brillent</b>, halo orange, fumée et gouttes de lave qui tombent.</li></ul></div>
+
+<div class="card" style="--c:#ff7a3a"><svg viewBox="0 0 400 170">
+  <path d="M30 90 L300 96" stroke="#ff7a1a" stroke-width="34" opacity=".35" filter="url(#g2)"/>
+  <path d="M150 93 L300 96" stroke="#ffd27a" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="310" cy="96" r="50" fill="#ff6a1a" opacity=".55" filter="url(#g3)"/>
+  <circle cx="310" cy="96" r="24" fill="url(#core)"/>
+  <g fill="#ffd27a"><circle cx="250" cy="70" r="3.5"/><circle cx="220" cy="118" r="3"/><circle cx="270" cy="124" r="2.5"/></g>
+</svg><div class="t">Dragon Ancien : soleil de feu</div><ul><li>La plus grosse : cœur blanc énorme, halo rouge-orange, ruban épais, lumière forte qui éclaire l'arène.</li></ul></div>
+
+<div class="card" style="--c:#ffd96a"><svg viewBox="0 0 400 170">
+  <path d="M40 60 C110 20 150 120 220 70 S280 100 300 90" fill="none" stroke="#ffd96a" stroke-width="12" opacity=".35" filter="url(#g2)"/>
+  <circle cx="300" cy="90" r="30" fill="#ffd96a" opacity=".45" filter="url(#g3)"/>
+  <g transform="translate(300 90) rotate(20)"><path d="M-28 0 Q0 -11 28 0 Q0 11 -28 0 Z" fill="#fff3c0"/><path d="M-28 0 L28 0" stroke="#ffb030" stroke-width="2"/></g>
+  <g stroke="#fff" stroke-width="2"><path d="M240 76 l0 10 M235 81 l10 0"/><path d="M210 92 l0 8 M206 96 l8 0"/><path d="M262 108 l0 7 M258.5 111.5 l7 0"/></g>
+</svg><div class="t">Griffon Doré : plume de lumière</div><ul><li>Plume blanc-or qui brille, ruban doré, <b>étoiles</b> qui restent derrière elle comme une poussière d'or.</li></ul></div>
+
+<div class="card" style="--c:#6dffb0"><svg viewBox="0 0 400 170">
+  <path d="M40 80 L330 70 L300 150 Z" fill="#6dffb0" opacity=".15" filter="url(#g2)"/>
+  <path d="M40 80 L300 100" stroke="#9dffcf" stroke-width="22" opacity=".35" filter="url(#g2)"/>
+  <path d="M40 80 L300 100" stroke="#e0fff0" stroke-width="5" opacity=".7"/>
+  <circle cx="230" cy="94" r="22" fill="#6dffb0" opacity=".5" filter="url(#g3)"/><circle cx="230" cy="94" r="10" fill="url(#core)"/>
+  <circle cx="300" cy="120" r="22" fill="#6dffb0" opacity=".5" filter="url(#g3)"/><circle cx="300" cy="120" r="10" fill="url(#core)"/>
+</svg><div class="t">Dragon Spectral : flammes fantômes</div><ul><li>Jet de flammes vert pâle presque transparent, avec des <b>têtes de mort fantômes</b> qui apparaissent dedans ; boules à cœur blanc.</li></ul></div>
+</div>
+
+<h2>3. Les impacts</h2>
+<div class="grid">
+<div class="card" style="--c:#ffffff"><svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="140" rx="150" ry="34" fill="none" stroke="#fff" stroke-width="8" opacity=".5" filter="url(#g1)"/>
+  <ellipse cx="200" cy="140" rx="150" ry="34" fill="none" stroke="#fff" stroke-width="2"/>
+  <ellipse cx="200" cy="140" rx="80" ry="18" fill="#fff" opacity=".35" filter="url(#g2)"/>
+  <circle cx="200" cy="118" r="34" fill="#fff" opacity=".7" filter="url(#g3)"/>
+  <g stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M200 70 L200 40"/><path d="M200 118 L250 70"/><path d="M200 118 L150 70"/><path d="M200 118 L280 110"/><path d="M200 118 L120 110"/></g>
+  <g fill="#fff"><circle cx="150" cy="60" r="3"/><circle cx="255" cy="58" r="3"/><circle cx="300" cy="100" r="2.5"/><circle cx="96" cy="98" r="2.5"/></g>
+</svg><div class="t">Recette commune</div><ul><li><b>Flash</b> de lumière au point d'impact (0,15 s).</li><li><b>Anneau</b> lumineux qui s'élargit au sol.</li><li><b>Étoiles</b> qui jaillissent en gerbe, puis retombent en scintillant.</li><li>Une petite <b>secousse</b> d'écran si on est tout près.</li></ul></div>
+<div class="card" style="--c:#9fdcff"><svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="145" rx="130" ry="30" fill="none" stroke="#9fdcff" stroke-width="8" opacity=".55" filter="url(#g1)"/>
+  <g fill="#e8f6ff" stroke="#9fdcff" stroke-width="2"><path d="M180 145 L190 90 L200 145 Z"/><path d="M200 145 L215 80 L226 145 Z"/><path d="M160 145 L166 110 L176 145 Z"/><path d="M228 145 L238 105 L246 145 Z"/></g>
+  <circle cx="205" cy="120" r="40" fill="#9fdcff" opacity=".35" filter="url(#g3)"/>
+</svg><div class="t">+ la couleur de chaque boss</div><ul><li>Yéti : <b>cristaux de glace</b> qui sortent du sol puis fondent.</li><li>Feu (Géant, Dragon Ancien, Roi) : <b>explosion</b> orange et braises.</li><li>Liche : anneau de runes violettes. Lave : flaque qui bouillonne. Griffon : plume plantée et <b>pluie d'étoiles</b>. Spectral : <b>feu fantôme</b> vert.</li></ul></div>
+</div>
+
+<h2>4. Les autres attaques</h2>
+<div class="grid">
+<div class="card" style="--c:#ffb03a"><svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="150" rx="150" ry="32" fill="none" stroke="#ffd27a" stroke-width="9" opacity=".55" filter="url(#g1)"/>
+  <ellipse cx="200" cy="150" rx="150" ry="32" fill="none" stroke="#fff3d0" stroke-width="2.5"/>
+  <g stroke="#ffd27a" stroke-width="4" stroke-linecap="round" filter="url(#g1)"><path d="M200 150 L150 136 L120 142"/><path d="M200 150 L250 132 L290 140"/><path d="M200 150 L210 170"/><path d="M200 150 L170 166"/></g>
+  <g stroke="#fff" stroke-width="1.5"><path d="M200 150 L150 136 L120 142"/><path d="M200 150 L250 132 L290 140"/></g>
+  <circle cx="200" cy="140" r="40" fill="#ffd27a" opacity=".5" filter="url(#g3)"/>
+  <g fill="#ffe8b0"><rect x="160" y="90" width="9" height="9" transform="rotate(20 164 94)"/><rect x="236" y="84" width="8" height="8" transform="rotate(-30 240 88)"/><rect x="198" y="70" width="7" height="7"/></g>
+</svg><div class="t">Frappe <span class="tag">Slam</span></div><ul><li>Au lieu d'un nuage de poussière marron : <b>flash</b>, <b>fissures lumineuses</b> qui courent sur le sol, anneau d'onde et petits blocs qui sautent en brillant.</li></ul></div>
+
+<div class="card" style="--c:#ff7a3a"><svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="140" rx="180" ry="40" fill="none" stroke="#ff9a5a" stroke-width="14" opacity=".45" filter="url(#g2)"/>
+  <ellipse cx="200" cy="140" rx="180" ry="40" fill="none" stroke="#ffe0c0" stroke-width="3"/>
+  <ellipse cx="200" cy="140" rx="110" ry="25" fill="none" stroke="#ffb070" stroke-width="6" opacity=".6" filter="url(#g1)"/>
+  <path d="M20 140 Q200 60 380 140" fill="#ff7a3a" opacity=".12" filter="url(#g2)"/>
+  <rect x="175" y="60" width="50" height="78" rx="18" fill="#3a3355"/>
+</svg><div class="t">Onde de choc <span class="tag">Stomp</span></div><ul><li>Une <b>double onde lumineuse</b> part du boss en rasant le sol, avec un voile de lumière au-dessus ; couleur de l'élément du boss (givre, feu, or...).</li></ul></div>
+
+<div class="card" style="--c:#7dff7a"><svg viewBox="0 0 400 190">
+  <path d="M60 150 A150 70 0 0 1 340 150" fill="none" stroke="#7dff7a" stroke-width="22" opacity=".35" filter="url(#g2)"/>
+  <path d="M60 150 A150 70 0 0 1 340 150" fill="none" stroke="#e0ffd0" stroke-width="5" stroke-linecap="round"/>
+  <path d="M90 150 A120 55 0 0 1 310 150" fill="none" stroke="#7dff7a" stroke-width="3" opacity=".7"/>
+  <g fill="#c0ffb0"><circle cx="120" cy="96" r="3"/><circle cx="200" cy="80" r="3"/><circle cx="280" cy="96" r="3"/></g>
+</svg><div class="t">Coup de liane / balayage <span class="tag">Sweep</span></div><ul><li>Un <b>arc lumineux</b> (comme un coup d'épée d'anime) balaie devant le boss, vert pour le Roi Citrouille, or pour le Griffon.</li></ul></div>
+
+<div class="card" style="--c:#c46bff"><svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="155" rx="110" ry="24" fill="none" stroke="#c46bff" stroke-width="8" opacity=".55" filter="url(#g1)"/>
+  <g filter="url(#g1)" fill="#c46bff" opacity=".8"><path d="M170 155 L182 70 L194 155 Z"/><path d="M196 155 L210 50 L224 155 Z"/><path d="M224 155 L234 90 L244 155 Z"/></g>
+  <g fill="#f0e0ff"><path d="M176 155 L182 82 L188 155 Z"/><path d="M203 155 L210 62 L217 155 Z"/><path d="M230 155 L234 100 L238 155 Z"/></g>
+  <circle cx="210" cy="110" r="40" fill="#c46bff" opacity=".3" filter="url(#g3)"/>
+</svg><div class="t">Racines épineuses / geysers <span class="tag">Thorns</span></div><ul><li>Roi Citrouille : <b>épines de cristal violet</b> qui brillent, au lieu de bâtons en bois.</li><li>Dragon de Lave : de vrais <b>geysers de lave</b> qui jaillissent (colonnes lumineuses orange).</li></ul></div>
+
+<div class="card" style="--c:#ffffff"><svg viewBox="0 0 400 190">
+  <circle cx="200" cy="100" r="70" fill="#fff" opacity=".35" filter="url(#g3)"/>
+  <g stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"><path d="M200 100 L200 20"/><path d="M200 100 L270 40"/><path d="M200 100 L130 40"/><path d="M200 100 L300 110"/><path d="M200 100 L100 110"/></g>
+  <g fill="#ffe27a"><circle cx="150" cy="60" r="4"/><circle cx="260" cy="64" r="4"/><circle cx="230" cy="30" r="3"/><circle cx="170" cy="30" r="3"/></g>
+  <ellipse cx="200" cy="165" rx="120" ry="20" fill="none" stroke="#ffe27a" stroke-width="4" opacity=".7"/>
+</svg><div class="t">Mort du boss <span class="tag">Death</span></div><ul><li>Après l'effondrement : le boss <b>éclate en lumière</b> (rayons, pluie d'étoiles dorées, anneau au sol) au lieu de simples morceaux.</li></ul></div>
+</div>
+
+<div class="note"><b>Comment je fais :</b> je cherche dans la boutique de créateurs des textures gratuites de particules (étoiles, halos, anneaux, slash, flammes), je vérifie qu'elles se chargent, puis je refais tous les effets avec. Je te montre ensuite une vidéo de chaque boss en jeu.<br><br>Tu valides ce style, ou tu veux changer quelque chose (plus ou moins de lumière, couleurs, cercle d'alerte...) ?</div>
+</div></body>
+</html>
