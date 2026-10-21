@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projectiles des boss</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --ok:#6fdc6f; --accent:#ffd34d; --line:#3a3460; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; } h2 { margin:28px 0 8px; font-size:21px; }
+  p, li { color:var(--muted); line-height:1.55; } b { color:var(--text); }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:14px; margin-top:12px; }
+  .card { background:var(--card); border-radius:14px; overflow:hidden; border-top:5px solid var(--c, var(--accent)); }
+  .card svg { width:100%; height:auto; display:block; background:linear-gradient(#3b3560, #2c2848 70%, #26223d); }
+  .card .t { padding:10px 14px 4px; font-size:18px; font-weight:700; }
+  .card ul { margin:0; padding:0 14px 12px 30px; font-size:14px; }
+  .card li { margin:3px 0; }
+  .tag { display:inline-block; font-size:12px; padding:2px 8px; border-radius:10px; background:#433b6e; color:var(--text); margin-left:6px; vertical-align:middle; font-weight:600; }
+  table { border-collapse:collapse; width:100%; margin-top:8px; font-size:14px; }
+  td, th { padding:6px 10px; border-bottom:1px solid var(--line); text-align:left; color:var(--muted); vertical-align:top; }
+  th { color:var(--text); }
+</style>
+</head>
+<body><div class="wrap">
+<h1>Projectiles des boss : chacun les siens</h1>
+<p>Aujourd'hui, toutes les salves sont les mêmes : des boules lumineuses qui partent <b>toutes en même temps de la tête</b> du boss, en ligne droite. Proposition : chaque projectile part <b>de la main, de la gueule ou du bâton, au moment exact du geste</b> de l'animation Blender, avec un aspect et une trajectoire propres à chaque boss.</p>
+<div class="note"><b>Règle de jeu gardée :</b> le cercle rouge au sol ne change pas, et chaque projectile tombe <b>pile quand le cercle disparaît</b> (1,5 s). Un projectile lancé tard vole donc plus vite qu'un projectile lancé tôt. Les dégâts et le nombre de projectiles ne changent pas.</div>
+
+<div class="grid">
+
+<!-- YÉTI -->
+<div class="card" style="--c:#bfe8ff">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#d9f1ff" opacity=".25"/>
+  <rect x="30" y="80" width="46" height="90" rx="20" fill="#e8f4ff"/><circle cx="53" cy="70" r="22" fill="#e8f4ff"/>
+  <path d="M70 92 L96 60" stroke="#e8f4ff" stroke-width="14" stroke-linecap="round"/>
+  <path d="M100 56 Q210 -10 300 120" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="5 6" opacity=".7"/>
+  <circle cx="190" cy="34" r="14" fill="#fff"/><circle cx="185" cy="30" r="4" fill="#dbefff"/>
+  <g fill="#fff" opacity=".8"><circle cx="160" cy="34" r="2.5"/><circle cx="148" cy="40" r="2"/><circle cx="136" cy="45" r="1.6"/></g>
+  <path d="M232 52 Q270 70 285 120" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 5" opacity=".6"/>
+  <path d="M232 52 Q300 70 330 130" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 5" opacity=".6"/>
+  <path d="M232 52 Q250 80 250 135" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="3 5" opacity=".6"/>
+  <g fill="#fff"><circle cx="285" cy="122" r="7"/><circle cx="330" cy="132" r="7"/><circle cx="250" cy="137" r="7"/></g>
+  <g fill="#fff" opacity=".9"><ellipse cx="330" cy="168" rx="22" ry="6"/><circle cx="318" cy="156" r="3"/><circle cx="342" cy="152" r="3"/><circle cx="330" cy="148" r="2.5"/></g>
+</svg>
+<div class="t">Yéti Géant <span class="tag">2 lancers → 6 boules</span></div>
+<ul>
+  <li><b>Départ :</b> une grosse boule de neige part de la main droite, puis une autre de la main gauche.</li>
+  <li><b>Vol :</b> haute cloche, flocons qui s'échappent derrière ; en l'air chaque boule <b>éclate en 3</b> petites boules, qui retombent sur les cercles.</li>
+  <li><b>Impact :</b> gerbe de neige et petit tas blanc qui fond en 1 s.</li>
+</ul>
+</div>
+
+<!-- GÉANT -->
+<div class="card" style="--c:#ff8c3a">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#ff9b4a" opacity=".12"/>
+  <rect x="26" y="66" width="44" height="104" rx="8" fill="#3d3a48"/><rect x="34" y="40" width="28" height="30" rx="6" fill="#4a4656"/>
+  <rect x="10" y="80" width="24" height="44" rx="10" fill="#3a5cc4"/>
+  <path d="M70 92 L104 96" stroke="#4a4656" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="110" cy="96" r="9" fill="#ffb347"/><circle cx="110" cy="96" r="15" fill="#ff7a1a" opacity=".35"/>
+  <path d="M120 96 Q220 92 330 150" fill="none" stroke="#ffb347" stroke-width="2" stroke-dasharray="5 6" opacity=".7"/>
+  <g><circle cx="215" cy="104" r="11" fill="#ffd27a"/><path d="M205 104 Q180 96 160 102 Q180 112 205 108 Z" fill="#ff7a1a" opacity=".9"/><path d="M204 100 Q170 90 150 96" stroke="#ff4d1a" stroke-width="3" fill="none" opacity=".6"/></g>
+  <g><circle cx="330" cy="168" r="18" fill="#ff7a1a" opacity=".55"/><circle cx="330" cy="168" r="9" fill="#ffd27a"/>
+  <g fill="#ffb347"><circle cx="306" cy="150" r="2.5"/><circle cx="352" cy="148" r="2.5"/><circle cx="318" cy="140" r="2"/><circle cx="344" cy="138" r="2"/></g></g>
+</svg>
+<div class="t">Géant <span class="tag">5 coups → 5 boules</span></div>
+<ul>
+  <li><b>Départ :</b> à chaque coup de poing de la main gauche (derrière le bouclier), une boule de feu jaillit du poing.</li>
+  <li><b>Vol :</b> tendu, presque droit, qui plonge à la fin ; longue traînée de flammes orange.</li>
+  <li><b>Impact :</b> petite explosion orange et braises qui sautent.</li>
+</ul>
+</div>
+
+<!-- ROI CITROUILLE -->
+<div class="card" style="--c:#ff9a2a">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#ff9a2a" opacity=".12"/>
+  <rect x="44" y="80" width="18" height="90" rx="8" fill="#5a3a24"/><circle cx="53" cy="60" r="24" fill="#f08a2a"/><path d="M42 54 l6 4 M58 54 l6 -4" stroke="#3a1a0a" stroke-width="4"/>
+  <path d="M40 28 l6 -12 l7 10 l7 -10 l6 12 Z" fill="#e8c34a"/>
+  <path d="M60 90 L92 60" stroke="#5a3a24" stroke-width="8" stroke-linecap="round"/>
+  <path d="M96 56 Q200 -20 320 150" fill="none" stroke="#ffcf7a" stroke-width="2" stroke-dasharray="5 6" opacity=".7"/>
+  <g transform="translate(200 26) rotate(25)"><ellipse rx="14" ry="12" fill="#f08a2a"/><rect x="-2" y="-17" width="4" height="7" fill="#3f7a2a"/><path d="M-6 -2 l4 2 M3 -2 l4 2 M-6 5 q6 4 12 0" stroke="#ffe27a" stroke-width="2.5" fill="none"/></g>
+  <g fill="#ff7a1a" opacity=".7"><circle cx="176" cy="28" r="5"/><circle cx="162" cy="34" r="3.5"/></g>
+  <circle cx="320" cy="166" r="16" fill="#ff7a1a" opacity=".45"/><g fill="#f08a2a"><rect x="300" y="162" width="9" height="7" rx="2"/><rect x="334" y="164" width="9" height="7" rx="2"/><rect x="318" y="150" width="8" height="6" rx="2"/></g>
+</svg>
+<div class="t">Roi Citrouille <span class="tag">7 lancers</span></div>
+<ul>
+  <li><b>Garde</b> ses citrouilles enflammées actuelles (déjà propres à lui).</li>
+  <li><b>Change :</b> elles partent <b>de sa main</b>, droite puis gauche, au rythme de son jonglage (une toutes les 0,17 s) au lieu de sortir de sa tête presque toutes ensemble.</li>
+  <li><b>Impact :</b> inchangé (explosion, éclats de citrouille qui roulent).</li>
+</ul>
+</div>
+
+<!-- LICHE -->
+<div class="card" style="--c:#a46bff">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#a46bff" opacity=".12"/>
+  <path d="M30 170 L50 70 L80 70 L100 170 Z" fill="#a8262e"/><circle cx="65" cy="58" r="16" fill="#e8e2d0"/>
+  <path d="M100 50 L120 168" stroke="#3a2a20" stroke-width="5"/><circle cx="98" cy="44" r="12" fill="#cfe9b0"/><circle cx="98" cy="44" r="20" fill="#8cff6a" opacity=".25"/>
+  <path d="M110 46 C160 10 170 90 220 60 S280 40 300 150" fill="none" stroke="#c49bff" stroke-width="2" stroke-dasharray="5 6" opacity=".8"/>
+  <g transform="translate(215 62)"><circle r="16" fill="#a46bff" opacity=".35"/><circle r="10" fill="#d9c2ff"/><circle cx="-3.5" cy="-1" r="2.5" fill="#4a2a7a"/><circle cx="3.5" cy="-1" r="2.5" fill="#4a2a7a"/></g>
+  <g fill="#c49bff" opacity=".6"><circle cx="190" cy="70" r="4"/><circle cx="176" cy="66" r="3"/><circle cx="164" cy="58" r="2"/></g>
+  <ellipse cx="300" cy="166" rx="28" ry="8" fill="none" stroke="#c49bff" stroke-width="3"/><ellipse cx="300" cy="166" rx="16" ry="4" fill="#a46bff" opacity=".5"/>
+  <g fill="#8a7aa8" opacity=".6"><circle cx="290" cy="150" r="6"/><circle cx="308" cy="146" r="5"/></g>
+</svg>
+<div class="t">Liche Ancienne <span class="tag">5 orbes</span></div>
+<ul>
+  <li><b>Départ :</b> du crâne au bout de son bâton, à chaque coup de bâton.</li>
+  <li><b>Vol :</b> orbe violet avec un petit visage de crâne lumineux, qui <b>ondule</b> en vol (trajectoire en vague) ; fumée violette derrière.</li>
+  <li><b>Impact :</b> anneau violet qui s'élargit au sol et fumée.</li>
+</ul>
+</div>
+
+<!-- DRAGON DE LAVE -->
+<div class="card" style="--c:#ff5a1f">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#ff5a1f" opacity=".12"/>
+  <path d="M20 120 Q50 70 90 80 L110 66 L118 84 Q80 110 60 140 Z" fill="#7a2a24"/><path d="M40 90 L10 50 L60 80 Z" fill="#a8302a"/>
+  <circle cx="114" cy="78" r="8" fill="#ff8a2a" opacity=".8"/>
+  <path d="M120 76 Q220 10 310 150" fill="none" stroke="#ff9a4a" stroke-width="2" stroke-dasharray="5 6" opacity=".7"/>
+  <g transform="translate(212 40) rotate(-20)"><path d="M-12 -6 L2 -13 L13 -3 L9 10 L-6 11 L-13 2 Z" fill="#2a2222"/><path d="M-7 -3 L2 2 L8 -5 M-2 2 L-4 8" stroke="#ff7a1a" stroke-width="2" fill="none"/></g>
+  <g fill="#777" opacity=".5"><circle cx="186" cy="42" r="6"/><circle cx="172" cy="50" r="5"/><circle cx="160" cy="58" r="4"/></g>
+  <ellipse cx="312" cy="168" rx="30" ry="8" fill="#ff5a1f"/><ellipse cx="312" cy="167" rx="18" ry="4" fill="#ffc04a"/>
+  <g fill="#ff9a4a"><circle cx="296" cy="156" r="2.5"/><circle cx="326" cy="152" r="2.5"/></g>
+</svg>
+<div class="t">Dragon de Lave <span class="tag">7 crachats</span></div>
+<ul>
+  <li><b>Départ :</b> de la gueule, à chaque crachat (la tête se rejette en arrière puis crache).</li>
+  <li><b>Vol :</b> rocher de lave noir aux fissures orange, en cloche moyenne, qui fume.</li>
+  <li><b>Impact :</b> <b>flaque de lave</b> qui reste et grésille 1 s (visuel seulement, pas de dégâts en plus).</li>
+</ul>
+</div>
+
+<!-- DRAGON ANCIEN -->
+<div class="card" style="--c:#ff7a3a">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#ff7a3a" opacity=".12"/>
+  <path d="M20 130 Q40 70 86 76 L108 60 L116 80 Q80 110 60 150 Z" fill="#b03a30"/><path d="M50 84 L14 30 L70 70 Z" fill="#c8483a"/>
+  <path d="M118 74 L300 148" stroke="#ffb05a" stroke-width="2" stroke-dasharray="5 6" opacity=".7"/>
+  <g><circle cx="205" cy="110" r="17" fill="#ff7a1a" opacity=".5"/><circle cx="205" cy="110" r="11" fill="#ffd27a"/>
+  <path d="M192 104 Q160 88 132 86 Q158 104 192 116 Z" fill="#ff5a1a" opacity=".8"/></g>
+  <circle cx="300" cy="160" r="26" fill="#ff7a1a" opacity=".45"/><circle cx="300" cy="160" r="13" fill="#ffd27a" opacity=".9"/>
+  <g fill="#ffb05a"><circle cx="270" cy="138" r="3"/><circle cx="330" cy="136" r="3"/><circle cx="300" cy="126" r="2.5"/></g>
+</svg>
+<div class="t">Dragon Ancien <span class="tag">6 boules de feu</span></div>
+<ul>
+  <li><b>Départ :</b> de la gueule, une boule à chaque élan du corps.</li>
+  <li><b>Vol :</b> grosses boules de feu, <b>droites et rapides</b>, longue traînée.</li>
+  <li><b>Impact :</b> grosse explosion de feu et braises.</li>
+  <li>Ses deux derniers crachats tombent trop tard (après 1,5 s) : je <b>resserre son animation</b> pour qu'il finisse de cracher avant.</li>
+</ul>
+</div>
+
+<!-- GRIFFON -->
+<div class="card" style="--c:#ffd96a">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#ffd96a" opacity=".12"/>
+  <path d="M40 110 Q60 80 90 86 L100 74 Q110 92 84 116 Z" fill="#c8862a"/><circle cx="96" cy="72" r="10" fill="#f2f2f2"/>
+  <path d="M60 90 Q20 30 90 20 Q110 60 70 96 Z" fill="#d9a03a"/>
+  <path d="M90 30 C150 10 140 80 200 60 S260 110 300 150" fill="none" stroke="#ffe27a" stroke-width="2" stroke-dasharray="5 6" opacity=".7"/>
+  <g transform="translate(200 62) rotate(28)"><path d="M-20 0 Q0 -8 20 0 Q0 8 -20 0 Z" fill="#ffd96a"/><path d="M-20 0 L20 0" stroke="#b07a1a" stroke-width="1.5"/></g>
+  <g fill="#fff6c0"><circle cx="180" cy="56" r="2"/><circle cx="170" cy="50" r="1.5"/><circle cx="160" cy="46" r="1.2"/></g>
+  <g transform="translate(300 156) rotate(60)"><path d="M-18 0 Q0 -7 18 0 Q0 7 -18 0 Z" fill="#ffd96a"/></g>
+  <g fill="#fff6c0"><circle cx="288" cy="150" r="3"/><circle cx="314" cy="146" r="2.5"/><circle cx="300" cy="138" r="2"/></g>
+</svg>
+<div class="t">Griffon Doré <span class="tag">7 plumes</span></div>
+<ul>
+  <li><b>Départ :</b> une grande plume dorée part de l'aile à chaque coup d'ailes vers l'avant (aile gauche, puis droite...).</li>
+  <li><b>Vol :</b> pointe en avant, elle <b>plane en zigzag</b> et scintille.</li>
+  <li><b>Impact :</b> la plume se plante dans le sol, brille, puis disparaît en étincelles dorées.</li>
+</ul>
+</div>
+
+<!-- DRAGON SPECTRAL -->
+<div class="card" style="--c:#6dffb0">
+<svg viewBox="0 0 400 190">
+  <ellipse cx="200" cy="178" rx="210" ry="14" fill="#6dffb0" opacity=".12"/>
+  <path d="M20 130 Q40 70 86 76 L108 60 L116 80 Q80 110 60 150 Z" fill="#3a8a7a" opacity=".85"/><path d="M50 84 L14 30 L70 70 Z" fill="#5ab8a0" opacity=".7"/>
+  <path d="M118 74 L330 120 L300 170 Z" fill="#6dffb0" opacity=".18"/>
+  <path d="M118 74 L250 104" stroke="#9dffcf" stroke-width="10" stroke-linecap="round" opacity=".35"/>
+  <g fill="#9dffcf" opacity=".7"><circle cx="170" cy="92" r="7"/><circle cx="215" cy="104" r="9"/><circle cx="260" cy="120" r="10"/></g>
+  <g fill="#6dffb0" opacity=".8"><path d="M286 168 q6 -20 12 0 z"/><path d="M302 168 q7 -26 14 0 z"/><path d="M320 168 q5 -16 10 0 z"/></g>
+  <path d="M310 60 A40 40 0 0 1 340 110" stroke="#9dffcf" stroke-width="2" fill="none" stroke-dasharray="3 4"/><path d="M340 110 l-8 -2 l6 -6 z" fill="#9dffcf"/>
+</svg>
+<div class="t">Dragon Spectral <span class="tag">jet + 6 boules</span></div>
+<ul>
+  <li><b>Départ :</b> de la gueule, un <b>jet de flammes vertes continu</b> qui balaie de gauche à droite (en éventail, comme sa tête).</li>
+  <li><b>Vol :</b> dans le jet, 6 boules vertes à moitié transparentes partent vers les cercles.</li>
+  <li><b>Impact :</b> petit feu vert fantôme qui danse au sol puis s'éteint.</li>
+</ul>
+</div>
+
+</div>
+
+<h2>Le Golem</h2>
+<p>Il n'a pas d'attaque à distance (frappe et piétinement seulement) : rien ne change pour lui.</p>
+
+<h2>Récapitulatif</h2>
+<table>
+  <tr><th>Boss</th><th>Part de</th><th>Projectile</th><th>Trajectoire</th><th>Impact</th></tr>
+  <tr><td>Yéti Géant</td><td>mains (2 lancers)</td><td>boule de neige qui éclate en 3</td><td>haute cloche</td><td>gerbe de neige</td></tr>
+  <tr><td>Géant</td><td>poing gauche (5 coups)</td><td>boule de feu</td><td>tendue</td><td>explosion + braises</td></tr>
+  <tr><td>Roi Citrouille</td><td>mains (jonglage)</td><td>citrouille en feu (actuelle)</td><td>cloche</td><td>inchangé</td></tr>
+  <tr><td>Liche Ancienne</td><td>crâne du bâton</td><td>orbe-crâne violet</td><td>en vague</td><td>anneau violet</td></tr>
+  <tr><td>Dragon de Lave</td><td>gueule</td><td>rocher de lave</td><td>cloche moyenne</td><td>flaque de lave</td></tr>
+  <tr><td>Dragon Ancien</td><td>gueule</td><td>grosse boule de feu</td><td>droite, rapide</td><td>grosse explosion</td></tr>
+  <tr><td>Griffon Doré</td><td>ailes</td><td>plume dorée</td><td>zigzag plané</td><td>plume plantée</td></tr>
+  <tr><td>Dragon Spectral</td><td>gueule</td><td>jet vert + boules</td><td>éventail</td><td>feu vert au sol</td></tr>
+</table>
+<div class="note">Tu valides ? Ou dis-moi lesquels changer (aspect, trajectoire, impact).</div>
+</div></body>
+</html>
