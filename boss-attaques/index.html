@@ -1,0 +1,74 @@
+<title>Boss en vidéo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600&display=swap">
+<style>
+  /* Arène de nuit : fond d'ardoise violacée, accents feu et givre ; une colonne de vidéos, grille pour les 9 boss */
+  :root {
+    --bg: #15121f; --panel: #221d33; --line: #352e4f;
+    --fg: #f2eeff; --muted: #b4acd2; --fire: #ff9a3c; --frost: #9fdcff;
+    --display: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+    color-scheme: dark;
+  }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-block: 28px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 34px; }
+  h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(28px, 5vw, 40px); }
+  h2 { font-size: 22px; }
+  p { margin: 0; color: var(--muted); max-width: 68ch; }
+  header { display: grid; gap: 8px; }
+  section { display: grid; gap: 14px; }
+  .lead { display: grid; gap: 16px; }
+  figure { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; min-width: 0; }
+  video { display: block; width: 100%; max-width: 100%; aspect-ratio: 946 / 440; background: #000; }
+  .grid video { aspect-ratio: 4 / 3; }
+  figcaption { padding: 10px 14px 12px; display: grid; gap: 2px; }
+  figcaption b { font-family: var(--display); font-weight: 500; font-size: 16px; }
+  figcaption span { color: var(--muted); font-size: 13.5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .tag { display: inline-block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fire); font-weight: 600; }
+  .tag.frost { color: var(--frost); }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="tag">Combats de boss · 21 octobre</span>
+    <h1>Les boss en vidéo</h1>
+    <p>Toutes les vidéos de la journée au même endroit : les nouveaux effets en jeu, les projectiles, puis les animations faites dans Blender pour chacun des 9 boss.</p>
+  </header>
+
+  <section>
+    <h2>En jeu</h2>
+    <div class="lead">
+      <figure>
+        <video src="effets-magiques-lave.mp4" controls muted playsinline preload="metadata"></video>
+        <figcaption><b>Nouveaux effets magiques · Dragon de Lave</b><span>Cercles d'alerte lumineux qui se remplissent, rochers de lave à traînée de feu, éclats d'étoiles, onde de choc.</span></figcaption>
+      </figure>
+      <figure>
+        <video src="projectiles-en-jeu.mp4" controls muted playsinline preload="metadata"></video>
+        <figcaption><b>Projectiles propres à chaque boss</b><span>Version précédente des effets : départ de la main, de la gueule ou du bâton au moment du geste. Roi Citrouille, Dragon Spectral, Liche, Dragon de Lave, Griffon, Yéti.</span></figcaption>
+      </figure>
+      <figure>
+        <video src="yeti-en-jeu.mp4" controls muted playsinline preload="metadata"></video>
+        <figcaption><b>Combat du Yéti</b><span>Les animations Blender jouées en combat : boules de neige, frappe, onde de givre.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <span class="tag frost">Rendus Blender</span>
+    <h2>Les 9 boss animés à la main</h2>
+    <div class="grid">
+      <figure><video src="yeti-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Yéti Géant</b><span>Frappe à deux poings, boules de neige, saut écrasant, mort</span></figcaption></figure>
+      <figure><video src="geant-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Géant</b><span>Bouclier abattu, poings de feu, mort sur son bouclier</span></figcaption></figure>
+      <figure><video src="roicitrouille-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Roi Citrouille</b><span>Coup de liane, bond, jonglage, racines, mort</span></figcaption></figure>
+      <figure><video src="licheancienne-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Liche Ancienne</b><span>Bâton planté, orbes, lévitation et onde, mort</span></figcaption></figure>
+      <figure><video src="golemancien-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Golem Ancien</b><span>Poing de pierre, piétinement, mort face contre terre</span></figcaption></figure>
+      <figure><video src="dragonlave-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Dragon de Lave</b><span>Boules de feu, piqué, éruption, geysers, mort</span></figcaption></figure>
+      <figure><video src="dragonancien-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Dragon Ancien</b><span>Boules de feu, rugissement puis coup d'ailes, mort</span></figcaption></figure>
+      <figure><video src="griffondore-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Griffon Doré</b><span>Serres en rase-mottes, rafale de plumes, tornade, mort</span></figcaption></figure>
+      <figure><video src="dragonspectral-v2.mp4" controls muted playsinline preload="metadata"></video><figcaption><b>Dragon Spectral</b><span>Flammes en éventail, cri spectral, mort</span></figcaption></figure>
+    </div>
+  </section>
+</div>
