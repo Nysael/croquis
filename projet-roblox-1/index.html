@@ -1,31 +1,20 @@
-<title>Murs d'arène en jeu</title>
+<title>Auras des œufs en jeu</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #eef1f8; --panel: #ffffff; --fg: #1d2236; --muted: #5b6380; --line: #d7dcec; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; color-scheme: dark } }
-  :root[data-theme="dark"] { --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9; --line: #2d3358; color-scheme: dark }
+  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; color-scheme: dark; }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
-  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+  .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 16px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
   p { margin: 0; color: var(--muted); max-width: 75ch; }
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
   figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
-  img { width: 100%; border-radius: 8px; display: block; }
+  video, img { width: 100%; max-width: 100%; border-radius: 8px; display: block; background: #000; }
   figcaption { font-size: 14px; color: var(--muted); }
-  figcaption b { color: var(--fg); }
 </style>
 <div class="wrap">
-  <h1>Murs d'arène en jeu</h1>
-  <p>Version 2 (21/10) : de vrais modèles 3D du Creator Store, choisis sur la page de choix. Captures dans Studio, vues depuis l'intérieur de l'arène, en plein jour. Les particules (flammes fantômes, brume, braises, givre) et les lueurs n'apparaissent qu'en jeu.</p>
-  <div class="grid">
-    <figure><img src="potager.jpg" alt="Mur du Potager"><figcaption><b>Potager aux Citrouilles</b> : pieux tordus, ronces à épines, vraies citrouilles-lanternes.</figcaption></figure>
-    <figure><img src="grotte.jpg" alt="Mur de la Grotte"><figcaption><b>Grotte des Fantômes</b> : grappes de cristaux violets, petits quartz devant.</figcaption></figure>
-    <figure><img src="glaces.jpg" alt="Mur des Glaces"><figcaption><b>Royaume des Glaces</b> : blocs d'iceberg transparents, pics de glace.</figcaption></figure>
-    <figure><img src="ombres.jpg" alt="Mur du Bois des Ombres"><figcaption><b>Bois des Ombres</b> (v3, pack Synty) : squelette de géant enterré, rangées de côtes, grandes côtes, crânes de bête à cornes.</figcaption></figure>
-    <figure><img src="cranes.jpg" alt="Crânes aux yeux mauves"><figcaption><b>Bois des Ombres, de près</b> : crâne de bête à cornes, yeux mauves dans les orbites.</figcaption></figure>
-    <figure><img src="volcan.jpg" alt="Mur du Volcan"><figcaption><b>Volcan</b> : pointes de roche à lave rouge et gros rochers noirs, ligne de lave au pied.</figcaption></figure>
-    <figure><img src="celeste.jpg" alt="Mur du Royaume Céleste"><figcaption><b>Royaume Céleste</b> : mur de nuages moelleux, colonnes de marbre blanc.</figcaption></figure>
-  </div>
+  <h1>Auras des œufs en jeu</h1>
+  <p>Les nouvelles auras (une signature par rareté), filmées dans Studio le 22/10 sur des œufs de test, en plein jour. Dans le jeu, elles s'affichent sur les vrais œufs de chaque espèce.</p>
+  <figure><video src="auras-en-jeu.mp4" controls muted loop playsinline></video><figcaption>Les 10 raretés, de gauche à droite : Commun, Peu commun, Rare, Épique, Légendaire, Mythique, Divin, Céleste, Cosmique, Secret (première version : feuilles, rayons et ailes corrigés ensuite).</figcaption></figure>
+  <figure><video src="auras-corrigees.mp4" controls muted loop playsinline></video><figcaption>Après correction : feuilles qui tombent (Peu commun), rayons dorés (Légendaire), Divin.</figcaption></figure>
+  <figure><img src="divin-ailes.jpg" alt="Œuf Divin avec ses ailes de lumière"><figcaption>Divin, de près : les deux ailes de lumière (elles battent en jeu) et l'auréole.</figcaption></figure>
 </div>
