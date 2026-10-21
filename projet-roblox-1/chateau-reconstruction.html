@@ -1,0 +1,251 @@
+<title>Château qui se reconstruit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@400;600;700&display=swap">
+<style>
+  /* Mise en page : une colonne, trois aperçus animés côte à côte (empilés sur téléphone), puis les détails */
+  :root {
+    --bg: #eef1f8; --panel: #ffffff; --fg: #1d2236; --muted: #5b6380;
+    --accent: #7b4dff; --mana: #36c6ff; --line: #d7dcec; --sky: #bfe3ff; --ok: #1f9d55;
+    --display: "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
+    --body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9;
+    --accent: #a487ff; --mana: #5fd6ff; --line: #2d3358; --sky: #23305e; --ok: #46d27f; color-scheme: dark } }
+  :root[data-theme="dark"] {
+    --bg: #12152a; --panel: #1b1f3a; --fg: #eef0ff; --muted: #a3a9c9;
+    --accent: #a487ff; --mana: #5fd6ff; --line: #2d3358; --sky: #23305e; --ok: #46d27f; color-scheme: dark }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 48px; }
+  .wrap { max-width: 1080px; margin: 0 auto; display: grid; gap: 28px; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; }
+  h2 { font-size: 24px; font-weight: 800; }
+  h3 { font-size: 20px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  p { margin: 0; max-width: 68ch; }
+  .lead { color: var(--muted); font-size: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+  .opt { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .opt.rec { border: 2px solid var(--accent); }
+  .tag { font-family: var(--body); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); }
+  canvas { width: 100%; max-width: 100%; aspect-ratio: 4 / 3; border-radius: 10px; background: var(--sky); display: block; }
+  .time { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+  .steps { display: grid; gap: 8px; counter-reset: s; list-style: none; padding: 0; }
+  .steps li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: start; }
+  .steps li::before { counter-increment: s; content: counter(s); font-family: var(--display); font-weight: 800; font-size: 18px;
+    color: var(--accent); background: var(--panel); border: 1px solid var(--line); border-radius: 50%; width: 32px; height: 32px; display: grid; place-items: center; }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 12px; }
+  code { font-size: 13px; background: var(--bg); padding: 1px 5px; border-radius: 4px; }
+  .ask { font-weight: 700; color: var(--fg); }
+  @media (prefers-reduced-motion: reduce) { canvas { opacity: .95; } }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <span class="tag">Croquis · renaissance</span>
+    <h1>Château qui se reconstruit</h1>
+    <p class="lead">Aujourd'hui, quand ta renaissance fait passer ton château au palier suivant (Fortin de bois → Château fort → … → Citadelle céleste), l'ancien disparaît d'un coup et le nouveau apparaît avec un petit nuage de poussière. Voici trois façons de le faire se reconstruire sous tes yeux. Les aperçus tournent en boucle.</p>
+  </header>
+
+  <section class="grid" aria-label="Trois animations possibles">
+    <article class="opt rec">
+      <span class="tag">Option A · conseillée</span>
+      <h3>Pierre par pierre</h3>
+      <canvas id="cA" width="480" height="360" aria-label="Aperçu : l'ancien château s'enfonce, puis le nouveau tombe du ciel rangée par rangée"></canvas>
+      <span class="time">≈ 6 secondes</span>
+      <ul>
+        <li>L'ancien château tremble et s'enfonce dans un nuage de poussière.</li>
+        <li>Le nouveau tombe du ciel rangée par rangée, du bas vers le haut, chaque bloc avec un petit rebond.</li>
+        <li>Les toits et drapeaux arrivent en dernier, puis une gerbe d'étincelles.</li>
+      </ul>
+    </article>
+    <article class="opt">
+      <span class="tag">Option B</span>
+      <h3>Tourbillon de mana</h3>
+      <canvas id="cB" width="480" height="360" aria-label="Aperçu : l'ancien château part en étincelles, puis les blocs du nouveau sortent d'un cristal et volent à leur place"></canvas>
+      <span class="time">≈ 6 secondes</span>
+      <ul>
+        <li>L'ancien château se dissout en Éclats de mana qui montent.</li>
+        <li>Un gros cristal apparaît au centre ; les blocs du nouveau château en sortent et volent en spirale jusqu'à leur place.</li>
+        <li>Plus « magique », un peu plus chargé à l'écran.</li>
+      </ul>
+    </article>
+    <article class="opt">
+      <span class="tag">Option C</span>
+      <h3>Pop rapide</h3>
+      <canvas id="cC" width="480" height="360" aria-label="Aperçu : l'ancien château rétrécit, le nouveau grandit d'un coup avec un rebond"></canvas>
+      <span class="time">≈ 2 secondes</span>
+      <ul>
+        <li>L'ancien rétrécit et disparaît, le nouveau grandit d'un coup avec un rebond.</li>
+        <li>Simple et rapide, mais on ne le « voit » pas se construire.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="box">
+    <h2>Ce qui se passe pendant l'animation</h2>
+    <ol class="steps">
+      <li><span>Le château est déjà le nouveau pour le jeu dès le clic : tes créatures, la tour des géants et les gains ne s'arrêtent pas. L'animation n'est qu'un spectacle par-dessus.</span></li>
+      <li><span>Elle est jouée par chaque joueur sur son écran (pas par le serveur) : aucun ralentissement pour les autres, et les joueurs trop loin ne la calculent pas.</span></li>
+      <li><span>Les autres joueurs proches la voient aussi, en plus du message « X a agrandi son château ».</span></li>
+      <li><span>Un son de chantier puis un son de victoire (bibliothèque Roblox), comme les autres sons du jeu.</span></li>
+    </ol>
+  </section>
+
+  <section class="box">
+    <h2>À toi de choisir</h2>
+    <p class="ask">Quelle option je fais : A, B ou C ? Tu peux aussi mélanger, par exemple A avec le cristal de B au début.</p>
+    <p class="lead">Je n'ai pas besoin de ton écran pour la coder ni pour la tester. Je te ferai juste une petite vidéo à la fin, quand tu ne joueras plus.</p>
+  </section>
+</div>
+
+<script>
+(() => {
+  const W = 480, H = 360, B = 14, GROUND = 300, CX = W / 2;
+  // Châteaux en blocs (colonne, rangée depuis le sol, couleur)
+  function fort() {
+    const out = [], wood = ["#9b6b3d", "#8a5c32", "#a8774a"];
+    for (let r = 0; r < 5; r++) for (let c = -5; c <= 4; c++) out.push({ c, r, col: wood[(c + r + 9) % 3] });
+    for (const c of [-6, 5]) for (let r = 0; r < 7; r++) out.push({ c, r, col: "#7a4f2a" });
+    for (let c = -2; c <= 1; c++) out.push({ c, r: 5, col: "#c0392b", roof: true });
+    for (let c = -1; c <= 0; c++) out.push({ c, r: 6, col: "#c0392b", roof: true });
+    return out;
+  }
+  function castle() {
+    const out = [], stone = ["#b9bfcc", "#a6adbd", "#cdd2dc"];
+    for (let r = 0; r < 7; r++) for (let c = -6; c <= 5; c++) {
+      const door = (c === -1 || c === 0) && r < 3;
+      out.push({ c, r, col: door ? "#4a3a2a" : stone[(c * 7 + r * 3 + 40) % 3] });
+    }
+    for (let c = -6; c <= 5; c += 2) out.push({ c, r: 7, col: "#cdd2dc" });
+    for (const c0 of [-9, 7]) {
+      for (let r = 0; r < 11; r++) for (let c = c0; c <= c0 + 1; c++) out.push({ c, r, col: stone[(c + r + 30) % 3] });
+      out.push({ c: c0, r: 11, col: "#3d5bd9", roof: true }, { c: c0 + 1, r: 11, col: "#3d5bd9", roof: true });
+      out.push({ c: c0, r: 12, col: "#3d5bd9", roof: true, flag: c0 > 0 });
+    }
+    for (let r = 7; r < 12; r++) for (let c = -2; c <= 1; c++) out.push({ c, r: r + 1, col: stone[(c + r + 31) % 3] });
+    for (let c = -3; c <= 2; c++) out.push({ c, r: 13, col: "#3d5bd9", roof: true });
+    for (let c = -2; c <= 1; c++) out.push({ c, r: 14, col: "#3d5bd9", roof: true });
+    for (let c = -1; c <= 0; c++) out.push({ c, r: 15, col: "#3d5bd9", roof: true, flag: c === 0 });
+    return out;
+  }
+  const OLD = fort(), NEW = castle();
+  const rnd = (i) => { const x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); };
+  NEW.forEach((b, i) => b.k = rnd(i + 1));
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+  const bounce = (t) => { const n = 7.5625, d = 2.75;
+    if (t < 1 / d) return n * t * t; if (t < 2 / d) return n * (t -= 1.5 / d) * t + .75;
+    if (t < 2.5 / d) return n * (t -= 2.25 / d) * t + .9375; return n * (t -= 2.625 / d) * t + .984375; };
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+
+  function block(g, x, y, col, a = 1, s = 1) {
+    g.globalAlpha = a; g.fillStyle = col;
+    const z = B * s; g.fillRect(x - z / 2, y - z / 2, z - 1, z - 1);
+    g.fillStyle = "rgba(255,255,255,.28)"; g.beginPath(); g.arc(x, y - z * .12, z * .18, 0, 7); g.fill();
+    g.globalAlpha = 1;
+  }
+  const pos = (b) => [CX + b.c * B + B / 2, GROUND - b.r * B - B / 2];
+  function scene(g) {
+    g.clearRect(0, 0, W, H);
+    g.fillStyle = "#5fbf4a"; g.fillRect(0, GROUND, W, H - GROUND);
+    g.fillStyle = "#4aa63a"; for (let x = 0; x < W; x += 16) g.fillRect(x, GROUND, 8, 6);
+  }
+  function flagOn(g, b, t) {
+    const [x, y] = pos(b); g.fillStyle = "#6b4a2a"; g.fillRect(x - 1, y - 28, 2, 22);
+    g.fillStyle = "#ffcc33"; g.beginPath(); g.moveTo(x + 1, y - 28);
+    g.lineTo(x + 16, y - 24 + Math.sin(t * 6) * 2); g.lineTo(x + 1, y - 19); g.fill();
+  }
+  const puffs = [];
+  function dust(g, t, a) {
+    for (let i = 0; i < 26; i++) {
+      const k = rnd(i + 50), x = CX + (k - .5) * 260, y = GROUND - 10 - rnd(i + 80) * 40 - t * 20;
+      g.globalAlpha = .55 * a; g.fillStyle = "#e6dccb";
+      g.beginPath(); g.arc(x, y, 14 + rnd(i + 3) * 18 + t * 12, 0, 7); g.fill();
+    }
+    g.globalAlpha = 1;
+  }
+  function sparks(g, t, color = "#ffe27a") {
+    for (let i = 0; i < 40; i++) {
+      const ang = rnd(i + 200) * Math.PI * 2, sp = 60 + rnd(i + 300) * 120;
+      const x = CX + Math.cos(ang) * sp * t, y = GROUND - 150 + Math.sin(ang) * sp * t + 80 * t * t;
+      g.globalAlpha = clamp(1 - t); g.fillStyle = color;
+      g.beginPath(); g.arc(x, y, 2.5, 0, 7); g.fill();
+    }
+    g.globalAlpha = 1;
+  }
+
+  // A : pierre par pierre
+  function drawA(g, t) {
+    scene(g);
+    if (t < 1.6) {
+      const sink = ease(clamp((t - .3) / 1.3)), shake = t < 1.3 ? Math.sin(t * 60) * 2 : 0;
+      g.save(); g.beginPath(); g.rect(0, 0, W, GROUND); g.clip();
+      OLD.forEach(b => { const [x, y] = pos(b); block(g, x + shake, y + sink * 110, b.col); });
+      g.restore();
+      dust(g, t / 1.6, Math.sin(Math.PI * clamp(t / 1.8)));
+    }
+    const start = 1.6;
+    NEW.forEach(b => {
+      const t0 = start + b.r * .2 + b.k * .15 + (b.roof ? .2 : 0), p = clamp((t - t0) / .45);
+      if (p <= 0) return;
+      const [x, y] = pos(b); block(g, x, y - (1 - bounce(p)) * 160, b.col, Math.min(1, p * 3));
+    });
+    if (t > 5.2) NEW.filter(b => b.flag).forEach(b => flagOn(g, b, t));
+    if (t > 5.2 && t < 6.6) sparks(g, (t - 5.2) / 1.4);
+  }
+  // B : tourbillon de mana
+  function drawB(g, t) {
+    scene(g);
+    if (t < 1.6) {
+      OLD.forEach((b, i) => { const [x, y] = pos(b), k = rnd(i + 9), p = clamp((t - k * .8) / .8);
+        block(g, x + Math.sin(i + t * 4) * p * 10, y - p * 120, p > 0 ? "#5fd6ff" : b.col, 1 - p, 1 - p * .6); });
+    }
+    const cy = GROUND - 120, cAlpha = clamp((t - 1) / .4) * (1 - clamp((t - 5.2) / .4));
+    if (cAlpha > 0) {
+      g.save(); g.translate(CX, cy); g.rotate(t * 1.5); g.globalAlpha = cAlpha;
+      g.fillStyle = "#7b4dff"; g.beginPath(); g.moveTo(0, -26); g.lineTo(16, 0); g.lineTo(0, 26); g.lineTo(-16, 0); g.fill();
+      g.fillStyle = "#c9b6ff"; g.beginPath(); g.moveTo(0, -26); g.lineTo(6, 0); g.lineTo(0, 26); g.fill();
+      g.restore(); g.globalAlpha = 1;
+    }
+    const order = NEW.slice().sort((a, b) => (a.r + a.k * 2) - (b.r + b.k * 2));
+    order.forEach((b, i) => {
+      const t0 = 1.5 + i / order.length * 3.3, p = clamp((t - t0) / .7);
+      if (p <= 0) return;
+      const [x, y] = pos(b), e = ease(p), ang = (1 - e) * 5 + b.k * 6, rad = (1 - e) * 50;
+      const px = CX + (x - CX) * e + Math.cos(ang) * rad, py = cy + (y - cy) * e + Math.sin(ang) * rad;
+      if (p < 1) { g.globalAlpha = .35; g.fillStyle = "#a487ff"; g.beginPath(); g.arc(px, py, 6, 0, 7); g.fill(); g.globalAlpha = 1; }
+      block(g, px, py, b.col, 1, .5 + e * .5);
+    });
+    if (t > 5.2) NEW.filter(b => b.flag).forEach(b => flagOn(g, b, t));
+    if (t > 5.2 && t < 6.6) sparks(g, (t - 5.2) / 1.4, "#8fe3ff");
+  }
+  // C : pop rapide
+  function drawC(g, t) {
+    scene(g);
+    const tt = t % 3.5;
+    if (tt < .5) {
+      const s = 1 - ease(tt / .5);
+      OLD.forEach(b => { const [x, y] = pos(b); block(g, CX + (x - CX) * s, GROUND + (y - GROUND) * s, b.col, 1, s); });
+    } else {
+      const p = clamp((tt - .5) / .6), s = p < 1 ? 1 + Math.sin(p * Math.PI) * .18 * (1 - p) + (ease(p) - 1) : 1;
+      const k = Math.max(0.01, p < 1 ? ease(p) * (1 + Math.sin(p * Math.PI) * .15) : 1);
+      NEW.forEach(b => { const [x, y] = pos(b); block(g, CX + (x - CX) * k, GROUND + (y - GROUND) * k, b.col, 1, k); });
+      if (tt > 1.1) NEW.filter(b => b.flag).forEach(b => flagOn(g, b, t));
+      if (tt > .9 && tt < 2.3) sparks(g, (tt - .9) / 1.4);
+    }
+  }
+
+  const items = [["cA", drawA, 7.5], ["cB", drawB, 7.5], ["cC", drawC, 3.5]]
+    .map(([id, fn, loop]) => ({ g: document.getElementById(id).getContext("2d"), fn, loop }));
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const t0 = performance.now();
+  function frame(now) {
+    const t = (now - t0) / 1000;
+    items.forEach(it => it.fn(it.g, still ? it.loop - .3 : t % it.loop));
+    if (!still) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
