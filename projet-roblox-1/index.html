@@ -15,33 +15,22 @@
   figcaption { font-size: 14px; color: var(--muted); }
   .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
   ul { margin: 6px 0 0; padding-left: 20px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
-  th { color: var(--muted); }
-  .scroll { overflow-x: auto; }
 </style>
 <div class="wrap">
-  <span class="tag">Dans le jeu · 23/10</span>
-  <h1>Marche des créatures à quatre pattes</h1>
-  <p>Le loup filmé dans le jeu, en boucle : arrêt, marche lente, course, arrêt. En haut l'ancienne démarche, en bas la nouvelle. Le changement vaut pour toutes les créatures à squelette qui marchent (loup, chiot, ours, tigre, renard…).</p>
-  <figure><video src="comparaison.mp4" controls autoplay muted loop playsinline></video><figcaption>Avant (haut) · Après (bas)</figcaption></figure>
+  <span class="tag">Essai Blender · pas encore dans le jeu</span>
+  <h1>Marche du loup : vraies animations</h1>
+  <p>La marche calculée par le jeu était ratée (« horrible ») : elle est retirée, le jeu a repris l'ancienne. À la place, de vraies animations faites dans Blender, comme pour les boss : les pieds sont posés au sol et la jambe se plie toute seule pour les suivre (cinématique inverse), ce qui évite les déformations.</p>
+  <figure><video src="blender-essai.mp4" controls autoplay muted loop playsinline></video><figcaption>Rendu Blender du loup : pas (profil, 3/4) puis trot (profil, 3/4), en boucle.</figcaption></figure>
   <div class="box">
-    <b>Ce qui a changé</b>
+    <b>Ce que montre l'essai</b>
     <ul>
-      <li><b>Au pas</b>, les pattes se posent l'une après l'autre comme un vrai loup (arrière-gauche, avant-gauche, arrière-droite, avant-droite) ; il passe <b>au trot</b> (en diagonale) seulement quand il va vite, en douceur.</li>
-      <li><b>Plus de patinage</b> : la longueur du pas est calculée d'après la vraie longueur de ses pattes, la patte posée reste collée au sol.</li>
-      <li><b>Rythme naturel</b> : pas plus longs quand il va vite, environ 1,5 à 2,5 pas par seconde au pas (avant : plus de 3).</li>
-      <li><b>Moins raide</b> : le genou plie un peu sous le poids, la patte se replie en l'air, le pas est centré sous l'épaule ; le corps rebondit moins au pas qu'au trot.</li>
+      <li><b>Pas</b> : les pattes se posent l'une après l'autre (arrière-gauche, avant-gauche, arrière-droite, avant-droite), pied posé 3/4 du temps, dos qui ondule doucement, tête stable, queue qui balance.</li>
+      <li><b>Trot</b> : pattes en diagonale, petit rebond du corps.</li>
+      <li>Les pas sont recentrés sous les hanches et les épaules : plus de coup de pied en arrière ni de peau étirée.</li>
     </ul>
   </div>
-  <div class="box scroll">
-    <b>Mesuré dans le jeu</b> (glissement de la patte posée, en % de la vitesse)
-    <table>
-      <tr><th>Créature</th><th>Marche lente</th><th>Marche</th><th>Course</th></tr>
-      <tr><td>Loup</td><td>1,5 pas/s</td><td>2,4 pas/s · 11 %</td><td>trot · 11 %</td></tr>
-      <tr><td>Ours</td><td>1,5 pas/s</td><td>1,6 pas/s · 7 %</td><td>trot · 8 %</td></tr>
-      <tr><td>Tigre</td><td>1,5 pas/s</td><td>2,0 pas/s · 7 %</td><td>trot · 7 %</td></tr>
-    </table>
+  <div class="box">
+    <b>Si ça te va</b>
+    <p style="margin-top:4px">Je fais pareil pour les autres créatures à quatre pattes (même générateur, adapté à chaque squelette), je les mets dans le jeu à la place de la marche calculée et je te filme le résultat en jeu avant de valider. Sinon dis-moi ce qui cloche (rythme, pattes, dos, tête…).</p>
   </div>
-  <p>Dis-moi si c'est mieux, ou ce qui te gêne encore (pattes trop levées, rythme…).</p>
 </div>
