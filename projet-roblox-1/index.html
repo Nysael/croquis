@@ -1,49 +1,61 @@
-<title>Panneau trophées des îles</title>
+<title>Trophées de boss</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; color-scheme: dark; }
+  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; --coin: #ffcd46; color-scheme: dark; }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
-  .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 14px; }
+  .wrap { max-width: 1050px; margin: 0 auto; display: grid; gap: 14px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
-  h2 { margin: 8px 0 0; font-size: 19px; }
-  p, li { color: var(--muted); max-width: 78ch; }
-  p { margin: 0; }
+  h2 { margin: 10px 0 0; font-size: 19px; }
+  p, li { color: var(--muted); }
+  p { margin: 0; max-width: 80ch; }
   b { color: var(--fg); }
   .tag { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
-  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
+  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; align-content: start; }
   img { width: 100%; max-width: 100%; border-radius: 8px; display: block; }
   figcaption { font-size: 14px; color: var(--muted); padding: 0 4px 2px; }
+  .coin { color: var(--coin); font-weight: 800; white-space: nowrap; }
   .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
   ul { margin: 6px 0 0; padding-left: 20px; }
-  ol { margin: 6px 0 0; padding-left: 20px; color: var(--muted); }
 </style>
 <div class="wrap">
-  <span class="tag">Croquis · rien n'est encore dans le jeu</span>
-  <h1>Panneau trophées devant chaque île</h1>
-  <p>Un grand panneau en bois à l'entrée de chaque île, juste au bout du pont, tourné vers ceux qui arrivent. Il montre <b>les 109 espèces</b> du jeu : celles que le joueur a déjà eues en couleur avec leur nom, les autres en <b>silhouette noire « ??? »</b>, comme dans l'Index. En haut, le nom du joueur et son score. Maquette faite dans le jeu, devant ton île (les espèces « eues » sont tirées au hasard pour l'exemple).</p>
+  <span class="tag">Modèles à valider · pas encore en vente</span>
+  <h1>Trophées de boss et Statue du collectionneur</h1>
+  <p>Rendus faits dans Blender avec les vrais modèles des boss. Chaque trophée : un socle de pierre à liseré doré, une plaque dorée gravée au nom du boss, une petite gemme de la couleur de sa zone, et le boss en miniature dessus. Dans le jeu, la miniature sera le boss tel qu'il est en combat, à environ 2 cases de haut.</p>
 
-  <figure><img src="panneau-face.png" alt="Panneau trophées vu du pont"><figcaption>Vu en arrivant par le pont : on voit tout de suite la collection du propriétaire.</figcaption></figure>
-  <figure><img src="panneau-pres.png" alt="Panneau trophées de près"><figcaption>De près : chaque case = la vraie créature en 3D, couleur et contour de sa rareté (gris Commun → … → Secret), nom dessous.</figcaption></figure>
+  <h2>Boss des zones</h2>
+  <div class="grid">
+    <figure><img src="Geant.jpg" alt="Trophée du Géant"><figcaption><b>Le Géant</b> · Prairie · <span class="coin">120 🪙</span></figcaption></figure>
+    <figure><img src="GolemAncien.jpg" alt="Trophée du Golem Ancien"><figcaption><b>Golem Ancien</b> · Grotte · <span class="coin">160 🪙</span></figcaption></figure>
+    <figure><img src="DragonAncien.jpg" alt="Trophée du Dragon Ancien"><figcaption><b>Dragon Ancien</b> · Bois des Ombres · <span class="coin">200 🪙</span></figcaption></figure>
+    <figure><img src="YetiGeant.jpg" alt="Trophée du Yéti Géant"><figcaption><b>Yéti Géant</b> · Glaces · <span class="coin">250 🪙</span></figcaption></figure>
+    <figure><img src="DragonLave.jpg" alt="Trophée du Dragon de Lave"><figcaption><b>Dragon de Lave</b> · Volcan · <span class="coin">300 🪙</span></figcaption></figure>
+    <figure><img src="GriffonDore.jpg" alt="Trophée du Griffon Doré"><figcaption><b>Griffon Doré</b> · Céleste · <span class="coin">400 🪙</span></figcaption></figure>
+  </div>
 
-  <h2>Comment ça marcherait</h2>
+  <h2>Boss de saison (Halloween)</h2>
+  <div class="grid">
+    <figure><img src="RoiCitrouille.jpg" alt="Trophée du Roi Citrouille"><figcaption><b>Roi Citrouille</b> · <span class="coin">200 🪙</span></figcaption></figure>
+    <figure><img src="LicheAncienne.jpg" alt="Trophée de la Liche Ancienne"><figcaption><b>Liche Ancienne</b> · <span class="coin">250 🪙</span></figcaption></figure>
+    <figure><img src="DragonSpectral.jpg" alt="Trophée du Dragon Spectral"><figcaption><b>Dragon Spectral</b> · <span class="coin">300 🪙</span></figcaption></figure>
+  </div>
+
+  <h2>Palier 🥇 75 espèces</h2>
+  <div class="grid">
+    <figure><img src="Statue.jpg" alt="Statue du collectionneur"><figcaption><b>Statue du collectionneur</b> : socle de marbre, coupe dorée et œuf de cristal violet lumineux. Offerte au palier 75 (pas à acheter).</figcaption></figure>
+  </div>
+
   <div class="box">
+    <b>Comment ça marchera</b>
     <ul>
-      <li><b>Rangé par rareté</b> : Commun en haut à gauche, puis Peu commun, Rare… jusqu'aux Boss et au Secret en bas.</li>
-      <li><b>Se remplit tout seul</b> : dès qu'une nouvelle espèce naît, sa case s'allume (avec un petit éclat doré si tu es devant).</li>
-      <li><b>Visible par tout le monde</b> : en passant sur l'île d'un autre joueur, on voit sa collection et son score « 62/109 ».</li>
-      <li><b>Titre</b> : « 🏆 Collection de &lt;joueur&gt; · 62/109 » sur le fronton doré. À 109/109, le cadre devient doré.</li>
-      <li><b>Île libre</b> (pas de propriétaire) : pas de panneau.</li>
-      <li><b>Performance</b> : les créatures 3D ne s'affichent que quand on est près du panneau (comme dans l'Index), sinon le panneau garde juste ses couleurs.</li>
+      <li>Nouvelle catégorie <b>« 🏆 Trophées »</b> dans le mode construction (2 × 2 cases).</li>
+      <li>Un trophée reste <b>🔒 verrouillé</b> tant que tu n'as pas battu ce boss au moins une fois ; ensuite il s'achète en 🪙. Un seul exemplaire de chaque.</li>
+      <li>Chaque trophée posé : <b>+5 % de revenu au jardin</b>.</li>
+      <li>Les boss de saison : trophée débloquable seulement pendant leur saison, mais il reste à toi après.</li>
     </ul>
   </div>
-
-  <h2>À choisir</h2>
-  <div class="box">
-    <ol>
-      <li>Place : à gauche du bout du pont (comme sur la maquette), à droite, ou des deux côtés en deux moitiés ?</li>
-      <li>Les espèces pas encore eues : silhouette noire « ??? » (comme ici) ou case vide ?</li>
-      <li>Taille : comme la maquette (≈ 30 × 15 studs) ou plus grand ?</li>
-    </ol>
-  </div>
+  <p>Dis-moi si un trophée est à revoir (taille, socle, couleurs), sinon je les mets dans le jeu.</p>
 </div>
