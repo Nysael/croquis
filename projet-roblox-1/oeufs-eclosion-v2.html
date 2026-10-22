@@ -27,7 +27,9 @@
   .panel { background:#352f55; border:3px solid #6f61c9; border-radius:18px; padding:12px; max-width:540px; }
   .panel .title { font-weight:900; font-size:20px; margin-bottom:8px; }
   .egg { display:flex; align-items:center; gap:10px; background:#2a2640; border-radius:12px; padding:8px 10px; margin-top:6px; }
-  .egg img { width:58px; height:58px; object-fit:cover; border-radius:12px; flex:none; }
+  .egg .view { width:58px; height:58px; border-radius:12px; flex:none; background:radial-gradient(circle at 50% 60%, #4a4275, #2a2640 70%); perspective:200px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .egg img { width:46px; height:46px; object-fit:cover; border-radius:50%; animation:spin 4s linear infinite; }
+  @keyframes spin { from { transform:rotateY(0deg); } to { transform:rotateY(360deg); } }
   .egg .info { flex:1; min-width:0; }
   .egg .name { font-weight:800; font-size:14px; }
   .bar { height:10px; background:#1d1a2b; border-radius:6px; overflow:hidden; margin-top:4px; }
@@ -65,16 +67,16 @@
     <div>
       <div class="panel">
         <div class="title">🥚 Mes œufs (4 en éclosion)</div>
-        <div class="egg"><img src="oeufs/ic-chauvesouris.png" alt=""><div class="info"><div class="name">Chauve-souris de l'Ombre · Légendaire</div><div class="bar"><span style="width:35%"></span></div><div class="time">⏱️ 5:12 restantes</div></div><div class="btn">⚡ Éclore R$35</div></div>
-        <div class="egg"><img src="oeufs/ic-ailes.png" alt=""><div class="info"><div class="name">Œuf ailé · Divin</div><div class="bar"><span style="width:10%"></span></div><div class="time">⏱️ 18:40 restantes</div></div><div class="btn">⚡ Éclore R$59</div></div>
-        <div class="egg"><img src="oeufs/ic-gelee.png" alt=""><div class="info"><div class="name">Gelée · Épique</div><div class="bar"><span style="width:80%"></span></div><div class="time">⏱️ 0:48 restantes</div></div><div class="btn">⚡ Éclore R$5</div></div>
-        <div class="egg ready"><img src="oeufs/ic-cerf.png" alt=""><div class="info"><div class="name">Cerf · Céleste</div><div class="bar"><span style="width:100%"></span></div><div class="time">✅ Prêt : tes créatures sont pleines (120/120)</div></div><div class="btn">Faire de la place</div></div>
+        <div class="egg"><div class="view"><img src="oeufs/ic-chauvesouris.png" alt=""></div><div class="info"><div class="name">Chauve-souris de l'Ombre · Légendaire</div><div class="bar"><span style="width:35%"></span></div><div class="time">⏱️ 5:12 restantes</div></div><div class="btn">⚡ Éclore R$35</div></div>
+        <div class="egg"><div class="view"><img src="oeufs/ic-ailes.png" alt=""></div><div class="info"><div class="name">Œuf ailé · Divin</div><div class="bar"><span style="width:10%"></span></div><div class="time">⏱️ 18:40 restantes</div></div><div class="btn">⚡ Éclore R$59</div></div>
+        <div class="egg"><div class="view"><img src="oeufs/ic-gelee.png" alt=""></div><div class="info"><div class="name">Gelée · Épique</div><div class="bar"><span style="width:80%"></span></div><div class="time">⏱️ 0:48 restantes</div></div><div class="btn">⚡ Éclore R$5</div></div>
+        <div class="egg ready"><div class="view"><img src="oeufs/ic-cerf.png" alt=""></div><div class="info"><div class="name">Cerf · Céleste</div><div class="bar"><span style="width:100%"></span></div><div class="time">✅ Prêt : tes créatures sont pleines (120/120)</div></div><div class="btn">Faire de la place</div></div>
       </div>
       <p style="margin-top:12px">Bouton du menu, avec le nombre d'œufs en cours :</p>
       <div class="badge">🥚 Œufs<span class="dot">4</span></div>
     </div>
     <div class="box"><h3>Ce qui change</h3><ul>
-      <li>Le bouton <b>« 🐣 Incubateurs »</b> disparaît ; tout se voit dans <b>« 🥚 Œufs »</b> : image de l'œuf cristal, temps qui reste, barre.</li>
+      <li>Le bouton <b>« 🐣 Incubateurs »</b> disparaît ; tout se voit dans <b>« 🥚 Œufs »</b> : <b>l'œuf cristal en 3D qui tourne sur lui-même</b> (seul, sans décor ni aura), temps qui reste, barre.</li>
       <li>Les <b>4 incubateurs de la place</b> sont retirés.</li>
       <li>L'<b>animation d'éclosion plein écran</b> est supprimée (on ne garde que le message).</li>
       <li>Le bouton Robux <b>« ⚡ Éclore maintenant »</b> reste, avec les mêmes prix selon le temps restant.</li>
@@ -85,7 +87,7 @@
       <li>Tutoriel : « ouvre ton œuf » devient « ton œuf éclot… patiente ! ».</li>
     </ul></div>
   </div>
-  <div class="note">Les noms et temps sont des exemples. Les temps d'éclosion par rareté ne changent pas.</div>
+  <div class="note">Dans le jeu, l'image de chaque œuf sera le vrai modèle 3D de l'œuf qui tourne lentement sur lui-même (ici simulé avec une capture). Les noms et temps sont des exemples. Les temps d'éclosion par rareté ne changent pas.</div>
 </div>
 </body>
 </html>
