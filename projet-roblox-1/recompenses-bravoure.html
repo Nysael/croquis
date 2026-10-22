@@ -1,0 +1,108 @@
+<title>Récompenses de bravoure</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  :root { --bg: #1b1830; --panel: #262241; --panel2: #302a52; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; --coin: #ffcd46; --ok: #7ee08a; color-scheme: dark; }
+  body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
+  .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 14px; }
+  h1 { margin: 0; font-size: 28px; text-wrap: balance; }
+  h2 { margin: 14px 0 0; font-size: 20px; }
+  p, li { color: var(--muted); }
+  p { margin: 0; max-width: 78ch; }
+  b { color: var(--fg); }
+  .tag { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+  ul { margin: 6px 0 0; padding-left: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 700; }
+  td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .coin { color: var(--coin); font-weight: 800; }
+  .scroll { overflow-x: auto; }
+  /* maquette du panneau */
+  .board { background: #5a3a22; border-radius: 14px; padding: 12px; display: grid; gap: 10px; max-width: 760px; }
+  .pediment { justify-self: center; background: #ffc83c; color: #46280a; font-weight: 900; border-radius: 8px; padding: 6px 18px; font-size: 18px; }
+  .cells { background: #28223a; border-radius: 8px; padding: 8px; display: grid; grid-template-columns: repeat(16, 1fr); gap: 3px; }
+  .cells span { aspect-ratio: 1 / 1.1; border-radius: 4px; background: #1a1626; }
+  .cells span.on { background: #4b5ea8; }
+  .track { position: relative; height: 18px; background: #1a1626; border-radius: 9px; margin: 14px 12px 34px; }
+  .fill { position: absolute; inset: 0 auto 0 0; width: 57%; background: linear-gradient(90deg, #7ee08a, #ffd34d); border-radius: 9px; }
+  .ms { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; background: #3a3256; border: 3px solid #8a7fc0; display: grid; place-items: center; font-size: 15px; }
+  .ms.done { background: #ffcd46; border-color: #fff3c4; }
+  .ms small { position: absolute; top: 34px; font-size: 12px; color: #f3f0ff; white-space: nowrap; font-weight: 800; }
+  .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 760px) { .row2 { grid-template-columns: 1fr; } .cells { grid-template-columns: repeat(8, 1fr); } }
+  .quest { display: flex; gap: 10px; align-items: center; background: var(--panel2); border-radius: 10px; padding: 8px 10px; margin-top: 6px; }
+  .quest .bar { flex: 1; height: 10px; background: #1a1626; border-radius: 5px; overflow: hidden; }
+  .quest .bar i { display: block; height: 100%; background: var(--ok); }
+  .quest .rw { white-space: nowrap; font-weight: 800; color: var(--coin); }
+</style>
+<div class="wrap">
+  <span class="tag">Croquis · rien n'est encore dans le jeu</span>
+  <h1>Récompenses de bravoure et paliers de collection</h1>
+  <p>Deux ajouts pour rendre le combat et la collection plus motivants : des <b>🪙 en récompense</b> (quêtes, premier boss du jour, décorations de boss) et des <b>paliers sur le panneau trophées</b> (25, 50, 75, 109 espèces).</p>
+
+  <h2>1. Des 🪙 Pièces de bravoure en récompense</h2>
+  <div class="row2">
+    <div class="box">
+      <b>Quêtes de combat</b>
+      <p style="margin-top:4px">Les quêtes qui demandent de se battre donnent aussi des 🪙 (en plus de ce qu'elles donnent déjà).</p>
+      <div class="quest"><span>⚔️ Bats 15 monstres</span><div class="bar"><i style="width:60%"></i></div><span class="rw">+15 🪙</span></div>
+      <div class="quest"><span>👑 Participe à 1 boss</span><div class="bar"><i style="width:0%"></i></div><span class="rw">+30 🪙</span></div>
+      <div class="quest"><span>🗓️ Bats 3 boss (semaine)</span><div class="bar"><i style="width:33%"></i></div><span class="rw">+150 🪙</span></div>
+    </div>
+    <div class="box">
+      <b>Premier boss du jour : ×2 🪙</b>
+      <p style="margin-top:4px">La première victoire contre un boss chaque jour donne le double de pièces (par ex. 85 → <span class="coin">170 🪙</span> aux Glaces). Une étiquette « 🪙 ×2 aujourd'hui » s'affiche avec les infos du boss tant qu'elle n'est pas utilisée.</p>
+    </div>
+  </div>
+  <div class="box">
+    <b>Trophées de boss (décorations exclusives)</b>
+    <p style="margin-top:4px">Une nouvelle catégorie « 🏆 Trophées » dans le mode construction : un socle de pierre avec la statue miniature du boss, son nom gravé et une petite lueur de sa zone. Chaque trophée se débloque en battant ce boss, puis s'achète en 🪙. Il donne <b>+5 % de revenu au jardin</b> (comme un habitat).</p>
+    <div class="scroll"><table>
+      <tr><th>Trophée</th><th>Débloqué en battant</th><th>Prix</th></tr>
+      <tr><td>🪓 Trophée du Géant</td><td>le boss de la Prairie</td><td class="n coin">120 🪙</td></tr>
+      <tr><td>🗿 Trophée du Golem Ancien</td><td>le boss de la Grotte</td><td class="n coin">160 🪙</td></tr>
+      <tr><td>🐉 Trophée du Dragon Ancien</td><td>le boss du Bois des Ombres</td><td class="n coin">200 🪙</td></tr>
+      <tr><td>❄️ Trophée du Yéti Géant</td><td>le boss des Glaces</td><td class="n coin">250 🪙</td></tr>
+      <tr><td>🌋 Trophée du Dragon de Lave</td><td>le boss du Volcan</td><td class="n coin">300 🪙</td></tr>
+      <tr><td>☁️ Trophée du Griffon Doré</td><td>le boss Céleste</td><td class="n coin">400 🪙</td></tr>
+    </table></div>
+    <p style="margin-top:6px">Les boss de saison (Roi Citrouille, Liche Ancienne, Dragon Spectral à Halloween) auront aussi leur trophée, à débloquer seulement pendant leur saison.</p>
+  </div>
+
+  <h2>2. Paliers du panneau trophées</h2>
+  <p>Sous le tableau des 109 espèces, une barre de progression avec 4 médaillons. Atteindre un palier donne la récompense <b>tout de suite</b> (message + son), et le médaillon devient doré sur le panneau : tout le monde voit jusqu'où le joueur est allé.</p>
+  <div class="board" aria-label="Maquette du panneau trophées avec la barre de paliers">
+    <div class="pediment">🏆 Collection de Nysael · 62/109</div>
+    <div class="cells">
+      <span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span>
+      <span class="on"></span><span></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span>
+      <span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span></span><span></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span></span><span class="on"></span><span></span><span class="on"></span><span></span>
+      <span></span><span class="on"></span><span></span><span></span><span class="on"></span><span></span><span class="on"></span><span></span><span></span><span class="on"></span><span></span><span class="on"></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="track">
+      <div class="fill"></div>
+      <div class="ms done" style="left:23%">🥉<small>25</small></div>
+      <div class="ms done" style="left:46%">🥈<small>50</small></div>
+      <div class="ms" style="left:69%">🥇<small>75</small></div>
+      <div class="ms" style="left:99%">👑<small>109</small></div>
+    </div>
+  </div>
+  <div class="box scroll">
+    <table>
+      <tr><th>Palier</th><th>Récompense</th></tr>
+      <tr><td>🥉 25 espèces</td><td><span class="coin">100 🪙</span> + 5 000 💠 + boost Chance +30 % (15 min)</td></tr>
+      <tr><td>🥈 50 espèces</td><td><span class="coin">250 🪙</span> + 25 000 💠 + cadre <b>argenté</b> sur le panneau</td></tr>
+      <tr><td>🥇 75 espèces</td><td><span class="coin">500 🪙</span> + 100 000 💠 + décoration exclusive « Statue du collectionneur »</td></tr>
+      <tr><td>👑 109 espèces</td><td><span class="coin">1 000 🪙</span> + 500 000 💠 + cadre <b>doré</b> (déjà fait) + titre « Maître collectionneur » au-dessus de la tête</td></tr>
+    </table>
+    <p style="margin-top:6px">Les 💠 sont multipliés par la progression du joueur, comme pour les quêtes. Un joueur qui a déjà passé un palier le reçoit à sa prochaine connexion.</p>
+  </div>
+
+  <h2>Ordre de travail</h2>
+  <div class="box"><ul>
+    <li>D'abord les 🪙 des quêtes, le premier boss du jour et les paliers : rapide, rien de nouveau à dessiner en 3D.</li>
+    <li>Ensuite les 6 trophées de boss et la Statue du collectionneur : il faut les modéliser. Je te montrerai les modèles avant de les mettre en vente.</li>
+  </ul></div>
+</div>
