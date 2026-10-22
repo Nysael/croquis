@@ -1,38 +1,51 @@
-<title>Œufs d'espèce : essai</title>
+<title>Œufs d'espèce : les 109</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; --warn: #ff8a7a; color-scheme: dark; }
+  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; --ok: #7ee08a; color-scheme: dark; }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
-  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+  .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 14px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
+  h2 { margin: 10px 0 0; font-size: 18px; }
   p { margin: 0; color: var(--muted); max-width: 78ch; }
   b { color: var(--fg); }
   .tag { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
-  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } }
-  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; align-content: start; }
+  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; }
   img { width: 100%; max-width: 100%; border-radius: 8px; display: block; }
-  figcaption { font-size: 14px; color: var(--muted); }
-  .warn { color: var(--warn); font-weight: 700; }
+  figcaption { font-size: 14px; color: var(--muted); padding: 0 4px 2px; }
   .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; }
+  ul { margin: 0; padding-left: 20px; color: var(--muted); }
+  .ok { color: var(--ok); font-weight: 700; }
 </style>
 <div class="wrap">
-  <span class="tag">Essai · 6 espèces sur 109</span>
-  <h1>Œufs d'espèce : essai</h1>
-  <p>Un œuf généré en 3D pour chaque espèce : base d'œuf en cristal taillé (le style du Prisme Suprême que tu as aimé), aux couleurs de l'espèce, avec de petits détails qui la rappellent, et <b>aucun visage</b>. Vus de près dans Studio. Sur chaque photo, l'œuf de l'espèce est celui du milieu.</p>
-  <figure><img src="rangee.jpg" alt="Rangée"><figcaption>De loin : Dragonnet, Phénix, Méduse, et à droite l'œuf du Prisme Suprême (référence de style).</figcaption></figure>
-  <div class="grid">
-    <figure><img src="lapin.jpg" alt=""><figcaption><b>Lapin</b> (Commun) : grandes oreilles, pompon, cristal rose nacré. <span class="warn">Le haut blanc fait un peu « paupières fermées » : je le referais.</span></figcaption></figure>
-    <figure><img src="renard.jpg" alt=""><figcaption><b>Renard</b> (Peu commun) : oreilles pointues, coquille fendue, queue enroulée au pied.</figcaption></figure>
-    <figure><img src="loup.jpg" alt=""><figcaption><b>Loup</b> (Rare) : oreilles, pelage gris, griffures bleues. <span class="warn">De face, les griffures ressemblent à des yeux : je les mettrais sur le côté.</span></figcaption></figure>
-    <figure><img src="dragonnet.jpg" alt=""><figcaption><b>Dragonnet de Cristal</b> (Épique) : écailles de cristal, petites cornes, ailes repliées.</figcaption></figure>
-    <figure><img src="phenix.jpg" alt=""><figcaption><b>Phénix</b> (Mythique) : œuf taillé dans une couronne de plumes de feu (plus rouge-orange en jeu avec son aura).</figcaption></figure>
-    <figure><img src="meduse.jpg" alt=""><figcaption><b>Méduse Astrale</b> (Céleste) : cloche étoilée et tentacules.</figcaption></figure>
-  </div>
+  <span class="tag">109 sur 109 · 22/10</span>
+  <h1>Œufs d'espèce : les 109</h1>
+  <p>Un œuf en cristal taillé pour chaque espèce, aux couleurs de l'animal, avec de petits détails qui le rappellent (oreilles, ailes, queue, cornes, tentacules…), et <b>aucun visage</b>. Photos prises dans Studio, rangées dans l'ordre des raretés : de Commun à Secret, puis le Prisme Suprême et les boss.</p>
+
   <div class="box">
-    <p><b>Si ce style te va</b>, je génère les 103 autres de la même façon, par lots de 6, en vérifiant chacun (pas de visage, espèce reconnaissable) et en refaisant les ratés. Je te montre une planche par lot. Ensuite je les branche dans la machine à œufs, avec les auras.</p>
-    <p>Dis-moi aussi si tu veux plus de cristal (plus proche du Prisme) ou plus de détails d'animal.</p>
+    <p><span class="ok">Déjà branché dans le jeu :</span> la machine à œufs montre maintenant l'œuf de l'espèce sur chaque socle, avec l'aura de sa rareté (version 3) autour.</p>
+    <p><b>Refaits après vérification</b> (ils avaient un air de visage) : Chat noir, Chat-licorne (yeux en cœur), Lapin lunaire (masque), Hibou (fente en bouche), Géant (casque de scaphandrier, maintenant enchaîné avec une massue).</p>
+  </div>
+
+  <figure><img src="en-jeu-auras.jpg" alt="Six œufs avec leur aura"><figcaption>En jeu avec leur aura : Lapin (Commun), Loup (Rare), Licorne (Légendaire), Phénix (Mythique), Ange lumineux (Divin), Dragon du néant (Secret).</figcaption></figure>
+
+  <h2>Toute la collection</h2>
+  <figure><img src="rangee-00.jpg" alt=""></figure>
+  <figure><img src="rangee-01.jpg" alt=""></figure>
+  <figure><img src="rangee-02.jpg" alt=""></figure>
+  <figure><img src="rangee-03.jpg" alt=""></figure>
+  <figure><img src="rangee-04.jpg" alt=""></figure>
+  <figure><img src="rangee-05.jpg" alt=""></figure>
+  <figure><img src="rangee-06.jpg" alt=""></figure>
+  <figure><img src="rangee-07.jpg" alt=""></figure>
+  <figure><img src="rangee-08.jpg" alt=""></figure>
+  <figure><img src="rangee-09.jpg" alt=""></figure>
+  <figure><img src="rangee-10.jpg" alt=""></figure>
+  <figure><img src="rangee-11.jpg" alt=""></figure>
+  <figure><img src="rangee-12.jpg" alt=""><figcaption>Prisme Suprême, puis les boss.</figcaption></figure>
+  <figure><img src="rangee-13.jpg" alt=""></figure>
+
+  <div class="box">
+    <p><b>Dis-moi les œufs que tu veux refaire</b> (par leur nom) : je les régénère un par un. L'éclairage des photos est bleuté (fond sombre) ; en jeu, au soleil, les couleurs sont plus vives.</p>
   </div>
 </div>
