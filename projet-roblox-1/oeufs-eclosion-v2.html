@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Éclosion dès l'achat</title>
+<style>
+  :root { --bg:#1d1a2b; --card:#2a2640; --text:#f3f0ff; --muted:#b8b2d6; --accent:#ffd34d; --ok:#8cff7a; --no:#ff8a7a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font-family:"Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1250px; margin:auto; padding:18px 16px 50px; }
+  h1 { margin:0 0 6px; font-size:28px; }
+  h2 { margin:30px 0 8px; font-size:22px; }
+  p, li { color:var(--muted); line-height:1.55; }
+  b { color:var(--text); }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width: 860px) { .duo { grid-template-columns:1fr; } }
+  .box { background:var(--card); border-radius:14px; padding:12px 16px; }
+  .box h3 { margin:0 0 6px; font-size:17px; }
+  .box.before h3 { color:var(--no); }
+  .box.after h3 { color:var(--ok); }
+  .shot { width:100%; border-radius:14px; display:block; }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px; }
+  @media (max-width: 860px) { .steps { grid-template-columns:1fr; } }
+  .step { background:var(--card); border-radius:14px; padding:10px 14px; }
+  .step .n { display:inline-block; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#1d1a2b; font-weight:900; text-align:center; line-height:26px; margin-right:6px; }
+  .panel { background:#352f55; border:3px solid #6f61c9; border-radius:18px; padding:12px; max-width:540px; }
+  .panel .title { font-weight:900; font-size:20px; margin-bottom:8px; }
+  .egg { display:flex; align-items:center; gap:10px; background:#2a2640; border-radius:12px; padding:8px 10px; margin-top:6px; }
+  .egg img { width:58px; height:58px; object-fit:cover; border-radius:12px; flex:none; }
+  .egg .info { flex:1; min-width:0; }
+  .egg .name { font-weight:800; font-size:14px; }
+  .bar { height:10px; background:#1d1a2b; border-radius:6px; overflow:hidden; margin-top:4px; }
+  .bar span { display:block; height:100%; background:linear-gradient(90deg,#8cff7a,#ffd34d); }
+  .egg .time { font-size:13px; color:var(--muted); margin-top:2px; }
+  .egg .btn { background:#00b06b; color:#fff; font-weight:900; font-size:12px; border-radius:10px; padding:6px 8px; white-space:nowrap; }
+  .egg.ready { outline:2px solid var(--accent); }
+  .egg.ready .btn { background:#6f61c9; }
+  .toast { display:inline-block; background:#1d1a2be0; border:2px solid var(--ok); border-radius:12px; padding:8px 12px; font-weight:800; margin-top:10px; }
+  .toast.buy { border-color:var(--accent); }
+  .badge { display:inline-flex; align-items:center; gap:6px; background:#352f55; border:3px solid #6f61c9; border-radius:14px; padding:6px 12px; font-weight:900; font-size:18px; position:relative; }
+  .badge .dot { position:absolute; top:-9px; right:-9px; background:#ff4d6d; color:#fff; font-size:13px; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; }
+  .note { background:#332d52; border-radius:14px; padding:12px 18px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐣 Éclosion dès l'achat (v2, avec les œufs cristal)</h1>
+  <p>Mise à jour du croquis du 18/10 que tu avais validé, avec les nouveaux œufs d'espèce. <b>Rien n'est encore changé dans le jeu.</b></p>
+
+  <h2>1. Le parcours d'un œuf</h2>
+  <img class="shot" src="oeufs/machine.jpg" alt="La machine à œufs">
+  <div class="steps">
+    <div class="step"><span class="n">1</span><b>Tu achètes l'œuf sur un socle</b> de la machine (ou tu le gagnes : boss, coffre, quotidien, récompense…).</div>
+    <div class="step"><span class="n">2</span><b>Il commence à éclore tout de suite</b>, sans incubateur. Petit message : « 🥚 Œuf acheté : il éclot dans 1:00 ». Pas de limite au nombre d'œufs qui éclosent en même temps.</div>
+    <div class="step"><span class="n">3</span><b>À la fin du temps, la créature naît toute seule</b>, sans animation plein écran : un message, un petit son, et elle est dans tes créatures.</div>
+  </div>
+  <div style="margin-top:10px">
+    <div class="toast buy">🥚 Œuf de Chauve-souris de l'Ombre acheté : il éclot dans 8:00</div><br>
+    <div class="toast">🐣 Ta Chauve-souris de l'Ombre (Légendaire) est née ! Elle t'attend dans tes créatures.</div>
+  </div>
+
+  <h2>2. Le menu « 🥚 Œufs »</h2>
+  <div class="duo">
+    <div>
+      <div class="panel">
+        <div class="title">🥚 Mes œufs (4 en éclosion)</div>
+        <div class="egg"><img src="oeufs/ic-chauvesouris.png" alt=""><div class="info"><div class="name">Chauve-souris de l'Ombre · Légendaire</div><div class="bar"><span style="width:35%"></span></div><div class="time">⏱️ 5:12 restantes</div></div><div class="btn">⚡ Éclore R$35</div></div>
+        <div class="egg"><img src="oeufs/ic-ailes.png" alt=""><div class="info"><div class="name">Œuf ailé · Divin</div><div class="bar"><span style="width:10%"></span></div><div class="time">⏱️ 18:40 restantes</div></div><div class="btn">⚡ Éclore R$59</div></div>
+        <div class="egg"><img src="oeufs/ic-gelee.png" alt=""><div class="info"><div class="name">Gelée · Épique</div><div class="bar"><span style="width:80%"></span></div><div class="time">⏱️ 0:48 restantes</div></div><div class="btn">⚡ Éclore R$5</div></div>
+        <div class="egg ready"><img src="oeufs/ic-cerf.png" alt=""><div class="info"><div class="name">Cerf · Céleste</div><div class="bar"><span style="width:100%"></span></div><div class="time">✅ Prêt : tes créatures sont pleines (120/120)</div></div><div class="btn">Faire de la place</div></div>
+      </div>
+      <p style="margin-top:12px">Bouton du menu, avec le nombre d'œufs en cours :</p>
+      <div class="badge">🥚 Œufs<span class="dot">4</span></div>
+    </div>
+    <div class="box"><h3>Ce qui change</h3><ul>
+      <li>Le bouton <b>« 🐣 Incubateurs »</b> disparaît ; tout se voit dans <b>« 🥚 Œufs »</b> : image de l'œuf cristal, temps qui reste, barre.</li>
+      <li>Les <b>4 incubateurs de la place</b> sont retirés.</li>
+      <li>L'<b>animation d'éclosion plein écran</b> est supprimée (on ne garde que le message).</li>
+      <li>Le bouton Robux <b>« ⚡ Éclore maintenant »</b> reste, avec les mêmes prix selon le temps restant.</li>
+      <li>Créatures pleines : l'œuf reste <b>« Prêt »</b> et naît dès que tu fais de la place.</li>
+      <li>Les mobs tués raccourcissent toujours le temps, maintenant de <b>tous</b> les œufs en cours.</li>
+      <li><b>Remboursement</b> : un joueur qui avait payé des incubateurs récupère ses éclats de mana 💠.</li>
+      <li>Les œufs en stock dans les sauvegardes commencent à éclore à la connexion.</li>
+      <li>Tutoriel : « ouvre ton œuf » devient « ton œuf éclot… patiente ! ».</li>
+    </ul></div>
+  </div>
+  <div class="note">Les noms et temps sont des exemples. Les temps d'éclosion par rareté ne changent pas.</div>
+</div>
+</body>
+</html>
