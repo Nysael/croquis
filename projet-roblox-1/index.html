@@ -1,51 +1,49 @@
-<title>Œufs d'espèce : les 109</title>
+<title>Panneau trophées des îles</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; --ok: #7ee08a; color-scheme: dark; }
+  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; color-scheme: dark; }
   body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
   .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 14px; }
   h1 { margin: 0; font-size: 28px; text-wrap: balance; }
-  h2 { margin: 10px 0 0; font-size: 18px; }
-  p { margin: 0; color: var(--muted); max-width: 78ch; }
+  h2 { margin: 8px 0 0; font-size: 19px; }
+  p, li { color: var(--muted); max-width: 78ch; }
+  p { margin: 0; }
   b { color: var(--fg); }
   .tag { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
   figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; }
   img { width: 100%; max-width: 100%; border-radius: 8px; display: block; }
   figcaption { font-size: 14px; color: var(--muted); padding: 0 4px 2px; }
-  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; }
-  ul { margin: 0; padding-left: 20px; color: var(--muted); }
-  .ok { color: var(--ok); font-weight: 700; }
+  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+  ul { margin: 6px 0 0; padding-left: 20px; }
+  ol { margin: 6px 0 0; padding-left: 20px; color: var(--muted); }
 </style>
 <div class="wrap">
-  <span class="tag">109 sur 109 · 22/10</span>
-  <h1>Œufs d'espèce : les 109</h1>
-  <p>Un œuf en cristal taillé pour chaque espèce, aux couleurs de l'animal, avec de petits détails qui le rappellent (oreilles, ailes, queue, cornes, tentacules…), et <b>aucun visage</b>. Photos prises dans Studio, rangées dans l'ordre des raretés : de Commun à Secret, puis le Prisme Suprême et les boss.</p>
+  <span class="tag">Croquis · rien n'est encore dans le jeu</span>
+  <h1>Panneau trophées devant chaque île</h1>
+  <p>Un grand panneau en bois à l'entrée de chaque île, juste au bout du pont, tourné vers ceux qui arrivent. Il montre <b>les 109 espèces</b> du jeu : celles que le joueur a déjà eues en couleur avec leur nom, les autres en <b>silhouette noire « ??? »</b>, comme dans l'Index. En haut, le nom du joueur et son score. Maquette faite dans le jeu, devant ton île (les espèces « eues » sont tirées au hasard pour l'exemple).</p>
 
+  <figure><img src="panneau-face.png" alt="Panneau trophées vu du pont"><figcaption>Vu en arrivant par le pont : on voit tout de suite la collection du propriétaire.</figcaption></figure>
+  <figure><img src="panneau-pres.png" alt="Panneau trophées de près"><figcaption>De près : chaque case = la vraie créature en 3D, couleur et contour de sa rareté (gris Commun → … → Secret), nom dessous.</figcaption></figure>
+
+  <h2>Comment ça marcherait</h2>
   <div class="box">
-    <p><span class="ok">Déjà branché dans le jeu :</span> la machine à œufs montre maintenant l'œuf de l'espèce sur chaque socle, avec l'aura de sa rareté (version 3) autour.</p>
-    <p><b>Refaits après vérification</b> (ils avaient un air de visage) : Chat noir, Chat-licorne (yeux en cœur), Lapin lunaire (masque), Hibou (fente en bouche), Géant (casque de scaphandrier, maintenant enchaîné avec une massue).</p>
+    <ul>
+      <li><b>Rangé par rareté</b> : Commun en haut à gauche, puis Peu commun, Rare… jusqu'aux Boss et au Secret en bas.</li>
+      <li><b>Se remplit tout seul</b> : dès qu'une nouvelle espèce naît, sa case s'allume (avec un petit éclat doré si tu es devant).</li>
+      <li><b>Visible par tout le monde</b> : en passant sur l'île d'un autre joueur, on voit sa collection et son score « 62/109 ».</li>
+      <li><b>Titre</b> : « 🏆 Collection de &lt;joueur&gt; · 62/109 » sur le fronton doré. À 109/109, le cadre devient doré.</li>
+      <li><b>Île libre</b> (pas de propriétaire) : pas de panneau.</li>
+      <li><b>Performance</b> : les créatures 3D ne s'affichent que quand on est près du panneau (comme dans l'Index), sinon le panneau garde juste ses couleurs.</li>
+    </ul>
   </div>
 
-  <figure><img src="en-jeu-auras.jpg" alt="Six œufs avec leur aura"><figcaption>En jeu avec leur aura : Lapin (Commun), Loup (Rare), Licorne (Légendaire), Phénix (Mythique), Ange lumineux (Divin), Dragon du néant (Secret).</figcaption></figure>
-
-  <h2>Toute la collection</h2>
-  <figure><img src="rangee-00.jpg" alt=""></figure>
-  <figure><img src="rangee-01.jpg" alt=""></figure>
-  <figure><img src="rangee-02.jpg" alt=""></figure>
-  <figure><img src="rangee-03.jpg" alt=""></figure>
-  <figure><img src="rangee-04.jpg" alt=""></figure>
-  <figure><img src="rangee-05.jpg" alt=""></figure>
-  <figure><img src="rangee-06.jpg" alt=""></figure>
-  <figure><img src="rangee-07.jpg" alt=""></figure>
-  <figure><img src="rangee-08.jpg" alt=""></figure>
-  <figure><img src="rangee-09.jpg" alt=""></figure>
-  <figure><img src="rangee-10.jpg" alt=""></figure>
-  <figure><img src="rangee-11.jpg" alt=""></figure>
-  <figure><img src="rangee-12.jpg" alt=""><figcaption>Prisme Suprême, puis les boss.</figcaption></figure>
-  <figure><img src="rangee-13.jpg" alt=""></figure>
-
+  <h2>À choisir</h2>
   <div class="box">
-    <p><b>Dis-moi les œufs que tu veux refaire</b> (par leur nom) : je les régénère un par un. L'éclairage des photos est bleuté (fond sombre) ; en jeu, au soleil, les couleurs sont plus vives.</p>
+    <ol>
+      <li>Place : à gauche du bout du pont (comme sur la maquette), à droite, ou des deux côtés en deux moitiés ?</li>
+      <li>Les espèces pas encore eues : silhouette noire « ??? » (comme ici) ou case vide ?</li>
+      <li>Taille : comme la maquette (≈ 30 × 15 studs) ou plus grand ?</li>
+    </ol>
   </div>
 </div>
