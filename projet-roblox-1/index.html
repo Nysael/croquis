@@ -1,36 +1,23 @@
-<title>Marche du loup</title>
+<title>Nouveau loup</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 :root{--bg:#1b1830;--panel:#262241;--fg:#f3f0ff;--muted:#b8b2d6;--line:#3a3560;--accent:#ffd34d;color-scheme:dark}
-body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-serif;font-size:15px;line-height:1.55;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
-.wrap{max-width:960px;margin:0 auto;display:grid;gap:14px}h1{margin:0;font-size:28px}p,li{color:var(--muted)}p{margin:0;max-width:78ch}b{color:var(--fg)}
+:root[data-theme="light"]{--bg:#f4f2fb;--panel:#fff;--fg:#1b1830;--muted:#57507a;--line:#dcd7ef;--accent:#a86b00;color-scheme:light}
+body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-serif;font-size:15px;line-height:1.55;margin:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
+.wrap{max-width:960px;margin:0 auto;display:grid;gap:14px}h1{margin:0;font-size:28px}h2{margin:10px 0 0;font-size:19px}p{margin:0;color:var(--muted);max-width:78ch}b{color:var(--fg)}
 .tag{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
-figure{margin:0;display:grid;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px}video{width:100%;border-radius:8px;display:block;background:#000}figcaption{font-size:14px;color:var(--muted)}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}@media(max-width:640px){.grid2{grid-template-columns:1fr}}img{width:100%;border-radius:8px;display:block}
-.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px}ul{margin:6px 0 0;padding-left:20px}
+figure{margin:0;display:grid;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px}img{width:100%;border-radius:8px;display:block}figcaption{font-size:14px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}@media(max-width:640px){.grid2{grid-template-columns:1fr}}
 </style>
 <div class="wrap">
-<span class="tag">Dans le jeu (Studio) · 23/10</span>
-<h1>Marche discrète des créatures</h1>
-<p>On garde tes modèles et la marche du jeu, en plus discret pour que la peau se déforme moins. Filmé dans le jeu : en haut l'ancienne marche, en bas la marche discrète (arrêt, marche, course, arrêt).</p>
-<figure><video src="comparaison-discrete.mp4" controls autoplay muted loop playsinline></video><figcaption>Avant (haut) · Marche discrète (bas)</figcaption></figure>
-<div class="box"><b>Ce qui change</b><ul>
-<li>Les pattes balancent environ 40 % de moins, les genoux se lèvent moins haut.</li>
-<li>Pas plus courts et plus fréquents : les pieds glissent moins sur le sol.</li>
-<li>Le corps rebondit moitié moins.</li>
-<li>Pour toutes les créatures à quatre pattes (et les bipèdes), en jeu tout de suite.</li></ul></div>
-<span class="tag">Nouveau · peau entièrement refaite</span>
-<h1>Le loup avec une peau propre</h1>
-<p><b>Découverte :</b> ton loup n'a en fait pas de queue. Ce qui ressemblait à une queue collée, c'était l'arrière de ses cuisses. L'outil les avait prises pour deux queues et leur avait mis des os à part, si bien que l'arrière des cuisses bougeait tout seul et que la peau se déformait.</p>
-<figure><video src="comparaison-peau-v2.mp4" controls autoplay muted loop playsinline></video><figcaption>En haut : avant · En bas : peau refaite (dans le jeu)</figcaption></figure>
-<div class="box"><b>Ce qui a été refait</b><ul>
-<li>Os de fausse queue retirés : les cuisses bougent d'un seul bloc.</li>
-<li>Nouveau maillage régulier (Instant Meshes), avec de vraies boucles aux articulations. L'ancien était un maillage simplifié au hasard, qui se pinçait.</li>
-<li>Couleurs reportées depuis les morceaux d'origine, en pleine qualité, plus les poils en relief.</li>
-<li>Poids de la peau calculés par Blender (diffusion de chaleur), puis affinés aux articulations.</li>
-<li>Mesure : la peau s'étire environ 30 % de moins en marchant (score 3,7 → 2,6).</li></ul></div>
-<div class="grid2"><figure><img src="pose-avant.png" alt=""><figcaption>Avant : patte levée écrasée, fente sur la cuisse</figcaption></figure><figure><img src="pose-peau-v2.png" alt=""><figcaption>Peau refaite : la patte se plie proprement</figcaption></figure></div>
-<span class="tag">Essai précédent · queue décollée</span>
-<p>Sur le modèle d'origine, la queue était soudée à l'arrière des cuisses : quand la cuisse avançait, elle tirait la peau de la queue. Maintenant la queue est séparée et chaque bord de la coupe est refermé (plus de fente). La peau des cuisses et du bassin a aussi été refaite pour suivre les bons os.</p>
-<figure><video src="queue-decollee.mp4" controls autoplay muted loop playsinline></video><figcaption>Loup refait, dans le jeu (arrêt, marche, course)</figcaption></figure>
+<span class="tag">Croquis · rien n'est changé dans le jeu</span>
+<h1>Nouveau loup, avec une vraie queue</h1>
+<p><b>Correction :</b> ton loup actuel a bien une queue, mais le générateur l'a coupée en deux moitiés, chacune collée à l'arrière d'une cuisse (vue de dos ci-dessous). D'où la « queue collée » qui se déforme. On le régénère.</p>
+<div class="grid2"><figure><img src="actuel.jpg" alt="Loup actuel de profil et de trois quarts"><figcaption>Actuel</figcaption></figure><figure><img src="actuel-dos.png" alt="Loup actuel de dos : deux moitiés de queue collées aux cuisses"><figcaption>Actuel, de dos : la queue en deux moitiés collées aux cuisses</figcaption></figure></div>
+<h2>2ᵉ série : plus proche de ton loup actuel</h2>
+<figure><img src="loup4.jpg" alt="Loup 4"><figcaption><b>4</b> · gris, crinière à pointes, queue sombre qui retombe</figcaption></figure>
+<figure><img src="loup5.jpg" alt="Loup 5"><figcaption><b>5</b> · bleu-gris foncé, poitrail clair, gueule ouverte</figcaption></figure>
+<figure><img src="loup6.jpg" alt="Loup 6"><figcaption><b>6</b> · gris et bleu acier, grande crinière hirsute</figcaption></figure>
+<h2>1ʳᵉ série (refusée)</h2>
+<div class="grid2"><figure><img src="loup1.jpg" alt="Loup 1"><figcaption>1</figcaption></figure><figure><img src="loup2.jpg" alt="Loup 2"><figcaption>2</figcaption></figure><figure><img src="loup3.jpg" alt="Loup 3"><figcaption>3</figcaption></figure></div>
 </div>
