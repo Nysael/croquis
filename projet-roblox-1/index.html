@@ -1,33 +1,41 @@
-<title>Marche du loup</title>
+<title>Modèles animés gratuits</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-  :root { --bg: #1b1830; --panel: #262241; --fg: #f3f0ff; --muted: #b8b2d6; --line: #3a3560; --accent: #ffd34d; color-scheme: dark; }
-  body { background: var(--bg); color: var(--fg); font-family: "Nunito", system-ui, sans-serif; font-size: 15px; line-height: 1.55;
-    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
-  .wrap { max-width: 960px; margin: 0 auto; display: grid; gap: 14px; }
-  h1 { margin: 0; font-size: 28px; }
-  p, li { color: var(--muted); }
-  p { margin: 0; max-width: 78ch; }
-  b { color: var(--fg); }
-  .tag { font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
-  figure { margin: 0; display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 8px; }
-  video, img { width: 100%; max-width: 100%; border-radius: 8px; display: block; background: #000; }
-  figcaption { font-size: 14px; color: var(--muted); }
-  .box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
-  ul { margin: 6px 0 0; padding-left: 20px; }
+:root{--bg:#1b1830;--panel:#262241;--fg:#f3f0ff;--muted:#b8b2d6;--line:#3a3560;--accent:#ffd34d;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-serif;font-size:15px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
+.wrap{max-width:1100px;margin:0 auto;display:grid;gap:14px} h1{margin:0;font-size:28px} h2{margin:10px 0 0;font-size:19px}
+p{margin:0;color:var(--muted);max-width:80ch} b{color:var(--fg)}
+.tag{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;display:grid;gap:6px;align-content:start}
+img{width:100%;border-radius:8px;display:block} figcaption{font-size:13px;color:var(--muted)} .a{font-size:12px} .w{color:#ff9a7a;font-size:12px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px} .stat{display:flex;gap:18px;flex-wrap:wrap} .stat div{font-size:15px} .stat b{font-size:24px}
 </style>
 <div class="wrap">
-  <span class="tag">Essai Blender · pas encore dans le jeu</span>
-  <h1>Marche du loup : version 10</h1>
-  <p>Le vrai problème venait du squelette de nos créatures (fait automatiquement) : les articulations des pattes n'étaient pas aux bons endroits et la peau était mal attachée aux os. J'ai refait le squelette des 4 pattes du loup (épaule, coude, poignet / hanche, genou, jarret, placés sur la forme réelle des pattes) et la façon dont la peau suit chaque os. Le mouvement des pattes vient d'un vrai cycle de marche de loup animé par un artiste (Quaternius, licence libre CC0).</p>
-  <figure><video src="loup-v10.mp4" controls autoplay muted loop playsinline></video><figcaption>Version 10 (rendu Blender) : la queue est découpée de la cuisse (elle y était soudée) : la cuisse balance sans pincer la queue. Version 9 : toute la cuisse arrière balance (pivot remonté + balancement x1,5). Version 8 : la cuisse arrière balance 1,5 fois plus (hanche remise comme en v6). Version 7 : la hanche pivote aussi avec la patte arrière (pivot remonté au haut du bassin). Version 6 : comme la 5 mais sans le dandinement (roulis presque supprimé). Version 5 : l'épaule pivote avec la patte avant (pivot remonté à l'omoplate), le bassin et les épaules roulent à chaque pas ; profil, face, 3/4. Version 4 : mouvements à 85 % de la référence, poitrail et crinière détachés du bassin ; angles des articulations copiés os par os sur le loup de référence, pieds recalés au sol, peau du poignet qui ne suit plus le dos. Profil puis 3/4.</figcaption></figure>
-  <figure><img src="reference-quaternius.png" alt="Marche de référence"><figcaption>La marche de référence (loup Quaternius) dont on a copié le trajet des pattes.</figcaption></figure>
-  <div class="box">
-    <b>Si ça te va</b>
-    <ul>
-      <li>Je mets ce nouveau squelette et cette marche dans le jeu pour le loup (ça demande quelques minutes de souris dans Studio pour importer et publier), et je te filme le loup en jeu.</li>
-      <li>Ensuite on l'étend aux autres créatures à quatre pattes (même méthode, réglée pour chacune), et j'ajoute une course.</li>
-    </ul>
-    <p style="margin-top:6px">Sinon, dis-moi ce qui cloche encore.</p>
-  </div>
+<span class="tag">Inventaire · rien n'est changé dans le jeu</span>
+<h1>Modèles animés gratuits pour nos 109 créatures</h1>
+<p>5 packs gratuits et libres de droits (CC0, auteur Quaternius), 42 modèles déjà animés par un artiste. Pour chacun : ses animations et les créatures qu'il pourrait remplacer.</p>
+<div class="box stat"><div><b>28</b> ✅ même animal</div><div><b>32</b> 🟡 corps proche, à adapter (corne, ailes, queues…)</div><div><b>49</b> ❌ aucun modèle</div></div>
+<div class="grid"><figure><img src="Animal_Pack__Wolf.jpg" alt=""><figcaption><b>Wolf</b><br><span class="a">Animations : Idle, Walking</span><br>✅ Loup, LoupDesNeiges, LoupLunaire, LoupOmbre</figcaption></figure>
+<figure><img src="Animal_Pack__Dog.jpg" alt=""><figcaption><b>Dog</b><br><span class="a">Animations : Idle, Walking</span><br>✅ Chiot</figcaption></figure>
+<figure><img src="Animal_Pack__Cat.jpg" alt=""><figcaption><b>Cat</b><br><span class="a">Animations : Idle, Walking</span><br>✅ ChatNoir, ChatGalactique<br>🟡 ChatLicorne, Tigre, LionEtoiles</figcaption></figure>
+<figure><img src="Animals_Pack_Red_Fox.jpg" alt=""><figcaption><b>Red Fox</b><br><span class="a">Animations : ArmatureAction</span><br>✅ Renard, RenardAurore<br>🟡 RenardTroisQueues</figcaption></figure>
+<figure><img src="Farm_Animals_Horse.jpg" alt=""><figcaption><b>Horse</b><br><span class="a">Animations : Death, Idle, Jump, Run, Walk, WalkSlow</span><br>✅ Poney, PoneyEtoile<br>🟡 Licorne, LicorneGlace, LicorneArcEnCiel, LicorneDivine, Alicorne, Pegase, PegaseOr, PegaseNuage, Kirin</figcaption></figure>
+<figure><img src="Animal_Pack__Eagle.jpg" alt=""><figcaption><b>Eagle</b><br><span class="a">Animations : Flying, Idle</span><br>✅ Aigle, AigleDore<br>🟡 Phenix, OiseauDeFeu, Hibou, HibouNeige</figcaption></figure>
+<figure><img src="Animals_Pack_Chick.jpg" alt=""><figcaption><b>Chick</b><br><span class="a">Animations : ArmatureAction.002</span><br>✅ Poussin</figcaption></figure>
+<figure><img src="Animals_Pack_Whale.jpg" alt=""><figcaption><b>Whale</b><br><span class="a">Animations : ArmatureAction, PlaneAction</span><br>✅ BaleineCeleste, BaleineNuage</figcaption></figure>
+<figure><img src="Animated_Mon_Bat.jpg" alt=""><figcaption><b>Bat</b><br><span class="a">Animations : Bat_Attack, Bat_Attack2, Bat_Death, Bat_Flying, Bat_Hit</span><br>✅ ChauveSouris, ChauveSourisCristal, ChauveSourisOmbre</figcaption></figure>
+<figure><img src="Animated_Mon_Dragon.jpg" alt=""><figcaption><b>Dragon</b><br><span class="a">Animations : Dragon_Attack, Dragon_Attack2, Dragon_Death, Dragon_Flying, Dragon_Hit</span><br>✅ Dragon, DragonOmbre, DragonLave, DragonNeant, DragonCosmique<br>🟡 DragonAncien, DragonSpectral, DragonnetCristal, DragonnetLave, WyverneGivre</figcaption></figure>
+<figure><img src="Animated_Mon_Slime.jpg" alt=""><figcaption><b>Slime</b><br><span class="a">Animations : Slime_Attack, Slime_Death, Slime_Idle, Slime_Walk</span><br>✅ GeleeVerte, GeleeGivre, GeleeMagma</figcaption></figure>
+<figure><img src="Animated_Mon_Skeleton.jpg" alt=""><figcaption><b>Skeleton</b><br><span class="a">Animations : Skeleton_Attack, Skeleton_Death, Skeleton_Idle, Skeleton_Running, Skeleton_Spawn</span><br>🟡 Liche, LicheAncienne, ChevalierOmbre</figcaption></figure>
+<figure><img src="Farm_Animals_Cow.jpg" alt=""><figcaption><b>Cow</b><br><span class="a">Animations : Death, Idle, Jump, Run, Walk, WalkSlow</span><br>🟡 Ours, OursPolaire</figcaption></figure>
+<figure><img src="Cute_Animate_Bee.jpg" alt=""><figcaption><b>Bee</b> <span class="w">style « mignon »</span><br><span class="a">Animations : Bite_Front, Death, Flying</span><br>✅ Bourdon</figcaption></figure>
+<figure><img src="Cute_Animate_Deer.jpg" alt=""><figcaption><b>Deer</b> <span class="w">style « mignon »</span><br><span class="a">Animations : Bite_Front, Bite_InPlace, Dance, Death, HitRecieve, Idle, Jump, No, Walk, Yes</span><br>🟡 CerfEtoiles</figcaption></figure>
+<figure><img src="Cute_Animate_Panda.jpg" alt=""><figcaption><b>Panda</b> <span class="w">style « mignon »</span><br><span class="a">Animations : Bite_Front, Bite_InPlace, Dance, Death, HitRecieve, Idle, Jump, No, Walk, Yes</span><br>🟡 Panda</figcaption></figure>
+<figure><img src="Cute_Animate_Yeti.jpg" alt=""><figcaption><b>Yeti</b> <span class="w">style « mignon »</span><br><span class="a">Animations : Bite_Front, Bite_InPlace, Dance, Death, HitRecieve, Idle, Jump, No, Walk, Yes</span><br>🟡 YetiGeant</figcaption></figure>
+<figure><img src="Cute_Animate_Ghost.jpg" alt=""><figcaption><b>Ghost</b> <span class="w">style « mignon »</span><br><span class="a">Animations : Bite_Front, Bite_InPlace, Dance, Death, HitRecieve, Idle, Jump, No, Walk, Yes</span><br>🟡 Spectre, EspritPerdu</figcaption></figure></div>
+<h2>❌ Sans modèle animé gratuit (49)</h2>
+<div class="box"><p>AngeLumineux, Araignee, AraigneeCristal, ChampiSauteur, DragonCeleste, Ecureuil, FeeCeleste, FeeLumineuse, FeuFollet, GardienCeleste, Gargouille, Geant, GolemAncien, GolemCitrouille, GolemCristal, GolemGeode, GolemGlace, GolemMagma, GolemMeteore, GolemPierre, Grenouille, Griffon, GriffonCeleste, GriffonDore, Herisson, Hippocampe, Hydre, KrakenVide, Lapin, LapinAile, LapinFarceur, LapinLicorne, LapinLunaire, Loutre, MeduseAstrale, Papillon, PetitKraken, Pingouin, PoulpeNebuleuse, PrismeSupreme, RatonLaveur, RoiCitrouille, SalamandreFeu, ScarabeeGeant, ScarabeeLave, Souris, SphinxDore, TaupeMineuse, TortueCristal</p></div>
+<div class="box"><b>À savoir</b><p>• Style : ces modèles sont en facettes simples (low-poly), sans les textures détaillées de tes créatures. Ceux marqués « mignon » ont de gros yeux de bébé (tu n'aimes pas ce style).<br>• 🟡 « à adapter » = le corps et la démarche vont, mais il faut ajouter la corne, les ailes ou les queues (faisable dans Blender).<br>• Certains n'ont pas de marche (cochon, lama, mouton, pingouin, champignon : seulement « Idle »).</p></div>
 </div>
