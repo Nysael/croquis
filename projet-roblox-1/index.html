@@ -1,23 +1,61 @@
-<title>Nouveau loup</title>
+<title>Peaux refaites</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 :root{--bg:#1b1830;--panel:#262241;--fg:#f3f0ff;--muted:#b8b2d6;--line:#3a3560;--accent:#ffd34d;color-scheme:dark}
 :root[data-theme="light"]{--bg:#f4f2fb;--panel:#fff;--fg:#1b1830;--muted:#57507a;--line:#dcd7ef;--accent:#a86b00;color-scheme:light}
-body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-serif;font-size:15px;line-height:1.55;margin:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
-.wrap{max-width:960px;margin:0 auto;display:grid;gap:14px}h1{margin:0;font-size:28px}h2{margin:10px 0 0;font-size:19px}p{margin:0;color:var(--muted);max-width:78ch}b{color:var(--fg)}
+body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-serif;font-size:15px;line-height:1.5;margin:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
+.wrap{max-width:1100px;margin:0 auto;display:grid;gap:14px}h1{margin:0;font-size:28px}p{margin:0;color:var(--muted);max-width:80ch}b{color:var(--fg)}
 .tag{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
-figure{margin:0;display:grid;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px}img{width:100%;border-radius:8px;display:block}figcaption{font-size:14px;color:var(--muted)}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.grid{grid-template-columns:1fr}}
+figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;display:grid;gap:6px}img{width:100%;border-radius:8px;display:block}figcaption{font-size:13px;color:var(--muted)}
 </style>
 <div class="wrap">
 <span class="tag">Croquis · rien n'est changé dans le jeu</span>
-<h1>Nouveau loup, avec une vraie queue</h1>
-<p><b>Correction :</b> ton loup actuel a bien une queue, mais le générateur l'a coupée en deux moitiés, chacune collée à l'arrière d'une cuisse (vue de dos ci-dessous). D'où la « queue collée » qui se déforme. On le régénère.</p>
-<div class="grid2"><figure><img src="actuel.jpg" alt="Loup actuel de profil et de trois quarts"><figcaption>Actuel</figcaption></figure><figure><img src="actuel-dos.png" alt="Loup actuel de dos : deux moitiés de queue collées aux cuisses"><figcaption>Actuel, de dos : la queue en deux moitiés collées aux cuisses</figcaption></figure></div>
-<h2>2ᵉ série : plus proche de ton loup actuel</h2>
-<figure><img src="loup4.jpg" alt="Loup 4"><figcaption><b>4</b> · gris, crinière à pointes, queue sombre qui retombe</figcaption></figure>
-<figure><img src="loup5.jpg" alt="Loup 5"><figcaption><b>5</b> · bleu-gris foncé, poitrail clair, gueule ouverte</figcaption></figure>
-<figure><img src="loup6.jpg" alt="Loup 6"><figcaption><b>6</b> · gris et bleu acier, grande crinière hirsute</figcaption></figure>
-<h2>1ʳᵉ série (refusée)</h2>
-<div class="grid2"><figure><img src="loup1.jpg" alt="Loup 1"><figcaption>1</figcaption></figure><figure><img src="loup2.jpg" alt="Loup 2"><figcaption>2</figcaption></figure><figure><img src="loup3.jpg" alt="Loup 3"><figcaption>3</figcaption></figure></div>
-</div>
+<h1>44 créatures à la peau refaite</h1>
+<p>Même méthode que le loup : maillage régulier, poids de peau calculés par Blender, chaque partie suit ses propres os. Chaque image : <b>à gauche avant, à droite après</b>, dans la même pose d'effort (patte levée, cou baissé, ailes à demi repliées). L'étirement de la peau baisse pour chacune. Les autres créatures (surtout les ailées) gardent leur peau actuelle, qui reste meilleure. Écartées à l'œil : Souris et Chat noir (moustaches perdues), Liche (bâton abîmé).</p>
+<div class="grid">
+<figure><img src="Aigle.jpg" alt="Aigle avant et après" loading="lazy"><figcaption><b>Aigle</b> · étirement 1.66 → 1.52 (pire point 6.3 → 6.3)</figcaption></figure>
+<figure><img src="BaleineCeleste.jpg" alt="BaleineCeleste avant et après" loading="lazy"><figcaption><b>BaleineCeleste</b> · étirement 1.53 → 1.26 (pire point 3.5 → 1.7)</figcaption></figure>
+<figure><img src="BaleineNuage.jpg" alt="BaleineNuage avant et après" loading="lazy"><figcaption><b>BaleineNuage</b> · étirement 1.44 → 1.25 (pire point 3.6 → 1.6)</figcaption></figure>
+<figure><img src="ChampiSauteur.jpg" alt="ChampiSauteur avant et après" loading="lazy"><figcaption><b>ChampiSauteur</b> · étirement 1.48 → 1.28 (pire point 5.5 → 3.4)</figcaption></figure>
+<figure><img src="ChatLicorne.jpg" alt="ChatLicorne avant et après" loading="lazy"><figcaption><b>ChatLicorne</b> · étirement 1.81 → 1.48 (pire point 12.7 → 10.6)</figcaption></figure>
+<figure><img src="ChauveSourisCristal.jpg" alt="ChauveSourisCristal avant et après" loading="lazy"><figcaption><b>ChauveSourisCristal</b> · étirement 2.02 → 1.84 (pire point 12.8 → 9.8)</figcaption></figure>
+<figure><img src="ChevalierOmbre.jpg" alt="ChevalierOmbre avant et après" loading="lazy"><figcaption><b>ChevalierOmbre</b> · étirement 2.19 → 1.63 (pire point 8.3 → 3.6)</figcaption></figure>
+<figure><img src="Chiot.jpg" alt="Chiot avant et après" loading="lazy"><figcaption><b>Chiot</b> · étirement 1.69 → 1.50 (pire point 10.2 → 6.3)</figcaption></figure>
+<figure><img src="DragonNeant.jpg" alt="DragonNeant avant et après" loading="lazy"><figcaption><b>DragonNeant</b> · étirement 1.68 → 1.57 (pire point 6.8 → 5.5)</figcaption></figure>
+<figure><img src="Ecureuil.jpg" alt="Ecureuil avant et après" loading="lazy"><figcaption><b>Ecureuil</b> · étirement 1.57 → 1.41 (pire point 6.4 → 3.5)</figcaption></figure>
+<figure><img src="EspritPerdu.jpg" alt="EspritPerdu avant et après" loading="lazy"><figcaption><b>EspritPerdu</b> · étirement 1.50 → 1.41 (pire point 4.5 → 2.3)</figcaption></figure>
+<figure><img src="GolemAncien.jpg" alt="GolemAncien avant et après" loading="lazy"><figcaption><b>GolemAncien</b> · étirement 1.51 → 1.45 (pire point 6.0 → 2.5)</figcaption></figure>
+<figure><img src="GolemCitrouille.jpg" alt="GolemCitrouille avant et après" loading="lazy"><figcaption><b>GolemCitrouille</b> · étirement 1.68 → 1.40 (pire point 4.9 → 2.3)</figcaption></figure>
+<figure><img src="GolemCristal.jpg" alt="GolemCristal avant et après" loading="lazy"><figcaption><b>GolemCristal</b> · étirement 1.63 → 1.43 (pire point 11.2 → 6.3)</figcaption></figure>
+<figure><img src="GolemGeode.jpg" alt="GolemGeode avant et après" loading="lazy"><figcaption><b>GolemGeode</b> · étirement 1.68 → 1.43 (pire point 4.9 → 3.0)</figcaption></figure>
+<figure><img src="GolemGlace.jpg" alt="GolemGlace avant et après" loading="lazy"><figcaption><b>GolemGlace</b> · étirement 1.94 → 1.46 (pire point 12.2 → 4.9)</figcaption></figure>
+<figure><img src="GolemMagma.jpg" alt="GolemMagma avant et après" loading="lazy"><figcaption><b>GolemMagma</b> · étirement 1.69 → 1.49 (pire point 6.9 → 4.1)</figcaption></figure>
+<figure><img src="GolemMeteore.jpg" alt="GolemMeteore avant et après" loading="lazy"><figcaption><b>GolemMeteore</b> · étirement 1.91 → 1.38 (pire point 5.1 → 1.9)</figcaption></figure>
+<figure><img src="Grenouille.jpg" alt="Grenouille avant et après" loading="lazy"><figcaption><b>Grenouille</b> · étirement 1.78 → 1.60 (pire point 16.8 → 4.7)</figcaption></figure>
+<figure><img src="HibouNeige.jpg" alt="HibouNeige avant et après" loading="lazy"><figcaption><b>HibouNeige</b> · étirement 1.67 → 1.61 (pire point 4.3 → 4.1)</figcaption></figure>
+<figure><img src="Hippocampe.jpg" alt="Hippocampe avant et après" loading="lazy"><figcaption><b>Hippocampe</b> · étirement 1.46 → 1.26 (pire point 8.1 → 2.0)</figcaption></figure>
+<figure><img src="KrakenVide.jpg" alt="KrakenVide avant et après" loading="lazy"><figcaption><b>KrakenVide</b> · étirement 1.54 → 1.38 (pire point 4.8 → 1.8)</figcaption></figure>
+<figure><img src="Lapin.jpg" alt="Lapin avant et après" loading="lazy"><figcaption><b>Lapin</b> · étirement 1.58 → 1.44 (pire point 9.3 → 3.6)</figcaption></figure>
+<figure><img src="LapinFarceur.jpg" alt="LapinFarceur avant et après" loading="lazy"><figcaption><b>LapinFarceur</b> · étirement 1.59 → 1.46 (pire point 4.5 → 2.7)</figcaption></figure>
+<figure><img src="LapinLicorne.jpg" alt="LapinLicorne avant et après" loading="lazy"><figcaption><b>LapinLicorne</b> · étirement 1.58 → 1.44 (pire point 3.8 → 2.9)</figcaption></figure>
+<figure><img src="LapinLunaire.jpg" alt="LapinLunaire avant et après" loading="lazy"><figcaption><b>LapinLunaire</b> · étirement 1.61 → 1.42 (pire point 4.7 → 3.5)</figcaption></figure>
+<figure><img src="Licorne.jpg" alt="Licorne avant et après" loading="lazy"><figcaption><b>Licorne</b> · étirement 1.50 → 1.41 (pire point 3.8 → 3.9)</figcaption></figure>
+<figure><img src="LoupDesNeiges.jpg" alt="LoupDesNeiges avant et après" loading="lazy"><figcaption><b>LoupDesNeiges</b> · étirement 1.59 → 1.47 (pire point 7.7 → 4.3)</figcaption></figure>
+<figure><img src="LoupLunaire.jpg" alt="LoupLunaire avant et après" loading="lazy"><figcaption><b>LoupLunaire</b> · étirement 1.99 → 1.58 (pire point 11.9 → 7.0)</figcaption></figure>
+<figure><img src="LoupOmbre.jpg" alt="LoupOmbre avant et après" loading="lazy"><figcaption><b>LoupOmbre</b> · étirement 1.67 → 1.61 (pire point 15.1 → 5.1)</figcaption></figure>
+<figure><img src="Loutre.jpg" alt="Loutre avant et après" loading="lazy"><figcaption><b>Loutre</b> · étirement 1.71 → 1.50 (pire point 5.8 → 4.5)</figcaption></figure>
+<figure><img src="PetitKraken.jpg" alt="PetitKraken avant et après" loading="lazy"><figcaption><b>PetitKraken</b> · étirement 1.41 → 1.18 (pire point 6.3 → 1.7)</figcaption></figure>
+<figure><img src="Pingouin.jpg" alt="Pingouin avant et après" loading="lazy"><figcaption><b>Pingouin</b> · étirement 1.68 → 1.54 (pire point 14.0 → 3.1)</figcaption></figure>
+<figure><img src="Poney.jpg" alt="Poney avant et après" loading="lazy"><figcaption><b>Poney</b> · étirement 1.53 → 1.45 (pire point 4.9 → 4.8)</figcaption></figure>
+<figure><img src="PoneyEtoile.jpg" alt="PoneyEtoile avant et après" loading="lazy"><figcaption><b>PoneyEtoile</b> · étirement 1.54 → 1.44 (pire point 4.5 → 3.5)</figcaption></figure>
+<figure><img src="PoulpeNebuleuse.jpg" alt="PoulpeNebuleuse avant et après" loading="lazy"><figcaption><b>PoulpeNebuleuse</b> · étirement 1.45 → 1.40 (pire point 11.6 → 2.1)</figcaption></figure>
+<figure><img src="PrismeSupreme.jpg" alt="PrismeSupreme avant et après" loading="lazy"><figcaption><b>PrismeSupreme</b> · étirement 1.70 → 1.48 (pire point 6.2 → 5.7)</figcaption></figure>
+<figure><img src="RatonLaveur.jpg" alt="RatonLaveur avant et après" loading="lazy"><figcaption><b>RatonLaveur</b> · étirement 1.59 → 1.39 (pire point 6.2 → 5.0)</figcaption></figure>
+<figure><img src="Renard.jpg" alt="Renard avant et après" loading="lazy"><figcaption><b>Renard</b> · étirement 1.88 → 1.56 (pire point 9.1 → 6.8)</figcaption></figure>
+<figure><img src="RenardAurore.jpg" alt="RenardAurore avant et après" loading="lazy"><figcaption><b>RenardAurore</b> · étirement 1.67 → 1.46 (pire point 18.6 → 14.2)</figcaption></figure>
+<figure><img src="ScarabeeGeant.jpg" alt="ScarabeeGeant avant et après" loading="lazy"><figcaption><b>ScarabeeGeant</b> · étirement 1.25 → 1.16 (pire point 5.0 → 1.6)</figcaption></figure>
+<figure><img src="Spectre.jpg" alt="Spectre avant et après" loading="lazy"><figcaption><b>Spectre</b> · étirement 1.85 → 1.73 (pire point 7.4 → 4.2)</figcaption></figure>
+<figure><img src="Tigre.jpg" alt="Tigre avant et après" loading="lazy"><figcaption><b>Tigre</b> · étirement 1.76 → 1.55 (pire point 7.3 → 7.1)</figcaption></figure>
+<figure><img src="YetiGeant.jpg" alt="YetiGeant avant et après" loading="lazy"><figcaption><b>YetiGeant</b> · étirement 1.72 → 1.61 (pire point 5.1 → 4.5)</figcaption></figure>
+</div></div>
