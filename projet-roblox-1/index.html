@@ -6,6 +6,7 @@ body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-se
 .wrap{max-width:960px;margin:0 auto;display:grid;gap:14px}h1{margin:0;font-size:28px}p,li{color:var(--muted)}p{margin:0;max-width:78ch}b{color:var(--fg)}
 .tag{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
 figure{margin:0;display:grid;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px}video{width:100%;border-radius:8px;display:block;background:#000}figcaption{font-size:14px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}@media(max-width:640px){.grid2{grid-template-columns:1fr}}img{width:100%;border-radius:8px;display:block}
 .box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px}ul{margin:6px 0 0;padding-left:20px}
 </style>
 <div class="wrap">
@@ -18,5 +19,18 @@ figure{margin:0;display:grid;gap:6px;background:var(--panel);border:1px solid va
 <li>Pas plus courts et plus fréquents : les pieds glissent moins sur le sol.</li>
 <li>Le corps rebondit moitié moins.</li>
 <li>Pour toutes les créatures à quatre pattes (et les bipèdes), en jeu tout de suite.</li></ul></div>
-<p>Dis-moi si c'est mieux, trop discret ou pas assez.</p>
+<span class="tag">Nouveau · peau entièrement refaite</span>
+<h1>Le loup avec une peau propre</h1>
+<p><b>Découverte :</b> ton loup n'a en fait pas de queue. Ce qui ressemblait à une queue collée, c'était l'arrière de ses cuisses. L'outil les avait prises pour deux queues et leur avait mis des os à part, si bien que l'arrière des cuisses bougeait tout seul et que la peau se déformait.</p>
+<figure><video src="comparaison-peau-v2.mp4" controls autoplay muted loop playsinline></video><figcaption>En haut : avant · En bas : peau refaite (dans le jeu)</figcaption></figure>
+<div class="box"><b>Ce qui a été refait</b><ul>
+<li>Os de fausse queue retirés : les cuisses bougent d'un seul bloc.</li>
+<li>Nouveau maillage régulier (Instant Meshes), avec de vraies boucles aux articulations. L'ancien était un maillage simplifié au hasard, qui se pinçait.</li>
+<li>Couleurs reportées depuis les morceaux d'origine, en pleine qualité, plus les poils en relief.</li>
+<li>Poids de la peau calculés par Blender (diffusion de chaleur), puis affinés aux articulations.</li>
+<li>Mesure : la peau s'étire environ 30 % de moins en marchant (score 3,7 → 2,6).</li></ul></div>
+<div class="grid2"><figure><img src="pose-avant.png" alt=""><figcaption>Avant : patte levée écrasée, fente sur la cuisse</figcaption></figure><figure><img src="pose-peau-v2.png" alt=""><figcaption>Peau refaite : la patte se plie proprement</figcaption></figure></div>
+<span class="tag">Essai précédent · queue décollée</span>
+<p>Sur le modèle d'origine, la queue était soudée à l'arrière des cuisses : quand la cuisse avançait, elle tirait la peau de la queue. Maintenant la queue est séparée et chaque bord de la coupe est refermé (plus de fente). La peau des cuisses et du bassin a aussi été refaite pour suivre les bons os.</p>
+<figure><video src="queue-decollee.mp4" controls autoplay muted loop playsinline></video><figcaption>Loup refait, dans le jeu (arrêt, marche, course)</figcaption></figure>
 </div>
