@@ -1,26 +1,57 @@
-<title>Nouveau loup</title>
+<title>Quadrupèdes refaits</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 :root{--bg:#1b1830;--panel:#262241;--fg:#f3f0ff;--muted:#b8b2d6;--line:#3a3560;--accent:#ffd34d;color-scheme:dark}
 :root[data-theme="light"]{--bg:#f4f2fb;--panel:#fff;--fg:#1b1830;--muted:#57507a;--line:#dcd7ef;--accent:#a86b00;color-scheme:light}
-body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-serif;font-size:15px;line-height:1.55;margin:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
-.wrap{max-width:960px;margin:0 auto;display:grid;gap:14px}h1{margin:0;font-size:28px}h2{margin:10px 0 0;font-size:19px}p{margin:0;color:var(--muted);max-width:78ch}b{color:var(--fg)}
+body{background:var(--bg);color:var(--fg);font-family:"Nunito",system-ui,sans-serif;font-size:15px;line-height:1.5;margin:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 40px}
+.wrap{max-width:1000px;margin:0 auto;display:grid;gap:12px}h1{margin:0;font-size:28px}p,li{margin:0;color:var(--muted);max-width:80ch}b{color:var(--fg)}
 .tag{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
-figure{margin:0;display:grid;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px}img{width:100%;border-radius:8px;display:block}figcaption{font-size:14px;color:var(--muted)}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;display:grid;gap:6px}img{width:100%;border-radius:8px;display:block}figcaption{font-size:14px;color:var(--muted)}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px}ul{margin:6px 0 0;padding-left:20px}
 </style>
 <div class="wrap">
-<span class="tag">Dans le jeu · 23/10</span>
-<h1>Loup 10 : dans le jeu</h1>
-<p>Ton choix, le loup 10, avec toute la chaîne : squelette (une seule queue, à 3 os), peau propre (maillage régulier, chaque partie suit ses os), poils en relief. Filmé dans le jeu : arrêt, marche, course.</p>
-<figure><video src="loup10-jeu.mp4" controls autoplay muted loop playsinline></video><figcaption>En haut : profil · En bas : trois quarts arrière</figcaption></figure>
-<span class="tag">Le choix (croquis)</span>
-<h2>Nouveau loup : une seule queue</h2>
-<p>Ton loup actuel a 2 queues collées aux cuisses (vue de dos plus bas), et le générateur refait souvent cette erreur. Maintenant, chaque loup est contrôlé <b>de dos</b> avant de te le montrer : ceux-ci ont tous <b>une seule queue</b>. Pour chacun : profil, dos, face.</p>
-<figure><img src="loup10.jpg" alt="Loup 10 : profil, dos et face"><figcaption><b>10</b> · gris foncé, pelage à pointes, queue touffue relevée bien loin des pattes</figcaption></figure>
-<figure><img src="loup11.jpg" alt="Loup 11 : profil, dos et face"><figcaption><b>11</b> · gris et bleu, dos bleu vif, queue relevée en crochet</figcaption></figure>
-<figure><img src="loup12.jpg" alt="Loup 12 : profil, dos et face"><figcaption><b>12</b> · blanc et bleu vif, grande crinière, yeux jaunes, queue relevée</figcaption></figure>
-<figure><img src="loup8.jpg" alt="Loup 8 : profil, dos et face"><figcaption><b>8</b> · gris, dos bleu, queue qui pend au milieu (touche un peu les cuisses)</figcaption></figure>
-<h2>Pour comparer : ton loup actuel</h2>
-<div class="grid2"><figure><img src="actuel.jpg" alt="Loup actuel"><figcaption>Actuel</figcaption></figure><figure><img src="actuel-dos.png" alt="Loup actuel de dos, deux queues collées aux cuisses"><figcaption>Actuel, de dos : 2 queues collées aux cuisses</figcaption></figure></div>
+<span class="tag">Croquis · rien n'est changé dans le jeu</span>
+<h1>36 quadrupèdes refaits comme le loup</h1>
+<p>Même description que tes créatures actuelles (style « pas bébé »), mais <b>une seule queue, relevée et loin des pattes</b>, des <b>yeux en amande</b>, et chaque créature vérifiée <b>de dos</b> (ni 2 queues, ni queue collée). Sur chaque image : <b>à gauche l'actuel</b>, puis le nouveau de profil, de dos et de face.</p>
+<div class="box"><b>Gardés tels quels (le générateur n'y arrive pas)</b><ul>
+<li>Hydre : 3 essais, il fait un corps debout ou deux dragons collés.</li>
+<li>Renard à trois queues : 3 essais, il fait toujours 5 à 7 queues (renard à neuf queues des légendes).</li>
+<li>Loup : déjà refait (loup 10).</li></ul></div>
+<p>Dis-moi ceux que tu refuses (je les regénère) ; les autres, je les mets dans le jeu avec toute la chaîne (squelette, peau propre, poils en relief).</p>
+<figure><img src="CerfEtoiles.jpg" alt="Cerf étoilé : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Cerf étoilé</b></figcaption></figure>
+<figure><img src="ChatGalactique.jpg" alt="Chat galactique : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Chat galactique</b></figcaption></figure>
+<figure><img src="ChatLicorne.jpg" alt="Chat licorne : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Chat licorne</b></figcaption></figure>
+<figure><img src="ChatNoir.jpg" alt="Chat noir : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Chat noir</b> · 2ᵉ essai, yeux en amande</figcaption></figure>
+<figure><img src="Chiot.jpg" alt="Chiot : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Chiot</b></figcaption></figure>
+<figure><img src="Grenouille.jpg" alt="Grenouille : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Grenouille</b></figcaption></figure>
+<figure><img src="Herisson.jpg" alt="Hérisson : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Hérisson</b></figcaption></figure>
+<figure><img src="Kirin.jpg" alt="Kirin : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Kirin</b></figcaption></figure>
+<figure><img src="Lapin.jpg" alt="Lapin : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Lapin</b></figcaption></figure>
+<figure><img src="LapinAile.jpg" alt="Lapin ailé : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Lapin ailé</b></figcaption></figure>
+<figure><img src="LapinFarceur.jpg" alt="Lapin farceur : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Lapin farceur</b></figcaption></figure>
+<figure><img src="LapinLicorne.jpg" alt="Lapin licorne : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Lapin licorne</b></figcaption></figure>
+<figure><img src="LapinLunaire.jpg" alt="Lapin lunaire : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Lapin lunaire</b></figcaption></figure>
+<figure><img src="Licorne.jpg" alt="Licorne : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Licorne</b></figcaption></figure>
+<figure><img src="LicorneArcEnCiel.jpg" alt="Licorne arc-en-ciel : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Licorne arc-en-ciel</b></figcaption></figure>
+<figure><img src="LicorneGlace.jpg" alt="Licorne de glace : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Licorne de glace</b></figcaption></figure>
+<figure><img src="LionEtoiles.jpg" alt="Lion étoilé : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Lion étoilé</b></figcaption></figure>
+<figure><img src="LoupOmbre.jpg" alt="Loup de l'ombre : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Loup de l'ombre</b></figcaption></figure>
+<figure><img src="LoupDesNeiges.jpg" alt="Loup des neiges : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Loup des neiges</b></figcaption></figure>
+<figure><img src="LoupLunaire.jpg" alt="Loup lunaire : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Loup lunaire</b></figcaption></figure>
+<figure><img src="Loutre.jpg" alt="Loutre : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Loutre</b></figcaption></figure>
+<figure><img src="Ours.jpg" alt="Ours : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Ours</b></figcaption></figure>
+<figure><img src="OursPolaire.jpg" alt="Ours polaire : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Ours polaire</b></figcaption></figure>
+<figure><img src="Panda.jpg" alt="Panda : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Panda</b></figcaption></figure>
+<figure><img src="Poney.jpg" alt="Poney : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Poney</b></figcaption></figure>
+<figure><img src="PoneyEtoile.jpg" alt="Poney étoilé : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Poney étoilé</b></figcaption></figure>
+<figure><img src="PrismeSupreme.jpg" alt="Prisme suprême : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Prisme suprême</b></figcaption></figure>
+<figure><img src="RatonLaveur.jpg" alt="Raton laveur : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Raton laveur</b></figcaption></figure>
+<figure><img src="Renard.jpg" alt="Renard : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Renard</b></figcaption></figure>
+<figure><img src="RenardAurore.jpg" alt="Renard aurore : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Renard aurore</b></figcaption></figure>
+<figure><img src="SalamandreFeu.jpg" alt="Salamandre de feu : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Salamandre de feu</b></figcaption></figure>
+<figure><img src="Souris.jpg" alt="Souris : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Souris</b> · 3ᵉ essai (les 2 premiers avaient 2 queues)</figcaption></figure>
+<figure><img src="TaupeMineuse.jpg" alt="Taupe mineuse : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Taupe mineuse</b> · encore un peu ramassée sur elle-même</figcaption></figure>
+<figure><img src="Tigre.jpg" alt="Tigre : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Tigre</b></figcaption></figure>
+<figure><img src="TortueCristal.jpg" alt="Tortue de cristal : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Tortue de cristal</b></figcaption></figure>
+<figure><img src="Ecureuil.jpg" alt="Écureuil : actuel puis nouveau de profil, de dos et de face" loading="lazy"><figcaption><b>Écureuil</b></figcaption></figure>
 </div>
