@@ -3,119 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Attrape le bouton</title>
+<title>Clique</title>
 <style>
-  :root { --bg:#14111f; --fg:#f4f1ff; --accent:#ff4f8b; --accent2:#7c5cff; }
-  * { box-sizing:border-box; }
-  html,body { margin:0; height:100%; overflow:hidden; background:var(--bg); color:var(--fg);
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; user-select:none; }
-  #hud { position:fixed; top:16px; left:0; right:0; text-align:center; font-size:20px; font-weight:600; z-index:2; }
-  #bar { width:min(400px,80vw); height:10px; margin:10px auto 0; background:#2a2440; border-radius:99px; overflow:hidden; }
-  #fill { height:100%; width:0; background:linear-gradient(90deg,var(--accent2),var(--accent)); transition:width .2s; }
-  #target { position:absolute; width:90px; height:90px; border-radius:50%; border:none; cursor:pointer;
-    background:radial-gradient(circle at 30% 30%, #ff9cc0, var(--accent)); color:#fff; font-size:32px;
-    box-shadow:0 0 30px var(--accent); transition: left .25s, top .25s, transform .1s; }
-  #target:active { transform:scale(.85); }
-  .screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    text-align:center; padding:16px; gap:20px; z-index:3; background:var(--bg); }
-  .hidden { display:none !important; }
-  h1 { margin:0; font-size:clamp(28px,6vw,48px); }
-  button.big { font-size:22px; padding:14px 36px; border-radius:99px; border:none; cursor:pointer; color:#fff;
-    background:linear-gradient(90deg,var(--accent2),var(--accent)); font-weight:700; }
-  #final p { font-size:clamp(22px,5vw,40px); line-height:1.4; max-width:900px; margin:0; }
-  #final .shout { display:block; font-size:clamp(40px,11vw,110px); font-weight:900; color:var(--accent);
-    animation:shake .3s infinite; margin:10px 0; }
-  #final small { opacity:.7; font-style:italic; }
-  @keyframes shake { 0%,100%{transform:translate(0)} 25%{transform:translate(-4px,2px) rotate(-1deg)} 75%{transform:translate(4px,-2px) rotate(1deg)} }
-  .pop { position:absolute; pointer-events:none; font-weight:800; color:var(--accent); animation:up .7s forwards; }
-  @keyframes up { to { transform:translateY(-50px); opacity:0; } }
+  body { margin:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:#14111f; color:#fff; font-family:system-ui, sans-serif; text-align:center; padding:16px; box-sizing:border-box; }
+  button { font-size:28px; padding:20px 50px; border:none; border-radius:99px; background:#ff4f8b; color:#fff; cursor:pointer; }
+  button:active { transform:scale(.9); }
+  #msg { font-size:36px; }
+  #msg b { display:block; font-size:70px; color:#ff4f8b; margin:10px 0; }
 </style>
 </head>
 <body>
-  <div id="start" class="screen">
-    <h1>🎯 Attrape le bouton</h1>
-    <p>Clique 20 fois sur la boule avant qu'elle t'échappe.<br>Une surprise t'attend à la fin.</p>
-    <button class="big" id="go">Jouer</button>
-  </div>
-
-  <div id="hud" class="hidden">
-    <div id="score">0 / 20</div>
-    <div id="bar"><div id="fill"></div></div>
-  </div>
-  <button id="target" class="hidden">👆</button>
-
-  <div id="final" class="screen hidden">
-    <p>Lyna, aurais-tu l'obligeance de
-      <span class="shout">FERMER TA GUEULE</span>
-      <small>avec tout le respect 🙏</small>
-    </p>
-    <button class="big" id="again">Rejouer</button>
-  </div>
+  <p id="txt">Clique 10 fois sur le bouton</p>
+  <button id="btn">0 / 10</button>
+  <p id="msg" hidden>Lyna, aurais-tu l'obligeance de <b>FERMER TA GUEULE</b> avec tout le respect 🙏</p>
 
 <script>
-  const GOAL = 20;
-  const $ = id => document.getElementById(id);
-  const target = $('target');
-  let score = 0, timer;
-
-  function move() {
-    const s = target.offsetWidth;
-    const x = Math.random() * (innerWidth - s);
-    const y = 80 + Math.random() * (innerHeight - s - 80);
-    target.style.left = x + 'px';
-    target.style.top = y + 'px';
-  }
-
-  function schedule() {
-    clearTimeout(timer);
-    // la boule bouge de plus en plus vite
-    timer = setTimeout(() => { move(); schedule(); }, Math.max(450, 1400 - score * 50));
-  }
-
-  function start() {
-    score = 0;
-    update();
-    $('start').classList.add('hidden');
-    $('final').classList.add('hidden');
-    $('hud').classList.remove('hidden');
-    target.classList.remove('hidden');
-    target.style.width = target.style.height = '90px';
-    move();
-    schedule();
-  }
-
-  function update() {
-    $('score').textContent = score + ' / ' + GOAL;
-    $('fill').style.width = (score / GOAL * 100) + '%';
-  }
-
-  target.addEventListener('click', e => {
-    score++;
-    const pop = document.createElement('div');
-    pop.className = 'pop';
-    pop.textContent = '+1';
-    pop.style.left = e.clientX + 'px';
-    pop.style.top = e.clientY + 'px';
-    document.body.appendChild(pop);
-    setTimeout(() => pop.remove(), 700);
-
-    const size = Math.max(45, 90 - score * 2);
-    target.style.width = target.style.height = size + 'px';
-    update();
-
-    if (score >= GOAL) {
-      clearTimeout(timer);
-      target.classList.add('hidden');
-      $('hud').classList.add('hidden');
-      $('final').classList.remove('hidden');
-    } else {
-      move();
-      schedule();
+  let n = 0;
+  btn.onclick = () => {
+    n++;
+    btn.textContent = n + ' / 10';
+    if (n === 10) {
+      btn.hidden = true;
+      txt.hidden = true;
+      msg.hidden = false;
     }
-  });
-
-  $('go').onclick = start;
-  $('again').onclick = start;
+  };
 </script>
 </body>
 </html>
