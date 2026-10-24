@@ -5,28 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Clique</title>
 <style>
-  body { margin:0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
-    background:#14111f; color:#fff; font-family:system-ui, sans-serif; text-align:center; padding:16px; box-sizing:border-box; }
-  button { font-size:28px; padding:20px 50px; border:none; border-radius:99px; background:#ff4f8b; color:#fff; cursor:pointer; }
-  button:active { transform:scale(.9); }
+  body { margin:0; height:100vh; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    background:#14111f; color:#fff; font-family:system-ui, sans-serif; text-align:center; padding:16px; box-sizing:border-box;
+    transition:background .3s; }
+  #txt { font-size:24px; min-height:1.5em; }
+  button { font-size:28px; padding:20px 50px; border:none; border-radius:99px; background:#ff4f8b; color:#fff; cursor:pointer;
+    transition:transform .15s; box-shadow:0 0 30px #ff4f8b88; }
   #msg { font-size:36px; }
-  #msg b { display:block; font-size:70px; color:#ff4f8b; margin:10px 0; }
+  #msg b { display:block; font-size:clamp(40px,12vw,100px); color:#ff4f8b; margin:10px 0; animation:shake .25s infinite; }
+  @keyframes shake { 0%,100%{transform:translate(0)} 25%{transform:translate(-5px,3px) rotate(-2deg)} 75%{transform:translate(5px,-3px) rotate(2deg)} }
+  .emoji { position:fixed; font-size:32px; pointer-events:none; animation:fly 1s ease-out forwards; }
+  @keyframes fly { to { transform:translate(var(--x), var(--y)) rotate(360deg); opacity:0; } }
 </style>
 </head>
 <body>
-  <p id="txt">Clique 10 fois sur le bouton</p>
-  <button id="btn">0 / 10</button>
+  <p id="txt">Clique sur le bouton 👀</p>
+  <button id="btn">CLIQUE</button>
   <p id="msg" hidden>Lyna, aurais-tu l'obligeance de <b>FERMER TA GUEULE</b> avec tout le respect 🙏</p>
 
 <script>
+  const phrases = [
+    "Encore !", "Plus vite 😤", "T'es sûre ?", "Continue...", "Ça chauffe 🔥",
+    "Presque...", "Non pas encore 😏", "Allez allez !", "Dernier effort 😱", ""
+  ];
+  const emojis = ["🎉", "💥", "😂", "🤫", "🔥", "✨", "🙊"];
+  const colors = ["#14111f", "#1f1430", "#2a1440", "#3a1445", "#4a1440"];
   let n = 0;
-  btn.onclick = () => {
+
+  function burst(x, y, count) {
+    for (let i = 0; i < count; i++) {
+      const e = document.createElement("div");
+      e.className = "emoji";
+      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      e.style.left = x + "px";
+      e.style.top = y + "px";
+      e.style.setProperty("--x", (Math.random() - .5) * 400 + "px");
+      e.style.setProperty("--y", (Math.random() - .5) * 400 + "px");
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 1000);
+    }
+  }
+
+  btn.onclick = (ev) => {
     n++;
-    btn.textContent = n + ' / 10';
+    txt.textContent = phrases[n - 1];
+    btn.style.transform = `scale(${1 + n * 0.08}) rotate(${(Math.random() - .5) * 20}deg)`;
+    document.body.style.background = colors[Math.min(n >> 1, colors.length - 1)];
+    burst(ev.clientX, ev.clientY, 5);
+
     if (n === 10) {
       btn.hidden = true;
       txt.hidden = true;
       msg.hidden = false;
+      burst(innerWidth / 2, innerHeight / 2, 40);
     }
   };
 </script>
